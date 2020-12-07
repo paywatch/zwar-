@@ -1,0 +1,231 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html"> ادارة برامج العمرة </a></li>
+        <li class="breadcrumb-item active" aria-current="page"> عمرة رمضان شركة الواحات للسياحة </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> اضافة باقة جديد </h1>
+    </div>
+    <div class="page-inner  overflow-hidden">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item active">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title"> البيانات الاساسية </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">2</span>
+                <span class="wizard-tabs-title"> المجموعة والمطوف </span>
+              </div>
+            </li>
+            <a class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">3</span>
+                <span class="wizard-tabs-title"> بيانات الغرف </span>
+              </div>
+            </a>
+            <a class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">4</span>
+                <span class="wizard-tabs-title"> تأكيد البيانات </span>
+              </div>
+            </a>
+          </ul>
+        </div>
+      </div>
+      <div class="wizard-details">
+        <form [formGroup]="baseForm" (ngSubmit)="createPackage()">
+          <section>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label" id="ai select"> المطار الداخلي </label>
+                  <select *ngFor="let airport of airPorts" class="form-control" formControlName="localAirportID">
+                    <option>
+                      {{airport.Gedda}}
+                    </option>
+                    <option>
+                      {{airport.madina}}
+                    </option>
+                    <option>
+                      {{airport.reyad}}
+                    </option>
+                  </select>
+                  <em
+                    *ngIf="baseForm.get('localAirportID').hasError('required') &&baseForm.get('localAirportID').dirty">
+                    هذا الحقل إجباري
+                  </em>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> تاريخ الانطلاق </label>
+                  <input type="date" formControlName="packageDepartureDate" class="form-control form-date">
+                  <em *ngIf="baseForm.get('packageDepartureDate').hasError('required') &&
+                           baseForm.get('packageDepartureDate').dirty">
+                    هذا الحقل إجباري
+                  </em>
+                  <span class="text-danger small" *ngIf="!baseForm.get('packageDepartureDate').hasError('required') &&
+                               baseForm.get('packageDepartureDate').hasError('afterToday') &&
+                               baseForm.get('packageDepartureDate').dirty">
+                    التاريخ يجب ان يكون بعد تاريخ اليوم
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="d-block col-form-label"> تاريخ العودة </label>
+                  <input type="date" formControlName="packageReturnDate" class="form-control form-date">
+                  <em
+                    *ngIf="baseForm.get('packageReturnDate').hasError('required') &&baseForm.get('packageReturnDate').dirty">
+                    هذا الحقل إجباري
+                  </em>
+                  <span class="text-danger small" *ngIf="baseForm.get('packageReturnDate').hasError('greaterThan') &&
+                               baseForm.get('packageReturnDate').dirty">
+                    تاريخ العودة يجب ان يكون اكبر من تاريخ الانطلاق
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label" id="uomra"> موسم العمرة </label>
+                  <select  *ngFor="let season of seasons" class="form-control" formControlName="packageSeasonID">
+                    <option>
+                      {{season.ramadan}}
+                    </option>
+                    <option>
+                      {{season.shaban}}
+                    </option>
+                    <option>
+                      {{season.ragab}}
+                    </option>
+                    <option>
+                      {{season.rabeaa}}
+                    </option>
+                  </select>
+                  <em
+                    *ngIf="baseForm.get('packageSeasonID').hasError('required') &&baseForm.get('packageSeasonID').dirty">
+                    هذا الحقل إجباري
+                  </em>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> سعة الباقة </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" formControlName="packageCapacity">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">فرد</span>
+                    </div>
+                  </div>
+                  <em
+                    *ngIf="baseForm.get('packageCapacity').hasError('required') && baseForm.get('packageCapacity').dirty">
+                    هذا الحقل إجباري
+                  </em>
+                  <em *ngIf="!baseForm.get('packageCapacity').hasError('required') &&
+                              baseForm.get('packageCapacity').hasError('pattern') &&
+                              baseForm.get('packageCapacity').dirty">
+                    ارقام فقط
+                  </em>
+                  <em *ngIf="!baseForm.get('packageCapacity').hasError('required') &&
+                             !baseForm.get('packageCapacity').hasError('pattern') &&
+                             baseForm.get('packageCapacity').hasError('maxlength') &&
+                             baseForm.get('packageCapacity').dirty">
+                    حد اقصي 20 رقم
+                  </em>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> عدد مقاعد السفر </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" formControlName="packageAvailableSeats">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">مقعد</span>
+                    </div>
+                  </div>
+                  <em
+                    *ngIf="baseForm.get('packageAvailableSeats').hasError('required') &&baseForm.get('packageAvailableSeats').dirty">
+                    هذا الحقل إجباري
+                  </em>
+                  <em *ngIf="!baseForm.get('packageAvailableSeats').hasError('required') &&
+                          baseForm.get('packageAvailableSeats').hasError('pattern') &&
+                          baseForm.get('packageAvailableSeats').dirty">
+                    ارقام فقط
+                  </em>
+                  <em *ngIf="!baseForm.get('packageAvailableSeats').hasError('required') &&
+                             !baseForm.get('packageAvailableSeats').hasError('pattern') &&
+                              baseForm.get('packageAvailableSeats').hasError('maxlength') &&
+                              baseForm.get('packageAvailableSeats').dirty">
+                    حد اقصي 20 رقم
+                  </em>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> خط سير الرحلة </label>
+                  <select *ngFor="let direction of umrahDirection" class="form-control" formControlName="itineraryID">
+                    <option>
+                      {{direction.madina}}
+                    </option>
+                    <option>
+                      {{direction.mecaa}}
+                    </option>
+                  </select>
+                  <em *ngIf="baseForm.get('itineraryID').hasError('required') &&baseForm.get('itineraryID').dirty">
+                    هذا الحقل إجباري
+                  </em>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم العرض </label>
+                  <input type="text" formControlName="ID" class="form-control">
+                  <em *ngIf="baseForm.get('ID').hasError('required') && baseForm.get('ID').dirty">
+                    هذا الحقل إجباري
+                  </em>
+                </div>
+              </div>
+              <!-- <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label">هل هناك عرض على الباقة</label>
+                  <div class="mt-2">
+                    <div class="custom-control custom-radio  d-inline-block ">
+                      <input id="first1" value="yes" type="radio" formControlName="baqaOffer"
+                        class="custom-control-input">
+                      <label class="custom-control-label" value="no" for="first1"> نعم </label>
+                    </div>
+                    <div class="custom-control custom-radio  d-inline-block  mx-3">
+                      <input id="second1" value="no" type="radio" formControlName="baqaOffer"
+                        class="custom-control-input">
+                      <label class="custom-control-label" for="second1"> لا </label>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </section>
+          <div class="btn-group mt-5">
+            <a class="btn btn-default px-0" (click)="back()"> الغاء </a>
+            <div>
+              <button class="btn btn-primary ml-3" [disabled]="!baseForm.valid">
+                التالي
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

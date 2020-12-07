@@ -1,0 +1,12 @@
+{
+  "demo": {
+    "internalAirPort": "internalAirPort",
+    "goTiime": "go Time",
+    "backTime": "back Time",
+    "umrahTime": "umrahTime",
+    "baqah": "baqa",
+    "numberOfSeat": "numberOfSeat",
+    "travelDirection": "travelDirection",
+    "baqaOffer": "baqaOffer"
+  }
+}

@@ -1,0 +1,608 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> إنشاء برنامج عمرة جديد </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> إنشاء برنامج عمرة جديد </h1>
+    </div>
+    <div class="page-inner  overflow-hidden">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title">
+                  البيانات الاساسية </span>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">2</span> <span class="wizard-tabs-title">
+                  تفاصيل الاقامة </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">3</span> <span class="wizard-tabs-title">
+                  تفاصيل التنقل </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">4</span> <span class="wizard-tabs-title">
+                  تفاصيل الزيارات </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">5</span> <span class="wizard-tabs-title"> تأكيد
+                  البيانات </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div>
+
+        <form [formGroup]="residentailForm">
+          <div>
+            <div>
+              <div class="wizard-details">
+                <section>
+                  <h3 class="text-primary"> الاقامة في مكة</h3>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> اسم الفندق </label>
+                        <input type="text" formControlName="hotelName" class="form-control">
+                        <em *ngIf="hotel.get('hotelName').hasError('required') && hotel.get('hotelName').touched">
+                          هذا الحقل إجباري
+                        </em>
+                        <em *ngIf="!hotel.get('hotelName').hasError('required') &&
+                                    hotel.get('hotelName').hasError('maxlength') &&
+                                    hotel.get('hotelName').touched">
+                          حد اقصي 50 رقم
+                        </em>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> مدة الاقامة </label>
+                        <div class="input-group">
+                          <input type="text" formControlName="hotelNights" class="form-control">
+                          <div class="input-group-append">
+                            <span class="input-group-text">ايام</span>
+                          </div>
+                        </div>
+                        <em *ngIf="hotel.get('hotelNights').hasError('required') && hotel.get('hotelNights').touched">
+                          هذا الحقل إجباري
+                        </em>
+                        <em *ngIf="hotel.get('hotelNights').hasError('maxlength') && hotel.get('hotelNights').touched">
+                          حد اقصي 20 رقم
+                        </em>
+                        <em *ngIf="!hotel.get('hotelNights').hasError('required') &&
+                                   !hotel.get('hotelNights').hasError('maxlenght') &&
+                                    hotel.get('hotelNights').hasError('pattern') &&
+                                    hotel.get('hotelNights').touched">
+                          فقط ارقام
+                        </em>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> نجوم الفندق </label>
+                        <select *ngFor="let star of hotelStars" class="form-control" formControlName="hotelStars">
+                          <option>اختر</option>
+                          <option>{{star.stars1}}</option>
+                          <option>{{star.stars2}}</option>
+                          <option>{{star.stars3}}</option>
+                          <option>{{star.stars4}}</option>
+                          <option>{{star.stars5}}</option>
+                        </select>
+                        <em *ngIf="hotel.get('hotelStars').hasError('required') && hotel.get('hotelStars').dirty">
+                          هذا الحقل إجباري
+                        </em>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> المسافة من الحرم </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="distanceFromHaram">
+                          <div class="input-group-append">
+                            <span class="input-group-text">متــر</span>
+                          </div>
+                        </div>
+                        <em
+                          *ngIf="hotel.get('distanceFromHaram').hasError('required') && hotel.get('distanceFromHaram').touched">
+                          هذا الحقل إجباري
+                        </em>
+                        <em
+                          *ngIf="hotel.get('distanceFromHaram').hasError('maxlength') && hotel.get('distanceFromHaram').touched">
+                          حد اقصي 20 رقم
+                        </em>
+                        <em *ngIf="!hotel.get('distanceFromHaram').hasError('required') &&
+                                !hotel.get('distanceFromHaram').hasError('maxlength') &&
+                                hotel.get('distanceFromHaram').hasError('pattern') &&
+                                hotel.get('distanceFromHaram').touched">
+                          فقط ارقام
+                        </em>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group mb-5">
+                        <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
+                        <div class="mt-2">
+                          <div class="custom-control custom-checkbox  d-inline-block ">
+                            <label>
+                              <input name="aa3" type="checkbox" formControlName="breakfastAvailable">
+                              فطور
+                            </label>
+                          </div>
+                          <div class="custom-control custom-checkbox  d-inline-block  mx-3">
+                            <label>
+                              <input name="aa3" type="checkbox" formControlName="lunchAvailable">
+                              غداء
+                            </label>
+                          </div>
+                          <div class="custom-control custom-checkbox  d-inline-block  mx-3">
+                            <label>
+                              <input name="aa3" type="checkbox" formControlName="dinnerAvailable">
+                              عشاء
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="hotel.get('breakfastAvailable').value">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> هل الفطور مشمول مجانا في البرنامج ؟
+                        </label>
+                        <div class="mt-2">
+                          <div class="custom-control custom-radio  d-inline-block ">
+                            <input type="radio" id="yes1" [value]="true" formControlName="breakfastIncluded">
+                            <label for="yes1"> نعم مشمول </label>
+                          </div>
+                          <div class="custom-control custom-radio  d-inline-block  mx-3">
+                            <input type="radio" id="no1" [value]="false" formControlName="breakfastIncluded">
+                            <label for="no1">
+                              يجب دفع سعر الوجبة
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> تفاصيل وجبة الفطور (اختياري) </label>
+                        <input type="text" class="form-control" formControlName="breakfastDetails">
+                      </div>
+                      <em *ngIf="hotel.get('breakfastDetails').hasError('maxlength') &&
+                                hotel.get('breakfastDetails').touched">
+                        حد اقصي 50 رقم
+                      </em>
+                    </div>
+                    <div class="col-md-4" *ngIf="hotel.get('breakfastIncluded').value == false">
+                      <div class="form-group">
+                        <label class="d-block col-form-label"> سعر الفطور ( لليوم الواحد ) </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="breakfastPrice">
+                          <div class="input-group-append">
+                            <span class="input-group-text">ريال</span>
+                          </div>
+                        </div>
+                      </div>
+                      <em *ngIf="hotel.get('breakfastPrice').hasError('pattern') &&
+                                 hotel.get('breakfastPrice').touched">
+                        فقط ارقام
+                      </em>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="hotel.get('lunchAvailable').value">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> هل الغداء مشمول مجانا في البرنامج ؟
+                        </label>
+                        <div class="mt-2">
+                          <div class="custom-control custom-radio  d-inline-block ">
+                            <input type="radio" id="yes" [value]="true" name="lunchIncluded"
+                              formControlName="lunchIncluded">
+                            <label for="yes"> نعم مشمول </label>
+                          </div>
+                          <div class="custom-control custom-radio  d-inline-block  mx-3">
+                            <input type="radio" id="no" [value]="false" name="lunchIncluded"
+                              formControlName="lunchIncluded">
+                            <label for="no"> يجب دفع سعر
+                              الوجبة
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> تفاصيل وجبة الغداء (اختياري) </label>
+                        <input type="text" class="form-control" formControlName="lunchDetails">
+                      </div>
+                      <em *ngIf="hotel.get('lunchDetails').hasError('maxlength') &&
+                                 hotel.get('breakfastDetails').touched">
+                        حد اقصي 50 رقم
+                      </em>
+                    </div>
+                    <div class="col-md-4" *ngIf="hotel.get('lunchIncluded').value == false">
+                      <div class="form-group">
+                        <label class="d-block col-form-label"> سعر الغداء ( لليوم الواحد ) </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="lunchPrice">
+                          <div class="input-group-append">
+                            <span class="input-group-text">ريال</span>
+                          </div>
+                        </div>
+                      </div>
+                      <em *ngIf="hotel.get('lunchPrice').hasError('pattern') &&
+                                 hotel.get('lunchPrice').touched">
+                        فقط ارقام
+                      </em>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="hotel.get('dinnerAvailable').value">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label">
+                          هل العشاء مشمول مجانا في البرنامج ؟
+                        </label>
+                        <div class="mt-2">
+                          <div class="custom-control custom-radio  d-inline-block">
+                            <input type="radio" id="dinnerIncluded" [value]="true" name="dinnerIncluded" formControlName="dinnerIncluded">
+                            <label for="dinnerIncluded">نعم مشمول</label>
+                          </div>
+                          <div class="custom-control custom-radio  d-inline-block  mx-3">
+                            <input type="radio" [value]="false" id="dinnerNotIncluded" name="dinnerIncluded" formControlName="dinnerIncluded">
+                            <label for="dinnerNotIncluded">يجب دفع سعر الوجبة
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> تفاصيل وجبة العشاء (اختياري) </label>
+                        <input type="text" class="form-control" formControlName="dinnerDetails">
+                      </div>
+                      <em *ngIf="hotel.get('dinnerDetails').hasError('maxlength') &&  hotel.get('breakfastDetails').dirty">
+                        حد اقصي 50 رقم
+                      </em>
+                    </div>
+                    <div class="col-md-4" *ngIf="hotel.get('dinnerIncluded').value == false">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> سعر العشاء ( لليوم الواحد ) </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="dinnerPrice">
+                          <div class="input-group-append">
+                            <span class="input-group-text">ريال</span>
+                          </div>
+                        </div>
+                      </div>
+                      <em *ngIf="hotel.get('dinnerPrice').hasError('pattern') &&
+                                 hotel.get('dinnerPrice').touched">
+                        فقط ارقام
+                      </em>
+                    </div>
+                  </div>
+
+                  <!-- <div class="mk-custom-file-upload">
+                    <p class="text-primary display-3">رفع صور فندق مكة
+                      <i class="fal fa-fw fa-upload"></i>
+                    </p>
+                    <p class="text-muted small"> صيغة jpg,png,svg </p>
+                    <input type="file" multiple class="gallery-photo-add">
+                    <div class="upload-gallery"></div>
+                  </div> -->
+                  <!-- <div>
+                    <div *ngFor="let img of hotel.get('tblHotelPictureSet').controls">
+                      <img src="http://placehold.it/300x200" width="200">
+                    </div>
+                  </div> -->
+                </section>
+              </div>
+              <!-- <hr class="my-5 mx-n4" *ngIf="i < hotels.length - 1"> -->
+            </div>
+          </div>
+        </form>
+
+        <form [formGroup]="madinaForm">
+          <div *ngIf="basics.programPathID === 'madina'">
+            <div>
+              <div class="wizard-details">
+                <section>
+                  <h3 class="text-primary"> الاقامة في المدينة</h3>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> اسم الفندق </label>
+                        <input type="text" formControlName="MHotelName" class="form-control">
+                        <em *ngIf="hotels.get('MHotelName').hasError('required') && hotels.get('MHotelName').touched">
+                          هذا الحقل إجباري
+                        </em>
+                        <em *ngIf="!hotels.get('MHotelName').hasError('required') &&
+                                    hotels.get('MHotelName').hasError('maxlength') &&
+                                    hotels.get('MHotelName').touched">
+                          حد اقصي 50 رقم
+                        </em>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> مدة الاقامة </label>
+                        <div class="input-group">
+                          <input type="text" formControlName="MHotelNights" class="form-control">
+                          <div class="input-group-append">
+                            <span class="input-group-text">ايام</span>
+                          </div>
+                        </div>
+                        <em *ngIf="hotels.get('MHotelNights').hasError('required') && hotels.get('MHotelNights').touched">
+                          هذا الحقل إجباري
+                        </em>
+                        <em *ngIf="hotels.get('MHotelNights').hasError('maxlength') && hotels.get('MHotelNights').touched">
+                          حد اقصي 20 رقم
+                        </em>
+                        <em *ngIf="!hotels.get('MHotelNights').hasError('required') &&
+                                   !hotels.get('MHotelNights').hasError('maxlenght') &&
+                                    hotels.get('MHotelNights').hasError('pattern') &&
+                                    hotels.get('MHotelNights').touched">
+                          فقط ارقام
+                        </em>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> نجوم الفندق </label>
+                        <select *ngFor="let star of hotelStars" class="form-control" formControlName="MHotelStars">
+                          <option>اختر</option>
+                          <option>{{star.stars1}}</option>
+                          <option>{{star.stars2}}</option>
+                          <option>{{star.stars3}}</option>
+                          <option>{{star.stars4}}</option>
+                          <option>{{star.stars5}}</option>
+                        </select>
+                        <em *ngIf="hotels.get('MHotelStars').hasError('required') && hotels.get('MHotelStars').dirty">
+                          هذا الحقل إجباري
+                        </em>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> المسافة من الحرم </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="MDistanceFromHaram">
+                          <div class="input-group-append">
+                            <span class="input-group-text">متــر</span>
+                          </div>
+                        </div>
+                        <em
+                          *ngIf="hotels.get('MDistanceFromHaram').hasError('required') && hotels.get('MDistanceFromHaram').touched">
+                          هذا الحقل إجباري
+                        </em>
+                        <em
+                          *ngIf="hotels.get('MDistanceFromHaram').hasError('maxlength') && hotels.get('MDistanceFromHaram').touched">
+                          حد اقصي 20 رقم
+                        </em>
+                        <em *ngIf="!hotels.get('MDistanceFromHaram').hasError('required') &&
+                                !hotels.get('MDistanceFromHaram').hasError('maxlength') &&
+                                hotels.get('MDistanceFromHaram').hasError('pattern') &&
+                                hotels.get('MDistanceFromHaram').touched">
+                          فقط ارقام
+                        </em>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group mb-5">
+                        <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
+                        <div class="mt-2">
+                          <div class="custom-control custom-checkbox  d-inline-block ">
+                            <label>
+                              <input name="MBreakfastAvailable" type="checkbox" formControlName="MBreakfastAvailable">
+                              فطور
+                            </label>
+                          </div>
+                          <div class="custom-control custom-checkbox  d-inline-block  mx-3">
+                            <label>
+                              <input name="MLunchAvailable" type="checkbox" formControlName="MLunchAvailable">
+                              غداء
+                            </label>
+                          </div>
+                          <div class="custom-control custom-checkbox  d-inline-block  mx-3">
+                            <label>
+                              <input name="MDinnerAvailable" type="checkbox" formControlName="MDinnerAvailable">
+                              عشاء
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="hotels.get('MBreakfastAvailable').value">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> هل الفطور مشمول مجانا في البرنامج ؟
+                        </label>
+                        <div class="mt-2">
+                          <div class="custom-control custom-radio  d-inline-block ">
+                            <input type="radio" id="yes2" name="MBreakfastIncluded" [value]="true" formControlName="MBreakfastIncluded">
+                            <label for="yes2"> نعم مشمول </label>
+                          </div>
+                          <div class="custom-control custom-radio  d-inline-block  mx-3">
+                            <input type="radio" id="no2" name="MBreakfastIncluded" [value]="false" formControlName="MBreakfastIncluded">
+                            <label for="no2">
+                              يجب دفع سعر الوجبة
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> تفاصيل وجبة الفطور (اختياري) </label>
+                        <input type="text" class="form-control" formControlName="MBreakfastDetails">
+                      </div>
+                      <em *ngIf="hotels.get('MBreakfastDetails').hasError('maxlength') &&
+                                hotels.get('MBreakfastDetails').touched">
+                        حد اقصي 50 رقم
+                      </em>
+                    </div>
+                    <div class="col-md-4" *ngIf="hotels.get('MBreakfastIncluded').value == false">
+                      <div class="form-group">
+                        <label class="d-block col-form-label"> سعر الفطور ( لليوم الواحد ) </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="MBreakfastPrice">
+                          <div class="input-group-append">
+                            <span class="input-group-text">ريال</span>
+                          </div>
+                        </div>
+                      </div>
+                      <em *ngIf="hotels.get('MBreakfastPrice').hasError('pattern') &&
+                                 hotels.get('MBreakfastPrice').touched">
+                        فقط ارقام
+                      </em>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="hotels.get('MLunchAvailable').value">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> هل الغداء مشمول مجانا في البرنامج ؟
+                        </label>
+                        <div class="mt-2">
+                          <div class="custom-control custom-radio  d-inline-block ">
+                            <input type="radio" id="ye3" [value]="true" name="MLunchIncluded"
+                              formControlName="MLunchIncluded">
+                            <label for="ye3"> نعم مشمول </label>
+                          </div>
+                          <div class="custom-control custom-radio  d-inline-block  mx-3">
+                            <input type="radio" id="no3" [value]="false" name="MLunchIncluded"
+                              formControlName="MLunchIncluded">
+                            <label for="no3"> يجب دفع سعر
+                              الوجبة
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> تفاصيل وجبة الغداء (اختياري) </label>
+                        <input type="text" class="form-control" formControlName="MLunchDetails">
+                      </div>
+                      <em *ngIf="hotels.get('MLunchDetails').hasError('maxlength') &&
+                                 hotels.get('MLunchDetails').touched">
+                        حد اقصي 50 رقم
+                      </em>
+                    </div>
+                    <div class="col-md-4" *ngIf="hotels.get('MLunchIncluded').value == false">
+                      <div class="form-group">
+                        <label class="d-block col-form-label"> سعر الغداء ( لليوم الواحد ) </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="MLunchPrice">
+                          <div class="input-group-append">
+                            <span class="input-group-text">ريال</span>
+                          </div>
+                        </div>
+                      </div>
+                      <em *ngIf="hotels.get('MLunchPrice').hasError('pattern') &&
+                                 hotels.get('MLunchPrice').touched">
+                        فقط ارقام
+                      </em>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="hotels.get('MDinnerAvailable').value">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label">
+                          هل العشاء مشمول مجانا في البرنامج ؟
+                        </label>
+                        <div class="mt-2">
+                          <div class="custom-control custom-radio  d-inline-block">
+                            <input type="radio" id="MDinner" [value]="true" formControlName="MDinnerIncluded">
+                            <label for="MDinner">نعم مشمول</label>
+                          </div>
+                          <div class="custom-control custom-radio  d-inline-block  mx-3">
+                            <input type="radio" [value]="false" id="Mdinner"
+                                   formControlName="MDinnerIncluded">
+                            <label for="Mdinner">يجب دفع سعر الوجبة
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> تفاصيل وجبة العشاء (اختياري) </label>
+                        <input type="text" class="form-control" formControlName="MDinnerDetails">
+                      </div>
+                      <em *ngIf="hotels.get('MDinnerDetails').hasError('maxlength') &&  hotels.get('MDinnerDetails').touched">
+                        حد اقصي 50 رقم
+                      </em>
+                    </div>
+                    <div class="col-md-4" *ngIf="hotels.get('MDinnerIncluded').value == false">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> سعر العشاء ( لليوم الواحد ) </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="MDinnerPrice">
+                          <div class="input-group-append">
+                            <span class="input-group-text">ريال</span>
+                          </div>
+                        </div>
+                      </div>
+                      <em *ngIf="hotels.get('MDinnerPrice').hasError('pattern') &&
+                                 hotels.get('MDinnerPrice').touched">
+                        فقط ارقام
+                      </em>
+                    </div>
+                  </div>
+
+                  <!-- <div class="mk-custom-file-upload">
+                    <p class="text-primary display-3">رفع صور فندق المدينة
+                      <i class="fal fa-fw fa-upload"></i>
+                    </p>
+                    <p class="text-muted small"> صيغة jpg,png,svg </p>
+                    <input type="file" multiple class="gallery-photo-add">
+                    <div class="upload-gallery"></div>
+                  </div> -->
+                  <!-- <div>
+                    <div *ngFor="let img of hotel.get('tblHotelPictureSet').controls">
+                      <img src="http://placehold.it/300x200" width="200">
+                    </div>
+                  </div> -->
+                </section>
+              </div>
+              <!-- <hr class="my-5 mx-n4" *ngIf="i < hotels.length - 1"> -->
+            </div>
+          </div>
+
+          <div class="btn-group mt-5">
+            <a routerLink="/" class="btn btn-default px-0"> الغاء </a>
+            <div>
+              <a routerLink="/program/basics" class="btn btn-outline-primary ml-3">السابق</a>
+              <button class="btn btn-primary ml-3" type="submit" (click)="createHotels()" [disabled]="!residentailForm.valid">
+                التالي
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,270 @@
+<div class="page-layout">
+  <div class="container" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a routerLink="/">الرئيسية</a></li>
+        <li class="breadcrumb-item active" aria-current="page">
+          تسجيل حساب وكالة سفر
+        </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary">تسجيل حساب وكالة سفر</h1>
+    </div>
+    <div class="bg-white p-4 border">
+      <form [formGroup]="RegisterForm" autocomplete="off" novalidate (ngSubmit)="register()">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="d-block col-form-label">اسم المستخدم </label>
+              <input type="text" id="userName" formControlName="userName" class="form-control" [class.is-invalid]="
+                  RegisterForm.get('userName').invalid &&
+                  RegisterForm.get('userName').dirty
+                " />
+              <span class="text-danger small" *ngIf="
+                  RegisterForm.get('userName').hasError('required') &&
+                  RegisterForm.get('userName').dirty
+                ">
+                هذا الحقل إجباري
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('userName').hasError('required') &&
+                  RegisterForm.get('userName').hasError('maxlength') &&
+                  RegisterForm.get('userName').dirty
+                ">
+                حد اقصي 20 رقم
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('userName').hasError('required') &&
+                  !RegisterForm.get('userName').hasError('maxlength') &&
+                  RegisterForm.get('userName').hasError('pattern')
+                ">
+                فقط انجليزي او ارقام
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('userName').hasError('required') &&
+                  !RegisterForm.get('userName').hasError('maxlength') &&
+                  !RegisterForm.get('userName').hasError('pattern') &&
+                  !uniqueUsername
+                ">
+                هذا الاسم مستخدم من قبل
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="d-block col-form-label"> الدولة </label>
+              <select *ngFor="let item of countries" class="form-control" formControlName="countryId">
+                <option>إختر</option>
+                <option>
+                  {{item.egypt}}
+                </option>
+                <option>
+                  {{item.saudi}}
+                </option>
+              </select>
+              <em *ngIf="
+                  RegisterForm.get('countryId').hasError('required') &&
+                  RegisterForm.get('countryId').dirty
+                ">
+                هذا الحقل إجباري
+              </em>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="d-block col-form-label"> رقم الجوال </label>
+              <div class="input-group custom-dropdown dropdown">
+                <input type="string" formControlName="tAAdminMobileNo" id="tAAdminMobileNo" class="form-control"
+                  aria-label="Text input with dropdown button" ng2TelInput (countryChange)="onCountryChange($event)"
+                  [class.is-invalid]="
+                    RegisterForm.get('tAAdminMobileNo').invalid &&
+                    RegisterForm.get('tAAdminMobileNo').dirty
+                  " />
+              </div>
+              <span class="text-danger small" *ngIf="
+                  RegisterForm.get('tAAdminMobileNo').hasError('required') &&
+                  RegisterForm.get('tAAdminMobileNo').dirty
+                ">
+                هذا الحقل إجباري
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('tAAdminMobileNo').hasError('required') &&
+                  RegisterForm.get('tAAdminMobileNo').hasError('maxlength') &&
+                  RegisterForm.get('tAAdminMobileNo').dirty
+                ">
+                حد اقصي 20 رقم
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('tAAdminMobileNo').hasError('required') &&
+                  !RegisterForm.get('tAAdminMobileNo').hasError('maxlength') &&
+                  RegisterForm.get('tAAdminMobileNo').hasError('pattern') &&
+                  RegisterForm.get('tAAdminMobileNo').dirty
+                ">
+                فقط ارقام
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('tAAdminMobileNo').hasError('required') &&
+                  !RegisterForm.get('tAAdminMobileNo').hasError('maxlength') &&
+                  !RegisterForm.get('tAAdminMobileNo').hasError('pattern') &&
+                  RegisterForm.get('tAAdminMobileNo').dirty &&
+                  !uniquePhone
+                ">
+                هذا الرقم مستخدم من قبل
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="d-block col-form-label"> البريد الالكتروني </label>
+              <input type="email" formControlName="tAAdminEmail" class="form-control" [class.is-invalid]="
+                  RegisterForm.get('tAAdminEmail').invalid &&
+                  RegisterForm.get('tAAdminEmail').dirty
+                " />
+              <em *ngIf="
+                  RegisterForm.get('tAAdminEmail').hasError('required') &&
+                  RegisterForm.get('tAAdminEmail').dirty
+                ">
+                هذا الحقل إجباري
+              </em>
+              <em *ngIf="
+                  !RegisterForm.get('tAAdminEmail').hasError('required') &&
+                  RegisterForm.get('tAAdminEmail').hasError('pattern') &&
+                  RegisterForm.get('tAAdminEmail').dirty
+                ">
+                ادخل البريد الالكتروني بطريقه صحيحه
+              </em>
+              <em *ngIf="RegisterForm.get('tAAdminEmail').hasError('maxlength')">
+                بحد اقصي 50 حرف
+              </em>
+              <em *ngIf="
+                  !RegisterForm.get('tAAdminEmail').hasError('required') &&
+                  !RegisterForm.get('tAAdminEmail').hasError('pattern') &&
+                  RegisterForm.get('tAAdminEmail').dirty &&
+                  !uniqueEmail
+                ">
+                هذا البريد الالكتروني مستخدم من قبل
+              </em>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="2" class="d-block col-form-label">
+                كلمة المرور
+              </label>
+              <input type="password" id="userName" formControlName="userPassword" class="form-control"
+                [class.is-invalid]="
+                  RegisterForm.get('userPassword').invalid &&
+                  RegisterForm.get('userPassword').dirty
+                " />
+              <span class="text-danger small" *ngIf="
+                  RegisterForm.get('userPassword').hasError(
+                    'usernameAvailable'
+                  ) && RegisterForm.get('userPassword').dirty
+                ">
+                هذا الحقل إجباري
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('userPassword').hasError('required') &&
+                  RegisterForm.get('userPassword').hasError('minlength') &&
+                  RegisterForm.controls['userPassword'].dirty
+                ">
+                يجب الا يقل عن 8 حروف
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('userPassword').hasError('required') &&
+                  !RegisterForm.get('userPassword').hasError('minlength') &&
+                  RegisterForm.controls['userPassword'].hasError('maxlength') &&
+                  RegisterForm.get('userPassword').dirty
+                ">
+                بحد اقصي 50 حرف
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('userPassword').hasError('required') &&
+                  !RegisterForm.get('userPassword').hasError('minlength') &&
+                  !RegisterForm.controls['userPassword'].hasError(
+                    'maxlength'
+                  ) &&
+                  RegisterForm.get('userPassword').hasError('password')
+                ">
+                كلمة السر يجب ان تحتوى على حروف صغيرة و كبيرة و ارقام و علامات
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="2" class="d-block col-form-label">
+                تأكيد كلمة المرور
+              </label>
+              <input type="password" formControlName="repassword" class="form-control" [class.is-invalid]="
+                  RegisterForm.get('repassword').invalid &&
+                  RegisterForm.get('repassword').dirty
+                " />
+              <span class="text-danger small" *ngIf="
+                  RegisterForm.get('repassword').hasError('required') &&
+                  RegisterForm.get('repassword').dirty
+                ">
+                هذا الحقل إجباري
+              </span>
+              <span class="text-danger small" *ngIf="
+                  !RegisterForm.get('repassword').hasError('required') &&
+                  RegisterForm.get('repassword').hasError('minlength') &&
+                  RegisterForm.get('repassword').dirty
+                ">
+                يجب الا يقل عن 8 حروف
+              </span>
+              <span class="text-danger small" *ngIf="
+                  RegisterForm.controls['repassword'].hasError('maxlength')
+                ">
+                بحد اقصي 50 حرف
+              </span>
+              <span class="text-danger small" *ngIf="
+                  RegisterForm.controls['repassword'].hasError('mustMatch')
+                ">
+                تأكيد كلمة المرور غير مطابق لكلمة المرور
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+              <label class="d-block col-form-label"> رقم وكالة السفر </label>
+              <input type="text" class="form-control" formControlName="userID">
+            </div>
+            <em *ngIf="RegisterForm.get('userID').hasError('required') && RegisterForm.get('userID').touched">
+              اجباري
+            </em>
+            <em *ngIf="!RegisterForm.get('userID').hasError('required') &&
+                        RegisterForm.get('userID').hasError('maxlength') 
+                        && RegisterForm.get('userID').touched">
+              حد اقصي 4 ارقام
+            </em>
+            <em *ngIf="!RegisterForm.get('userID').hasError('required') &&
+                       !RegisterForm.get('userID').hasError('maxlength') &&
+                        RegisterForm.get('userID').hasError('pattern') &&
+                       RegisterForm.get('userID').touched">
+                       ارقام فقط
+            </em>
+          </div>
+        </div>
+        <!-- <div class="text-danger small" *ngIf="message">
+          {{ message }}
+        </div> -->
+
+        <div class="btn-group mt-5">
+          <a routerLink="/" class="btn btn-default px-0"> الغاء التسجيل</a>
+          <div>
+            <button class="btn btn-primary ml-3" type="submit" [disabled]="RegisterForm.invalid">
+              تسجيل
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

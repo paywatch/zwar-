@@ -1,0 +1,148 @@
+<section>
+  <h3 class="text-primary"> الاقامة في {{city}} </h3>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> اسم الفندق </label>
+        {{residance?.tblHotel?.hotelName}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> نجوم الفندق </label>
+        {{residance?.tblHotel?.hotelStars}}
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> المسافة من الحرم </label>
+        {{residance?.tblHotel?.distanceFromHaram}}
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> مدة الاقامة </label>
+        {{residance?.tblProgram?.programMakkahNights}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
+          <span *ngIf="residance?.breakfastAvailable">
+            فطور 
+          </span>
+          <span *ngIf="residance?.lunchAvailable">
+            غداء
+          </span>
+          <span *ngIf="residance?.dinnerAvailable">
+            عشاء
+          </span>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="residance?.breakfastAvailable">
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> هل الفطور مشمول مجانا في البرنامج ؟
+        </label>
+        <span *ngIf="residance?.breakfastIncluded">
+          نعم
+        </span>
+        <span *ngIf="!residance?.breakfastIncluded">
+          لا
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> تفاصيل وجبة الفطور </label>
+        {{ residance?.breakfastDetails}}
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> سعر الفطور ( لليوم الواحد ) </label>
+        {{residance?.breakfastPrice}}
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="residance?.lunchAvailable">
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> هل الغداء مشمول مجانا في البرنامج
+        </label>
+        <span *ngIf="residance?.lunchIncluded">
+          نعم
+        </span>
+        <span *ngIf="!residance?.lunchIncluded">
+          لا
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> تفاصيل وجبة الغداء </label>
+        {{residance?.lunchDetails}}
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> سعر الغداء ( لليوم الواحد ) </label>
+        {{residance?.lunchPrice}}
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="residance?.dinnerAvailable">
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> هل العشاء مشمول مجانا في البرنامج ؟
+        </label>
+        <span *ngIf="residance?.lunchIncluded">
+          نعم
+        </span>
+        <span *ngIf="!residance?.lunchIncluded">
+          لا
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> تفاصيل وجبة العشاء </label>
+        {{residance?.dinnerDetails}}
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> سعر العشاء ( لليوم الواحد ) </label>
+        {{residance?.breakfastPrice}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group ">
+        <label class="d-block col-form-label"> صور فندق مكة </label>
+        <div class="prog-photo-gal">
+
+          <div class="item custom-control custom-radio  ">
+            <input id="first1" name="aa31" type="radio" class="custom-control-input" required="" checked>
+            <label class="custom-control-label" for="first1">
+              <img [src]="residance?.logo" alt="">
+              <span class="ttl">الصورة
+                الرئيسية للفندق</span>
+              <span class="ttl-hover">تعيين كصورة
+                رئيسية</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

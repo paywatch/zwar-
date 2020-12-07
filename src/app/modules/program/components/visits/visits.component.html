@@ -1,0 +1,146 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> إنشاء برنامج عمرة جديد </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> إنشاء برنامج عمرة جديد </h1>
+    </div>
+    <div class="page-inner  overflow-hidden">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title">
+                  البيانات الاساسية </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">2</span> <span class="wizard-tabs-title">
+                  تفاصيل الاقامة </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">3</span> <span class="wizard-tabs-title">
+                  تفاصيل التنقل </span>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">4</span> <span class="wizard-tabs-title">
+                  تفاصيل الزيارات </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">5</span> <span class="wizard-tabs-title"> تأكيد
+                  البيانات </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wizard-details">
+        <form [formGroup]="visitForm" novalidate (ngSubmit)="submit()">
+
+          <section>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-5">
+                  <label class="d-block col-form-label"> المزارات المشمولة في مكة </label>
+                  <div class="m-0 row">
+                    <div class="custom-control custom-checkbox  col-md-4 my-2">
+                      <input id="first" name="aa3" type="checkbox" formControlName="Hira" class="custom-control-input"
+                        required="">
+                      <label class="custom-control-label" for="first"> غار حراء </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2 ">
+                      <input id="second" name="aa3" type="checkbox" formControlName="MaccaMusieum"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="second"> متحف مكة </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2 ">
+                      <input id="third" name="aa3" type="checkbox" formControlName="Thour" class="custom-control-input"
+                        required="">
+                      <label class="custom-control-label" for="third"> غار ثور</label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2">
+                      <input id="first0" name="aa3" type="checkbox" formControlName="MoulaTomb"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="first0"> مقبرة المعلاة </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2 ">
+                      <input id="second0" name="aa3" type="checkbox" formControlName="NourMountain"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="second0"> جبل النور </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2 ">
+                      <input id="third0" name="aa3" type="checkbox" formControlName="HaramenSharefen"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="third0"> معرض عمارة الحرمين الشريفين </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12" *ngIf="basics.programPathID == 'madina'">
+                <div class="form-group mb-5">
+                  <label class="d-block col-form-label"> المزارات المشمولة في المدينة </label>
+                  <div class="m-0 row">
+                    <div class="custom-control custom-checkbox  col-md-4 my-2">
+                      <input id="firstmadinah1" name="aa3d4" formControlName="Uhod" type="checkbox"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="firstmadinah1"> جبل أحد </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2 ">
+                      <input id="secondmadinah1" name="aa3d4" formControlName="MasjedZuElqeblaten" type="checkbox"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="secondmadinah1"> مسجد ذى القبلتين </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2 ">
+                      <input id="thirdmadinah1" name="aa3d4" type="checkbox" formControlName="Qebaa"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="thirdmadinah1"> مسجد قباء </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2">
+                      <input id="first0madinah1" name="aa3d4" formControlName="SevenMasjed" type="checkbox"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="first0madinah1"> المساجد السبعة </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2 ">
+                      <input id="second0madinah1" name="aa3d4" formControlName="PrinitHolyQuran" type="checkbox"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="second0madinah1"> مجمع الملك فهد لطباعة المصحف الشريف
+                      </label>
+                    </div>
+                    <div class="custom-control custom-checkbox  col-md-4 my-2 ">
+                      <input id="third0madinah1" name="aa3d4" formControlName="ElGenValley" type="checkbox"
+                        class="custom-control-input" required="">
+                      <label class="custom-control-label" for="third0madinah1"> وادي الجن </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="btn-group mt-5">
+            <a class="btn btn-default px-0" (click)="reset()"> الغاء </a>
+            <div>
+              <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
+              <button class="btn btn-primary ml-3">التالي</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

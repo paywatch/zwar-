@@ -1,0 +1,13 @@
+.form-group {
+  position: relative;
+}
+
+.email {
+  position: absolute;
+  top: 5.5rem;
+}
+
+.password {
+  position: absolute;
+  bottom: 6rem;
+}

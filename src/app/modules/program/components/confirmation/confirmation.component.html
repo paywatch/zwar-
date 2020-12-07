@@ -1,0 +1,572 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> إنشاء برنامج عمرة جديد </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> إنشاء برنامج عمرة جديد </h1>
+    </div>
+    <div class="page-inner  overflow-hidden">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title">
+                  البيانات الاساسية </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">2</span> <span class="wizard-tabs-title">
+                  تفاصيل الاقامة </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">3</span> <span class="wizard-tabs-title">
+                  تفاصيل التنقل </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">4</span> <span class="wizard-tabs-title">
+                  تفاصيل الزيارات </span>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">5</span> <span class="wizard-tabs-title"> تأكيد
+                  البيانات </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wizard-details">
+        <section>
+          <h3 class="text-primary"> البيانات الاساسية </h3>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> اسم البرنامج </label>
+                {{program.programName}}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> عام العمرة </label>
+                {{program.programUmrahYear}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> تصنيف البرنامج </label>
+                {{program.programCategoryID}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> سعر البرنامج (يبدأ من) </label>
+                {{program.programPrice}}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> وصف البرنامج </label>
+                {{program.programDesc}}
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-md-12">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> بانر البرنامج </label>
+                <div class="program-banner">
+                  <img [src]="logoUrl" class="img-fluid" style="width: 200px; height: 100px;" alt="program banner">
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </section>
+        <div>
+          <hr class="my-4 mx-n4">
+          <section>
+            <h3 class="text-primary"> الاقامة في مكة </h3>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> اسم الفندق </label>
+                  {{program.hotelName}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> نجوم الفندق </label>
+                  {{program.hotelStars}}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> المسافة من الحرم </label>
+                  {{program.distanceFromHaram}}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> مدة الاقامة </label>
+                  {{program.hotelNights}}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
+                    <span *ngIf="program.breakfastAvailable">
+                      فطور
+                    </span>
+                    <span *ngIf="program.lunchAvailable">
+                      غداء
+                    </span>
+                    <span *ngIf="program.dinnerAvailable">
+                      عشاء
+                    </span>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="program.breakfastAvailable">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> هل الفطور مشمول مجانا في البرنامج ؟
+                  </label>
+                  <span *ngIf="program.breakfastIncluded">
+                    نعم
+                  </span>
+                  <span *ngIf="!program.breakfastIncluded">
+                    لا
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="program.breakfastDetails">
+                <div class="form-group">
+                  <label class="d-block col-form-label"> تفاصيل وجبة الفطور </label>
+                  {{ program.breakfastDetails}}
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="!program.breakfastIncluded">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> سعر الفطور ( لليوم الواحد ) </label>
+                  {{program.breakfastPrice}}
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="program.lunchAvailable">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> هل الغداء مشمول مجانا في البرنامج
+                  </label>
+                  <span *ngIf="program.lunchIncluded">
+                    نعم
+                  </span>
+                  <span *ngIf="!program.lunchIncluded">
+                    لا
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> تفاصيل وجبة الغداء </label>
+                  {{program.lunchDetails}}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> سعر الغداء ( لليوم الواحد ) </label>
+                  {{program.lunchPrice}}
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="program.dinnerAvailable">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> هل العشاء مشمول مجانا في البرنامج ؟
+                  </label>
+                  <span *ngIf="program.dinnerIncluded">
+                    نعم
+                  </span>
+                  <span *ngIf="!program.dinnerIncluded">
+                    لا
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> تفاصيل وجبة العشاء </label>
+                  {{program.dinnerDetails}}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> سعر العشاء ( لليوم الواحد ) </label>
+                  {{program.dinnerPrice}}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <div class="form-group ">
+                  <label class="d-block col-form-label"> صور فندق مكة </label>
+                  <div class="prog-photo-gal">
+
+                    <div class="item custom-control custom-radio  ">
+                      <input id="first1" name="aa31" type="radio" class="custom-control-input" required="" checked>
+                      <label class="custom-control-label" for="first1">
+                        <img [src]="hotel.logo" alt="">
+                        <span class="ttl">الصورة
+                          الرئيسية للفندق</span>
+                        <span class="ttl-hover">تعيين كصورة
+                          رئيسية</span>
+                      </label>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </section>
+          <section *ngIf="program.programPathID === 'madina'">
+            <h3 class="text-primary"> الاقامة في المدينة </h3>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> اسم الفندق </label>
+                  {{program.MHotelName}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> نجوم الفندق </label>
+                  {{program.MHotelStars}}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> المسافة من الحرم </label>
+                  {{program.MDistanceFromHaram}}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> مدة الاقامة </label>
+                  {{program.MHotelNights}}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
+                    <span *ngIf="program.MBreakfastAvailable">
+                      فطور
+                    </span>
+                    <span *ngIf="program.MLunchAvailable">
+                      غداء
+                    </span>
+                    <span *ngIf="program.MDinnerAvailable">
+                      عشاء
+                    </span>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="program.MBreakfastAvailable">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> هل الفطور مشمول مجانا في البرنامج ؟
+                  </label>
+                  <span *ngIf="program.MBreakfastAvailable">
+                    نعم
+                  </span>
+                  <span *ngIf="!program.MBreakfastAvailable">
+                    لا
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="program.MBreakfastDetails">
+                <div class="form-group">
+                  <label class="d-block col-form-label"> تفاصيل وجبة الفطور </label>
+                  {{ program.MBreakfastDetails}}
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="!program.MBreakfastIncluded">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> سعر الفطور ( لليوم الواحد ) </label>
+                  {{program.MBreakfastPrice}}
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="program.MLunchAvailable">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> هل الغداء مشمول مجانا في البرنامج
+                  </label>
+                  <span *ngIf="program.MLunchIncluded">
+                    نعم
+                  </span>
+                  <span *ngIf="!program.MLunchIncluded">
+                    لا
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> تفاصيل وجبة الغداء </label>
+                  {{program.MLunchDetails}}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> سعر الغداء ( لليوم الواحد ) </label>
+                  {{program.MLunchPrice}}
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="program.MDinnerAvailable">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> هل العشاء مشمول مجانا في البرنامج ؟
+                  </label>
+                  <span *ngIf="program.MDinnerIncluded">
+                    نعم
+                  </span>
+                  <span *ngIf="!program.MDinnerIncluded">
+                    لا
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> تفاصيل وجبة العشاء </label>
+                  {{program.MDinnerDetails}}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> سعر العشاء ( لليوم الواحد ) </label>
+                  {{program.MDinnerPrice}}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <div class="form-group ">
+                  <label class="d-block col-form-label"> صور فندق مكة </label>
+                  <div class="prog-photo-gal">
+
+                    <div class="item custom-control custom-radio  ">
+                      <input id="first1" name="aa31" type="radio" class="custom-control-input" required="" checked>
+                      <label class="custom-control-label" for="first1">
+                        <img [src]="hotel.logo" alt="">
+                        <span class="ttl">الصورة
+                          الرئيسية للفندق</span>
+                        <span class="ttl-hover">تعيين كصورة
+                          رئيسية</span>
+                      </label>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </section>
+        </div>
+        <hr class="my-4 mx-n4">
+        <section>
+          <h3 class="text-primary"> تذاكر السفر </h3>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> هل تذاكر السفر مشمولة داخل البرنامج ؟
+                </label>
+                {{program.progAirTicketIncluded? 'نعم': 'لا'}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> شركة الطيران </label>
+                {{program.airlineID}}
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> وصف طريقة و تذاكر السفر </label>
+                {{program.airlineDesc}}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="my-4 mx-n4">
+        <section>
+          <h3 class="text-primary"> التنقل الداخلي </h3>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label">
+                  طريقة التنقل
+                </label>
+                {{program.internalTransportations}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label">
+                  وصف طريقة التنقل
+                </label>
+                {{program.programTransDetails}}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="my-4 mx-n4">
+        <section>
+          <h3 class="text-primary"> تفاصيل الزيارات </h3>
+          <div>
+            <label>المزارات المشمولة في مكة </label>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label" *ngIf="program.Hira">
+                    غار حراء
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.MaccaMusieum">
+                         متحف مكة
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.Thour">
+                    جبل الطور
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.MoulaTomb">
+                    مقبرة المعلاه
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.HaramenSharefen">
+                         معرض عمارة الحرمين الشريفين
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.NourMountain">
+                    جبل النور
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section *ngIf="program.programPathID == 'madina'">
+          <h3 class="text-primary"> تفاصيل الزيارات </h3>
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label" *ngIf="program.Uhod">
+                    جبل احد
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.MasjedZuElqeblaten">
+                         مسجد القبلتين
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.Qebaa">
+                    مسجد قباء
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.SevenMasjed">
+                    المساجد السبعة
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.ElGenValley">
+                      وادي الجن
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="d-block col-form-label"
+                         *ngIf="program.PrinitHolyQuran">
+                         مجمع الملك فهد لطباعة المصحف الشريف
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="btn-group mt-5">
+          <a class="btn btn-default px-0"> الغاء </a>
+          <div>
+            <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
+            <a class="btn btn-primary ml-3" (click)="confirm()">تأكيد</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

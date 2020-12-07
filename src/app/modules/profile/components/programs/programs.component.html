@@ -1,0 +1,346 @@
+  <div class="wrapper">
+    <!-- <header class="header">
+      <div class="container ">
+        <button class="con navbar-toggle" type="button">
+          <div class="bar top"></div>
+          <div class="bar middle"></div>
+          <div class="bar bottom"></div>
+        </button>
+        <div class="d-flex header-inner ">
+          <a class="logo" href="index.html">
+            <h1 class="d-none"> زوار </h1>
+            <img src="./assets/images/Logo.png" alt="Zowar">
+          </a>
+          <div class="main-nav py-4">
+            <ul class="d-flex top-nav  p-0 m-0">
+              <li class="" class="  ">
+                <a href="Agency_Profile.html" class="d-block mr-3 ">
+                  <i class="fal fa-fw fa-file-alt mr-2 "></i>
+                  <span> حساب وكالة السفر</span>
+                </a>
+              </li>
+              <li class="" class="  ">
+                <a href="#index.html" class="d-block mr-3 ">
+                  <i class="fal fa-fw fa-cubes mr-2 "></i>
+                  <span> برامج العمرة </span>
+                </a>
+              </li>
+            </ul>
+            <ul class="d-flex side-nav p-0 m-0">
+              <li class="dropdown">
+                <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="pl-2">
+                    SAR |
+                    تونس
+                    <img src="./assets/images/flags/tunis.svg" alt="tunis flag" class="d-none d-md-inline ml-2">
+                  </span>
+                  <i class="fal fa-fw fa-1x fa-angle-down"></i>
+                </a>
+                <div class="dropdown-menu ">
+                  <div class="d-flex form-group justify-content-between">
+                    <label for="" class="w-50"> العملة </label>
+                    <select class="form-control form-control-sm">
+                      <option> ريال سعودي </option>
+                      <option> دولار </option>
+                      <option> يورو </option>
+                      <option> يوان صيني </option>
+                    </select>
+                  </div>
+                  <div class="d-flex form-group justify-content-between">
+                    <label for="" class="w-50"> الدولة </label>
+                    <select class="form-control form-control-sm">
+                      <option> تونس </option>
+                      <option> مصر </option>
+                      <option> السودان </option>
+                      <option> المغرب </option>
+                    </select>
+                  </div>
+                  <div class="d-flex form-group justify-content-between">
+                    <label for="" class="w-50"> اللغة </label>
+                    <select class="form-control form-control-sm toggle-lang">
+                      <option> Arabic </option>
+                      <option> English </option>
+                    </select>
+                  </div>
+                  <a href="javascript:;" class="btn btn-block btn-outline-primary btn-sm  px-2" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"> موافق </a>
+                </div>
+              </li>
+
+              <li class="dropdown username">
+                <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fal fa-fw fa-1x fa-user"></i>
+                  <span>محمد السعدني</span>
+                  <i class="fal fa-fw fa-1x fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu p-0 m-0 ">
+                  <li class="p-2 small"><a href="login.html" class=""> ملف المستخدم </a></li>
+                  <li class="p-2 small"><a href="login.html" class="text-danger"> تسجيل الخروج</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header> -->
+
+    <div class="page-layout">
+      <div class="container ">
+        <nav aria-label="breadcrumb">
+          <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+            <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="manage_package.html"> ادارة برامج العمرة</a></li>
+          </ol>
+        </nav>
+        <div class="page-title bg-light d-flex justify-content-between align-items-center mb-4">
+          <h1 class="h1 text-primary mb-4">
+            ادارة برامج العمرة
+            <a class="mx-2" data-toggle="collapse" href="#advSearch" role="button" aria-expanded="false"
+              aria-controls="advSearch"> <i class="fal fa-fw  search-icon fa-search"></i></a>
+          </h1>
+          <a routerLink="/program/basics" class="btn btn-outline-primary btn-hover"> اضافة برنامج <i
+              class="fal fa-plus fa-fw"></i></a>
+        </div>
+
+        <div class="adv-search collapse border p-4 mb-4" id="advSearch">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> رقم الباقة </label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> اسم البرنامج </label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> موسم العمرة </label>
+                <select class="form-control">
+                  <option value=""> رمضان </option>
+                  <option value=""> 1 </option>
+                  <option value=""> 2 </option>
+                  <option value=""> 3 </option>
+                  <option value=""> 4 </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> تاريخ الذهاب </label>
+                <input type="text" class="form-control form-date">
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> تاريخ العودة </label>
+                <input type="text" class="form-control form-date">
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> المسار </label>
+                <select class="form-control">
+                  <option value=""> مكة - المدينة </option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> حالة الطلب </label>
+                <select class="form-control">
+                  <option value="">كل الطلبات</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 text-right">
+            <a href="javascript:;" class="btn btn-block-mobile btn-primary">بحـــث</a>
+          </div>
+        </div>
+
+        <div *ngIf="programsList$ | async as programs">
+
+          <div *ngIf="!programs"
+            class="demo-1 align-items-center bg-light border  display-4 flex-column justify-content-center mb-5 p-5 round text-center text-muted">
+            <i class="fal fa-fw fa-4x text-muted fa-users mb-4"></i>
+            <p class="text-muted m-0">
+              لم تقم باضفـــــــة برامج بعد
+              <a href="javascript:;" class="d-inline-block border-bottom" data-toggle="modal" data-target="#addbranch">
+                اضافة برنامج جديد ؟ </a>
+            </p>
+          </div>
+
+          <div class="page-inner" *ngIf="programs">
+            <div class="table-responsive">
+              <table class="table table-bordered table-light table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col"> رقم البرنامج </th>
+                    <th scope="col"> اسم البرنامج </th>
+                    <th scope="col"> تصنيف البرنامج </th>
+                    <th scope="col"> المسار </th>
+                    <th scope="col"> عام العمرة </th>
+                    <th scope="col"> الحالة </th>
+                    <th scope="col" width="5%" class="text-center">عرض</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let program of programs">
+                    <td scope="row"> {{program.programID}} </td>
+                    <td> {{program.programName}} </td>
+                    <td> {{program.programCategoryID?.programCategoryName}} </td>
+                    <td> {{program.programPathID.programPathName}} </td>
+                    <td> {{program.programUmrahYear}} </td>
+                    <td>
+                      <span *ngIf="program.programActive" class="badge badge-sucess">
+                        نشط
+                      </span>
+                      <span *ngIf="!program.programActive" class="badge badge-light">
+                        مجمد
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <a [routerLink]="['/program/view', program.programID]" class="view-action" title="View item"><i
+                          class="fal fa-eye fa-fw fa-1x"></i>
+                        <span class="d-none">View item</span>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <footer class="footer ">
+      <div class="footer-top">
+        <div class="container border-bottom">
+          <div class="pr-lg-3 row">
+            <div class="col-lg-8">
+              <div class="d-flex justify-content-start align-items-center py-0 py-lg-4">
+                <i class="fal  fa-5x fa-mobile text-primary"></i>
+                <div class="ml-4">
+                  <h4 class=" display-3 my-3"> تطبيق زوار متوفر الآن في المتاجر الالكترونية لاندوريد وأبل </h4>
+                  <p class="text-light"> حمل التطبيق لتصلك كل التنبيهات الخاصة بعمليات حجزك وسفرك </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-lg-4 py-3 py-lg-5 d-flex justify-content-around justify-content-lg-between px-2 px-lg-0 footer-apps">
+              <a href="#android" class="d-inline-block "> <img src="./assets/images/android.png" class="round" width="180"
+                  alt="Android store"> </a>
+              <a href="#ios" class="d-inline-block "> <img src="./assets/images/ios.png" class="round" width="180"
+                  alt="Apple store"> </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-middle">
+        <div class="container">
+          <div class="pr-lg-3 row">
+            <div
+              class="align-items-center col-lg-8 d-flex flex-row justify-content-center justify-content-lg-start py-2 py-lg-0">
+              <p class="d-inline-block my-3"> نوفر اشهر طرق الدفع </p>
+              <ul class="d-flex flex-row justify-content-between payment-list px-3">
+                <li>
+                  <span href="#" class="d-block p-4 px-3">
+                    <img src="./assets/images/visa.svg" width="90" alt="Visa">
+                    <span class="d-none">Visa</span>
+                  </span>
+                </li>
+                <li>
+                  <span href="#" class="d-block p-3 pr-3">
+                    <img src="./assets/images/mastercard.svg" width="75" alt="mastercard">
+                    <span class="d-none">mastercard</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="d-block p-3">
+                    <img src="./assets/images/american-express.svg" width="44" alt="american-express">
+                    <span class="d-none">american-express</span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="align-items-center col-lg-4 d-flex flex-row justify-content-center justify-content-lg-between px-2 px-lg-0 py-2 py-lg-0">
+              <p class="d-inline-block my-3 "> تواصل معنا </p>
+              <ul class="social-media d-flex flex-row justify-content-between ml-5">
+                <li>
+                  <a href="#twitter">
+                    <i class="fab fa-fw fa-2x fa-twitter-square"></i>
+                    <span class="d-none">twitter</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#facebook">
+                    <i class="fab fa-fw fa-2x fa-facebook-square"></i>
+                    <span class="d-none">Facebook</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#linkedin">
+                    <i class="fa fa-fw fa-2x fa-linkedin-square"></i>
+                    <span class="d-none">linkedin</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#youtube">
+                    <i class="fab fa-fw fa-2x fa-youtube-square"></i>
+                    <span class="d-none">youtube</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#instagram">
+                    <i class="fab fa-fw fa-2x fa-instagram-square"></i>
+                    <span class="d-none">instagram</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="pr-lg-3 row">
+            <div class="col-md-7 col-lg-8">
+              <ul class="footer-bottom-list  d-flex flex-row align-items-between">
+                <li><a href="#" class="d-inline-block pr-3 pr-md-4 py-1 py-md-3"> عن عمــرة </a> </li>
+                <li><a href="#" class="d-inline-block pr-3 pr-md-4 py-1 py-md-3"> أسئلة وأجوبة </a> </li>
+                <li><a href="#" class="d-inline-block pr-3 pr-md-4 py-1 py-md-3"> الشروط والاحكام </a> </li>
+                <li><a href="sitemap.html" class="d-inline-block pr-3 pr-md-4 py-1 py-md-3"> دليل المستخدم </a> </li>
+              </ul>
+            </div>
+            <div
+              class="col-md-5 col-lg-4 d-flex flex-row align-items-center justify-content-between  px-4 px-md-2 px-lg-0">
+              <p class="copyrights  pr-4 py-3 m-0"> جميع الحقوق محفوظة © 2018 لشركة علم </p>
+              <a href="https://www.elm.sa/ar/Pages/default.aspx" target="_blank">
+                <img width="50" src="./assets/images/elm-logo.svg" alt="elm logo">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>

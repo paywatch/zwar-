@@ -1,0 +1,276 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> تسجيل وكالة السفر </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> تسجيل وكالة السفر </h1>
+    </div>
+    <div class="page-inner overflow-hidden">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title"> البيانات الاساسية </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">2</span> <span class="wizard-tabs-title"> بيانات الترخيص </span>
+              </div>
+            </li>
+            <li class="nav-item active">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">3</span> <span class="wizard-tabs-title"> بيانات التواصل والفروع
+                </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">4</span> <span class="wizard-tabs-title"> تأكيد البيانات </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wizard-details">
+        <form [formGroup]="myForm" autocomplete="off" novalidate (ngSubmit)="createBrnaches()">
+          <section>
+            <h3 class="text-primary"> بيانات التواصل </h3>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> اسم الفرع </label>
+                  <input type="text" id="tABranchName" formControlName="tABranchName" class="form-control"
+                    [class.is-invalid]="myForm.get('tABranchName').invalid && myForm.get('tABranchName').dirty">
+                  <span class="text-danger small"
+                    *ngIf="myForm.controls['tABranchName'].hasError('required') && myForm.controls['tABranchName'].dirty">
+                    هذا الحقل إجباري
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.controls['tABranchName'].hasError('maxlength')">
+                    حد اقصي 100 رقم
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.controls['tABranchName'].hasError('pattern')">
+                    فقط حروف و ارقام
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> المدينة </label>
+                  <select *ngFor="let item of districtList" id="country" name="tADistrictID" class="form-control" formControlName="tADistrictID"
+                    [class.is-invalid]="myForm.get('tADistrictID').invalid && myForm.get('tADistrictID').dirty">
+                    <option [value]="''">إختر </option>
+                    <option>
+                      {{item.cairo}}
+                    </option>
+                    <option>
+                      {{item.reyad}}
+                    </option>
+                  </select>
+                  <span class="text-danger small"
+                    *ngIf="myForm.controls['tADistrictID'].hasError('required') && myForm.controls['tADistrictID'].dirty">
+                    هذا الحقل إجباري
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم / اسم المبنى	 </label>
+                  <input type="text" id="tABranchAddress" formControlName="tABranchAddress" class="form-control"
+                    [class.is-invalid]="myForm.get('tABranchAddress').invalid && myForm.get('tABranchAddress').dirty">
+                  <span class="text-danger small"
+                    *ngIf="myForm.controls['tABranchAddress'].hasError('required') && myForm.controls['tABranchAddress'].dirty">
+                    هذا الحقل إجباري
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.controls['tABranchAddress'].hasError('maxlength')">
+                    بحد اقصي 50 رقم
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> الاحداثيات </label>
+                  <div class="input-group">
+                    <input type="text" id="tABranchLongitude" formControlName="tABranchLongitude" class="form-control"
+                      placeholder="longitude"
+                      [class.is-invalid]="myForm.get('tABranchLongitude').invalid && myForm.get('tABranchLongitude').dirty">
+                    <input type="text" id="tABranchLatitude" formControlName="tABranchLatitude" class="form-control"
+                      placeholder="latitude"
+                      [class.is-invalid]="myForm.get('tABranchLatitude').invalid && myForm.get('tABranchLatitude').dirty">
+                  </div>
+                  <span class="text-danger small"
+                    *ngIf="myForm.controls['tABranchLongitude'].hasError('required') && myForm.controls['tABranchLongitude'].dirty">
+                    هذا الحقل إجباري
+                  </span>
+                  <span class="text-danger small" *ngIf="!myForm.controls['tABranchLongitude'].hasError('required') &&
+                        myForm.controls['tABranchLongitude'].hasError('maxlength')">
+                    حد قصي 20 رقم
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.controls['tABranchLongitude'].hasError('pattern')">
+                    ارقام فقط
+                  </span>
+                  <span class="text-danger small"
+                    *ngIf="myForm.controls['tABranchLatitude'].hasError('required') && myForm.controls['tABranchLatitude'].dirty">
+                    هذا الحقل إجباري
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.controls['tABranchLatitude'].hasError('required') &&
+                            myForm.controls['tABranchLatitude'].hasError('maxlength')">
+                    بحد اقصي 20 رقم
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.controls['tABranchLatitude'].hasError('pattern')">
+                    ارقام فقط
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم الهاتف </label>
+                  <input type="text" id="tABranchPhoneNo" formControlName="tABranchPhoneNo" class="form-control"
+                    [class.is-invalid]="myForm.get('tABranchPhoneNo').invalid && myForm.get('tABranchPhoneNo').dirty">
+                  <span class="text-danger small"
+                    *ngIf="myForm.get('tABranchPhoneNo').hasError('required') && myForm.get('tABranchPhoneNo').dirty">
+                    هذا الحقل إجباري
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.get('tABranchPhoneNo').hasError('maxlength')">
+                    بحد اقصي 20 رقم
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.get('tABranchPhoneNo').hasError('pattern')">
+                    ارقام فقط
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم الجوال </label>
+                  <input type="text" id="tABranchMobileNo" formControlName="tABranchMobileNo" class="form-control"
+                    [class.is-invalid]="myForm.get('tABranchMobileNo').invalid && myForm.get('tABranchMobileNo').dirty">
+                  <span class="text-danger small"
+                    *ngIf="myForm.get('tABranchMobileNo').hasError('required') && myForm.get('tABranchMobileNo').dirty">
+                    هذا الحقل إجباري
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.get('tABranchMobileNo').hasError('maxlength')">
+                    حد اقصي 20 رقم
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.get('tABranchMobileNo').hasError('pattern')">
+                    ارقام فقط
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم الفاكس </label>
+                  <input type="text" id="tABranchFaxNo" formControlName="tABranchFaxNo" class="form-control"
+                    [class.is-invalid]="myForm.get('tABranchFaxNo').invalid && myForm.get('tABranchFaxNo').dirty">
+                  <span class="text-danger small"
+                    *ngIf="myForm.controls['tABranchFaxNo'].hasError('required') && myForm.controls['tABranchFaxNo'].dirty">
+                    هذا الحقل إجباري
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.controls['tABranchFaxNo'].hasError('maxlength')">
+                    حد اقصي 20 رقم
+                  </span>
+                  <span class="text-danger small" *ngIf="myForm.get('tABranchFaxNo').hasError('pattern')">
+                    ارقام فقط
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> البريد الالكتروني </label>
+                  <input type="email" id="tABranchEmail" formControlName="tABranchEmail" class="form-control"
+                    [class.is-invalid]="myForm.get('tABranchEmail').invalid && myForm.get('tABranchEmail').dirty">
+                  <span class="text-danger small"
+                    *ngIf="myForm.controls['tABranchEmail'].hasError('required') && myForm.controls['tABranchEmail'].dirty">
+                    هذا الحقل إجباري
+                  </span>
+                  <em *ngIf="!myForm.get('tABranchEmail').hasError('required')&&
+                              myForm.get('tABranchEmail').hasError('pattern')
+                            && myForm.get('tABranchEmail').dirty">
+                    ادخل الايميل بشكل صحيح
+                  </em>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <div class="custom-control custom-checkbox mr-sm-2 mb-3">
+                    <input type="checkbox" id formControlName="tABranchType" class="custom-control-input" id="xx">
+                    <label class="custom-control-label" for="xx">&nbsp; فرع رئيسى &nbsp;</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <hr class="my-4">
+          <section>
+            <div class="d-flex justify-content-between align-items-center my-4">
+              <h2 class="h3 text-primary m-0"> فروع وكالة السفر</h2>
+              <!--<a href="javascript:;" class="btn btn-outline-primary btn-hover" data-toggle="modal" data-target="#addbranch">اضافة فرع</a>-->
+              <button class="btn btn-outline-primary btn-hover" [disabled]="!myForm.valid"
+                (click)="SaveData()">حفظ</button>
+            </div>
+
+            <div *ngIf="taBranchesList?.length <= 0"
+              class="demo-1 align-items-center bg-light border  display-4 flex-column justify-content-center mb-5 p-5 round text-center text-muted">
+              <i class="fal fa-fw fa-3x text-muted fa-building mb-4"></i>
+              <p class="text-muted m-0">
+                ليس لديك فروع حاليا ...
+                <a href="javascript:;" class="d-inline-block border-bottom" data-toggle="modal"
+                  data-target="#addbranch"> اضافة فرع جديد ؟ </a>
+              </p>
+            </div>
+
+            <div class="demo">
+
+              <table class="table">
+                <tr>
+                  <th> اسم الفرع</th>
+                  <th>المدينة</th>
+                  <th>رقم / اسم المبنى </th>
+                  <th>الجوال </th>
+                  <th style="width:8rem"></th>
+                </tr>
+                <tr *ngFor="let branch of taBranchesList">
+                  <td>{{branch.tABranchName}}</td>
+                  <td>{{branch.tADistrictID}}</td>
+                  <td>{{branch.tABranchAddress}}</td>
+                  <td>{{branch.tABranchMobileNo}}</td>
+                  <td style="text-align:center">
+                    <a class="table-action text-danger" (click)="onRowDelete(branch.$$ID)"> <i
+                        class="fal fa-fw fa-trash-alt"></i></a>
+                  </td>
+                </tr>
+              </table>
+              <div class="branch-map">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d104888.4757581263!2d10.663058829797!3d34.76151547712517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13002cda1486c695%3A0x22dfe0a62c50ce6f!2sSfax%2C%20Tunisia!5e0!3m2!1sen!2ssa!4v1570107555457!5m2!1sen!2ssa"
+                  width="100%" height="216" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+              </div>
+            </div>
+          </section>
+
+          <div class="btn-group mt-5">
+            <a routerLink="/" class="btn btn-default px-0"> الغاء التسجيل</a>
+            <div>
+              <a routerLink="/agency/license" class="btn btn-outline-primary ml-3">السابق</a>
+              <button class="btn btn-primary ml-3" [disabled]="!taBranchesList?.length" type="submit">التالي</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

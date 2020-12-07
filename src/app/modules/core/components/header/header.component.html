@@ -1,0 +1,108 @@
+<header class="header">
+  <div class="container ">
+    <button class="con navbar-toggle" type="button">
+      <div class="bar top"></div>
+      <div class="bar middle"></div>
+      <div class="bar bottom"></div>
+    </button>
+    <div class="d-flex header-inner ">
+      <a class="logo" routerLink="/">
+        <h1 class="d-none"> زوار </h1>
+        <img src="assets/images/Logo.png" alt="Zowar">
+      </a>
+      <div class="main-nav py-4">
+        <ul class="d-flex top-nav  p-0 m-0">
+            <li *ngIf="isLoggedIn">
+              <a routerLink="/profile" class="d-block mr-3 ">
+                <i class="fal fa-fw fa-file-alt mr-2 "></i>
+                <span> حساب وكالة السفر</span>
+              </a>
+            </li>
+            <li *ngIf="isLoggedIn">
+              <a [routerLink]="['/profile/programs']" class="d-block mr-3 ">
+                <i class="fal fa-fw fa-cubes mr-2 "></i>
+                <span> برامج العمرة </span>
+              </a>
+            </li>
+          <li *ngIf="!isLoggedIn">
+            <a class="d-block mr-3 ">
+              <i class="fal fa-fw fa-thumbs-up mr-2 "></i>
+              <span>العروض الخاصة</span>
+            </a>
+          </li>
+          <li *ngIf="!isLoggedIn">
+            <a class="d-block mr-3 ">
+              <i class="fal fa-fw fa-history mr-2 "></i>
+              <span>آخر عمليات البحث </span>
+            </a>
+          </li>
+        </ul>
+        <ul class="d-flex side-nav p-0 m-0">
+          <li *ngIf="!isLoggedIn">
+            <a routerLink="./agency/register" class="btn btn-outline-dark btn-sm mr-3"> اعرض برنامجك معنا </a>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <span class="pl-2">
+                SAR |
+                تونس
+                <img src="assets/images/flags/tunis.svg" alt="tunis flag" class="d-none d-md-inline ml-2">
+              </span>
+              <i class="fal fa-fw fa-1x fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu ">
+              <div class="d-flex form-group justify-content-between">
+                <label for="" class="w-50"> العملة </label>
+                <select class="form-control form-control-sm">
+                  <option> ريال سعودي </option>
+                  <option> دولار </option>
+                  <option> يورو </option>
+                  <option> يوان صيني </option>
+                </select>
+              </div>
+              <div class="d-flex form-group justify-content-between">
+                <label for="" class="w-50"> الدولة </label>
+                <select class="form-control form-control-sm">
+                  <option> تونس </option>
+                  <option> مصر </option>
+                  <option> السودان </option>
+                  <option> المغرب </option>
+                </select>
+              </div>
+              <div class="d-flex form-group justify-content-between">
+                <!-- <a href="#f" class="btn btn-outline-light btn-sm mr-3 toggle-lang" >  ENGLISH  </a> -->
+                <label for="" class="w-50"> اللغة </label>
+                <select class="form-control form-control-sm toggle-lang">
+                  <option> Arabic </option>
+                  <option> English </option>
+                  <!-- <option> German    </option>   -->
+                </select>
+              </div>
+              <a href="javascript:;" class="btn btn-block btn-outline-primary btn-sm  px-2" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"> موافق </a>
+            </div>
+          </li>
+          <li class="dropdown username" *ngIf="isLoggedIn">
+            <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fal fa-fw fa-1x fa-user"></i>
+              <span> {{user.userName}} </span>
+              <i class="fal fa-fw fa-1x fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu p-0 m-0 ">
+              <li class="p-2 small"><a class=""> ملف المستخدم </a></li>
+              <li class="p-2 small"><a routerLink="/auth/logout" class="text-danger"> تسجيل الخروج</a></li>
+            </ul>
+          </li>
+          <!-- <li *ngIf="isLoggedIn">
+            <a routerLink="/auth/logout" class="btn btn-outline-dark btn-sm "> تسجيل خروج </a>
+          </li> -->
+          <li *ngIf="!isLoggedIn">
+            <a routerLink="/auth/login" class="btn btn-outline-dark btn-sm "> تسجيل دخول </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

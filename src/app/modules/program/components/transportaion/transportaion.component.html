@@ -1,0 +1,191 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> إنشاء برنامج عمرة جديد </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> إنشاء برنامج عمرة جديد </h1>
+    </div>
+    <div class="page-inner  overflow-hidden">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title">
+                  البيانات الاساسية </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">2</span> <span class="wizard-tabs-title">
+                  تفاصيل الاقامة </span>
+              </div>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">3</span> <span class="wizard-tabs-title">
+                  تفاصيل التنقل </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">4</span> <span class="wizard-tabs-title">
+                  تفاصيل الزيارات </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">5</span> <span class="wizard-tabs-title"> تأكيد
+                  البيانات </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wizard-details">
+        <form [formGroup]="transportationFrom" novalidate>
+          <section>
+            <h3 class="text-primary"> تذاكر السفر </h3>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> هل تذاكر السفر مشمولة داخل البرنامج ؟
+                  </label>
+                  <div class="mt-2">
+                    <div class="custom-control custom-radio  d-inline-block ">
+                      <input id="first1" type="radio" [value]="true" formControlName="progAirTicketIncluded"
+                        class="custom-control-input">
+                      <label class="custom-control-label" for="first1"> نعم مشمولة </label>
+                      <em
+                        *ngIf="transportation.get('progAirTicketIncluded').hasError('required') &&
+                               transportation.get('progAirTicketIncluded').touched">
+                        هذا الحقل إجباري
+                      </em>
+                    </div>
+                    <div class="custom-control custom-radio  d-inline-block  mx-3">
+                      <input id="second1" type="radio" [value]="false" formControlName="progAirTicketIncluded"
+                        class="custom-control-input">
+                      <label class="custom-control-label" for="second1"> لا ..تكلفة التذاكر
+                        منفصلة </label>
+                      <em
+                        *ngIf="transportation.get('progAirTicketIncluded').hasError('required') && transportation.get('progAirTicketIncluded').dirty">
+                        هذا الحقل إجباري
+                      </em>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> شركة الطيران </label>
+                  <select *ngFor="let air of airplane" class="form-control" formControlName="airlineID">
+                    <option>
+                      {{air.egtptAir}}
+                    </option>
+                    <option>
+                      {{air.flyEmiraties}}
+                    </option>
+                    <option>
+                      {{air.saudiAir}}
+                    </option>
+                  </select>
+                  <em
+                    *ngIf="transportation.get('airlineID').hasError('required') && transportation.get('airlineID').touched">
+                    هذا الحقل إجباري
+                  </em>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> وصف طريقة و تذاكر السفر </label>
+                  <input type="text" class="form-control" formControlName="airlineDesc"
+                    placeholder="مثال : تذاكر درجة اقتصادية حقيبة واحدة 21 كيلو لكل مسافر">
+                  <em
+                    *ngIf="transportation.get('airlineDesc').hasError('required') && transportation.get('airlineDesc').touched">
+                    هذا الحقل إجباري
+                  </em>
+                  <em *ngIf="!transportation.get('airlineDesc').hasError('required')&&
+                              transportation.get('airlineDesc').hasError('maxlength')
+                            && transportation.get('airlineDesc').touched">
+                    حد اقصي 50 رقم
+                  </em>
+                </div>
+              </div>
+            </div>
+          </section>
+          <hr class="my-5 mx-n4">
+
+          <section>
+            <h3 class="text-primary"> التنقل الداخلي </h3>
+            <div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="d-block col-form-label">
+                      طريقة التنقل
+                    </label>
+                    <select *ngFor="let transport of transports" formControlName="internalTransportations" class="form-control">
+                      <option>اختر</option>
+                      <option>
+                        {{transport.Bus}}
+                      </option>
+                      <option>
+                        {{transport.train}}
+                      </option>
+                      <option>
+                        {{transport.car}}
+                      </option>
+                      <option>
+                        {{transport.air}}
+                      </option>
+
+                    </select>
+                    <em *ngIf="transportation.get('internalTransportations').hasError('required') &&
+                               transportation.get('internalTransportations').touched">
+                               اجباري
+                    </em>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label">
+                      وصف طريقة التنقل
+                    </label>
+                    <input type="text" class="form-control" formControlName="programTransDetails"
+                      placeholder="مثال : باص مكيف  شامل كل وسائل الراحة">
+                      <em *ngIf="transportation.get('programTransDetails').hasError('required') &&
+                                   transportation.get('programTransDetails').touched">
+                                   اجباري
+                      </em>
+                      <em *ngIf="!transportation.get('programTransDetails').hasError('required') &&
+                                  transportation.get('programTransDetails').hasError('maxlength') &&
+                                 transportation.get('programTransDetails').touched">
+                      حد اقصي 50 رقم
+                      </em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </form>
+        <div class="btn-group mt-5">
+          <a href="index.html" class="btn btn-default px-0"> الغاء </a>
+          <div>
+            <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
+            <button class="btn btn-primary ml-3" (click)="submit()">
+              التالي
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="wrapper">
+  <div class="login-layout">
+    <div class="container ">
+      <div class="login-box">
+        <div class="mb-4"><img src="./assets/images/Logo.png" alt="Zowar"></div>
+        <h1> تسجيل حساب </h1>
+
+        <div class="form-group">
+          <form [formGroup]="registerForm" (ngSubmit)="submit()">
+
+            <label class=" col-form-label">البريد الالكتروني </label>
+            <input type="email" class="form-control" formControlName="email" placeholder="أسم المستخدم">
+            <em class="email"
+              *ngIf="registerForm.get('email').hasError('required') && registerForm.get('email').touched">
+              اجباري
+            </em>
+            <em class="email" *ngIf="!registerForm.get('email').hasError('required') &&
+                        registerForm.get('email').hasError('email') &&
+                        registerForm.get('email').touched">
+              ادخل البريد الالكتروني بطريقه صحيحه
+            </em>
+            <label class="col-form-label">كلمة المرور </label>
+            <input type="password" class="form-control" formControlName="password" placeholder="كلمة المرور">
+            <em class="password"
+              *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">
+              اجباري
+            </em>
+            <!-- <div class="my-3 d-flex justify-content-between align-items-center">
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input" id="xx">
+                <label class="custom-control-label" for="xx">تذكرني</label>
+              </div>
+              <a routerLink="/auth/forgot-password" class="btn-link text-primary"> نسيت كلمة السر </a>
+            </div> -->
+            <div class="mt-3 d-flex justify-content-between">
+              <input type="submit" value="تسجيل" [disabled]="!registerForm.valid"
+                class="btn btn-primary btn-block" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

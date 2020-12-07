@@ -1,0 +1,156 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة </a></li>
+      </ol>
+    </nav>
+    <form [formGroup]="packageForm" novalidate (ngSubmit)="submit()">
+      <h3>تعديل الباقة</h3>
+      <section>
+        <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label" id="ai select"> المطار الداخلي </label>
+              <input type="text" class="form-control" formControlName="localAirportID">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> تاريخ الانطلاق </label>
+              <input type="date" formControlName="packageDepartureDate" class="form-control form-date">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="d-block col-form-label"> تاريخ العودة </label>
+              <input type="date" formControlName="packageReturnDate" class="form-control form-date">
+            </div>
+          </div>
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label" id="uomra"> موسم العمرة </label>
+              <input class="form-control" formControlName="packageSeasonID">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> سعة الباقة </label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="packageCapacity">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">فرد</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> عدد مقاعد السفر </label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="packageAvailableSeats">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">مقعد</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mt-3">بيانات المطوف</h3>
+        <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> اسم المطوف </label>
+                  <input type="text" class="form-control" formControlName="mutawefName">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم جوال المطوف </label>
+                  <div class="input-group custom-dropdown dropdown">
+                    <input type="tel" formControlName="mutawefPhone" class="form-control"
+                      aria-label="Text input with dropdown button">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> اسم قائد المجموعة </label>
+                  <input type="text" class="form-control" formControlName="groupLeadName">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم جوال قائد المجموعة </label>
+                  <input type="tel" class="form-control" formControlName="groupLeadPhone">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mt-3">بيانات الغرف</h3>
+        <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-6">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> السعر للبالغين </label>
+              <div class="input-group">
+                <input type="text" class="form-control" type="text" formControlName="roomPriceAdult">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">ريـال</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> السعر للاطفال </label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="roomPriceKids">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">ريـال</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-6">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> السعر للرضع </label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="roomTypeInfants">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">ريـال</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> العدد المتوفر </label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="roomQuantity">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">غرفة</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="row justify-content-end ml-3">
+        <button class="btn btn-secondary" type="submit">تعديل</button>
+      </div>
+    </form>
+  </div>
+</div>

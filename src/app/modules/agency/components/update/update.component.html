@@ -1,0 +1,319 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة </a></li>
+      </ol>
+    </nav>
+    <form [formGroup]="agencyForm" novalidate (ngSubmit)="submit()">
+      <h3>تعديل الباقة</h3>
+      <section>
+        <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> اسم وكالة السفر </label>
+              <input type="text" id="tAName" formControlName="tAName" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="d-block col-form-label"> الدولة </label>
+              <input type="text" class="form-control" formControlName="countryId">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> تصنيف الوكالة </label>
+              <input name="tAType" class="form-control" formControlName="tAType">
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="d-block col-form-label"> الموقع الالكتروني </label>
+              <input type="text" id="tAWebsite" formControlName="tAWebsite" class="form-control"
+                placeholder="www.example.com">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> رقم السجل التجاري </label>
+              <input type="text" id="tACommeRegNo" formControlName="tACommeRegNo" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label  "> تاريخ انشاء السجل التجاري </label>
+              <input type="date" id="tACommRegIssueDate" formControlName="tACommRegIssueDate" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="d-block col-form-label">رقم الوكالة</label>
+              <input type="text" class="form-control" formControlName="agencyID">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group ">
+              <label class="d-block col-form-label"> تاريخ انتهاء السجل التجاري </label>
+              <input type="date" id="tACommRegExpiryDate" formControlName="tACommRegExpiryDate" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="d-block col-form-label"> نبذة عن وكالة السفر </label>
+              <textarea class="form-control" rows="4" formControlName="tADescription"></textarea>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="wizard-details">
+          <section>
+            <h3 class="text-primary"> ترخيص وزارة السياحة </h3>
+            <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+              <div class="col-lg-8">
+                <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="d-block col-form-label"> هل الوكالة مرخصة من قبل السفارة ؟ </label>
+                      <div class="mt-2">
+                        <div class="custom-control custom-radio  d-inline-block ">
+                          <input id="yes1" [value]="true" formControlName="$$isMinTourAuth" type="radio"
+                            class="custom-control-input" (change)="changeMinTourAuth()">
+                          <label class="custom-control-label" for="yes1"> نعم </label>
+                        </div>
+                        <div class="custom-control custom-radio  d-inline-block  mx-3">
+                          <input id="no1" formControlName="$$isMinTourAuth" [value]="false" type="radio"
+                            class="custom-control-input" (change)="changeMinTourAuth()">
+                          <label class="custom-control-label" for="no1"> لا</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="$$isMinTourAuth">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> رقم الترخيص </label>
+                        <input type="text" id="tAMinTourAuthNo" formControlName="tAMinTourAuthNo" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label  "> تاريخ انشاء الترخيص </label>
+                        <input type="date" id="tAMinTourAuthIssueDate" formControlName="tAMinTourAuthIssueDate"
+                          class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="d-block col-form-label  "> تاريخ انتهاء الترخيص </label>
+                        <input type="date" id="tAMinTourAuthExpiryDate" formControlName="tAMinTourAuthExpiryDate"
+                          class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <hr class="my-4">
+
+          <section>
+            <h3 class="text-primary"> التسجيل في FTAV</h3>
+            <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+              <div class="col-lg-8">
+                <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="col-md-12">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> هل الوكالة مسجلة لدى FTAV؟ </label>
+                      <div class="mt-2">
+                        <div class="custom-control custom-radio  d-inline-block ">
+                          <input id="yes2" [value]="true" formControlName="$$isFTAVMember" type="radio"
+                            class="custom-control-input" checked (change)="changeFTAVMember()">
+                          <label class="custom-control-label" for="yes2"> نعم </label>
+                        </div>
+                        <div class="custom-control custom-radio  d-inline-block  mx-3">
+                          <input id="no2" [value]="false" formControlName="$$isFTAVMember" type="radio"
+                            class="custom-control-input" (change)="changeFTAVMember()">
+                          <label class="custom-control-label" for="no2">لا</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="$$isFTAVMember">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> رقم العضوية </label>
+                        <input type="text" id="tAFTAVMemberNo" formControlName="tAFTAVMemberNo" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label  "> تاريخ انشاء العضوية </label>
+                        <input type="date" id="tAFTAVMemberIssueDate" formControlName="tAFTAVMemberIssueDate"
+                          class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label  "> تاريخ انتهاء العضوية </label>
+                        <input type="date" id="tAFTAVMemberExpiryDate" formControlName="tAFTAVMemberExpiryDate"
+                          class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <hr class="my-4">
+          <section>
+            <h3 class="text-primary"> التسجيل في الجامعة التونسية لوكالات الأسفار والسياحة </h3>
+            <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+              <div class="col-lg-8">
+                <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="col-md-12">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> هل الوكالة مسجلة لدى الجامعة التونسية لوكالات الأسفار
+                        والسياحة ؟ </label>
+                      <div class="mt-2">
+                        <div class="custom-control custom-radio  d-inline-block ">
+                          <input id="yes3" [value]="true" formControlName="$$isFITTMember" type="radio"
+                            class="custom-control-input" (change)="changeFITTMember()">
+                          <label class="custom-control-label" for="yes3"> نعم </label>
+                        </div>
+                        <div class="custom-control custom-radio  d-inline-block  mx-3">
+                          <input id="no3" [value]="false" formControlName="$$isFITTMember" type="radio"
+                            class="custom-control-input" (change)="changeFITTMember()">
+                          <label class="custom-control-label" for="no3"> لا</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="$$isFITTMember">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> رقم العضوية </label>
+                        <input type="text" id="tAFITTMemberNo" formControlName="tAFITTMemberNo" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label  "> تاريخ انشاء العضوية </label>
+                        <input type="date" id="tAFITTMemberIssueDate" formControlName="tAFITTMemberIssueDate"
+                          class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> تاريخ انتهاء العضوية </label>
+                        <input type="date" id="tAFITTMemberExpiryDate" formControlName="tAFITTMemberExpiryDate"
+                          class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <h3 class="text-primary"> بيانات التواصل </h3>
+          <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> اسم الفرع </label>
+                <input type="text" id="tABranchName" formControlName="tABranchName" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="d-block col-form-label"> المدينة </label>
+                <input id="country" name="tADistrictID" class="form-control" formControlName="tADistrictID">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> رقم / اسم المبنى	 </label>
+                <input type="text" id="tABranchAddress" formControlName="tABranchAddress" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> الاحداثيات </label>
+                <div class="input-group">
+                  <input type="text" id="tABranchLongitude" formControlName="tABranchLongitude" class="form-control"
+                    placeholder="longitude">
+                  <input type="text" id="tABranchLatitude" formControlName="tABranchLatitude" class="form-control"
+                    placeholder="latitude">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> رقم الهاتف </label>
+                <input type="text" id="tABranchPhoneNo" formControlName="tABranchPhoneNo" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> رقم الجوال </label>
+                <input type="text" id="tABranchMobileNo" formControlName="tABranchMobileNo" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> رقم الفاكس </label>
+                <input type="text" id="tABranchFaxNo" formControlName="tABranchFaxNo" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="d-block col-form-label"> البريد الالكتروني </label>
+                <input type="email" id="tABranchEmail" formControlName="tABranchEmail" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <div class="custom-control custom-checkbox mr-sm-2 mb-3">
+                  <input type="checkbox" id formControlName="tABranchType" class="custom-control-input" id="xx">
+                  <label class="custom-control-label" for="xx">&nbsp; فرع رئيسى &nbsp;</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="row justify-content-between ml-3">
+        <button class="btn btn-secondary" [routerLink]="['/agency/edit']">رجوع</button>
+        <button class="btn btn-secondary" type="submit">تعديل</button>
+      </div>
+    </form>
+  </div>
+</div>

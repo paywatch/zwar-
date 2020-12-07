@@ -1,0 +1,51 @@
+<div class="page-layout" *ngIf="packages">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة </a></li>
+      </ol>
+    </nav>
+    <div class="row justify-content-center" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
+      data-aos-delay="100">
+      <div class="col-sm-12 col-md-10 col-lg-10">
+        <table class="table table-hover table-striped ">
+          <thead class="bg-secondary">
+            <tr>
+              <th>المطار الداخلي</th>
+              <th>موسم العمرة</th>
+              <th>مسار العمرة </th>
+              <th>المقاعد المتاحه </th>
+              <th>سعه الباقه</th>
+              <th>تفاصيل</th>
+              <th>عرض</th>
+              <th>حذف</th>
+            </tr>
+          </thead>
+          <tr *ngFor="let package of packages">
+            <td>{{package.localAirportID}}</td>
+            <td>{{package.packageSeasonID}}</td>
+            <td>{{package.itineraryID}}</td>
+            <td>{{package.packageAvailableSeats}}</td>
+            <td>{{package.packageCapacity}}</td>
+            <td style="text-align:center">
+              <a [routerLink]="['/package/update',package.id]">
+                <i class="fa fa-pen"></i>
+              </a>
+            </td>
+            <td>
+              <a [routerLink]="['/package/view', package.id]">
+                <i class="far fa-eye" ></i>
+              </a>
+            </td>
+            <td style="text-align:center">
+              <a class="table-action text-danger" (click)="onRowDelete($event,package)">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

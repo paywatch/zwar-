@@ -1,0 +1,441 @@
+<div class="page-layout pb-5">
+  <section class="inner-search">
+    <div class="container">
+      <div class="page-title bg-light d-flex align-items-center mb-4">
+        <h1 class="h1 text-primary mb-4"> ادارة برامج العمرة </h1>
+        <!-- <a href="create_program_1.html" class="btn btn-outline-primary btn-hover"> اضافة برنامج <i
+            class="fal fa-plus fa-fw"></i></a> -->
+      </div>
+      <div class="row">
+        <div class="col-lg-10">
+          <div class="row">
+            <div class="col-md-4 col-lg-2 form-group">
+              <label for="" class="d-block"> رقم البرنامج </label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-8 col-lg-4 form-group">
+              <label for="" class="d-block">اسم البرنامج</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-4 col-lg-2 form-group">
+              <label for="" class="d-block"> موسم البرنامج </label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-4 col-lg-2  form-group">
+              <label for="" class="d-block"> نوع البرنامج </label>
+              <select class="form-control">
+                <option> اقتصادي </option>
+                <option> 2 </option>
+                <option> 3 </option>
+                <option> 4 </option>
+              </select>
+            </div>
+            <div class="col-md-4 col-lg-2  form-group">
+              <label for="" class="d-block"> حالة البرنامج </label>
+              <select class="form-control">
+                <option> اقتصادي </option>
+                <option> 2 </option>
+                <option> 3 </option>
+                <option> 4 </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-lg-2 form-group pt-2 pt-md-4">
+          <a href="#search" class="btn btn-block btn-primary mt-2"> بحث </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="container pt-5 ">
+    <div class="row">
+      <div class="col-lg-3 side-filter mb-3 d-md-block collapse" id="filteritems">
+        <div class="border overflow-hidden">
+          <div class="h5 side-filter-title d-flex justify-content-between m-0">
+            تصفية النتائج حسب
+            <a class="btn btn-outline-primary btn-sm toggle-filter d-block d-lg-none " data-toggle="collapse"
+              href="#filteritems" role="button" aria-expanded="false" aria-controls="filteritems">تطبيــق</a>
+          </div>
+          <div class="s-filter-inner">
+            <div class="p-3 border-bottom side-filter-blk">
+              <h3 class="h6 mb-3"> اسم البرنامج او احد الفنادق </h3>
+              <input type="text" placeholder="مثال: فندق الساعة " class=" form-control form-search">
+            </div>
+            <div class="p-3 border-bottom  side-filter-blk">
+              <h3 class="h6 mb-3"> السعر</h3>
+              <div class="range-text d-flex justify-content-between align-items-center">
+                <div class="">
+                  <span class="range-text-ttl"> من </span>
+                  <span class="range-text-val bold" id="lower-value"></span>
+                </div>
+                <div class="">
+                  <span class="range-text-ttl"> إلي </span>
+                  <span class="range-text-val bold" id="upper-value"></span>
+                </div>
+              </div>
+              <div class="rangeslider mt-4">
+                <div id="slider-handles"></div>
+              </div>
+            </div>
+            <div class="p-3 border-bottom  side-filter-blk">
+              <h3 class="h6 mb-3"> مدة البرنامج</h3>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item1a">
+                <label class="custom-control-label" for="item1a"> اقل من 10 ايام </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item2a">
+                <label class="custom-control-label" for="item2a"> من 11 الى 14 يوم </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item3a">
+                <label class="custom-control-label" for="item3a"> اكثر من 14 يوم </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+            </div>
+            <div class="p-3 border-bottom  side-filter-blk">
+              <h3 class="h6 mb-3"> مسار الحملة </h3>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item1b">
+                <label class="custom-control-label" for="item1b"> مكة اولا </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item2b">
+                <label class="custom-control-label" for="item2b"> المدينة اولا </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+            </div>
+            <div class="p-3 border-bottom  side-filter-blk">
+              <h3 class="h6 mb-3"> تقييم وكالة السفر </h3>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item1c">
+                <label class="custom-control-label" for="item1c"> استثنائي +9 </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item2c">
+                <label class="custom-control-label" for="item2c"> ممتاز +8 </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item3c">
+                <label class="custom-control-label" for="item3c"> جيد +7 </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item4c">
+                <label class="custom-control-label" for="item4c"> مقبول +6 </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+            </div>
+            <div class="p-3 border-bottom  side-filter-blk">
+              <h3 class="h6 mb-3"> تصنيف الفنادق بالنجوم </h3>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item1d">
+                <label class="custom-control-label" for="item1d"> 5 نجوم </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item2d">
+                <label class="custom-control-label" for="item2d"> 4 نجوم </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item3d">
+                <label class="custom-control-label" for="item3d"> 3 نجوم </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item4d">
+                <label class="custom-control-label" for="item4d"> 2 نجوم </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item5d">
+                <label class="custom-control-label" for="item5d"> 1 نجوم </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item6d">
+                <label class="custom-control-label" for="item6d"> غير مصنف </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+            </div>
+            <div class="p-3 border-bottom  side-filter-blk">
+              <h3 class="h6 mb-3"> نوع الغرف </h3>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item1h">
+                <label class="custom-control-label" for="item1h"> فردية </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item2h">
+                <label class="custom-control-label" for="item2h"> ثنائية </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item3h">
+                <label class="custom-control-label" for="item3h"> ثلاثية </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item4h">
+                <label class="custom-control-label" for="item4h"> رباعية </label> <span class="side-number text-light">
+                  987 </span>
+              </div>
+            </div>
+            <div class="p-3 border-bottom  side-filter-blk">
+              <h3 class="h6 mb-3"> المسافة والتنقل </h3>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item1m">
+                <label class="custom-control-label" for="item1m"> اقل من 200 متر </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item2m">
+                <label class="custom-control-label" for="item2m"> من 200 الى 500 متر </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item3m">
+                <label class="custom-control-label" for="item3m"> تنقل بالباص </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+            </div>
+            <div class="p-3 side-filter-blk ">
+              <h3 class="h6 mb-3"> بحث رائج </h3>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item1yu">
+                <label class="custom-control-label" for="item1yu"> شامل افطار </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item2yu">
+                <label class="custom-control-label" for="item2yu"> باقات العروض </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item3yu">
+                <label class="custom-control-label" for="item3yu"> طاقم طبي مرافق </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item8yu">
+                <label class="custom-control-label" for="item8yu"> خدمات العربات </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item4yu">
+                <label class="custom-control-label" for="item4yu"> ذوي الاحتياجات الخاصة </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item5yu">
+                <label class="custom-control-label" for="item5yu"> مرافق خاص </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+              <div class="align-items-center custom-checkbox custom-control d-flex justify-content-between mb-2">
+                <input type="checkbox" class="custom-control-input" id="item6yu">
+                <label class="custom-control-label" for="item6yu"> افطار وغداء </label> <span
+                  class="side-number text-light"> 987 </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div
+          class="top-filter top-filter1  d-flex d-lg-none justify-content-between align-items-center border mb-4 flex-row ">
+          <a class="top-filter-block toggle-filter font-weight-bold" data-toggle="collapse" href="#filteritems"
+            role="button" aria-expanded="false" aria-controls="filteritems">
+            تصفية
+            <i class="fal fa-fw fa-filter"></i>
+          </a>
+          <a class="top-filter-block toggle-sorter font-weight-bold" data-toggle="collapse" href="#sortItems"
+            role="button" aria-expanded="false" aria-controls="sortItems">
+            ترتيب
+            <i class="fal fa-fw fa-sort-numeric-up"></i>
+          </a>
+        </div>
+        <div class="collapse d-md-block" id="sortItems">
+          <div class="top-filter d-flex btn-group-toggle flex-column flex-md-row border mb-4" data-toggle="buttons">
+            <label class="btn top-filter-block active">
+              <input type="radio" name="options" id="option1" autocomplete="off" checked>
+              <span> الاحدث نشرا </span>
+            </label>
+            <label class="btn top-filter-block">
+              <input type="radio" name="options" id="option2" autocomplete="off">
+              <span>السعر</span>
+              <!-- <i class="fal fa-fw fa-sort-amount-up"></i> -->
+              <i class="fal fa-fw fa-sort-amount-down"></i>
+            </label>
+            <label class="btn top-filter-block">
+              <input type="radio" name="options" id="option3" autocomplete="off">
+              <span> الاقرب في الموعد </span>
+            </label>
+          </div>
+        </div>
+        <div class="result-blk border mb-4" *ngFor="let package of packages$|async">
+          <div class="result-blk-ttl p-3 d-flex justify-content-between align-items-center">
+            <h4 class="display-4 m-0 text-primary">شركة أجيليكا للسياحة
+              <span>المستوى الاول </span>
+              <span class="text-danger border-danger"> عرض لفترة محدودة</span>
+            </h4>
+            <div class="align-items-center d-flex justify-content-between r-b-left text-center text-md-left">
+              <div class="r-b-left-numbers text-muted">
+                <p class="m-0 small"><span class="bold">543</span> <span class="small">حجز</span></p>
+                <p class="m-0 small"><span class="bold">279</span> <span class="small">تقييم</span></p>
+              </div>
+              <div class="h2 m-0 ml-3 pt-2 r-b-left-value text-center">{{package.rating}}</div>
+            </div>
+          </div>
+          <div class="row r-blk-center mb-4 mx-0">
+            <div class="col-md-6 d-flex justify-content-between p-0">
+              <div class="r-blk-right w-75w-75 overflow-hidden">
+                <h4 class="mb-2 r-blk-r-l1 text-truncate">الاقامة في مكة 7 ليالي </h4>
+                <h5 class="mb-3 r-blk-r-l2 px-3">
+                  <span> مكارم منى</span>
+                  <span class="d-inlin-block px-2 small">
+                    <i class="fal  fa-star text-warning"></i>
+                    <i class="fal  fa-star text-warning"></i>
+                    <i class="fal  fa-star text-warning"></i>
+                  </span>
+                </h5>
+                <div class="r-blk-r-l3 small px-3  mb-1">
+                  <i class="fal fa-flag fa-fw"></i>
+                  <span>170 </span><span>متر من الحرم</span>
+                </div>
+                <div class="r-blk-r-l4 small px-3">
+                  <i class="fal fa-utensils fa-fw"></i>
+                  <span>شامل الفطور والغداء</span>
+                </div>
+              </div>
+              <div class="r-blk-left">
+                <!-- <img src="./assets/images/sample-img2.jpg" alt="room view"> -->
+                <img src="./assets/images/default.jpg" alt="room view">
+              </div>
+            </div>
+
+            <div class="col-md-6 d-flex justify-content-between p-0">
+              <div class="r-blk-right w-75 overflow-hidden">
+                <h4 class="mb-2 r-blk-r-l1 text-truncate"> الاقامة في المدينة 5 ليالي </h4>
+                <h5 class="mb-3 r-blk-r-l2 px-3">
+                  <span> بلاتينيوم رويال ديار </span>
+                  <span class="d-inlin-block px-2 small">
+                    <i class="fal  fa-star text-warning"></i>
+                    <i class="fal  fa-star text-warning"></i>
+                    <i class="fal  fa-star text-warning"></i>
+                  </span>
+                </h5>
+                <div class="r-blk-r-l3 small px-3 mb-1">
+                  <i class="fal fa-flag fa-fw"></i>
+                  <span> 700 متر من الحرم
+                    - التنقل بالباص</span>
+                </div>
+                <div class="r-blk-r-l4 small px-3">
+                  <i class="fal fa-utensils fa-fw"></i>
+                  <span>شامل الفطور والغداء</span>
+                </div>
+              </div>
+              <div class="r-blk-left">
+                <img src="./assets/images/sample-img.jpg" alt="room view">
+              </div>
+            </div>
+
+          </div>
+          <div class="trip-time mb-3">
+            <div class="row m-0">
+              <div class="col-md-2">
+                <p class="m-0 py-3">وقت البرنامج </p>
+              </div>
+              <div class="col-md-10 d-flex justify-content-between align-items-center pt-1">
+                <p class="text-muted m-0"> <span class="d-inline-block">من 20 نوفمبر 2020 </span> <span
+                    class="d-inline-block">الى 20 ديسمبر 2020</span> </p>
+                <div class="airlines">
+                  <img src="./assets/images/saudiairlines.jpg" alt="saudi airlines">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="trip-route mb-3">
+            <div class="row m-0">
+              <div class="col-md-2">
+                <p class="m-0 py-3">مسار الرحلة</p>
+              </div>
+              <div class="col-md-10">
+                <div class="d-flex justify-content-between mx-md-n4 t-p-cont text-center">
+                  <div class="t-p-blk p-3">
+                    <span class="d-block w-city ">القاهرة</span>
+                  </div>
+                  <div class="t-p-blk w-icon py-3">
+                    <span>
+                      <div class="fal fa-plane w-icon-plan"></div>
+                    </span>
+                  </div>
+                  <div class="t-p-blk p-3">
+                    <span class="d-block w-city ">جدة</span>
+                  </div>
+                  <div class="t-p-blk w-icon py-3">
+                    <span>
+                      <div class="fal fa-bus"></div>
+                    </span>
+                  </div>
+                  <div class="t-p-blk p-3">
+                    <span class="d-block w-city">المدينة</span>
+                  </div>
+                  <div class="t-p-blk w-icon py-3">
+                    <span>
+                      <div class="fal fa-plane w-icon-plan"></div>
+                    </span>
+                  </div>
+                  <div class="t-p-blk p-3">
+                    <span class="d-block w-city ">القاهرة</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="trip-price mb-3">
+            <div class="row m-0">
+              <div class="col-md-2">
+                <p class="m-0 py-2"> السعر الاجمالي للفرد الواحد </p>
+              </div>
+              <div class="col-md-10 d-flex justify-content-between  flex-column flex-md-row pl-3 pr-0">
+                <div class="t-p-pakg align-items-start d-flex justify-content-start ">
+                  <div class="border mr-3 p-2 px-3 round text-center">
+                    <span class="d-block bold">غرف ثنائية</span>
+                    <span class="small text-muted"> 25000 ريال </span>
+                  </div>
+                  <div class="border mr-3 p-2 px-3 round text-center">
+                    <span class="d-block bold">غرف ثنائية</span>
+                    <span class="small text-muted"> 25000 ريال </span>
+                  </div>
+                  <div class="border mr-3 p-2 px-3 round text-center">
+                    <span class="d-block bold">غرف ثنائية</span>
+                    <span class="small text-muted"> 25000 ريال </span>
+                  </div>
+                </div>
+                <div class="t-p-cta">
+                  <a href="program_details.html"
+                    class="align-items-center btn btn-primary d-flex justify-content-between my-3 my-md-0">
+                    <span>المزيد من
+                      <span class="d-md-block">التفاصيل</span>
+                    </span>
+                    <i class="fal fa-fw fa-chevron-left ml-3 "></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

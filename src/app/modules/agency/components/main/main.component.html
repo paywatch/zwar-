@@ -1,0 +1,400 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a routerLink="/">الرئيسية</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> تسجيل وكالة السفر </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> تسجيل وكالة السفر </h1>
+    </div>
+    <div class="page-inner">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item active">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title"> البيانات الاساسية </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">2</span> <span class="wizard-tabs-title"> بيانات الترخيص </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">3</span> <span class="wizard-tabs-title"> بيانات التواصل والفروع
+                </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">4</span> <span class="wizard-tabs-title"> تأكيد البيانات </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wizard-details">
+        <form [formGroup]="myForm" autocomplete="off" novalidate (ngSubmit)="SaveData()">
+          <section>
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> اسم وكالة السفر </label>
+                      <input type="text" id="tAName" formControlName="tAName" class="form-control"
+                        [class.is-invalid]="myForm.get('tAName').invalid && myForm.get('tAName').dirty">
+                      <span class="text-danger small"
+                        *ngIf="myForm.get('tAName').hasError('required') && myForm.get('tAName').dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small" *ngIf="!myForm.get('tAName').hasError('required') &&
+                                    myForm.get('tAName').hasError('maxlength') &&
+                                    myForm.get('tAName').dirty">
+                        بحد اقصي 100 رقم
+                      </span>
+                      <span class="text-danger small" *ngIf="myForm.get('tAName').hasError('pattern')">
+                        فقط حروف او ارقام
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> الدولة </label>
+                      <select *ngFor="let item of countries" name="countryId" class="form-control"
+                        formControlName="countryId"
+                        [class.is-invalid]="myForm.get('countryId').invalid && myForm.get('countryId').dirty">
+                        <option>إختر</option>
+                        <option>
+                          {{item.egypt}}
+                        </option>
+                        <option>
+                          {{item.saudi}}
+                        </option>
+                      </select>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['countryId'].hasError('required') && myForm.controls['countryId'].dirty">
+                        هذا الحقل إجباري
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> تصنيف الوكالة </label>
+                      <select name="tAType" class="form-control"
+                        formControlName="tAType"
+                        [class.is-invalid]="myForm.get('tAType').invalid && myForm.get('tAType').dirty">
+                        <option *ngFor="let item of agencyType">
+                          {{item.private}} <br>
+                          {{item.public}}
+                        </option>
+                      </select>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAType'].hasError('required') && myForm.controls['tAType'].dirty">
+                        هذا الحقل إجباري
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> الموقع الالكتروني </label>
+                      <input type="text" id="tAWebsite" formControlName="tAWebsite" class="form-control"
+                        placeholder="www.example.com"
+                        [class.is-invalid]="myForm.get('tAWebsite').invalid && myForm.get('tAWebsite').dirty">
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAWebsite'].hasError('required') && myForm.controls['tAWebsite'].dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small" *ngIf="!myForm.controls['tAWebsite'].hasError('required') &&
+                             myForm.controls['tAWebsite'].hasError('maxlength')">
+                        بحد اقصي 100 رقم
+                      </span>
+                      <span class="text-danger small" *ngIf="myForm.controls['tAWebsite'].hasError('pattern')">
+                        برجاء ادخال عنوان موقع صحيح
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> رقم السجل التجاري </label>
+                      <input type="text" id="tACommeRegNo" formControlName="tACommeRegNo" class="form-control"
+                        [class.is-invalid]="myForm.get('tACommeRegNo').invalid && myForm.get('tACommeRegNo').dirty">
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tACommeRegNo'].hasError('required') && myForm.controls['tACommeRegNo'].dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small" *ngIf="myForm.controls['tACommeRegNo'].hasError('maxlength')">
+                        حد اقصي 20 رقم
+                      </span>
+                      <span class="text-danger small" *ngIf="myForm.controls['tACommeRegNo'].hasError('pattern')">
+                        فقط ارقام
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label">
+                        إرفاق ملف السجل التجاري
+                      </label>
+                      <label class="form-control" for="commRegFile">
+                        {{comFile || 'اختر ملف'}}
+                      </label>
+                      <span class="form-control form-upload" class="d-none">
+                        <input type="file" id="commRegFile" formControlName="$$commRegFile" accept="application/pdf"
+                          (change)="commRegFileChange($event, 'tACommRegFile')">
+                      </span>
+                      <span class="text-muted small"> صيغة PDF </span>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tACommRegFile'].hasError('required') && myForm.get('tACommRegFile').dirty">
+                        هذا الحقل إجباري
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label  "> تاريخ انشاء السجل التجاري </label>
+                      <input type="date" id="tACommRegIssueDate" formControlName="tACommRegIssueDate"
+                        class="form-control"
+                        [class.is-invalid]="myForm.get('tACommRegIssueDate').invalid && myForm.get('tACommRegIssueDate').dirty">
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tACommRegIssueDate'].hasError('required') && myForm.get('tACommRegIssueDate').dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tACommRegIssueDate'].hasError('lessThanToday')">
+                        التاريخ يجب ان يكون قبل تاريخ اليوم
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> تاريخ انتهاء السجل التجاري </label>
+                      <input type="date" id="tACommRegExpiryDate" formControlName="tACommRegExpiryDate"
+                        class="form-control"
+                        [class.is-invalid]="myForm.get('tACommRegExpiryDate').invalid && myForm.get('tACommRegExpiryDate').dirty">
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tACommRegExpiryDate'].hasError('required') && myForm.get('tACommRegExpiryDate').dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tACommRegExpiryDate'].hasError('greaterThan')">
+                        تاريخ انتهاء السجل التجاري يجب ان يكون اكبر من تاريخ الانشاء
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="d-block col-form-label">رقم الوكالة</label>
+                      <input type="text" class="form-control" formControlName="agencyID">
+                    </div>
+                    <em *ngIf="myForm.get('agencyID').hasError('required') && myForm.get('agencyID').touched">
+                      اجباري
+                    </em>
+                    <em *ngIf="!myForm.get('agencyID').hasError('required') && 
+                                myForm.get('agencyID').hasError('maxlength') &&
+                                myForm.get('agencyID').touched">
+                      حد اقصي 4 ارقام
+                    </em>
+                    <em *ngIf="!myForm.get('agencyID').hasError('required') && 
+                               !myForm.get('agencyID').hasError('maxlength') &&
+                               myForm.get('agencyID').hasError('pattern') &&
+                               myForm.get('agencyID').touched">
+                      ارقام فقط
+                    </em>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="d-block col-form-label"> نبذة عن وكالة السفر </label>
+                      <textarea class="form-control" rows="4" formControlName="tADescription"
+                        [class.is-invalid]="myForm.get('tADescription').invalid && myForm.get('tADescription').dirty"> </textarea>
+                    </div>
+                    <span class="text-danger small"
+                      *ngIf="myForm.get('tADescription').hasError('required') && myForm.get('tADescription').dirty">
+                      هذا الحقل إجباري
+                    </span>
+                    <em class="text-danger small" *ngIf="!myForm.get('tADescription').hasError('required') &&
+                                  myForm.get('tADescription').hasError('maxlength') &&
+                                  myForm.get('tADescription').dirty">
+                      حد اقصي الف رقم
+                    </em>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-lg-3 offset-lg-1  text-center mt-3 pt-3">
+                <label
+                  class="mb-2 p-5 form-upload-img d-flex justify-content-center align-items-center flex-column overflow-hidden"
+                  for="upload-photo">
+                  <div class="ttl mb-3">
+                    <span class="d-block mb-3"><i class="fal fa-2x fa-upload"></i></span>
+                    <span class="d-block">رفع صورة </span>
+                    <span class="d-block">شعار الوكالة</span>
+                  </div>
+                  <div class="file-input-mask">
+                    <input id="upload-photo" class="d-none" type="file" accept=".jpg, .jpeg, .png"
+                      formControlName="$$logoFile" (change)="logoChange($event, 'tALogo' )">
+                    <span class="text-danger small" *ngIf="myForm.controls['tALogo'].hasError('required')">
+                      هذا الحقل إجباري
+                    </span>
+                    <span class="text-danger small" *ngIf="myForm.controls['$$logoFile'].hasError('maxSize')">
+                      حد اقصي 500 كيلو بايت
+                    </span>
+                  </div>
+                </label>
+                <span class="text-muted small"> صيغة jpg,png</span>
+                <span class="p-4 d-block">
+                  <img *ngIf="logoUrl" [src]="logoUrl" alt="company logo">
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <hr class="my-5">
+          <section>
+            <div class="d-flex justify-content-between align-items-center my-4">
+              <h3 class="text-primary m-0"> بيانات مالك / ملاك وكالة السفر </h3>
+              <!--<a href="javascript:;" class="btn btn-outline-primary btn-hover" data-toggle="modal" data-target="#addbranch">اضافة مالك</a>-->
+              <button type="button" (click)="showDialog()" class="btn btn-outline-primary btn-hover">اضافة مالك</button>
+            </div>
+            <div *ngIf="ownerList && ownerList.length">
+              <table class="table">
+                <tr>
+                  <th> اسم المالك</th>
+                  <th>رقم الجوال</th>
+                  <th>رقم الهوية </th>
+                  <th>تعديل</th>
+                  <th>حذف</th>
+                </tr>
+                <tr *ngFor="let owner of ownerList; let i = index">
+                  <td>{{owner.tAOwnerFullName}}</td>
+                  <td>{{owner.tAOwnerPhoneNo}}</td>
+                  <td>{{owner.tAOwnerNationalID}}</td>
+                  <td>
+                    <a class="table-action text-success" (click)="onRowEdit(i)">
+                      <i class="fal fa-fw fa-pencil-alt"></i>
+                    </a>
+                  </td>
+                  <td>
+                    <a class="table-action text-danger" (click)="onRowDelete(owner.tAOwnerNationalID)">
+                      <i class="fal fa-fw fa-trash-alt"></i>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div *ngIf="!ownerList.length"
+              class="demo-1 align-items-center bg-light border  display-4 flex-column justify-content-center mb-5 p-5 round text-center text-muted">
+              <i class="fal fa-fw fa-4x text-muted fa-users mb-4"></i>
+              <p class="text-muted m-0">
+                لا يوجد ملاك حاليا ...
+                <a href="javascript:;" class="d-inline-block border-bottom" data-toggle="modal"
+                  data-target="#addbranch"> اضافة مالك جديد ؟ </a>
+              </p>
+            </div>
+          </section>
+          <div class="btn-group mt-5">
+            <a routerLink="/" class="btn btn-default px-0"> الغاء التسجيل</a>
+            <div>
+              <button class="btn btn-primary ml-3" [disabled]="!myForm.valid" type="submit">التالي</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<p-dialog header="" [(visible)]="displayDialog" [responsive]="true" [style]="{width: '60%'}">
+  <p-header>
+    <span>إضافة مالك</span>
+  </p-header>
+  <div class="modal-body">
+    <form [formGroup]="ownerForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group ">
+            <label class="d-block col-form-label"> اسم المالك </label>
+            <input type="text" id="tAOwnerFullName" formControlName="tAOwnerFullName" class="form-control">
+            <span class="text-danger"
+              *ngIf="ownerForm.get('tAOwnerFullName').hasError('required') && ownerForm.get('tAOwnerFullName').dirty">
+              هذا الحقل إجباري
+            </span>
+            <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerFullName').hasError('required') &&
+                     ownerForm.get('tAOwnerFullName').hasError('maxlength')">
+              فقط 20 رقم
+            </span>
+            <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerFullName').hasError('required') &&
+            !ownerForm.get('tAOwnerFullName').hasError('maxlength') &&
+            ownerForm.get('tAOwnerFullName').hasError('pattern')">
+              حروف فقط
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="d-block col-form-label"> رقم الهوية </label>
+            <input type="text" class="form-control" formControlName="tAOwnerNationalID">
+            <span class="text-danger"
+              *ngIf="ownerForm.get('tAOwnerNationalID').hasError('required') && ownerForm.get('tAOwnerNationalID').dirty">
+              هذا الحقل إجباري
+            </span>
+            <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerNationalID').hasError('required') &&
+            ownerForm.get('tAOwnerNationalID').hasError('maxlength') && ownerForm.get('tAOwnerNationalID').dirty">
+              فقط 20 حرف
+            </span>
+            <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerNationalID').hasError('required') &&
+                          !ownerForm.get('tAOwnerNationalID').hasError('maxlength') &&
+                          ownerForm.get('tAOwnerNationalID').hasError('pattern') &&
+                          ownerForm.get('tAOwnerNationalID').dirty">
+              ارقام فقط
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="d-block col-form-label"> رقم الجوال </label>
+            <input type="text" id="tAOwnerPhoneNo" class="form-control" formControlName="tAOwnerPhoneNo">
+            <span class="text-danger"
+              *ngIf="ownerForm.get('tAOwnerPhoneNo').hasError('required') && ownerForm.get('tAOwnerPhoneNo').dirty">
+              هذا الحقل إجباري
+            </span>
+            <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerPhoneNo').hasError('required') &&
+                  ownerForm.get('tAOwnerPhoneNo').hasError('maxlength')">
+              فقط 20 رقم
+            </span>
+            <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerPhoneNo').hasError('required') &&
+            !ownerForm.get('tAOwnerPhoneNo').hasError('maxlength') &&
+            ownerForm.get('tAOwnerPhoneNo').hasError('pattern') &&
+            ownerForm.get('tAOwnerPhoneNo').dirty">
+              ارقام فقط
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <p-footer>
+    <button type="button" class="btn btn-outline-primary mr-2" (click)="onClose()">إلغاء</button>
+    <button type="button" class="btn btn-primary demo-trigger-1" [disabled]="!ownerForm.valid" (click)="saveOwner()">
+      حفظ
+    </button>
+  </p-footer>
+</p-dialog>

@@ -1,0 +1,257 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="Search_results.html"> ادارة برامج العمرة </a></li>
+        <li class="breadcrumb-item active" aria-current="page"> عمرة رمضان شركة الواحات للسياحة </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> اضافة باقة جديد </h1>
+    </div>
+    <div class="page-inner  overflow-hidden">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title"> البيانات الاساسية </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">2</span> <span class="wizard-tabs-title"> المجموعة والمطوف </span>
+              </div>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">3</span> <span class="wizard-tabs-title"> بيانات الغرف </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <span class="wizard-tabs-number">4</span> <span class="wizard-tabs-title"> تأكيد البيانات </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wizard-details">
+        <section>
+          <div class="d-flex justify-content-between align-items-center my-4">
+            <h3 class="text-primary m-0">بيانات الغرف </h3>
+            <a href="javascript:;" class="btn btn-outline-primary btn-hover" data-toggle="modal"
+              data-target="#additem" (click)="resetForm()">اضافة غرف </a>
+          </div>
+
+          <div *ngIf="!rooms.length"
+            class="demo-1 align-items-center bg-light border  display-4 flex-column justify-content-center mb-5 p-5 round text-center text-muted">
+            <i class="fal fa-fw fa-4x text-muted fa-door-open mb-4"></i>
+            <p class="text-muted m-0">
+              لا يوجد غرف حاليا ...
+              <a href="javascript:;" class="d-inline-block border-bottom" data-toggle="modal" data-target="#additem">
+                اضافة غرفة جديدة ؟ </a>
+            </p>
+          </div>
+
+          <div *ngIf="rooms.length">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>نوع الغرف </th>
+                    <th>السعر للبالغين </th>
+                    <th> السعر للاطفال </th>
+                    <th> السعر للرضع </th>
+                    <th>العدد المتوفر</th>
+                    <th>تعديل</th>
+                    <th>حذف</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let room of rooms; let i = index">
+                    <td>{{room.roomTypeID}}</td>
+                    <td>{{room.roomPriceAdult}}</td>
+                    <td>{{room.roomPriceKids}}</td>
+                    <td>{{room.roomTypeInfants}}</td>
+                    <td>{{room.roomQuantity}}</td>
+                    <td>
+                      <a href="javascript:;" (click)="editRoom(room.$$ID)" class="table-action text-success" data-toggle="modal"
+                        data-target="#additem"> <i class="fal fa-fw fa-pencil-alt"></i> </a>
+                    </td>
+                    <td>
+                      <a href="javascript:;" (click)="deleteRoom(room.$$ID)" class="table-action text-danger"
+                        data-toggle="modal" data-target="#deleteitem"> <i class="fal fa-fw fa-trash-alt"></i> </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <div class="btn-group mt-5">
+          <a class="btn btn-default px-0"> الغاء </a>
+          <div>
+            <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
+            <button class="btn btn-primary ml-3" [disabled]="!rooms.length" (click)="submit()">التالي</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="additem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> إضافة غرفة </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="roomForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> نوع الغرفة </label>
+                <select *ngFor="let item of roomType" class="form-control" formControlName="roomTypeID">
+                  <option>
+                    {{item.single}}
+                  </option>
+                  <option>
+                    {{item.double}}
+                  </option>
+                  <option>
+                    {{item.third}}
+                  </option>
+                  <option>
+                    {{item.fourth}}
+                  </option>
+                </select>
+                <em *ngIf="roomForm.get('roomTypeID').hasError('required') && roomForm.get('roomTypeID').dirty">
+                  هذا الحقل إجباري
+                </em>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> السعر للبالغين </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" type="text" formControlName="roomPriceAdult">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">ريـال</span>
+                  </div>
+                </div>
+                <em
+                  *ngIf="roomForm.get('roomPriceAdult').hasError('required') && roomForm.get('roomPriceAdult').dirty">
+                  هذا الحقل إجباري
+                </em>
+                <em *ngIf="!roomForm.get('roomPriceAdult').hasError('required') &&
+                          roomForm.get('roomPriceAdult').hasError('pattern') &&
+                          roomForm.get('roomPriceAdult').dirty">
+                  فقط ارقام
+                </em>
+                <em *ngIf="!roomForm.get('roomPriceAdult').hasError('required') &&
+                           !roomForm.get('roomPriceAdult').hasError('pattern') &&
+                           roomForm.get('roomPriceAdult').hasError('maxlength') &&
+                              roomForm.get('roomPriceAdult').dirty">
+                  حد اقصي 20 رقم
+                </em>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> السعر للاطفال </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" formControlName="roomPriceKids">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">ريـال</span>
+                  </div>
+                </div>
+                <em *ngIf="roomForm.get('roomPriceKids').hasError('required') && roomForm.get('roomPriceKids').dirty">
+                  هذا الحقل إجباري
+                </em>
+                <em *ngIf="!roomForm.get('roomPriceKids').hasError('required') &&
+                           roomForm.get('roomPriceKids').hasError('pattern') &&
+                           roomForm.get('roomPriceKids').dirty">
+                  فقط ارقام
+                </em>
+                <em *ngIf="!roomForm.get('roomPriceKids').hasError('required') &&
+                           !roomForm.get('roomPriceKids').hasError('pattern') &&
+                            roomForm.get('roomPriceKids').hasError('maxlength') &&
+                            roomForm.get('roomPriceKids').dirty">
+                  حد اقصي 20 رقم
+                </em>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> السعر للرضع </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" formControlName="roomTypeInfants">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">ريـال</span>
+                  </div>
+                </div>
+                <em
+                  *ngIf="roomForm.get('roomTypeInfants').hasError('required') && roomForm.get('roomTypeInfants').dirty">
+                  هذا الحقل إجباري
+                </em>
+                <em *ngIf="!roomForm.get('roomTypeInfants').hasError('required') &&
+                         roomForm.get('roomTypeInfants').hasError('pattern') &&
+                         roomForm.get('roomTypeInfants').dirty">
+                  فقط ارقام
+                </em>
+                <em *ngIf="!roomForm.get('roomTypeInfants').hasError('required') &&
+                           !roomForm.get('roomTypeInfants').hasError('pattern') &&
+                           roomForm.get('roomTypeInfants').hasError('maxlength') &&
+                           roomForm.get('roomTypeInfants').dirty">
+                  حد اقصي 20 رقم
+                </em>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> العدد المتوفر </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" formControlName="roomQuantity">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">غرفة</span>
+                  </div>
+                </div>
+                <em *ngIf="roomForm.get('roomQuantity').hasError('required') && roomForm.get('roomQuantity').dirty">
+                  هذا الحقل إجباري
+                </em>
+                <em *ngIf="!roomForm.get('roomQuantity').hasError('required') &&
+                            roomForm.get('roomQuantity').hasError('pattern') &&
+                            roomForm.get('roomQuantity').dirty">
+                  فقط ارقام
+                </em>
+                <em *ngIf="!roomForm.get('roomQuantity').hasError('required') &&
+                           !roomForm.get('roomQuantity').hasError('pattern') &&
+                           roomForm.get('roomQuantity').hasError('maxlength') &&
+                           roomForm.get('roomQuantity').dirty">
+                  حد اقصي 20 رقم
+                </em>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">إلغاء</button>
+        <button type="button" [disabled]="!roomForm.valid" (click)="addRoom()" class="btn btn-primary demo-trigger-1"
+          data-dismiss="modal">
+          حفظ </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+{
+  "/oauth": {
+    "target": "http://ubsapi.abofasada.com/umrah/oauth/token",
+    "changeOrigin": true,
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/oauth": ""
+    }
+  }
+}

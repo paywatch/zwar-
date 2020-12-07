@@ -1,0 +1,343 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> تسجيل وكالة السفر </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> تسجيل وكالة السفر </h1>
+    </div>
+    <div class="page-inner">
+      <div class="border-bottom mb-4 mx-n4 px-4 pb-3">
+        <div class="wizard-control">
+          <ul class="d-flex justify-content-center flex-column flex-md-row ">
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">1</span> <span class="wizard-tabs-title"> البيانات الاساسية </span>
+              </div>
+            </li>
+            <li class="nav-item active">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">2</span> <span class="wizard-tabs-title"> بيانات الترخيص </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">3</span> <span class="wizard-tabs-title"> بيانات التواصل والفروع
+                </span>
+              </div>
+            </li>
+            <li class="nav-item ">
+              <div class="nav-link">
+                <span class="wizard-tabs-number">4</span> <span class="wizard-tabs-title"> تأكيد البيانات </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wizard-details">
+        <form [formGroup]="myForm" autocomplete="off" novalidate (ngSubmit)="SaveData()">
+          <input formControlName="taid" type="hidden">
+          <section>
+            <h3 class="text-primary"> ترخيص وزارة السياحة </h3>
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="d-block col-form-label"> هل الوكالة مرخصة من قبل السفارة ؟ </label>
+                      <div class="mt-2">
+                        <div class="custom-control custom-radio  d-inline-block ">
+                          <input id="yes1" [value]="true" formControlName="$$isMinTourAuth" type="radio"
+                            class="custom-control-input" (change)="changeMinTourAuth()">
+                          <label class="custom-control-label" for="yes1"> نعم </label>
+                        </div>
+                        <div class="custom-control custom-radio  d-inline-block  mx-3">
+                          <input id="no1" formControlName="$$isMinTourAuth" [value]="false" type="radio"
+                            class="custom-control-input" (change)="changeMinTourAuth()">
+                          <label class="custom-control-label" for="no1"> لا</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="$$isMinTourAuth">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> رقم الترخيص </label>
+                        <input type="text" id="tAMinTourAuthNo" formControlName="tAMinTourAuthNo" class="form-control"
+                          [class.is-invalid]="myForm.get('tAMinTourAuthNo').invalid && myForm.get('tAMinTourAuthNo').dirty">
+                        <span class="text-danger small"
+                          *ngIf="myForm.get('tAMinTourAuthNo').hasError('required') && myForm.get('tAMinTourAuthNo').dirty">
+                          هذا الحقل إجباري
+                        </span>
+                        <span class="text-danger small" *ngIf="!myForm.get('tAMinTourAuthNo').hasError('required') &&
+                                    myForm.get('tAMinTourAuthNo').hasError('maxlength')">
+                          بحد اقصي 20 رقم
+                        </span>
+                        <span class="text-danger small" *ngIf="myForm.get('tAMinTourAuthNo').hasError('pattern')">
+                          فقط ارقام
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> ملف الترخيص </label>
+                        <label class="form-control" for="minAuthFile"> {{files['tAMinTourAuthFile'] || 'اختر ملف'}}
+                        </label>
+                        <span class="form-control form-upload" class="d-none">
+                          <input type="file" accept=".pdf" id="minAuthFile"
+                            (change)="onPdfChange($event,'tAMinTourAuthFile')">
+                        </span>
+                        <span class="text-muted small"> صيغة PDF </span>
+                        <span class="text-danger small"
+                          *ngIf="myForm.controls['tAMinTourAuthFile'].hasError('required')">
+                          Required
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label  "> تاريخ انشاء الترخيص </label>
+                        <input type="date" id="tAMinTourAuthIssueDate" formControlName="tAMinTourAuthIssueDate"
+                          class="form-control"
+                          [class.is-invalid]="myForm.get('tAMinTourAuthIssueDate').invalid && myForm.get('tAMinTourAuthIssueDate').dirty">
+                      </div>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAMinTourAuthIssueDate'].hasError('required') && myForm.controls['tAMinTourAuthIssueDate'].dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAMinTourAuthIssueDate'].hasError('lessThanToday')">
+                        التاريخ يجب ان يكون قبل تاريخ اليوم
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="d-block col-form-label  "> تاريخ انتهاء الترخيص </label>
+                        <input type="date" id="tAMinTourAuthExpiryDate" formControlName="tAMinTourAuthExpiryDate"
+                          class="form-control"
+                          [class.is-invalid]="myForm.get('tAMinTourAuthExpiryDate').invalid && myForm.get('tAMinTourAuthExpiryDate').dirty">
+                      </div>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAMinTourAuthExpiryDate'].hasError('required') && myForm.controls['tAMinTourAuthExpiryDate'].dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small" *ngIf="!myForm.controls['tAMinTourAuthExpiryDate'].hasError('required') &&
+                                   myForm.controls['tAMinTourAuthExpiryDate'].hasError('greaterThan')">
+                        تاريخ النهايه يجب ان يكون اكبر من تاريخ البدايه
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <hr class="my-4">
+
+          <section>
+            <h3 class="text-primary"> التسجيل في FTAV</h3>
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> هل الوكالة مسجلة لدى FTAV؟ </label>
+                      <div class="mt-2">
+                        <div class="custom-control custom-radio  d-inline-block ">
+                          <input id="yes2" [value]="true" formControlName="$$isFTAVMember" type="radio"
+                            class="custom-control-input" checked (change)="changeFTAVMember()">
+                          <label class="custom-control-label" for="yes2"> نعم </label>
+                        </div>
+                        <div class="custom-control custom-radio  d-inline-block  mx-3">
+                          <input id="no2" [value]="false" formControlName="$$isFTAVMember" type="radio"
+                            class="custom-control-input" (change)="changeFTAVMember()">
+                          <label class="custom-control-label" for="no2">لا</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="$$isFTAVMember">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> رقم العضوية </label>
+                        <input type="text" id="tAFTAVMemberNo" formControlName="tAFTAVMemberNo" class="form-control"
+                          [class.is-invalid]="myForm.get('tAFTAVMemberNo').invalid && myForm.get('tAFTAVMemberNo').dirty">
+                        <span class="text-danger small"
+                          *ngIf="myForm.controls['tAFTAVMemberNo'].hasError('required') &&myForm.controls['tAFTAVMemberNo'].dirty">
+                          هذا الحقل إجباري
+                        </span>
+                        <span class="text-danger small" *ngIf="myForm.controls['tAFTAVMemberNo'].hasError('maxlength')">
+                          بحد اقصي 20 رقم
+                        </span>
+                        <span class="text-danger small" *ngIf="myForm.controls['tAFTAVMemberNo'].hasError('pattern')">
+                          فقط ارقام
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> ملف العضوية </label>
+                        <label class="form-control"> {{files['tAFTAVMemberFile'] || 'اختر ملف'}}
+                          <span class="form-control form-upload" class="d-none">
+                            <input type="file" accept=".pdf"
+                            (change)="onPdfChange($event, 'tAFTAVMemberFile')">
+                          </span>
+                        </label>
+                        <span class="text-muted small"> صيغة PDF </span>
+                        <span class="text-danger small"
+                          *ngIf="myForm.controls['tAFTAVMemberFile'].hasError('required')">
+                          Required
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label  "> تاريخ انشاء العضوية </label>
+                        <input type="date" id="tAFTAVMemberIssueDate" formControlName="tAFTAVMemberIssueDate"
+                          class="form-control"
+                          [class.is-invalid]="myForm.get('tAFTAVMemberIssueDate').invalid && myForm.get('tAFTAVMemberIssueDate').dirty">
+                      </div>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAFTAVMemberIssueDate'].hasError('required') &&myForm.controls['tAFTAVMemberIssueDate'].dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAFTAVMemberIssueDate'].hasError('lessThanToday')">
+                        التاريخ يجب ان يكون قبل تاريخ اليوم
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label  "> تاريخ انتهاء العضوية </label>
+                        <input type="date" id="tAFTAVMemberExpiryDate" formControlName="tAFTAVMemberExpiryDate"
+                          class="form-control"
+                          [class.is-invalid]="myForm.get('tAFTAVMemberExpiryDate').invalid && myForm.get('tAFTAVMemberExpiryDate').dirty">
+                      </div>
+                      <span class="text-danger small" *ngIf="!myForm.controls['tAFTAVMemberExpiryDate'].hasError('required') &&
+                      myForm.controls['tAFTAVMemberExpiryDate'].hasError('greaterThan')">
+                        تاريخ النهايه يجب ان يكون اكبر من تاريخ البدايه
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <hr class="my-4">
+          <section>
+            <h3 class="text-primary"> التسجيل في الجامعة التونسية لوكالات الأسفار والسياحة </h3>
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> هل الوكالة مسجلة لدى الجامعة التونسية لوكالات الأسفار
+                        والسياحة ؟ </label>
+                      <div class="mt-2">
+                        <div class="custom-control custom-radio  d-inline-block ">
+                          <input id="yes3" [value]="true" formControlName="$$isFITTMember" type="radio"
+                            class="custom-control-input" (change)="changeFITTMember()">
+                          <label class="custom-control-label" for="yes3"> نعم </label>
+                        </div>
+                        <div class="custom-control custom-radio  d-inline-block  mx-3">
+                          <input id="no3" [value]="false" formControlName="$$isFITTMember" type="radio"
+                            class="custom-control-input" (change)="changeFITTMember()">
+                          <label class="custom-control-label" for="no3"> لا</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="$$isFITTMember">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> رقم العضوية </label>
+                        <input type="text" id="tAFITTMemberNo" formControlName="tAFITTMemberNo" class="form-control"
+                          [class.is-invalid]="myForm.get('tAFITTMemberNo').invalid && myForm.get('tAFITTMemberNo').dirty">
+                        <span class="text-danger small"
+                          *ngIf="myForm.controls['tAFITTMemberNo'].hasError('required') &&myForm.controls['tAFITTMemberNo'].dirty">
+                          هذا الحقل إجباري
+                        </span>
+                        <span class="text-danger small" *ngIf="myForm.controls['tAFITTMemberNo'].hasError('maxlength')">
+                          بحد اقصي 20 رقم
+                        </span>
+                        <span class="text-danger small" *ngIf="myForm.controls['tAFITTMemberNo'].hasError('pattern')">
+                          فقط ارقام
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> ملف العضوية </label>
+                        <label class="form-control"> {{files['tAFITTMemberFile'] || 'اختر ملف'}}
+                          <span class="form-control form-upload" class="d-none">
+                            <input type="file" accept=".pdf"
+                            (change)="onPdfChange($event, 'tAFITTMemberFile')">
+                          </span>
+                        </label>
+                        <span class="text-muted small"> صيغة PDF </span>
+                        <span class="text-danger small"
+                          *ngIf="myForm.controls['tAFITTMemberFile'].hasError('required')">
+                          Required
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label  "> تاريخ انشاء العضوية </label>
+                        <input type="date" id="tAFITTMemberIssueDate" formControlName="tAFITTMemberIssueDate"
+                          class="form-control"
+                          [class.is-invalid]="myForm.get('tAFITTMemberIssueDate').invalid && myForm.get('tAFITTMemberIssueDate').dirty">
+                      </div>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAFITTMemberIssueDate'].hasError('required') &&myForm.controls['tAFITTMemberIssueDate'].dirty">
+                        هذا الحقل إجباري
+                      </span>
+                      <span class="text-danger small"
+                        *ngIf="myForm.controls['tAFITTMemberIssueDate'].hasError('lessThanToday')">
+                        التاريخ يجب ان يكون قبل تاريخ اليوم
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group ">
+                        <label class="d-block col-form-label"> تاريخ انتهاء العضوية </label>
+                        <input type="date" id="tAFITTMemberExpiryDate" formControlName="tAFITTMemberExpiryDate"
+                          class="form-control"
+                          [class.is-invalid]="myForm.get('tAFITTMemberExpiryDate').invalid && myForm.get('tAFITTMemberExpiryDate').dirty">
+                      </div>
+                      <span class="text-danger small" *ngIf="!myForm.controls['tAFITTMemberExpiryDate'].hasError('required') &&
+                                   myForm.controls['tAFITTMemberExpiryDate'].hasError('greaterThan')">
+                        تاريخ النهايه يجب ان يكون اكبر من تاريخ البدايه
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="btn-group mt-5">
+            <a routerLink="/" class="btn btn-default px-0"> الغاء التسجيل</a>
+            <div>
+              <a routerLink="/agency/main" class="btn btn-outline-primary ml-3">السابق</a>
+              <button class="btn btn-primary ml-3" type="submit" [disabled]="!myForm.valid">التالي</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

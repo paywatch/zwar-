@@ -1,0 +1,166 @@
+<div class="page-layout" *ngIf="package">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="manage_package.html"> ادارة باقات العمرة </a></li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary">
+
+        <span class="ml-3">
+        </span>
+      </h1>
+    </div>
+    <div class="bg-white shadows px-4 pb-4 border">
+
+
+      <ul class="border-bottom f-tabs mb-4  mx-n4 nav nav-tabs pb-1 sticky-top">
+        <li class="nav-item" role="tablist">
+          <a class="nav-link active" href="#essential">البيانات الاساسية</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#groups"> المجموعة والمطوف </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#rooms"> بيانات الغرف </a>
+        </li>
+      </ul>
+      <section id="essential">
+        <h3 class="text-primary"> البيانات الاساسية </h3>
+       <div>
+         <div class="row">
+           <div class="col-md-4">
+             <div class="form-group">
+               <label class="d-block col-form-label"> المطار الداخلي </label>
+               {{package.localAirportID}}
+             </div>
+           </div>
+           <div class="col-md-4">
+             <div class="form-group ">
+               <label class="d-block col-form-label"> تاريخ الانطلاق </label>
+               {{package.packageDepartureDate}}
+             </div>
+           </div>
+           <div class="col-md-4">
+             <div class="form-group ">
+               <label class="d-block col-form-label"> تاريخ العودة </label>
+               {{package.packageReturnDate}}
+             </div>
+           </div>
+         </div>
+         <div class="row">
+           <div class="col-md-4">
+             <div class="form-group ">
+               <label class="d-block col-form-label"> موسم العمرة </label>
+               {{package.packageSeasonID}}
+             </div>
+           </div>
+           <div class="col-md-4">
+             <div class="form-group ">
+               <label class="d-block col-form-label"> سعة الباقة </label>
+               {{package.packageCapacity}}
+             </div>
+           </div>
+           <div class="col-md-4"> 
+             <div class="form-group ">
+               <label class="d-block col-form-label"> عدد مقاعد السفر </label>
+               {{package.packageAvailableSeats}}
+             </div>
+           </div>
+         </div>
+         <div class="row">
+           <div class="col-md-4">
+             <div class="form-group ">
+               <label class="d-block col-form-label"> خط سير الرحلة </label>
+               {{package.itineraryID}}
+             </div>
+           </div>
+           <div class="col-md-4">
+             <div class="form-group ">
+               <label class="d-block col-form-label">هل هناك عرض على الباقة</label>
+               <input type="text" readonly="" class="form-control-plaintext" value=" لا يوجد عرض ">
+             </div>
+           </div>
+         </div>
+       </div>  
+      </section>
+      <hr class="my-4 mx-n4">
+      <section id="groups">
+        <h3 class="text-primary"> المجموعة والمطوف </h3>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> اسم المطوف </label>
+                  {{package.mutawefName}}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم جوال المطوف </label>
+                  {{package.mutawefPhone}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> اسم قائد المجموعة </label>
+                  {{package.groupLeadName}}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> رقم جوال قائد المجموعة </label>
+                  {{package.groupLeadPhone}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-3 offset-lg-1  text-center   pt-3">
+            <div class="border border-primary mb-3">
+              <img src="ui/images/motawaf.jpg" alt="صورة المطوف ">
+            </div>
+            <p class="text-light"> صورة المطوف </p>
+          </div>
+        </div>
+
+      </section>
+      <hr class="my-4 mx-n4">
+      <section id="rooms">
+        <h3 class="text-primary"> بيانات الغرف </h3>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>نوع الغرف </th>
+                <th>السعر للبالغين </th>
+                <th> السعر للاطفال </th>
+                <th> السعر للرضع </th>
+                <th>العدد المتوفر</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> {{package.roomTypeID}} </td>
+                <td> {{package.roomPriceAdult}}</td>
+                <td> {{package.roomPriceKids}}</td>
+                <td> {{package.roomTypeInfants}} </td>
+                <td> {{package.roomQuantity}} </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div class="btn-group mt-5">
+        <div>
+          <a  class="btn btn-outline-primary ml-3"[routerLink]="['/package/edit']">رجوع</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
