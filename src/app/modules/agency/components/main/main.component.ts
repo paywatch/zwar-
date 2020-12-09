@@ -81,7 +81,6 @@ export class MainComponent implements OnInit {
       tADescription: ['', [Validators.required, Validators.maxLength(1000)]],
       tACommRegFile: [''],
       $$commRegFile: [null],
-      agencyID: ['' , [Validators.required, Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)]],
       tALogo: [''],
       $$logoFile: [null],
     }, {

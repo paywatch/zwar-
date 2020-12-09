@@ -73,7 +73,6 @@ export class RegisterComponent implements OnInit {
             Validators.maxLength(50),
           ],
         ],
-        userID: ['' , [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(4)]]
       },
       {
         validator: MustMatch('userPassword', 'repassword'),
@@ -117,7 +116,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/agency/main']);
           this.toast.success('تمت الاضافه');
         }
-        else{
+        else {
           this.toast.error('SomeThing Went Wrong');
         }
       });

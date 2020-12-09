@@ -191,28 +191,6 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="d-block col-form-label">رقم الوكالة</label>
-                      <input type="text" class="form-control" formControlName="agencyID">
-                    </div>
-                    <em *ngIf="myForm.get('agencyID').hasError('required') && myForm.get('agencyID').touched">
-                      اجباري
-                    </em>
-                    <em *ngIf="!myForm.get('agencyID').hasError('required') && 
-                                myForm.get('agencyID').hasError('maxlength') &&
-                                myForm.get('agencyID').touched">
-                      حد اقصي 4 ارقام
-                    </em>
-                    <em *ngIf="!myForm.get('agencyID').hasError('required') && 
-                               !myForm.get('agencyID').hasError('maxlength') &&
-                               myForm.get('agencyID').hasError('pattern') &&
-                               myForm.get('agencyID').touched">
-                      ارقام فقط
-                    </em>
-                  </div>
-                </div>
-                <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label class="d-block col-form-label"> نبذة عن وكالة السفر </label>

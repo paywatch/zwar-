@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getAuthnication() {
-    if (this.user.user.apiKey) {
+    if (this.user?.user?.apiKey) {
       this.isLoggedIn = true;
     }
 
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getUser() {
-    this.user = JSON.parse(sessionStorage.getItem('user'));
+    this.user = JSON.parse(sessionStorage.getItem('user')) || {};
     console.log(this.user);
   }
 

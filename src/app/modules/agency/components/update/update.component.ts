@@ -80,7 +80,6 @@ export class UpdateComponent implements OnInit {
       $$isFTAVMember: [true],
       $$isMinTourAuth: [true],
       $$logoFile: [],
-      agencyID: [],
       countryId: []
     });
   }

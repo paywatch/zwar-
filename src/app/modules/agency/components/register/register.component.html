@@ -54,7 +54,7 @@
           <div class="col-md-6 col-lg-4">
             <div class="form-group">
               <label class="d-block col-form-label"> الدولة </label>
-              <select  class="form-control" formControlName="countryId">
+              <select class="form-control" formControlName="countryId">
                 <option>إختر</option>
                 <option *ngFor="let item of countries" [value]="item.id">
                   {{item.name}}
@@ -225,28 +225,6 @@
                 تأكيد كلمة المرور غير مطابق لكلمة المرور
               </span>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-sm-12">
-            <div class="form-group">
-              <label class="d-block col-form-label"> رقم وكالة السفر </label>
-              <input type="text" class="form-control" formControlName="userID">
-            </div>
-            <em *ngIf="RegisterForm.get('userID').hasError('required') && RegisterForm.get('userID').touched">
-              اجباري
-            </em>
-            <em *ngIf="!RegisterForm.get('userID').hasError('required') &&
-                        RegisterForm.get('userID').hasError('maxlength') 
-                        && RegisterForm.get('userID').touched">
-              حد اقصي 4 ارقام
-            </em>
-            <em *ngIf="!RegisterForm.get('userID').hasError('required') &&
-                       !RegisterForm.get('userID').hasError('maxlength') &&
-                        RegisterForm.get('userID').hasError('pattern') &&
-                       RegisterForm.get('userID').touched">
-                       ارقام فقط
-            </em>
           </div>
         </div>
         <!-- <div class="text-danger small" *ngIf="message">
