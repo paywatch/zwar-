@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter, NgZone } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { ProgramService } from '../../services/program.service';
 
@@ -21,7 +22,8 @@ export class ResidentialComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private programservice: ProgramService) { }
+    private programservice: ProgramService,
+    private toaster: ToastrService) { }
 
   ngOnInit(): void {
     this.initResidentialForm();
@@ -102,7 +104,7 @@ export class ResidentialComponent implements OnInit {
     this.programservice.getAllStars().subscribe(stars => {
       this.hotelStars = stars;
       console.log(this.hotelStars);
-    })
+    });
   }
 
   createHotels() {
@@ -111,6 +113,7 @@ export class ResidentialComponent implements OnInit {
     this.programservice.createResidential(hotels)
       .subscribe((res) => {
         this.router.navigate(['/program/transportation']);
-      });
+        this.toaster.success('تمت الاضافه');
+      }, (error) => this.toaster.error(error));
   }
 }

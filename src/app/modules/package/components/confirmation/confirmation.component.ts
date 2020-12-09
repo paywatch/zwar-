@@ -14,6 +14,7 @@ export class ConfirmationComponent implements OnInit {
   base: any;
   matwaf: any;
   room: any;
+  ID: string;
 
   constructor(
     private router: Router,
@@ -23,6 +24,11 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBasicData();
+    this.ID = JSON.parse(sessionStorage.getItem('ID'));
+    this.getAirPorts();
+    this.getUmrahSeason();
+    this.getUmrahDirection();
+    this.getRoomType();
   }
 
   getBasicData() {
@@ -37,15 +43,40 @@ export class ConfirmationComponent implements OnInit {
     console.log(this.package);
   }
 
+  getAirPorts() {
+    this.packaService.getAirPorts().subscribe(airport => {
+      this.package.internalAirPort = airport.find(air => air.id == this.base.localAirportID).name;
+    });
+  }
+
+  getUmrahSeason() {
+    this.packaService.getUmrahSeason().subscribe(season => {
+      this.package.umrahSeasonName = season.find(s => s.id == this.base.packageSeasonID).name;
+    });
+  }
+
+  getUmrahDirection() {
+    this.packaService.getUmrahDirection().subscribe(direction => {
+      this.package.directionName = direction.find(d => d.id == this.base.itineraryID).name;
+    });
+  }
+
+  getRoomType() {
+    this.packaService.getRoomType().subscribe(roomType => {
+      this.package.roomTypeName = roomType.find(r => r.id == this.room.roomTypeID).name;
+    });
+  }
+
   back() {
     this.router.navigate(['/package/room-data']);
   }
 
   confirm() {
+    this.package.ID = this.ID;
     this.packaService.addPackages(this.package)
-    .subscribe(res => {
+      .subscribe(res => {
         this.router.navigate(['/package/congratulate']);
         this.toast.success('تمت الاضافه');
-    }, (error) => this.toast.error('حدث خطا ما'));
+      }, (error) => this.toast.error('حدث خطا ما'));
   }
 }

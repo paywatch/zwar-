@@ -61,8 +61,7 @@
                       <input id="first1" type="radio" [value]="true" formControlName="progAirTicketIncluded"
                         class="custom-control-input">
                       <label class="custom-control-label" for="first1"> نعم مشمولة </label>
-                      <em
-                        *ngIf="transportation.get('progAirTicketIncluded').hasError('required') &&
+                      <em *ngIf="transportation.get('progAirTicketIncluded').hasError('required') &&
                                transportation.get('progAirTicketIncluded').touched">
                         هذا الحقل إجباري
                       </em>
@@ -85,15 +84,9 @@
               <div class="col-md-4">
                 <div class="form-group ">
                   <label class="d-block col-form-label"> شركة الطيران </label>
-                  <select *ngFor="let air of airplane" class="form-control" formControlName="airlineID">
-                    <option>
-                      {{air.egtptAir}}
-                    </option>
-                    <option>
-                      {{air.flyEmiraties}}
-                    </option>
-                    <option>
-                      {{air.saudiAir}}
+                  <select class="form-control" formControlName="airlineID">
+                    <option *ngFor="let air of airplane" [value]="air.id">
+                      {{air.name}}
                     </option>
                   </select>
                   <em
@@ -131,25 +124,15 @@
                     <label class="d-block col-form-label">
                       طريقة التنقل
                     </label>
-                    <select *ngFor="let transport of transports" formControlName="internalTransportations" class="form-control">
-                      <option>اختر</option>
-                      <option>
-                        {{transport.Bus}}
+                    <select formControlName="internalTransportations"
+                      class="form-control">
+                      <option *ngFor="let transport of transports" [value]="transport.id">
+                        {{transport.name}}
                       </option>
-                      <option>
-                        {{transport.train}}
-                      </option>
-                      <option>
-                        {{transport.car}}
-                      </option>
-                      <option>
-                        {{transport.air}}
-                      </option>
-
                     </select>
                     <em *ngIf="transportation.get('internalTransportations').hasError('required') &&
                                transportation.get('internalTransportations').touched">
-                               اجباري
+                      اجباري
                     </em>
                   </div>
                 </div>
@@ -160,15 +143,15 @@
                     </label>
                     <input type="text" class="form-control" formControlName="programTransDetails"
                       placeholder="مثال : باص مكيف  شامل كل وسائل الراحة">
-                      <em *ngIf="transportation.get('programTransDetails').hasError('required') &&
+                    <em *ngIf="transportation.get('programTransDetails').hasError('required') &&
                                    transportation.get('programTransDetails').touched">
-                                   اجباري
-                      </em>
-                      <em *ngIf="!transportation.get('programTransDetails').hasError('required') &&
+                      اجباري
+                    </em>
+                    <em *ngIf="!transportation.get('programTransDetails').hasError('required') &&
                                   transportation.get('programTransDetails').hasError('maxlength') &&
                                  transportation.get('programTransDetails').touched">
                       حد اقصي 50 رقم
-                      </em>
+                    </em>
                   </div>
                 </div>
               </div>

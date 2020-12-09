@@ -16,17 +16,18 @@ export class TransportaionComponent implements OnInit {
   airplane: any;
   transports: any;
 
-  constructor(private fb: FormBuilder,
-              private router: Router,
-              private programService: ProgramService,
-              private toast: ToastrService
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private programService: ProgramService,
+    private toast: ToastrService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     setTimeout(() => {
       this.patchForm();
-    },1000);
+    }, 1000);
     this.getAllAirplanes();
     this.getAllTransportation();
   }
@@ -36,7 +37,7 @@ export class TransportaionComponent implements OnInit {
       progAirTicketIncluded: ['', Validators.required],
       airlineID: ['', Validators.required],
       airlineDesc: ['', [Validators.required, Validators.maxLength(50)]],
-      internalTransportations: ['' , Validators.required],
+      internalTransportations: ['', Validators.required],
       programTransDetails: ['', [Validators.required, Validators.maxLength(50)]]
     });
   }

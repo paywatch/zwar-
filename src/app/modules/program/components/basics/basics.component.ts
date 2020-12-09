@@ -35,7 +35,7 @@ export class BasicsComponent implements OnInit {
     }, 2000);
     this.getAllCategory();
     this.getProgram();
-   }
+  }
 
   initForm() {
     this.basicsForm = this.fb.group({
@@ -45,7 +45,6 @@ export class BasicsComponent implements OnInit {
       programCategoryID: ['', Validators.required],
       programPrice: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
       programDesc: ['', [Validators.required, Validators.maxLength(1000)]],
-      programId: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(20)]]
     });
   }
 
@@ -59,34 +58,21 @@ export class BasicsComponent implements OnInit {
   getAllCategory() {
     this.programService.getAllCategory().subscribe(category => {
       this.categories = category;
-      console.log(this.categories);
-    });
-  }
-
-  getProgram() {
-    this.programService.getProgram().subscribe(program => {
-      this.programs = program;
+      console.log(category);
     });
   }
 
   createProgram() {
     const payload = this.basicsForm.value;
-    this.programs.map(p => {
-      if (payload.programId === p.programId) {
-        this.toastr.error('كود البرنامج موجود من قيل')
-      }
-      else{
-        this.programService.createProgram(payload)
-          .subscribe(
-            (data) => {
-              this.toastr.success('تمت الاضافه بنجاح');
-              this.router.navigate(['/program/residential']);
-            },
-            (error) => {
-              this.toastr.error('لقد حدث خطأ ما');
-            }
-          );
-      }
-    });
+    this.programService.createProgram(payload)
+      .subscribe(
+        (data) => {
+          this.toastr.success('تمت الاضافه بنجاح');
+          this.router.navigate(['/program/residential']);
+        },
+        (error) => {
+          this.toastr.error('لقد حدث خطأ ما');
+        }
+      );
   }
 }

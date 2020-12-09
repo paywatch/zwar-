@@ -582,9 +582,9 @@
       </section>
       <div class="btn-group mt-5">
         <!-- <a href="#delete" class="btn btn-default px-0" data-toggle="modal" data-target="#deleteitem"> حذف </a> -->
-        <a class="btn btn-default px-0" (click)="deleteProgram(program)"> حذف </a>
+        <a class="btn btn-default px-0" [routerLink]="['/program/edit']"> رجوع </a>
         <div>
-          <a [routerLink]="['/program/basics']" class="btn btn-outline-primary ml-3">تعديل</a>
+          <a [routerLink]="['/program/update', programId]" class="btn btn-outline-primary ml-3">تعديل</a>
           <a *ngIf="!program.programActive" class="btn btn-primary ml-3"> نشر البرنامج </a>
           <a *ngIf="program.programActive" class="btn btn-primary ml-3"> الغاء نشر البرنامج </a>
         </div>

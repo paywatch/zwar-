@@ -47,7 +47,6 @@ export class BaseComponent implements OnInit {
         Validators.maxLength(20),
         Validators.pattern(/^[0-9]*$/)]],
       packageSeasonID: ['', Validators.required],
-      ID: ['', Validators.required],
       itineraryID: ['', Validators.required]
     }, {
       validators: GreaterThan('packageDepartureDate', 'packageReturnDate')

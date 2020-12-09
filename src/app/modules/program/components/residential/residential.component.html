@@ -98,13 +98,9 @@
                     <div class="col-md-4">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> نجوم الفندق </label>
-                        <select *ngFor="let star of hotelStars" class="form-control" formControlName="hotelStars">
+                        <select  class="form-control" formControlName="hotelStars">
                           <option>اختر</option>
-                          <option>{{star.stars1}}</option>
-                          <option>{{star.stars2}}</option>
-                          <option>{{star.stars3}}</option>
-                          <option>{{star.stars4}}</option>
-                          <option>{{star.stars5}}</option>
+                          <option *ngFor="let star of hotelStars" [value]="star.id">{{star.name}}</option>
                         </select>
                         <em *ngIf="hotel.get('hotelStars').hasError('required') && hotel.get('hotelStars').dirty">
                           هذا الحقل إجباري

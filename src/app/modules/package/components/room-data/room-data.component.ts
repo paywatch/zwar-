@@ -14,8 +14,9 @@ export class RoomDataComponent implements OnInit {
   roomForm: FormGroup;
   basics: any;
   roomType: any;
-  rooms: any[] = [];
+  rooms: any[];
   payload: any;
+  roomData: any;
 
   constructor(
     private fb: FormBuilder,
@@ -26,8 +27,7 @@ export class RoomDataComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getRoomType();
-    this.getAllRooms();
-    this.getRoomType();
+    this.getSessionStorageData();
   }
 
   initForm() {
@@ -43,18 +43,15 @@ export class RoomDataComponent implements OnInit {
   getRoomType() {
     this.packageService.getRoomType().subscribe(roomType => {
       this.roomType = roomType;
+      this.roomData.roomTypeName = roomType.find(r => r.id == this.roomData.roomTypeID).name;
+      console.log(this.roomData);
     });
   }
 
-  getAllRooms() {
-    this.packageService.getRooms().subscribe(rooms => {
-      if (rooms) {
-        this.rooms = rooms;
-      }
-      else {
-        this.rooms = [];
-      }
-    });
+  getSessionStorageData() {
+    this.roomData = JSON.parse(sessionStorage.getItem('room'));
+    this.roomData ? this.rooms = [].concat(this.roomData) : this.rooms = [];
+    console.log(this.rooms);
   }
 
   resetForm() {
@@ -89,20 +86,15 @@ export class RoomDataComponent implements OnInit {
   }
 
   submit() {
-    if (this.payload) {
-      this.packageService.createRooms(this.payload)
-        .subscribe((res) => {
-          if (res) {
-            this.toast.success('تمت الاضافه');
-            this.router.navigate(['/package/confirm']);
-          }
-        },
-          (err) => {
-            this.toast.error('لقد حدث خطأ ما');
-          });
-    }
-    else {
-      this.toast.error('يرجي اضافه بيانات');
-    }
+    this.packageService.createRooms(this.payload)
+      .subscribe((res) => {
+        if (res) {
+          this.toast.success('تمت الاضافه');
+          this.router.navigate(['/package/confirm']);
+        }
+      },
+        (err) => {
+          this.toast.error('لقد حدث خطأ ما');
+        });
   }
 }

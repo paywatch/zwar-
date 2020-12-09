@@ -47,15 +47,9 @@
               <div class="col-md-4">
                 <div class="form-group ">
                   <label class="d-block col-form-label" id="ai select"> المطار الداخلي </label>
-                  <select *ngFor="let airport of airPorts" class="form-control" formControlName="localAirportID">
-                    <option>
-                      {{airport.Gedda}}
-                    </option>
-                    <option>
-                      {{airport.madina}}
-                    </option>
-                    <option>
-                      {{airport.reyad}}
+                  <select class="form-control" formControlName="localAirportID">
+                    <option *ngFor="let airport of airPorts" [value]="airport.id">
+                      {{airport.name}}
                     </option>
                   </select>
                   <em
@@ -98,18 +92,9 @@
               <div class="col-md-4">
                 <div class="form-group ">
                   <label class="d-block col-form-label" id="uomra"> موسم العمرة </label>
-                  <select  *ngFor="let season of seasons" class="form-control" formControlName="packageSeasonID">
-                    <option>
-                      {{season.ramadan}}
-                    </option>
-                    <option>
-                      {{season.shaban}}
-                    </option>
-                    <option>
-                      {{season.ragab}}
-                    </option>
-                    <option>
-                      {{season.rabeaa}}
+                  <select class="form-control" formControlName="packageSeasonID">
+                    <option *ngFor="let season of seasons" [value]="season.id">
+                      {{season.name}}
                     </option>
                   </select>
                   <em
@@ -175,24 +160,12 @@
               <div class="col-md-4">
                 <div class="form-group ">
                   <label class="d-block col-form-label"> خط سير الرحلة </label>
-                  <select *ngFor="let direction of umrahDirection" class="form-control" formControlName="itineraryID">
-                    <option>
-                      {{direction.madina}}
-                    </option>
-                    <option>
-                      {{direction.mecaa}}
+                  <select class="form-control" formControlName="itineraryID">
+                    <option *ngFor="let direction of umrahDirection" [value]="direction.id">
+                      {{direction.name}}
                     </option>
                   </select>
                   <em *ngIf="baseForm.get('itineraryID').hasError('required') &&baseForm.get('itineraryID').dirty">
-                    هذا الحقل إجباري
-                  </em>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group ">
-                  <label class="d-block col-form-label"> رقم العرض </label>
-                  <input type="text" formControlName="ID" class="form-control">
-                  <em *ngIf="baseForm.get('ID').hasError('required') && baseForm.get('ID').dirty">
                     هذا الحقل إجباري
                   </em>
                 </div>

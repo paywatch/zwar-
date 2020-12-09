@@ -45,7 +45,7 @@
               data-target="#additem" (click)="resetForm()">اضافة غرف </a>
           </div>
 
-          <div *ngIf="!rooms.length"
+          <div *ngIf="!rooms"
             class="demo-1 align-items-center bg-light border  display-4 flex-column justify-content-center mb-5 p-5 round text-center text-muted">
             <i class="fal fa-fw fa-4x text-muted fa-door-open mb-4"></i>
             <p class="text-muted m-0">
@@ -55,7 +55,7 @@
             </p>
           </div>
 
-          <div *ngIf="rooms.length">
+          <div *ngIf="rooms">
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead>
@@ -70,8 +70,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let room of rooms; let i = index">
-                    <td>{{room.roomTypeID}}</td>
+                  <tr *ngFor="let room of rooms">
+                    <td>{{room.roomTypeName}}</td>
                     <td>{{room.roomPriceAdult}}</td>
                     <td>{{room.roomPriceKids}}</td>
                     <td>{{room.roomTypeInfants}}</td>
@@ -118,18 +118,9 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label class="d-block col-form-label"> نوع الغرفة </label>
-                <select *ngFor="let item of roomType" class="form-control" formControlName="roomTypeID">
-                  <option>
-                    {{item.single}}
-                  </option>
-                  <option>
-                    {{item.double}}
-                  </option>
-                  <option>
-                    {{item.third}}
-                  </option>
-                  <option>
-                    {{item.fourth}}
+                <select class="form-control" formControlName="roomTypeID">
+                  <option *ngFor="let item of roomType" [value]="item.id">
+                    {{item.name}}
                   </option>
                 </select>
                 <em *ngIf="roomForm.get('roomTypeID').hasError('required') && roomForm.get('roomTypeID').dirty">

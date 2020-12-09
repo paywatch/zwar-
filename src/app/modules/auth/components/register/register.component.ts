@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
 
   submit() {
     const payload = this.registerForm.value;
+    console.log(payload);
     this.authService.register(payload.email, payload.password)
       .then(res => {
         this.toast.success('تم التسجيل بنجاح');

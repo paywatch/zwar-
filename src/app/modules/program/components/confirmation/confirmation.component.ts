@@ -24,8 +24,12 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.collectAllData();
+    this.getAllCategory();
+    this.getAllHotelStars();
+    this.getAllAirplanes();
+    this.getAllTransportation();
     console.log(this.program);
- }
+  }
 
   collectAllData() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
@@ -39,22 +43,47 @@ export class ConfirmationComponent implements OnInit {
       ...this.transportation,
       ...this.visit
     };
- }
+  }
 
+  getAllCategory() {
+    this.programService.getAllCategory().subscribe(categories => {
+      const found = categories.find(c => c.id == this.basics.programCategoryID);
+      this.program.categoryName = found.name;
+    });
+  }
+
+  getAllHotelStars() {
+    this.programService.getAllStars().subscribe(stars => {
+      const found = stars.find(star => star.id == this.residential.hotelStars);
+      this.program.hotelStar = found.name;
+    });
+  }
+
+  getAllAirplanes() {
+    this.programService.getAllAirplaneCompany().subscribe(airplane => {
+      this.program.airlineNAme = airplane.find(air => air.id == this.transportation.airlineID).name;      
+    });
+  }
+
+  getAllTransportation() {
+    this.programService.getAllTransportation().subscribe(transportation => {
+      this.program.transportName = transportation.find(t => t.id == this.transportation.internalTransportations).name;
+    });
+  }
 
   confirm() {
-   this.programService.AddProgram(this.program).subscribe(program => {
-     sessionStorage.removeItem('basics');
-     sessionStorage.removeItem('hotels');
-     sessionStorage.removeItem('residence');
-     sessionStorage.removeItem('visit');
-     sessionStorage.setItem('program', JSON.stringify(this.program));
-     this.router.navigate(['program/congratulation']);
-   });
- }
+    this.programService.AddProgram(this.program).subscribe(program => {
+      sessionStorage.removeItem('basics');
+      sessionStorage.removeItem('hotels');
+      sessionStorage.removeItem('residence');
+      sessionStorage.removeItem('visit');
+      sessionStorage.setItem('program', JSON.stringify(this.program));
+      this.router.navigate(['program/congratulation']);
+    });
+  }
 
   back() {
-  this.router.navigate(['/program/visits']);
- }
+    this.router.navigate(['/program/visits']);
+  }
 
 }

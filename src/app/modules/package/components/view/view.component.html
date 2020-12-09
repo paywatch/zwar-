@@ -34,7 +34,7 @@
            <div class="col-md-4">
              <div class="form-group">
                <label class="d-block col-form-label"> المطار الداخلي </label>
-               {{package.localAirportID}}
+               {{package.internalAirPort}}
              </div>
            </div>
            <div class="col-md-4">
@@ -54,7 +54,7 @@
            <div class="col-md-4">
              <div class="form-group ">
                <label class="d-block col-form-label"> موسم العمرة </label>
-               {{package.packageSeasonID}}
+               {{package.umrahSeasonName}}
              </div>
            </div>
            <div class="col-md-4">
@@ -74,7 +74,7 @@
            <div class="col-md-4">
              <div class="form-group ">
                <label class="d-block col-form-label"> خط سير الرحلة </label>
-               {{package.itineraryID}}
+               {{package.directionName}}
              </div>
            </div>
            <div class="col-md-4">
@@ -146,7 +146,7 @@
             </thead>
             <tbody>
               <tr>
-                <td> {{package.roomTypeID}} </td>
+                <td> {{package.roomTypeName}} </td>
                 <td> {{package.roomPriceAdult}}</td>
                 <td> {{package.roomPriceKids}}</td>
                 <td> {{package.roomTypeInfants}} </td>

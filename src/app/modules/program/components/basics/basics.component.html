@@ -138,17 +138,11 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="d-block col-form-label"> تصنيف البرنامج </label>
-                  <select *ngFor="let category of categories"
+                  <select
                     class="form-control"
                     formControlName="programCategoryID">
-                  <option>
-                    {{category.title}}
-                  </option>
-                  <option>
-                    {{category.title1}}
-                  </option>
-                  <option>
-                    {{category.title3}}
+                  <option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name}}
                   </option>
                   </select>
                   <em *ngIf="basicsForm.get('programCategoryID').hasError('required') &&
@@ -190,38 +184,7 @@
                   </em>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="d-block col-form-label">
-                    كود البرنامج
-                  </label>
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      type="text"
-                      formControlName="programId"/>
-                    <div class="input-group-append">
-                      <span class="input-group-text" id="basic-addon2">ريـال
-                      </span>
-                    </div>
-                  </div>
-                  <em *ngIf="basicsForm.get('programId').hasError('required') &&
-                             basicsForm.get('programId').touched">
-                             اجباري
-                  </em>
-                  <em *ngIf="!basicsForm.get('programId').hasError('required') &&
-                              basicsForm.get('programId').hasError('pattern') &&
-                              basicsForm.get('programId').touched">
-                      ارقام فقط
-                  </em>
-                  <em *ngIf="!basicsForm.get('programId').hasError('required') &&
-                              basicsForm.get('programId').hasError('pattern') &&
-                              basicsForm.get('programId').touched">
-                      حد اقصي 20 رقم
-                  </em>
-                </div>
-              </div>
+
             </div>
 
             <div class="row">
