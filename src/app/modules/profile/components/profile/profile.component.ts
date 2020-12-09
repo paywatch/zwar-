@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const ID = JSON.parse(sessionStorage.getItem('agencyID'));
+    console.log(ID);
     this.getAgencyDetails(ID);
   }
 

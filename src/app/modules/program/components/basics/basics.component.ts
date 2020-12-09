@@ -34,7 +34,6 @@ export class BasicsComponent implements OnInit {
       this.patchForm();
     }, 2000);
     this.getAllCategory();
-    this.getProgram();
   }
 
   initForm() {

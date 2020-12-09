@@ -7,7 +7,8 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 @Injectable()
 export class AuthenticationGuard implements CanActivate, CanLoad {
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private authenticationService: AuthenticationService) { }
 
   canActivate(

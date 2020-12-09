@@ -5,7 +5,7 @@
         <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
         <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة </a></li>
       </ol>
-    </nav>
+    </nav>س
     <form [formGroup]="programForm" novalidate (ngSubmit)="submit()">
       <h3>تعديل البرنامج</h3>
       <section>
@@ -15,6 +15,14 @@
               <label class="col-form-label">اسم البرنامج</label>
               <input type="text" class="form-control" formControlName="programName">
             </div>
+            <em *ngIf="programForm.get('programName').hasError('required') && programForm.get('programName').touched">
+              اجباري
+            </em>
+            <em *ngIf="!programForm.get('programName').hasError('required') &&
+                        programForm.get('programName').hasError('maxlength')
+                        && programForm.get('programName').touched">
+              حداقصي 30 رقم
+            </em>
           </div>
           <div class="col-sm-12 col-md-6">
             <div class="form-group">
@@ -46,12 +54,29 @@
               <label class="d-block col-form-label">عام العمرة</label>
               <input type="text" class="form-control" formControlName="programUmrahYear" />
             </div>
+            <em
+              *ngIf="programForm.get('programUmrahYear').hasError('required') && programForm.get('programUmrahYear').touched">
+              اجباري
+            </em>
+            <em *ngIf="!programForm.get('programUmrahYear').hasError('required')&& 
+                        programForm.get('programUmrahYear').hasError('pattern') &&
+                        programForm.get('programUmrahYear').touched">
+              ارقام فقط
+            </em>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label class="d-block col-form-label"> تصنيف البرنامج </label>
-              <input type="text" class="form-control" disabled formControlName="programCategoryID">
+              <select type="text" class="form-control" formControlName="programCategoryID">
+                <option *ngFor="let item of categories" [value]="item.id">
+                  {{item.name}}
+                </option>
+              </select>
             </div>
+            <em *ngIf="programForm.get('programCategoryID').hasError('required') &&
+                       programForm.get('programCategoryID').touched">
+              اجباري
+            </em>
           </div>
           <div class="col-md-4">
             <div class="form-group">
@@ -65,6 +90,15 @@
                   </span>
                 </div>
               </div>
+              <em *ngIf="programForm.get('programPrice').hasError('required') &&
+                         programForm.get('programPrice').touched">
+                اجباري
+              </em>
+              <em *ngIf="!programForm.get('programPrice').hasError('required') &&
+                          programForm.get('programPrice').hasError('pattern') &&
+                          programForm.get('programPrice').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
         </div>
@@ -75,6 +109,15 @@
               <textarea class="form-control" rows="4" formControlName="programDesc">
               </textarea>
             </div>
+            <em *ngIf="programForm.get('programDesc').hasError('required') && 
+                       programForm.get('programDesc').touched">
+              اجباري
+            </em>
+            <em *ngIf="!programForm.get('programDesc').hasError('required') && 
+                        programForm.get('programDesc').hasError('maxlength') &&
+                       programForm.get('programDesc').touched">
+              حداقصي 50 رقم
+            </em>
           </div>
         </div>
       </section>
@@ -85,6 +128,15 @@
             <label class="d-block col-form-label"> اسم الفندق </label>
             <input type="text" formControlName="hotelName" class="form-control">
           </div>
+          <em *ngIf="programForm.get('hotelName').hasError('required') && 
+                     programForm.get('hotelName').touched">
+            اجباري
+          </em>
+          <em *ngIf="!programForm.get('hotelName').hasError('required') && 
+                      programForm.get('hotelName').hasError('maxlength') &&
+                      programForm.get('hotelName').touched">
+            حداقصي 50 رقم
+          </em>
           <div class="col-md-4">
             <label class="d-block col-form-label">مدة الاقامة</label>
             <div class="input-group">
@@ -94,6 +146,15 @@
               </div>
             </div>
           </div>
+          <em *ngIf="programForm.get('hotelNights').hasError('required') && 
+                     programForm.get('hotelNights').touched">
+            اجباري
+          </em>
+          <em *ngIf="!programForm.get('hotelNights').hasError('required') && 
+                      programForm.get('hotelNights').hasError('pattern') &&
+                      programForm.get('hotelNights').touched">
+            ارقام فقط
+          </em>
         </div>
         <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
           <div class="col-md-4">
@@ -106,12 +167,25 @@
                 </div>
               </div>
             </div>
+            <em *ngIf="programForm.get('distanceFromHaram').hasError('required') && 
+                       programForm.get('distanceFromHaram').touched">
+              اجباري
+            </em>
+            <em *ngIf="!programForm.get('distanceFromHaram').hasError('required') && 
+                        programForm.get('distanceFromHaram').hasError('pattern') &&
+                        programForm.get('distanceFromHaram').touched">
+              ارقام فقط
+            </em>
           </div>
           <div class="col-md-4">
             <label class="d-block col-form-label"> نجوم الفندق </label>
             <div class="form-group">
               <input type="text" class="form-control" formControlName="hotelStars">
             </div>
+            <em *ngIf="programForm.get('hotelStars').hasError('required') && 
+                       programForm.get('hotelStars').touched">
+              اجباري
+            </em>
           </div>
         </div>
 
@@ -292,7 +366,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
             <div class="col-md-12">
               <div class="form-group mb-5">
@@ -357,8 +431,8 @@
               </div>
             </div>
           </div>
-          <div class="row mt-3" *ngIf="programForm.get('MLunchAvailable').value" data-aos="fade-up" data-aos-offset="100"
-            data-aos-duration="1000" data-aos-delay="100">
+          <div class="row mt-3" *ngIf="programForm.get('MLunchAvailable').value" data-aos="fade-up"
+            data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
             <div class="col-md-4">
               <div class="form-group ">
                 <label class="d-block col-form-label"> هل الغداء مشمول مجانا في البرنامج ؟
@@ -466,7 +540,15 @@
           <div class="col-md-4">
             <div class="form-group">
               <label class="d-block col-form-label"> شركة الطيران </label>
-              <input type="text" class="form-control" formControlName="airlineID">
+              <select type="text" class="form-control" formControlName="airlineID">
+                <option *ngFor="let item of airplane" [value]="item.id">
+                  {{item.name}}
+                </option>
+              </select>
+              <em *ngIf="programForm.get('airlineID').hasError('required') && 
+                         programForm.get('airlineID').touched">
+                اجباري
+              </em>
             </div>
           </div>
           <div class="col-md-8">
@@ -474,6 +556,15 @@
               <label class="d-block col-form-label"> وصف طريقة و تذاكر السفر </label>
               <input type="text" class="form-control" formControlName="airlineDesc">
             </div>
+            <em *ngIf="programForm.get('airlineDesc').hasError('required') && 
+                       programForm.get('airlineDesc').touched">
+              اجباري
+            </em>
+            <em *ngIf="!programForm.get('airlineDesc').hasError('required') && 
+                        programForm.get('airlineDesc').hasError('maxlength') &&
+                        programForm.get('airlineDesc').touched">
+              حداقصي 50 رقم
+            </em>
           </div>
         </div>
 
@@ -483,7 +574,15 @@
               <label class="d-block col-form-label">
                 طريقة التنقل
               </label>
-              <input type="text" class="form-control" formControlName="internalTransportations">
+              <select type="text" class="form-control" formControlName="internalTransportations">
+                <option *ngFor="let item of transportationWay" [value]="item.id">
+                  {{item.name}}
+                </option>
+              </select>
+              <em *ngIf="programForm.get('internalTransportations').hasError('required') && 
+                         programForm.get('internalTransportations').touched">
+                اجباري
+              </em>
             </div>
           </div>
           <div class="col-md-8">
@@ -493,6 +592,15 @@
             <input type="text" class="form-control" formControlName="programTransDetails"
               placeholder="مثال : باص مكيف  شامل كل وسائل الراحة">
           </div>
+          <em *ngIf="programForm.get('programTransDetails').hasError('required') && 
+                     programForm.get('programTransDetails').touched">
+            اجباري
+          </em>
+          <em *ngIf="!programForm.get('programTransDetails').hasError('required') && 
+                      programForm.get('programTransDetails').hasError('maxlength') &&
+                      programForm.get('programTransDetails').touched">
+            حداقصي 50 رقم
+          </em>
         </div>
       </section>
 
@@ -578,7 +686,7 @@
           </div>
         </div>
       </section>
-      <div class="row justify-content-between m-2">
+      <div class="row justify-content-between m-1">
         <button class="btn btn-secondary" [routerLink]="['/program/edit']">رجوع</button>
         <button class="btn btn-secondary" type="submit">تعديل</button>
       </div>

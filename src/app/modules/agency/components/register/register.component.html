@@ -54,13 +54,10 @@
           <div class="col-md-6 col-lg-4">
             <div class="form-group">
               <label class="d-block col-form-label"> الدولة </label>
-              <select *ngFor="let item of countries" class="form-control" formControlName="countryId">
+              <select  class="form-control" formControlName="countryId">
                 <option>إختر</option>
-                <option>
-                  {{item.egypt}}
-                </option>
-                <option>
-                  {{item.saudi}}
+                <option *ngFor="let item of countries" [value]="item.id">
+                  {{item.name}}
                 </option>
               </select>
               <em *ngIf="

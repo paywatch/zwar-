@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,10 @@ export class HeaderComponent implements OnInit {
   user: any;
   auth: any;
 
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -18,15 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getAuthnication() {
-    if(sessionStorage.getItem('auth')) {
-      this.auth = JSON.parse(sessionStorage.getItem('auth'));
-    }
-
-    else{
-      this.auth = {};
-    }
-
-    if (this.auth.access_token) {
+    if (this.user.user.apiKey) {
       this.isLoggedIn = true;
     }
 
@@ -37,5 +34,12 @@ export class HeaderComponent implements OnInit {
 
   getUser() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(this.user);
+  }
+
+  logOut() {
+    // this.authService.logOut();
+    this.router.navigate(['/auth/login']);
+    sessionStorage.removeItem('user');
   }
 }

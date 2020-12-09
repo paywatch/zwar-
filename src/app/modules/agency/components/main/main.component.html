@@ -65,15 +65,11 @@
                   <div class="col-md-6">
                     <div class="form-group ">
                       <label class="d-block col-form-label"> الدولة </label>
-                      <select *ngFor="let item of countries" name="countryId" class="form-control"
-                        formControlName="countryId"
+                      <select name="countryId" class="form-control" formControlName="countryId"
                         [class.is-invalid]="myForm.get('countryId').invalid && myForm.get('countryId').dirty">
                         <option>إختر</option>
-                        <option>
-                          {{item.egypt}}
-                        </option>
-                        <option>
-                          {{item.saudi}}
+                        <option *ngFor="let item of countries" [value]="item.id">
+                          {{item.name}}
                         </option>
                       </select>
                       <span class="text-danger small"
@@ -88,12 +84,10 @@
                   <div class="col-md-6">
                     <div class="form-group ">
                       <label class="d-block col-form-label"> تصنيف الوكالة </label>
-                      <select name="tAType" class="form-control"
-                        formControlName="tAType"
+                      <select name="tAType" class="form-control" formControlName="tAType"
                         [class.is-invalid]="myForm.get('tAType').invalid && myForm.get('tAType').dirty">
                         <option *ngFor="let item of agencyType">
-                          {{item.private}} <br>
-                          {{item.public}}
+                          {{item.name}}
                         </option>
                       </select>
                       <span class="text-danger small"

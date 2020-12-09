@@ -19,13 +19,21 @@
           <div class="col-md-4">
             <div class="form-group">
               <label class="d-block col-form-label"> الدولة </label>
-              <input type="text" class="form-control" formControlName="countryId">
+              <select type="text" class="form-control" formControlName="countryId">
+                <option *ngFor="let item of countries">
+                  {{item.name}}
+                </option>
+              </select>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group ">
               <label class="d-block col-form-label"> تصنيف الوكالة </label>
-              <input name="tAType" class="form-control" formControlName="tAType">
+              <select name="tAType" class="form-control" formControlName="tAType">
+                <option *ngFor="let item of agencyType">
+                  {{item.name}}
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -99,7 +107,8 @@
                   </div>
                 </div>
                 <div *ngIf="$$isMinTourAuth">
-                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
+                    data-aos-delay="100">
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> رقم الترخيص </label>
@@ -107,7 +116,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
+                    data-aos-delay="100">
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label  "> تاريخ انشاء الترخيص </label>
@@ -153,7 +163,8 @@
                   </div>
                 </div>
                 <div *ngIf="$$isFTAVMember">
-                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
+                    data-aos-delay="100">
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> رقم العضوية </label>
@@ -161,7 +172,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
+                    data-aos-delay="100">
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label  "> تاريخ انشاء العضوية </label>
@@ -207,7 +219,8 @@
                   </div>
                 </div>
                 <div *ngIf="$$isFITTMember">
-                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
+                    data-aos-delay="100">
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> رقم العضوية </label>
@@ -215,7 +228,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+                  <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
+                    data-aos-delay="100">
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label  "> تاريخ انشاء العضوية </label>
@@ -247,12 +261,16 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="d-block col-form-label"> المدينة </label>
-                <input id="country" name="tADistrictID" class="form-control" formControlName="tADistrictID">
+                <select id="country" name="tADistrictID" class="form-control" formControlName="tADistrictID">
+                  <option *ngFor="let item of district">
+                    {{item.name}}
+                  </option>
+                </select>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group ">
-                <label class="d-block col-form-label"> رقم / اسم المبنى	 </label>
+                <label class="d-block col-form-label"> رقم / اسم المبنى </label>
                 <input type="text" id="tABranchAddress" formControlName="tABranchAddress" class="form-control">
               </div>
             </div>

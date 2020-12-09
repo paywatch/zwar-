@@ -15,6 +15,8 @@ export class UpdateComponent implements OnInit {
   agencyForm: FormGroup;
   agencyType: any[];
   ID: any;
+  countries: any;
+  district: any;
 
   constructor(
     private agencyService: AgencyService,
@@ -31,6 +33,8 @@ export class UpdateComponent implements OnInit {
     this.changeFTAVMember();
     this.changeFITTMember();
     this.getAgencyType();
+    this.getCountries();
+    this.getDistrictList();
   }
 
   initForm() {
@@ -104,6 +108,22 @@ export class UpdateComponent implements OnInit {
     this.agencyService.getAgencyType().subscribe(res => {
       if (res) {
         this.agencyType = res;
+      }
+    });
+  }
+
+  getCountries() {
+    this.agencyService.getAllCountries().subscribe(country => {
+      if (country) {
+        this.countries = country;
+      }
+    });
+  }
+
+  getDistrictList() {
+    this.agencyService.getDistrictList().subscribe(district => {
+      if (district) {
+        this.district = district;
       }
     });
   }

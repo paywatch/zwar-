@@ -56,6 +56,7 @@ export class ConfirmationComponent implements OnInit {
     this.programService.getAllStars().subscribe(stars => {
       const found = stars.find(star => star.id == this.residential.hotelStars);
       this.program.hotelStar = found.name;
+      console.log();
     });
   }
 

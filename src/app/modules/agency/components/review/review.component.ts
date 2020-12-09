@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { textChangeRangeIsUnchanged } from 'typescript';
@@ -12,6 +13,7 @@ export class ReviewComponent implements OnInit {
 
   agency: any;
   ID: string;
+  agencyBasic: any;
 
   constructor(
     private agencyService: AgencyService,
@@ -20,7 +22,9 @@ export class ReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.ID = this.activatedRoute.snapshot.params['id'];
+    this.agencyBasic = JSON.parse(sessionStorage.getItem('agencyBasic'));
     this.getAgency(this.ID);
+    this.getCountry();
   }
 
   getAgency(id) {
@@ -30,8 +34,19 @@ export class ReviewComponent implements OnInit {
     });
   }
 
+  getCountry() {
+    this.agencyService.getAllCountries().subscribe(country => {
+      this.agency.countryName = country.find(c => c.id == this.agencyBasic.countryId).name;
+      console.log(this.agency.countryName);
+    });
+  }
+
   backToLogin() {
     this.router.navigate(['/auth/login']);
     sessionStorage.setItem('agencyID', JSON.stringify(this.ID));
+    sessionStorage.removeItem('agencyBasic');
+    sessionStorage.removeItem('licence');
+    sessionStorage.removeItem('register');
+    sessionStorage.removeItem('branches');
   }
 }

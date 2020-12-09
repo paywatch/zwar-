@@ -62,14 +62,11 @@
               <div class="col-md-4">
                 <div class="form-group ">
                   <label class="d-block col-form-label"> المدينة </label>
-                  <select *ngFor="let item of districtList" id="country" name="tADistrictID" class="form-control" formControlName="tADistrictID"
+                  <select id="country" name="tADistrictID" class="form-control" formControlName="tADistrictID"
                     [class.is-invalid]="myForm.get('tADistrictID').invalid && myForm.get('tADistrictID').dirty">
                     <option [value]="''">إختر </option>
-                    <option>
-                      {{item.cairo}}
-                    </option>
-                    <option>
-                      {{item.reyad}}
+                    <option *ngFor="let item of districtList" [value]="item.name">
+                      {{item.name}}
                     </option>
                   </select>
                   <span class="text-danger small"
@@ -80,7 +77,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group ">
-                  <label class="d-block col-form-label"> رقم / اسم المبنى	 </label>
+                  <label class="d-block col-form-label"> رقم / اسم المبنى </label>
                   <input type="text" id="tABranchAddress" formControlName="tABranchAddress" class="form-control"
                     [class.is-invalid]="myForm.get('tABranchAddress').invalid && myForm.get('tABranchAddress').dirty">
                   <span class="text-danger small"

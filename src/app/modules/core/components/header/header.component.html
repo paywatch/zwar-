@@ -87,12 +87,12 @@
             <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fal fa-fw fa-1x fa-user"></i>
-              <span> {{user.userName}} </span>
+              <span> {{user.user.email}} </span>
               <i class="fal fa-fw fa-1x fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu p-0 m-0 ">
               <li class="p-2 small"><a class=""> ملف المستخدم </a></li>
-              <li class="p-2 small"><a routerLink="/auth/logout" class="text-danger"> تسجيل الخروج</a></li>
+              <li class="p-2 small"><a (click)="logOut()" class="text-danger"> تسجيل الخروج</a></li>
             </ul>
           </li>
           <!-- <li *ngIf="isLoggedIn">

@@ -43,7 +43,6 @@ export class RoomDataComponent implements OnInit {
   getRoomType() {
     this.packageService.getRoomType().subscribe(roomType => {
       this.roomType = roomType;
-      this.roomData.roomTypeName = roomType.find(r => r.id == this.roomData.roomTypeID).name;
       console.log(this.roomData);
     });
   }

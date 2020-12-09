@@ -15,9 +15,4 @@ export class ProgramsComponent implements OnInit {
 
   constructor(private profileService: ProfileService) { }
 
-  // ngOnInit(): void {
-  //   const user = JSON.parse(sessionStorage.getItem('user'));
-  //   this.programsList$ = this.profileService.getPrograms(user.userID);
-  // }
-
 }
