@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { GreaterThan } from '../../../../_helpers/greater-than.validator';
+import { LessThanToday } from '../../../../_helpers/lessThanToday.validator';
 import { AgencyService } from '../../services/agency/agency.service';
 
 @Component({
@@ -35,71 +37,68 @@ export class UpdateComponent implements OnInit {
     this.getAgencyType();
     this.getCountries();
     this.getDistrictList();
+    this.agencyForm.valueChanges.subscribe(f => {
+      console.log(f);
+    });
   }
 
   initForm() {
     this.agencyForm = this.formBuilder.group({
-      tABranchAddress: [],
-      tABranchEmail: [],
-      tABranchFaxNo: [],
-      tADistrictID: [],
-      tADescription: [],
-      tABranchLatitude: [],
-      tABranchLongitude: [],
-      tABranchMobileNo: [],
-      tABranchName: [],
-      tABranchPhoneNo: [],
-      tABranchType: [],
-      tACommRegExpiryDate: [],
+      tAName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]/)]],
+      countryId: ['', Validators.required],
+      tAType: ['', Validators.required],
+      tAWebsite: ['', [Validators.required, Validators.pattern(/(https?:\/\/)?(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)|(https?:\/\/)?(www\.)?(?!ww)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)]],
+      tACommeRegNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tACommRegIssueDate: ['', [Validators.required, LessThanToday]],
+      tACommRegExpiryDate: ['', Validators.required],
+      tADescription: ['', [Validators.required, Validators.maxLength(200)]],
+      tAMinTourAuthNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tAMinTourAuthIssueDate: ['', [Validators.required, LessThanToday]],
+      tAMinTourAuthExpiryDate: ['', Validators.required],
+      tAFTAVMemberNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tAFTAVMemberIssueDate: ['', [Validators.required, LessThanToday]],
+      tAFTAVMemberExpiryDate: ['', Validators.required],
+      tAFITTMemberNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tAFITTMemberIssueDate: ['', [Validators.required, LessThanToday]],
+      tAFITTMemberExpiryDate: ['', Validators.required],
+      tABranchName: ['', [Validators.required, Validators.pattern(/^[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z]+[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z-_]*$/)]],
+      tABranchAddress: ['', Validators.required],
+      tABranchEmail: ['', [Validators.required, Validators.email]],
+      tABranchFaxNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tADistrictID: ['', Validators.required],
+      tABranchLatitude: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tABranchLongitude: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tABranchMobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tABranchPhoneNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tABranchType: ['', Validators.required],
       tACommRegFile: [],
-      tACommRegIssueDate: [],
-      tACommeRegNo: [],
-      tAFITTMemberExpiryDate: [],
       tAFITTMemberFile: [],
-      tAFITTMemberIssueDate: [],
-      tAFITTMemberNo: [],
-      tAFTAVMemberExpiryDate: [],
       tAFTAVMemberFile: [],
-      tAFTAVMemberIssueDate: [],
-      tAFTAVMemberNo: [],
       tALogo: [],
-      tAMinTourAuthExpiryDate: [],
       tAMinTourAuthFile: [],
-      tAMinTourAuthIssueDate: [],
-      tAMinTourAuthNo: [],
-      tAName: [],
-      tAType: [],
-      tAWebsite: [],
-      taid: [],
       $$ID: [],
-      tAOwnerFullName: [],
-      tAOwnerNationalID: [],
-      tAOwnerPhoneNo: [],
+      tAOwnerFullName: ['', Validators.required],
+      tAOwnerNationalID: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tAOwnerPhoneNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       $$commRegFile: [],
       $$isFITTMember: [true],
       $$isFTAVMember: [true],
       $$isMinTourAuth: [true],
       $$logoFile: [],
-      countryId: []
+    }, {
+      validators: [GreaterThan('tACommRegIssueDate', 'tACommRegExpiryDate'),
+      GreaterThan('tAMinTourAuthIssueDate', 'tAMinTourAuthExpiryDate'),
+      GreaterThan('tAFTAVMemberIssueDate', 'tAFTAVMemberExpiryDate'),
+      GreaterThan('tAFITTMemberIssueDate', 'tAFITTMemberExpiryDate')
+      ]
     });
-  }
-
-  get $$isMinTourAuth() {
-    return this.agencyForm.get('$$isMinTourAuth').value;
-  }
-
-  get $$isFTAVMember() {
-    return this.agencyForm.get('$$isFTAVMember').value;
-  }
-
-  get $$isFITTMember() {
-    return this.agencyForm.get('$$isFITTMember').value;
   }
 
   getSingleAgency(id) {
     this.agencyService.getAllData().subscribe(agency => {
       this.agency = agency.find(a => a.id == id);
       this.agencyForm.patchValue(this.agency);
+      console.log(this.agency);
     });
   }
 
@@ -125,6 +124,18 @@ export class UpdateComponent implements OnInit {
         this.district = district;
       }
     });
+  }
+
+  get $$isMinTourAuth() {
+    return this.agencyForm.get('$$isMinTourAuth').value;
+  }
+
+  get $$isFTAVMember() {
+    return this.agencyForm.get('$$isFTAVMember').value;
+  }
+
+  get $$isFITTMember() {
+    return this.agencyForm.get('$$isFITTMember').value;
   }
 
   changeMinTourAuth() {

@@ -5,9 +5,9 @@
         <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
         <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة </a></li>
       </ol>
-    </nav>س
+    </nav>
     <form [formGroup]="programForm" novalidate (ngSubmit)="submit()">
-      <h3>تعديل البرنامج</h3>
+      <h3> تعديل البرنامج</h3>
       <section>
         <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
           <div class="col-sm-12 col-md-6">
@@ -125,18 +125,20 @@
       <section>
         <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
           <div class="col-md-8">
-            <label class="d-block col-form-label"> اسم الفندق </label>
-            <input type="text" formControlName="hotelName" class="form-control">
+            <div class="form-group">
+              <label class="d-block col-form-label"> اسم الفندق </label>
+              <input type="text" formControlName="hotelName" class="form-control">
+            </div>
+            <em *ngIf="programForm.get('hotelName').hasError('required') && 
+                       programForm.get('hotelName').touched">
+              اجباري
+            </em>
+            <em *ngIf="!programForm.get('hotelName').hasError('required') && 
+                        programForm.get('hotelName').hasError('maxlength') &&
+                        programForm.get('hotelName').touched">
+              حداقصي 50 رقم
+            </em>
           </div>
-          <em *ngIf="programForm.get('hotelName').hasError('required') && 
-                     programForm.get('hotelName').touched">
-            اجباري
-          </em>
-          <em *ngIf="!programForm.get('hotelName').hasError('required') && 
-                      programForm.get('hotelName').hasError('maxlength') &&
-                      programForm.get('hotelName').touched">
-            حداقصي 50 رقم
-          </em>
           <div class="col-md-4">
             <label class="d-block col-form-label">مدة الاقامة</label>
             <div class="input-group">
@@ -145,16 +147,16 @@
                 <span class="input-group-text">ايام</span>
               </div>
             </div>
+            <em *ngIf="programForm.get('hotelNights').hasError('required') && 
+                       programForm.get('hotelNights').touched">
+              اجباري
+            </em>
+            <em *ngIf="!programForm.get('hotelNights').hasError('required') && 
+                        programForm.get('hotelNights').hasError('pattern') &&
+                        programForm.get('hotelNights').touched">
+              ارقام فقط
+            </em>
           </div>
-          <em *ngIf="programForm.get('hotelNights').hasError('required') && 
-                     programForm.get('hotelNights').touched">
-            اجباري
-          </em>
-          <em *ngIf="!programForm.get('hotelNights').hasError('required') && 
-                      programForm.get('hotelNights').hasError('pattern') &&
-                      programForm.get('hotelNights').touched">
-            ارقام فقط
-          </em>
         </div>
         <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
           <div class="col-md-4">
@@ -180,7 +182,11 @@
           <div class="col-md-4">
             <label class="d-block col-form-label"> نجوم الفندق </label>
             <div class="form-group">
-              <input type="text" class="form-control" formControlName="hotelStars">
+              <select type="text" class="form-control" formControlName="hotelStars">
+                <option *ngFor="let item of hotelStars">
+                  {{item.name}}
+                </option>
+              </select>
             </div>
             <em *ngIf="programForm.get('hotelStars').hasError('required') && 
                        programForm.get('hotelStars').touched">
@@ -223,11 +229,13 @@
               </label>
               <div class="mt-2">
                 <div class="custom-control custom-radio  d-inline-block ">
-                  <input type="radio" id="yes1" [value]="true" formControlName="breakfastIncluded">
+                  <input type="radio" id="yes1" [value]="true" (click)="breakfastIncluded()"
+                    formControlName="breakfastIncluded">
                   <label for="yes1"> نعم مشمول </label>
                 </div>
                 <div class="custom-control custom-radio  d-inline-block  mx-3">
-                  <input type="radio" id="no1" [value]="false" formControlName="breakfastIncluded">
+                  <input type="radio" id="no1" [value]="false" (click)="breakfastIncluded()"
+                    formControlName="breakfastIncluded">
                   <label for="no1">
                     يجب دفع سعر الوجبة
                   </label>
@@ -240,6 +248,10 @@
               <label class="d-block col-form-label"> تفاصيل وجبة الفطور (اختياري) </label>
               <input type="text" class="form-control" formControlName="breakfastDetails">
             </div>
+            <em *ngIf="programForm.get('breakfastDetails').hasError('maxlength') &&
+                       programForm.get('breakfastDetails').touched">
+              حداقصي 50 رقم
+            </em>
           </div>
           <div class="col-md-4" *ngIf="programForm.get('breakfastIncluded').value == false">
             <div class="form-group">
@@ -250,6 +262,10 @@
                   <span class="input-group-text">ريال</span>
                 </div>
               </div>
+              <em *ngIf="programForm.get('breakfastPrice').hasError('pattern') &&
+                         programForm.get('breakfastPrice').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
         </div>
@@ -278,6 +294,10 @@
               <label class="d-block col-form-label"> تفاصيل وجبة الغداء (اختياري) </label>
               <input type="text" class="form-control" formControlName="lunchDetails">
             </div>
+            <em *ngIf="programForm.get('lunchDetails').hasError('maxlength') &&
+                       programForm.get('lunchDetails').touched">
+              حداقصي 50 رقم
+            </em>
           </div>
           <div class="col-md-4" *ngIf="programForm.get('lunchIncluded').value == false">
             <div class="form-group">
@@ -289,6 +309,10 @@
                 </div>
               </div>
             </div>
+            <em *ngIf="programForm.get('lunchPrice').hasError('pattern') &&
+                       programForm.get('lunchPrice').touched">
+              ارقام فقط
+            </em>
           </div>
         </div>
         <div class="row mt-3" *ngIf="programForm.get('dinnerAvailable').value" data-aos="fade-up" data-aos-offset="100">
@@ -317,6 +341,10 @@
               <label class="d-block col-form-label"> تفاصيل وجبة العشاء (اختياري) </label>
               <input type="text" class="form-control" formControlName="dinnerDetails">
             </div>
+            <em *ngIf="programForm.get('dinnerDetails').hasError('maxlength') &&
+                       programForm.get('dinnerDetails').touched">
+              حداقصي 50 رقم
+            </em>
           </div>
           <div class="col-md-4" *ngIf="programForm.get('dinnerIncluded').value == false">
             <div class="form-group ">
@@ -327,15 +355,25 @@
                   <span class="input-group-text">ريال</span>
                 </div>
               </div>
+              <em *ngIf="programForm.get('dinnerPrice').hasError('pattern') &&
+                         programForm.get('dinnerPrice').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
         </div>
 
-        <div *ngIf="program?.programPathID == 'madina'">
+        <div *ngIf="programForm.get('programPathID').value == 'madina'">
           <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
             <div class="col-md-8">
-              <label class="d-block col-form-label"> اسم الفندق </label>
-              <input type="text" formControlName="MHotelName" class="form-control">
+              <div class="form-group">
+                <label class="d-block col-form-label"> اسم الفندق </label>
+                <input type="text" formControlName="MHotelName" class="form-control">
+              </div>
+              <em *ngIf="programForm.get('MHotelName').hasError('required') &&
+                         programForm.get('MHotelName').touched">
+                اجباري
+              </em>
             </div>
             <div class="col-md-4">
               <label class="d-block col-form-label">مدة الاقامة</label>
@@ -345,6 +383,15 @@
                   <span class="input-group-text">ايام</span>
                 </div>
               </div>
+              <em *ngIf="programForm.get('MHotelNights').hasError('required') &&
+                         programForm.get('MHotelNights').touched">
+                اجباري
+              </em>
+              <em *ngIf="!programForm.get('MHotelNights').hasError('required') &&
+                          programForm.get('MHotelNights').hasError('pattern') &&
+                          programForm.get('MHotelNights').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
           <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
@@ -358,12 +405,28 @@
                   </div>
                 </div>
               </div>
+              <em *ngIf="programForm.get('MDistanceFromHaram').hasError('required') &&
+                         programForm.get('MDistanceFromHaram').touched">
+                اجباري
+              </em>
+              <em *ngIf="!programForm.get('MDistanceFromHaram').hasError('required') && 
+                          programForm.get('MDistanceFromHaram').hasError('pattern')">
+                ارقام فقط
+              </em>
             </div>
             <div class="col-md-4">
               <label class="d-block col-form-label"> نجوم الفندق </label>
               <div class="form-group">
-                <input type="text" class="form-control" formControlName="MHotelStars">
+                <select type="text" class="form-control" formControlName="MHotelStars">
+                  <option **ngFor="let item of hotelStars">
+                    {{item.name}}
+                  </option>
+                </select>
               </div>
+              <em *ngIf="programForm.get('MHotelStars').hasError('required') && 
+                          programForm.get('MHotelStars').touched">
+                اجباري
+              </em>
             </div>
           </div>
 
@@ -418,6 +481,10 @@
                 <label class="d-block col-form-label"> تفاصيل وجبة الفطور (اختياري) </label>
                 <input type="text" class="form-control" formControlName="MBreakfastDetails">
               </div>
+              <em *ngIf="programForm.get('MBreakfastDetails').hasError('maxlength') &&
+                         programForm.get('MBreakfastDetails').touched">
+                اجباري
+              </em>
             </div>
             <div class="col-md-4" *ngIf="programForm.get('MBreakfastIncluded').value == false">
               <div class="form-group">
@@ -429,6 +496,10 @@
                   </div>
                 </div>
               </div>
+              <em *ngIf="programForm.get('MBreakfastPrice').hasError('pattern') && 
+                         programForm.get('MBreakfastPrice').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
           <div class="row mt-3" *ngIf="programForm.get('MLunchAvailable').value" data-aos="fade-up"
@@ -456,6 +527,10 @@
                 <label class="d-block col-form-label"> تفاصيل وجبة الغداء (اختياري) </label>
                 <input type="text" class="form-control" formControlName="MLunchDetails">
               </div>
+              <em *ngIf="programForm.get('MLunchDetails').hasError('maxlength') &&
+                         programForm.get('MLunchDetails').touched">
+                اجباري
+              </em>
             </div>
             <div class="col-md-4" *ngIf="programForm.get('MLunchIncluded').value == false">
               <div class="form-group">
@@ -467,6 +542,10 @@
                   </div>
                 </div>
               </div>
+              <em *ngIf="programForm.get('MLunchPrice').hasError('pattern') &&
+                         programForm.get('MLunchPrice').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
           <div class="row mt-3" *ngIf="programForm.get('MDinnerAvailable').value" data-aos="fade-up"
@@ -494,6 +573,10 @@
                 <label class="d-block col-form-label"> تفاصيل وجبة العشاء (اختياري) </label>
                 <input type="text" class="form-control" formControlName="MDinnerDetails">
               </div>
+              <em *ngIf="programForm.get('MDinnerDetails').hasError('maxlength') &&
+                         programForm.get('MDinnerDetails').touched">
+                اجباري
+              </em>
             </div>
             <div class="col-md-4" *ngIf="programForm.get('MDinnerIncluded').value == false">
               <div class="form-group ">
@@ -505,6 +588,10 @@
                   </div>
                 </div>
               </div>
+              <em *ngIf="programForm.get('MDinnerPrice').hasError('pattern') &&
+                         programForm.get('MDinnerPrice').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
         </div>

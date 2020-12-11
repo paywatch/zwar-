@@ -13,7 +13,15 @@
           <div class="col-md-4">
             <div class="form-group ">
               <label class="d-block col-form-label" id="ai select"> المطار الداخلي </label>
-              <input type="text" class="form-control" formControlName="localAirportID">
+              <select type="text" class="form-control" formControlName="localAirportID">
+                <option *ngFor="let item of airports" [value]="item.id">
+                  {{item.name}}
+                </option>
+              </select>
+              <em *ngIf="packageForm.get('localAirportID').hasError('required') && 
+                         packageForm.get('localAirportID').touched">
+                اجباري
+              </em>
             </div>
           </div>
           <div class="col-md-4">
@@ -21,12 +29,30 @@
               <label class="d-block col-form-label"> تاريخ الانطلاق </label>
               <input type="date" formControlName="packageDepartureDate" class="form-control form-date">
             </div>
+            <em *ngIf="packageForm.get('packageDepartureDate').hasError('required') && 
+                       packageForm.get('packageDepartureDate').touched">
+              اجباري
+            </em>
+            <em *ngIf="!packageForm.get('packageDepartureDate').hasError('required') && 
+                        packageForm.get('packageDepartureDate').hasError('afterToday') &&
+                       packageForm.get('packageDepartureDate').touched">
+              التاريخ يجب ان يكون بعد تاريخ اليوم
+            </em>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label class="d-block col-form-label"> تاريخ العودة </label>
               <input type="date" formControlName="packageReturnDate" class="form-control form-date">
             </div>
+            <em *ngIf="packageForm.get('packageReturnDate').hasError('required') && 
+                       packageForm.get('packageReturnDate').touched">
+              اجباري
+            </em>
+            <em *ngIf="!packageForm.get('packageReturnDate').hasError('required') && 
+                        packageForm.get('packageReturnDate').hasError('greaterThan') &&
+                        packageForm.get('packageReturnDate').touched">
+              تاريخ العودة يجب ان يكون اكبر من تاريخ الانطلاق
+            </em>
           </div>
         </div>
 
@@ -34,7 +60,15 @@
           <div class="col-md-4">
             <div class="form-group ">
               <label class="d-block col-form-label" id="uomra"> موسم العمرة </label>
-              <input class="form-control" formControlName="packageSeasonID">
+              <select class="form-control" formControlName="packageSeasonID">
+                <option *ngFor="let item of umrahSeason" [value]="item.id">
+                  {{item.name}}
+                </option>
+              </select>
+              <em *ngIf="packageForm.get('packageSeasonID').hasError('required') && 
+                         packageForm.get('packageSeasonID').touched">
+                اجباري
+              </em>
             </div>
           </div>
           <div class="col-md-4">
@@ -47,6 +81,21 @@
                 </div>
               </div>
             </div>
+            <em *ngIf="packageForm.get('packageCapacity').hasError('required') && 
+                       packageForm.get('packageCapacity').touched">
+              اجباري
+            </em>
+            <em *ngIf="!packageForm.get('packageCapacity').hasError('required') && 
+                       packageForm.get('packageCapacity').hasError('maxlength') &&
+                       packageForm.get('packageCapacity').touched">
+              حداقصي 20 رقم
+            </em>
+            <em *ngIf="!packageForm.get('packageCapacity').hasError('required') &&
+                       !packageForm.get('packageCapacity').hasError('maxlength') &&
+                       packageForm.get('packageCapacity').hasError('pattern') &&
+                       packageForm.get('packageCapacity').touched">
+              ارقام فقط
+            </em>
           </div>
           <div class="col-md-4">
             <div class="form-group ">
@@ -58,6 +107,15 @@
                 </div>
               </div>
             </div>
+            <em *ngIf="packageForm.get('packageAvailableSeats').hasError('required') && 
+                       packageForm.get('packageAvailableSeats').touched">
+              اجباري
+            </em>
+            <em *ngIf="!packageForm.get('packageAvailableSeats').hasError('required') &&
+                        packageForm.get('packageAvailableSeats').hasError('pattern') &&
+                        packageForm.get('packageAvailableSeats').touched">
+              ارقام فقط
+            </em>
           </div>
         </div>
 
@@ -70,6 +128,10 @@
                   <label class="d-block col-form-label"> اسم المطوف </label>
                   <input type="text" class="form-control" formControlName="mutawefName">
                 </div>
+                <em *ngIf="packageForm.get('mutawefName').hasError('required') && 
+                           packageForm.get('mutawefName').touched">
+                  اجباري
+                </em>
               </div>
               <div class="col-md-6">
                 <div class="form-group ">
@@ -79,6 +141,15 @@
                       aria-label="Text input with dropdown button">
                   </div>
                 </div>
+                <em *ngIf="packageForm.get('mutawefPhone').hasError('required') && 
+                           packageForm.get('mutawefPhone').touched">
+                  اجباري
+                </em>
+                <em *ngIf="!packageForm.get('mutawefPhone').hasError('required') && 
+                            packageForm.get('mutawefPhone').hasError('pattern') &&
+                            packageForm.get('mutawefPhone').touched">
+                  ارقام فقط
+                </em>
               </div>
             </div>
             <div class="row">
@@ -87,18 +158,47 @@
                   <label class="d-block col-form-label"> اسم قائد المجموعة </label>
                   <input type="text" class="form-control" formControlName="groupLeadName">
                 </div>
+                <em *ngIf="packageForm.get('groupLeadName').hasError('required') && 
+                           packageForm.get('groupLeadName').touched">
+                  اجباري
+                </em>
               </div>
               <div class="col-md-6">
                 <div class="form-group ">
                   <label class="d-block col-form-label"> رقم جوال قائد المجموعة </label>
                   <input type="tel" class="form-control" formControlName="groupLeadPhone">
                 </div>
+                <em *ngIf="packageForm.get('groupLeadPhone').hasError('required') && 
+                           packageForm.get('groupLeadPhone').touched">
+                  اجباري
+                </em>
+                <em *ngIf="!packageForm.get('groupLeadPhone').hasError('required') && 
+                            packageForm.get('groupLeadPhone').hasError('pattern') &&
+                            packageForm.get('groupLeadPhone').touched">
+                  ارقام فقط
+                </em>
               </div>
             </div>
           </div>
         </div>
 
         <h3 class="mt-3">بيانات الغرف</h3>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="d-block col-form-label">نوع الغرفة</label>
+              <select class="form-control" formControlName="roomTypeID">
+                <option *ngFor="let item of roomType" [value]="item.id">
+                  {{item.name}}
+                </option>
+              </select>
+            </div>
+            <em *ngIf="packageForm.get('roomTypeID').hasError('required') && 
+                       packageForm.get('roomTypeID').touched">
+              اجباري
+            </em>
+          </div>
+        </div>
         <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
           <div class="col-md-6">
             <div class="form-group ">
@@ -110,6 +210,15 @@
                 </div>
               </div>
             </div>
+            <em *ngIf="packageForm.get('roomPriceAdult').hasError('required') && 
+                       packageForm.get('roomPriceAdult').touched">
+              اجباري
+            </em>
+            <em *ngIf="!packageForm.get('roomPriceAdult').hasError('required') && 
+                        packageForm.get('roomPriceAdult').hasError('pattern') &&
+                        packageForm.get('roomPriceAdult').touched">
+              ارقام فقط
+            </em>
           </div>
           <div class="col-md-6">
             <div class="form-group ">
@@ -121,6 +230,15 @@
                 </div>
               </div>
             </div>
+            <em *ngIf="packageForm.get('roomPriceKids').hasError('required') && 
+                      packageForm.get('roomPriceKids').touched">
+              اجباري
+            </em>
+            <em *ngIf="!packageForm.get('roomPriceKids').hasError('required') && 
+                        packageForm.get('roomPriceKids').hasError('pattern') &&
+                        packageForm.get('roomPriceKids').touched">
+              ارقام فقط
+            </em>
           </div>
         </div>
         <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
@@ -133,6 +251,15 @@
                   <span class="input-group-text" id="basic-addon2">ريـال</span>
                 </div>
               </div>
+              <em *ngIf="packageForm.get('roomTypeInfants').hasError('required') && 
+                         packageForm.get('roomTypeInfants').touched">
+                اجباري
+              </em>
+              <em *ngIf="!packageForm.get('roomTypeInfants').hasError('required') && 
+                          packageForm.get('roomTypeInfants').hasError('pattern') &&
+                          packageForm.get('roomTypeInfants').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
           <div class="col-md-6">
@@ -145,6 +272,15 @@
                 </div>
               </div>
             </div>
+            <em *ngIf="packageForm.get('roomQuantity').hasError('required') && 
+                       packageForm.get('roomQuantity').touched">
+              اجباري
+            </em>
+            <em *ngIf="!packageForm.get('roomQuantity').hasError('required') && 
+                        packageForm.get('roomQuantity').hasError('pattern') &&
+                        packageForm.get('roomQuantity').touched">
+              ارقام فقط
+            </em>
           </div>
         </div>
       </section>

@@ -18,6 +18,9 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPackage();
+    this.getAirport();
+    this.getUmrahSeason();
+    this.getUmrahDirection();
   }
 
   getPackage() {
@@ -29,6 +32,33 @@ export class EditComponent implements OnInit {
       else {
         this.packages = [];
       }
+    });
+  }
+
+  getAirport() {
+    this.packageService.getAirPorts().subscribe(airport => {
+      this.packages = this.packages.map(p => {
+        p.airportNAme = airport.find(a => a.id == p.localAirportID).name;
+        return p;
+      });
+    });
+  }
+
+  getUmrahSeason() {
+    this.packageService.getUmrahSeason().subscribe(season => {
+      this.packages = this.packages.map(p => {
+        p.umrahSeasonName = season.find(s => s.id == p.packageSeasonID).name;
+        return p;
+      });
+    });
+  }
+
+  getUmrahDirection() {
+    this.packageService.getUmrahDirection().subscribe(direction => {
+      this.packages = this.packages.map(p => {
+        p.packageDirectionName = direction.find(d => d.id == p.itineraryID).name;
+        return p;
+      });
     });
   }
 

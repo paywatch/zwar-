@@ -12,6 +12,7 @@ export function GreaterThan(controlName: string, matchingControlName: string) {
         }
 
         // set error on matchingControl if validation fails
+        // tslint:disable-next-line:max-line-length
         if (control.value && matchingControl.value && ((new Date(matchingControl.value)).getTime() - (new Date(control.value)).getTime()) <= 86400000 ) {
             matchingControl.setErrors({ greaterThan: true });
         } else {

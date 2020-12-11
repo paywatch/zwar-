@@ -171,9 +171,9 @@ export class MainComponent implements OnInit {
   }
 
   _saveOwner() {
-    console.log('Add new owner');
     const payload = this.ownerForm.value;
     if (this.ownerForm.valid) {
+      payload.$$ID = this.ownerList.length + 1;
       this.ownerList.push(payload);
     }
     this.onClose();

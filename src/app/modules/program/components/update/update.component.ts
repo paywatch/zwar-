@@ -53,28 +53,28 @@ export class UpdateComponent implements OnInit {
       breakfastIncluded: [this.program?.breakfastIncluded],
       lunchIncluded: [this.program?.lunchIncluded],
       dinnerIncluded: [this.program?.dinnerIncluded],
-      breakfastDetails: [this.program?.breakfastDetails],
-      breakfastPrice: [this.program?.breakfastPrice],
-      lunchDetails: [this.program?.lunchDetails],
-      lunchPrice: [this.program?.lunchPrice],
-      dinnerDetails: [this.program?.dinnerDetails],
-      dinnerPrice: [this.program?.dinnerPrice],
-      MHotelName: [this.program?.MHotelName],
-      MHotelNights: [this.program?.MHotelNights],
-      MHotelStars: [this.program?.MHotelStars],
-      MDistanceFromHaram: [this.program?.MDistanceFromHaram],
+      breakfastDetails: [this.program?.breakfastDetails, Validators.maxLength(50)],
+      breakfastPrice: [this.program?.breakfastPrice, [Validators.pattern(/^[0-9]*$/)]],
+      lunchDetails: [this.program?.lunchDetails, Validators.maxLength(50)],
+      lunchPrice: [this.program?.lunchPrice, Validators.pattern(/^[0-9]*$/)],
+      dinnerDetails: [this.program?.dinnerDetails, Validators.maxLength(50)],
+      dinnerPrice: [this.program?.dinnerPrice, Validators.pattern(/^[0-9]*$/)],
+      MHotelName: [this.program?.MHotelName, Validators.required],
+      MHotelNights: [this.program?.MHotelNights, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      MHotelStars: [this.program?.MHotelStars, [Validators.required]],
+      MDistanceFromHaram: [this.program?.MDistanceFromHaram, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       MBreakfastAvailable: [this.program?.MBreakfastAvailable],
       MLunchAvailable: [this.program?.MLunchAvailable],
       MDinnerAvailable: [this.program?.MDinnerAvailable],
       MBreakfastIncluded: [this.program?.MBreakfastIncluded],
       MLunchIncluded: [this.program?.MLunchIncluded],
       MDinnerIncluded: [this.program?.MDinnerIncluded],
-      MBreakfastDetails: [this.program?.MBreakfastDetails],
-      MBreakfastPrice: [this.program?.MBreakfastPrice],
-      MLunchDetails: [this.program?.MLunchDetails],
-      MLunchPrice: [this.program?.MLunchPrice],
-      MDinnerDetails: [this.program?.MDinnerDetails],
-      MDinnerPrice: [this.program?.MDinnerPrice],
+      MBreakfastDetails: [this.program?.MBreakfastDetails, Validators.maxLength(50)],
+      MBreakfastPrice: [this.program?.MBreakfastPrice, [Validators.pattern(/^[0-9]*$/)]],
+      MLunchDetails: [this.program?.MLunchDetails, Validators.maxLength(50)],
+      MLunchPrice: [this.program?.MLunchPrice, [Validators.pattern(/^[0-9]*$/)]],
+      MDinnerDetails: [this.program?.MDinnerDetails, Validators.maxLength(50)],
+      MDinnerPrice: [this.program?.MDinnerPrice, [Validators.pattern(/^[0-9]*$/)]],
       progAirTicketIncluded: [this.program?.progAirTicketIncluded],
       airlineID: [this.program?.airlineID, Validators.required],
       airlineDesc: [this.program?.airlineDesc, [Validators.required, Validators.maxLength(50)]],
@@ -98,6 +98,7 @@ export class UpdateComponent implements OnInit {
   getSingleProgram() {
     this.programService.getProgram().subscribe((programs: any) => {
       this.program = programs.find(p => p.programId == this.programId);
+      console.log(this.program);
       this.programForm.patchValue(this.program);
     });
   }
@@ -107,7 +108,6 @@ export class UpdateComponent implements OnInit {
       this.categories = res;
     });
   }
-
 
   getAllHotelStars() {
     this.programService.getAllStars().subscribe(stars => {

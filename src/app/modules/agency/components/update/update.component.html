@@ -15,6 +15,15 @@
               <label class="d-block col-form-label"> اسم وكالة السفر </label>
               <input type="text" id="tAName" formControlName="tAName" class="form-control">
             </div>
+            <em *ngIf="agencyForm.get('tAName').hasError('required') &&
+                       agencyForm.get('tAName').touched">
+              اجباري
+            </em>
+            <em *ngIf="!agencyForm.get('tAName').hasError('required') &&
+                        agencyForm.get('tAName').hasError('pattern') &&
+                       agencyForm.get('tAName').touched">
+              حروف فقط
+            </em>
           </div>
           <div class="col-md-4">
             <div class="form-group">
@@ -25,6 +34,10 @@
                 </option>
               </select>
             </div>
+            <em *ngIf="agencyForm.get('countryId').hasError('required') &&
+                       agencyForm.get('countryId').touched">
+              اجباري
+            </em>
           </div>
           <div class="col-md-4">
             <div class="form-group ">
@@ -35,6 +48,10 @@
                 </option>
               </select>
             </div>
+            <em *ngIf="agencyForm.get('tAType').hasError('required') &&
+                       agencyForm.get('tAType').touched">
+              اجباري
+            </em>
           </div>
         </div>
         <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
@@ -50,12 +67,30 @@
               <label class="d-block col-form-label"> رقم السجل التجاري </label>
               <input type="text" id="tACommeRegNo" formControlName="tACommeRegNo" class="form-control">
             </div>
+            <em *ngIf="agencyForm.get('tACommeRegNo').hasError('required') &&
+                       agencyForm.get('tACommeRegNo').touched">
+              اجباري
+            </em>
+            <em *ngIf="!agencyForm.get('tACommeRegNo').hasError('required') &&
+                        agencyForm.get('tACommeRegNo').hasError('pattern') &&
+                        agencyForm.get('tACommeRegNo').touched">
+              الرقم فقط
+            </em>
           </div>
           <div class="col-md-4">
-            <div class="form-group ">
+            <div class="form-group">
               <label class="d-block col-form-label  "> تاريخ انشاء السجل التجاري </label>
               <input type="date" id="tACommRegIssueDate" formControlName="tACommRegIssueDate" class="form-control">
             </div>
+            <em *ngIf="agencyForm.get('tACommRegIssueDate').hasError('required') &&
+                        agencyForm.get('tACommRegIssueDate').touched">
+              اجباري
+            </em>
+            <em *ngIf="!agencyForm.get('tACommRegIssueDate').hasError('required') &&
+                        agencyForm.get('tACommRegIssueDate').hasError('lessThanToday') &&
+                        agencyForm.get('tACommRegIssueDate').touched">
+              التاريخ يجب ان يكون قبل تاريخ اليوم
+            </em>
           </div>
         </div>
         <div class="row mt-3" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
@@ -64,6 +99,15 @@
               <label class="d-block col-form-label"> تاريخ انتهاء السجل التجاري </label>
               <input type="date" id="tACommRegExpiryDate" formControlName="tACommRegExpiryDate" class="form-control">
             </div>
+            <em *ngIf="agencyForm.get('tACommRegExpiryDate').hasError('required') &&
+                       agencyForm.get('tACommRegExpiryDate').touched">
+              اجباري
+            </em>
+            <em *ngIf="!agencyForm.get('tACommRegExpiryDate').hasError('required') && 
+                        agencyForm.get('tACommRegExpiryDate').hasError('greaterThan') &&
+                        agencyForm.get('tACommRegExpiryDate').touched">
+              تاريخ النهايه يجب ان يكون اكبر من تاريخ البدايه
+            </em>
           </div>
         </div>
         <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
@@ -72,9 +116,69 @@
               <label class="d-block col-form-label"> نبذة عن وكالة السفر </label>
               <textarea class="form-control" rows="4" formControlName="tADescription"></textarea>
             </div>
+            <em *ngIf="agencyForm.get('tADescription').hasError('required') &&
+                       agencyForm.get('tADescription').touched">
+              اجباري
+            </em>
+            <em *ngIf="!agencyForm.get('tADescription').hasError('required') &&
+                        agencyForm.get('tADescription').hasError('maxlength') &&
+                       agencyForm.get('tADescription').touched">
+              حد اقصي 200 رقم
+            </em>
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <table style="width: 100%;" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>الاسم</th>
+                  <th>الرقم القومي</th>
+                  <th>رقم الهاتف</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of agency?.ownerList">
+                  <td>
+                    <input type="text" class="form-control" formControlName="tAOwnerFullName"
+                      [value]="item.tAOwnerFullName">
+                    <em *ngIf="agencyForm.get('tAOwnerFullName').hasError('required') &&
+                               agencyForm.get('tAOwnerFullName').touched">
+                      اجباري
+                    </em>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" formControlName="tAOwnerNationalID"
+                      [value]="item.tAOwnerNationalID">
+                    <em *ngIf="agencyForm.get('tAOwnerNationalID').hasError('required') &&
+                               agencyForm.get('tAOwnerNationalID').touched">
+                      اجباري
+                    </em>
+                    <em *ngIf="!agencyForm.get('tAOwnerNationalID').hasError('required') &&
+                                agencyForm.get('tAOwnerNationalID').hasError('pattern') &&
+                                agencyForm.get('tAOwnerNationalID').touched">
+                      ارقام فقط
+                    </em>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" formControlName="tAOwnerPhoneNo"
+                      [value]="item.tAOwnerPhoneNo">
+                    <em *ngIf="agencyForm.get('tAOwnerPhoneNo').hasError('required') &&
+                                agencyForm.get('tAOwnerPhoneNo').touched">
+                      اجباري
+                    </em>
+                    <em *ngIf="!agencyForm.get('tAOwnerPhoneNo').hasError('required') &&
+                               agencyForm.get('tAOwnerPhoneNo').hasError('pattern') &&
+                               agencyForm.get('tAOwnerPhoneNo').touched">
+                      ارقام فقط
+                    </em>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
         <div class="wizard-details">
           <section>
@@ -108,6 +212,15 @@
                         <label class="d-block col-form-label"> رقم الترخيص </label>
                         <input type="text" id="tAMinTourAuthNo" formControlName="tAMinTourAuthNo" class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAMinTourAuthNo').hasError('required') &&
+                                 agencyForm.get('tAMinTourAuthNo').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAMinTourAuthNo').hasError('required') &&
+                                  agencyForm.get('tAMinTourAuthNo').hasError('pattern') &&
+                                  agencyForm.get('tAMinTourAuthNo').touched">
+                        الرقم فقط
+                      </em>
                     </div>
                   </div>
                   <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
@@ -118,6 +231,15 @@
                         <input type="date" id="tAMinTourAuthIssueDate" formControlName="tAMinTourAuthIssueDate"
                           class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAMinTourAuthIssueDate').hasError('required') &&
+                                 agencyForm.get('tAMinTourAuthIssueDate').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAMinTourAuthIssueDate').hasError('required') &&
+                                  agencyForm.get('tAMinTourAuthIssueDate').hasError('lessThanToday') &&
+                                 agencyForm.get('tAMinTourAuthIssueDate').touched">
+                        التاريخ يجب ان يكون قبل تاريخ اليوم
+                      </em>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
@@ -125,6 +247,15 @@
                         <input type="date" id="tAMinTourAuthExpiryDate" formControlName="tAMinTourAuthExpiryDate"
                           class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAMinTourAuthExpiryDate').hasError('required') &&
+                                 agencyForm.get('tAMinTourAuthExpiryDate').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAMinTourAuthExpiryDate').hasError('required') &&
+                                  agencyForm.get('tAMinTourAuthExpiryDate').hasError('greaterThan') &&
+                                  agencyForm.get('tAMinTourAuthExpiryDate').touched">
+                        تاريخ النهايه يجب ان يكون اكبر من تاريخ البدايه
+                      </em>
                     </div>
                   </div>
                 </div>
@@ -164,6 +295,15 @@
                         <label class="d-block col-form-label"> رقم العضوية </label>
                         <input type="text" id="tAFTAVMemberNo" formControlName="tAFTAVMemberNo" class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAFTAVMemberNo').hasError('required') &&
+                                 agencyForm.get('tAFTAVMemberNo').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAFTAVMemberNo').hasError('required') &&
+                                  agencyForm.get('tAFTAVMemberNo').hasError('pattern') &&
+                                  agencyForm.get('tAFTAVMemberNo').touched">
+                        الرقم فقط
+                      </em>
                     </div>
                   </div>
                   <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
@@ -174,6 +314,15 @@
                         <input type="date" id="tAFTAVMemberIssueDate" formControlName="tAFTAVMemberIssueDate"
                           class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAFTAVMemberIssueDate').hasError('required') &&
+                                 agencyForm.get('tAFTAVMemberIssueDate').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAFTAVMemberIssueDate').hasError('required') &&
+                                  agencyForm.get('tAFTAVMemberIssueDate').hasError('lessThanToday') &&
+                                 agencyForm.get('tAFTAVMemberIssueDate').touched">
+                        التاريخ يجب ان يكون قبل تاريخ اليوم
+                      </em>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group ">
@@ -181,6 +330,15 @@
                         <input type="date" id="tAFTAVMemberExpiryDate" formControlName="tAFTAVMemberExpiryDate"
                           class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAFTAVMemberIssueDate').hasError('required') &&
+                                 agencyForm.get('tAFTAVMemberIssueDate').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAFTAVMemberIssueDate').hasError('required') &&
+                                  agencyForm.get('tAFTAVMemberIssueDate').hasError('greaterThan') &&
+                                  agencyForm.get('tAFTAVMemberIssueDate').touched">
+                        تاريخ انتهاء العضوية يجب ان يكون اكبر من تاريخ بدايه العضوية
+                      </em>
                     </div>
                   </div>
                 </div>
@@ -220,6 +378,15 @@
                         <label class="d-block col-form-label"> رقم العضوية </label>
                         <input type="text" id="tAFITTMemberNo" formControlName="tAFITTMemberNo" class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAFITTMemberNo').hasError('required') &&
+                                 agencyForm.get('tAFITTMemberNo').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAFITTMemberNo').hasError('required') &&
+                                  agencyForm.get('tAFITTMemberNo').hasError('pattern') &&
+                                  agencyForm.get('tAFITTMemberNo').touched">
+                        ارقام فقط
+                      </em>
                     </div>
                   </div>
                   <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
@@ -230,6 +397,15 @@
                         <input type="date" id="tAFITTMemberIssueDate" formControlName="tAFITTMemberIssueDate"
                           class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAFITTMemberIssueDate').hasError('required') &&
+                                 agencyForm.get('tAFITTMemberIssueDate').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAFITTMemberIssueDate').hasError('required') &&
+                                  agencyForm.get('tAFITTMemberIssueDate').hasError('lessThanToday') &&
+                                  agencyForm.get('tAFITTMemberIssueDate').touched">
+                        التاريخ يجب ان يكون قبل تاريخ اليوم
+                      </em>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group ">
@@ -237,6 +413,15 @@
                         <input type="date" id="tAFITTMemberExpiryDate" formControlName="tAFITTMemberExpiryDate"
                           class="form-control">
                       </div>
+                      <em *ngIf="agencyForm.get('tAFITTMemberExpiryDate').hasError('required') &&
+                                 agencyForm.get('tAFITTMemberExpiryDate').touched">
+                        اجباري
+                      </em>
+                      <em *ngIf="!agencyForm.get('tAFITTMemberExpiryDate').hasError('required') &&
+                                  agencyForm.get('tAFITTMemberExpiryDate').hasError('greaterThan') &&
+                                 agencyForm.get('tAFITTMemberExpiryDate').touched">
+                        تاريخ انتهاء العضوية يجب ان يكون اكبر من تاريخ بدايه العضوية
+                      </em>
                     </div>
                   </div>
                 </div>
@@ -251,15 +436,28 @@
                 <label class="d-block col-form-label"> اسم الفرع </label>
                 <input type="text" id="tABranchName" formControlName="tABranchName" class="form-control">
               </div>
+              <em *ngIf="agencyForm.get('tABranchName').hasError('required') && 
+                         agencyForm.get('tABranchName').touched">
+                اجباري
+              </em>
+              <em *ngIf="!agencyForm.get('tABranchName').hasError('required') && 
+                          agencyForm.get('tABranchName').hasError('pattern') &&
+                         agencyForm.get('tABranchName').touched">
+                حروف فقط
+              </em>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label class="d-block col-form-label"> المدينة </label>
                 <select id="country" name="tADistrictID" class="form-control" formControlName="tADistrictID">
-                  <option *ngFor="let item of district">
+                  <option *ngFor="let item of district" [value]="item.id">
                     {{item.name}}
                   </option>
                 </select>
+                <em *ngIf="agencyForm.get('tADistrictID').hasError('required') &&
+                           agencyForm.get('tADistrictID').touched">
+                  اجباري
+                </em>
               </div>
             </div>
             <div class="col-md-4">
@@ -267,6 +465,10 @@
                 <label class="d-block col-form-label"> رقم / اسم المبنى </label>
                 <input type="text" id="tABranchAddress" formControlName="tABranchAddress" class="form-control">
               </div>
+              <em *ngIf="agencyForm.get('tABranchAddress').hasError('required') &&
+                         agencyForm.get('tABranchAddress').touched">
+                اجباري
+              </em>
             </div>
           </div>
           <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
@@ -280,12 +482,39 @@
                     placeholder="latitude">
                 </div>
               </div>
+              <em *ngIf="agencyForm.get('tABranchLongitude').hasError('required') &&
+                         agencyForm.get('tABranchLongitude').touched">
+                اجباري
+              </em>
+              <em *ngIf="!agencyForm.get('tABranchLongitude').hasError('required') &&
+                          agencyForm.get('tABranchLongitude').hasError('pattern') &&
+                          agencyForm.get('tABranchLongitude').touched">
+                ارقام فقط
+              </em>
+              <em class="row justify-content-end" *ngIf="agencyForm.get('tABranchLatitude').hasError('required') &&
+                         agencyForm.get('tABranchLatitude').touched">
+                اجباري
+              </em>
+              <em class="row justify-content-end" *ngIf="!agencyForm.get('tABranchLatitude').hasError('required') &&
+                          agencyForm.get('tABranchLatitude').hasError('pattern') &&
+                          agencyForm.get('tABranchLatitude').touched">
+                ارقام فقط
+              </em>
             </div>
             <div class="col-md-4">
               <div class="form-group ">
                 <label class="d-block col-form-label"> رقم الهاتف </label>
                 <input type="text" id="tABranchPhoneNo" formControlName="tABranchPhoneNo" class="form-control">
               </div>
+              <em *ngIf="agencyForm.get('tABranchPhoneNo').hasError('required') &&
+                         agencyForm.get('tABranchPhoneNo').touched">
+                اجباري
+              </em>
+              <em *ngIf="!agencyForm.get('tABranchPhoneNo').hasError('required') &&
+                          agencyForm.get('tABranchPhoneNo').hasError('pattern') &&
+                         agencyForm.get('tABranchPhoneNo').touched">
+                ارقام فقط
+              </em>
             </div>
           </div>
 
@@ -295,18 +524,45 @@
                 <label class="d-block col-form-label"> رقم الجوال </label>
                 <input type="text" id="tABranchMobileNo" formControlName="tABranchMobileNo" class="form-control">
               </div>
+              <em *ngIf="agencyForm.get('tABranchMobileNo').hasError('required') &&
+                         agencyForm.get('tABranchMobileNo').touched">
+                اجباري
+              </em>
+              <em *ngIf="!agencyForm.get('tABranchMobileNo').hasError('required') &&
+                          agencyForm.get('tABranchMobileNo').hasError('pattern') &&
+                          agencyForm.get('tABranchMobileNo').touched">
+                ارقام فقط
+              </em>
             </div>
             <div class="col-md-4">
               <div class="form-group ">
                 <label class="d-block col-form-label"> رقم الفاكس </label>
                 <input type="text" id="tABranchFaxNo" formControlName="tABranchFaxNo" class="form-control">
               </div>
+              <em *ngIf="agencyForm.get('tABranchFaxNo').hasError('required') &&
+                         agencyForm.get('tABranchFaxNo').touched">
+                اجباري
+              </em>
+              <em *ngIf="!agencyForm.get('tABranchFaxNo').hasError('required') &&
+                          agencyForm.get('tABranchFaxNo').hasError('pattern') &&
+                          agencyForm.get('tABranchFaxNo').touched">
+                ارقام فقط
+              </em>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label class="d-block col-form-label"> البريد الالكتروني </label>
                 <input type="email" id="tABranchEmail" formControlName="tABranchEmail" class="form-control">
               </div>
+              <em *ngIf="agencyForm.get('tABranchEmail').hasError('required') &&
+                         agencyForm.get('tABranchEmail').touched">
+                اجباري
+              </em>
+              <em *ngIf="!agencyForm.get('tABranchEmail').hasError('required') &&
+                         agencyForm.get('tABranchEmail').hasError('email') &&
+                         agencyForm.get('tABranchEmail').touched">
+                ادخل البريد الالكتروني بطريقه صحيحه
+              </em>
             </div>
           </div>
 

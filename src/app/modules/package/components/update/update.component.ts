@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AfterToday } from '../../../../_helpers/afterToday.validator';
+import { GreaterThan } from '../../../../_helpers/greater-than.validator';
 import { Package } from '../../models/package';
 import { PackageService } from '../../services/package-service.service';
 
@@ -13,6 +15,9 @@ export class UpdateComponent implements OnInit {
   singlePackage: Package;
   packageForm: FormGroup;
   ID: any;
+  roomType: any;
+  airports: any;
+  umrahSeason: any;
 
   constructor(
     private router: Router,
@@ -22,30 +27,36 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.ID = this.activatedRouter.snapshot.params['id'];
-    this.initForm();
+    this.getRoomType();
+    this.getInternalAirPort();
     this.getPackage(this.ID);
+    this.getUmrahSeason();
+    this.initForm();
   }
 
   initForm() {
     this.packageForm = this.formBuilder.group({
       ID: [this.singlePackage?.ID],
-      groupLeadName: [this.singlePackage?.groupLeadName],
-      groupLeadPhone: [this.singlePackage?.groupLeadPhone],
+      localAirportID: [this.singlePackage?.localAirportID, Validators.required],
+      packageAvailableSeats: [this.singlePackage?.packageAvailableSeats, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      // tslint:disable-next-line:max-line-length
+      packageCapacity: [this.singlePackage?.packageCapacity, [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
+      packageDepartureDate: [this.singlePackage?.packageReturnDate, [Validators.required, AfterToday]],
+      packageReturnDate: [this.singlePackage?.packageDepartureDate, Validators.required],
       itineraryID: [this.singlePackage?.itineraryID],
-      localAirportID: [this.singlePackage?.localAirportID],
-      mutawefName: [this.singlePackage?.mutawefName],
-      mutawefPhone: [this.singlePackage?.mutawefPhone],
+      packageSeasonID: [this.singlePackage?.packageSeasonID, Validators.required],
+      groupLeadName: [this.singlePackage?.groupLeadName, Validators.required],
+      groupLeadPhone: [this.singlePackage?.groupLeadPhone, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      mutawefName: [this.singlePackage?.mutawefName, Validators.required],
+      mutawefPhone: [this.singlePackage?.mutawefPhone, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       mutawefPicture: [this.singlePackage?.mutawefPicture],
-      packageAvailableSeats: [this.singlePackage?.packageAvailableSeats],
-      packageCapacity: [this.singlePackage?.packageCapacity],
-      packageDepartureDate: [this.singlePackage?.packageReturnDate],
-      packageReturnDate: [this.singlePackage?.packageDepartureDate],
-      packageSeasonID: [this.singlePackage?.packageSeasonID],
-      roomPriceAdult: [this.singlePackage?.roomPriceAdult],
-      roomPriceKids: [this.singlePackage?.roomPriceKids],
-      roomQuantity: [this.singlePackage?.roomQuantity],
-      roomTypeID: [this.singlePackage?.roomTypeID],
-      roomTypeInfants: [this.singlePackage?.roomTypeInfants]
+      roomPriceAdult: [this.singlePackage?.roomPriceAdult, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      roomPriceKids: [this.singlePackage?.roomPriceKids, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      roomQuantity: [this.singlePackage?.roomQuantity, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      roomTypeID: [this.singlePackage?.roomTypeID, Validators.required],
+      roomTypeInfants: [this.singlePackage?.roomTypeInfants, [Validators.required, Validators.pattern(/^[0-9]*$/)]]
+    }, {
+      validators: GreaterThan('packageDepartureDate', 'packageReturnDate')
     });
   }
 
@@ -55,6 +66,24 @@ export class UpdateComponent implements OnInit {
       this.singlePackage = found;
       console.log(this.singlePackage);
       this.packageForm.patchValue(this.singlePackage);
+    });
+  }
+
+  getRoomType() {
+    this.packageService.getRoomType().subscribe(room => {
+      this.roomType = room;
+    });
+  }
+
+  getInternalAirPort() {
+    this.packageService.getAirPorts().subscribe(airport => {
+      this.airports = airport;
+    });
+  }
+
+  getUmrahSeason() {
+    this.packageService.getUmrahSeason().subscribe(seasons => {
+      this.umrahSeason = seasons;
     });
   }
 
