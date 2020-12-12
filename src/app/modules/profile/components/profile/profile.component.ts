@@ -14,14 +14,14 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const ID = JSON.parse(sessionStorage.getItem('agencyID'));
-    console.log(ID);
-    this.getAgencyDetails(ID);
+    const userID = JSON.parse(sessionStorage.getItem('user'));
+    console.log(userID.user.uid);
+    this.getAgencyDetails(userID.user.uid);
   }
 
   getAgencyDetails(ID) {
     this.agencyService.getAllData().subscribe(agency => {
-      this.agency = agency.find(a => a.id == ID);
+      this.agency = agency.find(a => a.userID == ID);
       console.log(this.agency);
     });
   }

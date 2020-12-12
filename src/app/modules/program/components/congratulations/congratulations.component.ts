@@ -18,7 +18,6 @@ export class CongratulationsComponent implements OnInit {
   }
 
   submit() {
-    const program = JSON.parse(sessionStorage.getItem('program'));
     this.router.navigate(['/program/edit']);
   }
 }

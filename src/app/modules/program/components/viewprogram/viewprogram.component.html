@@ -56,7 +56,7 @@
           <div class="col-md-4">
             <div class="form-group ">
               <label class="d-block col-form-label"> تصنيف البرنامج </label>
-              {{program.programCategoryID}}
+              {{program.categoryName}}
             </div>
           </div>
           <div class="col-md-4">
@@ -92,7 +92,7 @@
           <div class="col-md-4">
             <div class="form-group ">
               <label class="d-block col-form-label"> نجوم الفندق </label>
-              {{program.hotelStars}}
+              {{program.hotelStar}}
             </div>
           </div>
           <div class="col-md-4">
@@ -113,15 +113,15 @@
           <div class="col-md-12">
             <div class="form-group ">
               <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
-                <span *ngIf="program.breakfastAvailable">
-                  فطور
-                </span>
-                <span *ngIf="program.lunchAvailable">
-                  غداء
-                </span>
-                <span *ngIf="program.dinnerAvailable">
-                  عشاء
-                </span>
+              <span *ngIf="program.breakfastAvailable">
+                فطور
+              </span>
+              <span *ngIf="program.lunchAvailable">
+                غداء
+              </span>
+              <span *ngIf="program.dinnerAvailable">
+                عشاء
+              </span>
             </div>
           </div>
         </div>
@@ -260,15 +260,15 @@
           <div class="col-md-12">
             <div class="form-group ">
               <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
-                <span *ngIf="program.MBreakfastAvailable">
-                  فطور
-                </span>
-                <span *ngIf="program.MLunchAvailable">
-                  غداء
-                </span>
-                <span *ngIf="program.MDinnerAvailable">
-                  عشاء
-                </span>
+              <span *ngIf="program.MBreakfastAvailable">
+                فطور
+              </span>
+              <span *ngIf="program.MLunchAvailable">
+                غداء
+              </span>
+              <span *ngIf="program.MDinnerAvailable">
+                عشاء
+              </span>
             </div>
           </div>
         </div>
@@ -394,7 +394,7 @@
           <div class="col-md-4">
             <div class="form-group ">
               <label class="d-block col-form-label"> شركة الطيران </label>
-              {{program.airlineID}}
+              {{program.airlineNAme}}
             </div>
           </div>
           <div class="col-md-8">
@@ -413,9 +413,9 @@
           <div class="col-md-4">
             <div class="form-group ">
               <label class="d-block col-form-label">
-                 طريقة التنقل الداخلي
+                طريقة التنقل الداخلي
               </label>
-              {{program.internalTransportations}}
+              {{program.transportName}}
             </div>
           </div>
           <div class="col-md-8">
@@ -444,40 +444,35 @@
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.MaccaMusieum">
-                       متحف مكة
+                <label class="d-block col-form-label" *ngIf="program.MaccaMusieum">
+                  متحف مكة
                 </label>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.Thour">
+                <label class="d-block col-form-label" *ngIf="program.Thour">
                   جبل الطور
                 </label>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.MoulaTomb">
+                <label class="d-block col-form-label" *ngIf="program.MoulaTomb">
                   مقبرة المعلاه
                 </label>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.HaramenSharefen">
-                       معرض عمارة الحرمين الشريفين
+                <label class="d-block col-form-label" *ngIf="program.HaramenSharefen">
+                  معرض عمارة الحرمين الشريفين
                 </label>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.NourMountain">
+                <label class="d-block col-form-label" *ngIf="program.NourMountain">
                   جبل النور
                 </label>
               </div>
@@ -499,41 +494,36 @@
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.MasjedZuElqeblaten">
-                       مسجد القبلتين
+                <label class="d-block col-form-label" *ngIf="program.MasjedZuElqeblaten">
+                  مسجد القبلتين
                 </label>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.Qebaa">
+                <label class="d-block col-form-label" *ngIf="program.Qebaa">
                   مسجد قباء
                 </label>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.SevenMasjed">
+                <label class="d-block col-form-label" *ngIf="program.SevenMasjed">
                   المساجد السبعة
                 </label>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.ElGenValley">
-                    وادي الجن
+                <label class="d-block col-form-label" *ngIf="program.ElGenValley">
+                  وادي الجن
                 </label>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label class="d-block col-form-label"
-                       *ngIf="program.PrinitHolyQuran">
-                       مجمع الملك فهد لطباعة المصحف الشريف
+                <label class="d-block col-form-label" *ngIf="program.PrinitHolyQuran">
+                  مجمع الملك فهد لطباعة المصحف الشريف
                 </label>
               </div>
             </div>
@@ -546,12 +536,11 @@
         <a [routerLink]="['/profile/packages/', program.programID]">
           <h3 class="text-primary"> تفاصيل الباقات </h3>
         </a>
-        <div class="table-responsive">
+        <div class="table-responsive" *ngIf="program.packages">
           <table class="table table-bordered table-light table-striped">
             <thead>
               <tr>
                 <th scope="col"> رقم الباقة </th>
-                <th scope="col"> اسم الباقة </th>
                 <th scope="col"> تاريخ الذهاب </th>
                 <th scope="col"> تاريخ العودة </th>
                 <th scope="col"> موسم العمرة </th>
@@ -561,17 +550,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let package of program.tblPackageSet">
-                <td scope="row"> {{package.packageID}} </td>
-                <td>{{package.packageID}}</td>
-                <td>{{package.packageDepartureDate}}</td>
-                <td>{{package.packageReturnDate}}</td>
-                <td>{{package.packageID}} </td>
-                <td>{{package.itineraryID?.itineraryName}}</td>
+              <tr>
+                <td>{{program.packages.ID}} </td>
+                <td>{{program.packages.packageDepartureDate}}</td>
+                <td>{{program.packages.packageReturnDate}}</td>
+                <td>{{program.packages.umrahSeasonName}} </td>
+                <td>{{program.packages.directionName}}</td>
                 <td><span class="badge badge-success">جديد</span></td>
                 <td class="text-center">
-                  <a [routerLink]="['/package/view',programId,package.packageID]" class="view-action" title="View item"><i
-                      class="fal fa-eye fa-fw fa-1x"></i>
+                  <a [routerLink]="[]" class="view-action"
+                    title="View item"><i class="fal fa-eye fa-fw fa-1x"></i>
                     <span class="d-none">View item</span>
                   </a>
                 </td>
@@ -585,8 +573,8 @@
         <a class="btn btn-default px-0" [routerLink]="['/program/edit']"> رجوع </a>
         <div>
           <a [routerLink]="['/program/update', programId]" class="btn btn-outline-primary ml-3">تعديل</a>
-          <a *ngIf="!program.programActive" class="btn btn-primary ml-3"> نشر البرنامج </a>
-          <a *ngIf="program.programActive" class="btn btn-primary ml-3"> الغاء نشر البرنامج </a>
+          <a *ngIf="!program.programActive" class="btn btn-primary ml-3" (click)="publishProgram()"> نشر البرنامج </a>
+          <a *ngIf="program.programActive" class="btn btn-primary ml-3" (click)="unPublishProgram()"> الغاء نشر البرنامج </a>
         </div>
       </div>
     </div>

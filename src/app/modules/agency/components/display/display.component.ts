@@ -19,6 +19,7 @@ export class DisplayComponent implements OnInit {
   basics: any;
   licenses: any;
   branches: any;
+  user: any;
 
   constructor(
     private router: Router,
@@ -35,6 +36,7 @@ export class DisplayComponent implements OnInit {
     this.basics = JSON.parse(sessionStorage.getItem('agencyBasic')) || {};
     this.licenses = JSON.parse(sessionStorage.getItem('licence')) || {};
     this.branches = JSON.parse(sessionStorage.getItem('branches')) || {};
+    this.user = JSON.parse(sessionStorage.getItem('user'));
   }
 
   getFullAgencyData() {
@@ -50,6 +52,8 @@ export class DisplayComponent implements OnInit {
   }
 
   confirm() {
+    this.agency.userID = this.user.user.uid;
+    console.log(this.agency.userID);
     this.agencyService.confirm(this.agency).subscribe(res => {
       if (res) {
         this.router.navigate(['agency/edit']);

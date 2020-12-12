@@ -73,6 +73,7 @@ export class ConfirmationComponent implements OnInit {
 
   confirm() {
     this.package.ID = this.ID;
+    console.log(this.package.ID);
     this.packaService.addPackages(this.package)
       .subscribe(res => {
         this.router.navigate(['/package/congratulate']);

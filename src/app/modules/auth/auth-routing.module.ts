@@ -5,7 +5,9 @@ import {
   LoginComponent,
   LogoutComponent,
   ForgotPasswordComponent,
-  RegisterComponent
+  RegisterComponent,
+  ResetpasswordComponent,
+  ChangepasswordComponent
 } from './components';
 
 const routes: Routes = [
@@ -24,6 +26,14 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'resetpassword',
+    component: ResetpasswordComponent
+  },
+  {
+    path: 'changePassword',
+    component: ChangepasswordComponent
   }
 ];
 
@@ -36,6 +46,8 @@ export class AuthRoutingModule {
     LoginComponent,
     LogoutComponent,
     ForgotPasswordComponent,
-    RegisterComponent
+    RegisterComponent,
+    ResetpasswordComponent,
+    ChangepasswordComponent
   ];
 }
