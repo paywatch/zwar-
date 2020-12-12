@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { resolve } from 'dns';
+import { AngularFirestoreDocument } from 'angularfire2/firestore';
+import firebase from 'firebase/app';
+
 
 import { AuthService as CoreService } from '../../../core/services/auth/auth.service';
-
 
 @Injectable()
 export class AuthService {
@@ -46,6 +47,49 @@ export class AuthService {
       this.AfAuth.auth.currentUser.updatePassword(payload).then(data => resolve(data), err => reject(err));
     });
   }
+
+
+  doFacebookLogin() {
+    return new Promise<any>((resolve, reject) => {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      this.AfAuth.auth
+        .signInWithPopup(provider)
+        .then(res => {
+          resolve(res);
+        }, err => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  doTwitterLogin() {
+    return new Promise<any>((resolve, reject) => {
+      const provider = new firebase.auth.TwitterAuthProvider();
+      this.AfAuth.auth
+        .signInWithPopup(provider)
+        .then(res => {
+          resolve(res);
+        }, err => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  doGoogleLogin() {
+    return new Promise<any>((resolve, reject) => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      this.AfAuth.auth
+        .signInWithPopup(provider)
+        .then(res => {
+          resolve(res);
+        }, err => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
 }
-
-
