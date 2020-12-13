@@ -48,35 +48,6 @@ export class AuthService {
     });
   }
 
-
-  doFacebookLogin() {
-    return new Promise<any>((resolve, reject) => {
-      const provider = new firebase.auth.FacebookAuthProvider();
-      this.AfAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        });
-    });
-  }
-
-  doTwitterLogin() {
-    return new Promise<any>((resolve, reject) => {
-      const provider = new firebase.auth.TwitterAuthProvider();
-      this.AfAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        });
-    });
-  }
-
   doGoogleLogin() {
     return new Promise<any>((resolve, reject) => {
       const provider = new firebase.auth.GoogleAuthProvider();

@@ -22,8 +22,8 @@ export class AuthenticationGuard implements CanActivate, CanLoad {
   }
 
   private isAuthenticated() {
-    if (this.authenticationService.getAuthorizationHeader()) {
-      return true;
+    if () {
+      // NOT IMPLEMENT YET;
     }
     else {
       this.router.navigate(['/users/login']);

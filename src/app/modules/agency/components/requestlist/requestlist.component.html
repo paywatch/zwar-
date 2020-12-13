@@ -1,0 +1,130 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']">الرئيسية</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> طلبات تسجيل وكالات الاسفار </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary">
+        طلبات تسجيل وكالات الاسفار
+        <a class="mx-2" data-toggle="collapse" href="#advSearch" role="button" aria-expanded="false"
+          aria-controls="advSearch"> <i class="fal fa-fw  search-icon fa-search"></i></a>
+      </h1>
+    </div>
+    <div class="adv-search collapse border p-4 mb-4" id="advSearch">
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group ">
+            <label class="d-block col-form-label"> رقم الطلب </label>
+            <input type="string" class="form-control" name="agencyID" ngDefaultControl [(ngModel)]="agencyID">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group ">
+            <label class="d-block col-form-label"> اسم وكالة السفر </label>
+            <input type="text" class="form-control" name="agencyName" ngDefaultControl [(ngModel)]="agencyName">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group ">
+            <label class="d-block col-form-label"> تصنيف الوكالة </label>
+            <select class="form-control" [(ngModel)]="agencytype" (change)="getValue($event.target.value)" ngDefaultControl name="agencytype">
+              <option *ngFor="let item of agencyType">
+                {{item.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="mt-2 text-right">
+        <a class="btn btn-block-mobile btn-primary" (click)="agencySearch()">بحـــث</a>
+      </div>
+
+      <div class="tab-content" *ngIf="searchResult">
+        <div class="tab-pane   show active" id="current" role="tabpanel" aria-labelledby="current-tab">
+          <div class="table-responsive">
+            <table class="table table-bordered table-light table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">رقم الطلب</th>
+                  <th scope="col">اسم وكالة السفر</th>
+                  <th scope="col">تاريخ الانشاء</th>
+                  <th scope="col">الدولة</th>
+                  <th scope="col">تصنيف الوكالة</th>
+                  <th scope="col">حالة الطلب</th>
+                  <th scope="col" width="5%" class="text-center">عرض</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row">{{searchResult.id}}</td>
+                  <td>{{searchResult.tAName}}</td>
+                  <td>{{searchResult.tACommRegIssueDate}}</td>
+                  <td>{{searchResult.countryId}}</td>
+                  <td>{{searchResult.tAType}}</td>
+                  <td><span class="badge badge-info">جديد</span></td>
+                  <td class="text-center">
+                    <a href="view_request.html" class="view-action" title="View item"><i
+                        class="fal fa-eye fa-fw fa-1x"></i>
+                      <span class="d-none">View item</span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-inner">
+      <div class="mt-n4">
+        <ul class="nav nav-tabs border-bottom f-tabs mb-4  mx-n4 nav nav-tabs pb-1 sticky-top" id="myTab"
+          role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="current-tab" data-toggle="tab" href="#current" role="tab"
+              aria-controls="current" aria-selected="true">الطلبات الحالية</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane   show active" id="current" role="tabpanel" aria-labelledby="current-tab">
+          <div class="table-responsive">
+            <table class="table table-bordered table-light table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">رقم الطلب</th>
+                  <th scope="col">اسم وكالة السفر</th>
+                  <th scope="col">تاريخ الانشاء</th>
+                  <th scope="col">الدولة</th>
+                  <th scope="col">تصنيف الوكالة</th>
+                  <th scope="col">حالة الطلب</th>
+                  <th scope="col" width="5%" class="text-center">عرض</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of agencies">
+                  <td scope="row">{{item.id}}</td>
+                  <td>{{item.tAName}}</td>
+                  <td>{{item.tACommRegIssueDate}}</td>
+                  <td>{{item.countryId}}</td>
+                  <td>{{item.tAType}}</td>
+                  <td><span class="badge badge-info">جديد</span></td>
+                  <td class="text-center">
+                    <a href="view_request.html" class="view-action" title="View item"><i
+                        class="fal fa-eye fa-fw fa-1x"></i>
+                      <span class="d-none">View item</span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

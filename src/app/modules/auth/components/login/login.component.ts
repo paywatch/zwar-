@@ -41,4 +41,11 @@ export class LoginComponent implements OnInit {
       this.toaster.error(err);
     });
   }
+
+
+  googleLogin() {
+    this.authService.doGoogleLogin().then(res => {
+      this.router.navigate(['/profile']);
+    });
+  }
 }

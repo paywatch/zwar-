@@ -8,3 +8,5 @@ export * from './review/review.component';
 export * from './congratulations/congratulations.component';
 export * from './edit/edit.component';
 export * from './update/update.component';
+export * from './requestlist/requestlist.component';
+
