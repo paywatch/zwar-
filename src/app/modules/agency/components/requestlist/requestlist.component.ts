@@ -37,6 +37,13 @@ export class RequestlistComponent implements OnInit {
     this.agencytype = event;
   }
 
+  resetForm() {
+    this.agencytype = '';
+    this.agencyID = '';
+    this.agencyName = '';
+    this.searchResult = null;
+  }
+
   agencySearch() {
     console.log(this.agencytype);
     // tslint:disable-next-line:max-line-length
