@@ -90,7 +90,7 @@ export class UpdateComponent implements OnInit {
       GreaterThan('tAMinTourAuthIssueDate', 'tAMinTourAuthExpiryDate'),
       GreaterThan('tAFTAVMemberIssueDate', 'tAFTAVMemberExpiryDate'),
       GreaterThan('tAFITTMemberIssueDate', 'tAFITTMemberExpiryDate')
-      ]
+       ]
     });
   }
 

@@ -58,19 +58,16 @@
               <div class="col-md-8">
                 <div class="form-group">
                   <label class="d-block col-form-label"> اسم البرنامج </label>
-                  <input
-                    type="text"
-                    formControlName="programName"
-                    class="form-control"/>
+                  <input type="text" formControlName="programName" class="form-control" />
                 </div>
                 <em *ngIf="basicsForm.get('programName').hasError('required') &&
                            basicsForm.get('programName').touched">
-                           هذا الحقل اجباري
+                  هذا الحقل اجباري
                 </em>
                 <em *ngIf="!basicsForm.get('programName').hasError('required')
                             && basicsForm.get('programName').hasError('maxlength')
                             && basicsForm.get('programName').touched">
-                            حد اقصي 100 ارقام
+                  حد اقصي 100 ارقام
                 </em>
               </div>
               <div class="col-md-4">
@@ -81,27 +78,15 @@
                   <div class="mt-2">
                     <div>
                       <div class="custom-control custom-radio d-inline-block">
-                        <input
-                        type="radio"
-                        id="mecca"
-                        value="mecca"
-                        name="programPathID"
-                        formControlName="programPathID"
-                        class="custom-control-input"
-                        />
+                        <input type="radio" id="mecca" value="mecca" name="programPathID"
+                          formControlName="programPathID" class="custom-control-input" />
                         <label class="custom-control-label" for="mecca">مكه</label>
                       </div>
                     </div>
                     <div>
                       <div class="custom-control custom-radio d-inline-block">
-                        <input
-                        type="radio"
-                        id="madina"
-                        name="programPathID"
-                        value="madina"
-                        formControlName="programPathID"
-                        class="custom-control-input"
-                        />
+                        <input type="radio" id="madina" name="programPathID" value="madina"
+                          formControlName="programPathID" class="custom-control-input" />
                         <label class="custom-control-label" for="madina">مكة و المدينة</label>
                       </div>
                     </div>
@@ -113,41 +98,36 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="d-block col-form-label"> عام العمرة </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="programUmrahYear"/>
+                  <input type="text" class="form-control" formControlName="programUmrahYear" />
                 </div>
                 <em *ngIf="basicsForm.get('programUmrahYear').hasError('required') &&
                            basicsForm.get('programUmrahYear').touched">
-                اجباري
+                  اجباري
                 </em>
                 <em *ngIf="!basicsForm.get('programUmrahYear').hasError('required') &&
                             basicsForm.get('programUmrahYear').hasError('maxlength') &&
                             basicsForm.get('programUmrahYear').touched">
-                            حد اقصي 4 ارقام
+                  حد اقصي 4 ارقام
                 </em>
                 <em *ngIf="!basicsForm.get('programUmrahYear').hasError('required') &&
                            !basicsForm.get('programUmrahYear').hasError('maxlength') &&
                             basicsForm.get('programUmrahYear').hasError('pattern') &&
                             basicsForm.get('programUmrahYear').touched">
-                            فقط ارقام و حروف
+                  فقط ارقام و حروف
                 </em>
               </div>
 
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="d-block col-form-label"> تصنيف البرنامج </label>
-                  <select
-                    class="form-control"
-                    formControlName="programCategoryID">
-                  <option *ngFor="let category of categories" [value]="category.id">
-                    {{category.name}}
-                  </option>
+                  <select class="form-control" formControlName="programCategoryID">
+                    <option *ngFor="let category of categories" [value]="category.id">
+                      {{category.name}}
+                    </option>
                   </select>
                   <em *ngIf="basicsForm.get('programCategoryID').hasError('required') &&
                              basicsForm.get('programCategoryID').touched">
-                             اجباري
+                    اجباري
                   </em>
                 </div>
               </div>
@@ -157,11 +137,7 @@
                     سعر البرنامج (يبدأ من)
                   </label>
                   <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      type="text"
-                      formControlName="programPrice"/>
+                    <input type="text" class="form-control" type="text" formControlName="programPrice" />
                     <div class="input-group-append">
                       <span class="input-group-text" id="basic-addon2">ريـال
                       </span>
@@ -169,12 +145,12 @@
                   </div>
                   <em *ngIf="basicsForm.get('programPrice').hasError('required') &&
                              basicsForm.get('programPrice').touched">
-                             اجباري
+                    اجباري
                   </em>
                   <em *ngIf="!basicsForm.get('programPrice').hasError('required') &&
                               basicsForm.get('programPrice').hasError('maxlength') &&
                               basicsForm.get('programPrice').touched">
-                  حد اقصي 20 رقم
+                    حد اقصي 20 رقم
                   </em>
                   <em *ngIf="!basicsForm.get('programPrice').hasError('required') &&
                              !basicsForm.get('programPrice').hasError('maxlength') &&
@@ -191,24 +167,21 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="d-block col-form-label"> وصف البرنامج </label>
-                  <textarea
-                    class="form-control"
-                    rows="4"
-                    formControlName="programDesc">
+                  <textarea class="form-control" rows="4" formControlName="programDesc">
                   </textarea>
                 </div>
-                <em *ngIf="basicsForm.get('programDesc').hasError('required') && basicsForm.get('programDesc').touched"> هذا الحقل اجباري</em>
+                <em *ngIf="basicsForm.get('programDesc').hasError('required') && basicsForm.get('programDesc').touched">
+                  هذا الحقل اجباري</em>
                 <em *ngIf="!basicsForm.get('programDesc').hasError('required') &&
                             basicsForm.get('programDesc').hasError('maxlength') &&
                              basicsForm.get('programDesc').touched">
-                            حد اقصي 1000 حرف
+                  حد اقصي 1000 حرف
                 </em>
               </div>
             </div>
 
             <div class="btn-group mt-5">
-              <a class="btn btn-default px-0"
-                [routerLink]="['/profile/programs']">
+              <a (click)="deleteBasic()" class="btn btn-default px-0" [routerLink]="['/profile/programs']">
                 الغاء
               </a>
               <div>
@@ -218,6 +191,11 @@
               </div>
             </div>
           </form>
+          <div class="row justify-content-end ml-1 pt-2">
+            <button (click)="updateBasic()" class="btn btn-secondary ml-3" [disabled]="!basicsForm.valid">
+              تعديل
+            </button>
+          </div>
         </section>
       </div>
     </div>

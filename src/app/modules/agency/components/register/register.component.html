@@ -41,14 +41,6 @@
                 ">
                 فقط انجليزي او ارقام
               </span>
-              <span class="text-danger small" *ngIf="
-                  !RegisterForm.get('userName').hasError('required') &&
-                  !RegisterForm.get('userName').hasError('maxlength') &&
-                  !RegisterForm.get('userName').hasError('pattern') &&
-                  !uniqueUsername
-                ">
-                هذا الاسم مستخدم من قبل
-              </span>
             </div>
           </div>
           <div class="col-md-6 col-lg-4">
@@ -102,15 +94,6 @@
                 ">
                 فقط ارقام
               </span>
-              <span class="text-danger small" *ngIf="
-                  !RegisterForm.get('tAAdminMobileNo').hasError('required') &&
-                  !RegisterForm.get('tAAdminMobileNo').hasError('maxlength') &&
-                  !RegisterForm.get('tAAdminMobileNo').hasError('pattern') &&
-                  RegisterForm.get('tAAdminMobileNo').dirty &&
-                  !uniquePhone
-                ">
-                هذا الرقم مستخدم من قبل
-              </span>
             </div>
           </div>
           <div class="col-md-6 col-lg-4">
@@ -135,14 +118,6 @@
               </em>
               <em *ngIf="RegisterForm.get('tAAdminEmail').hasError('maxlength')">
                 بحد اقصي 50 حرف
-              </em>
-              <em *ngIf="
-                  !RegisterForm.get('tAAdminEmail').hasError('required') &&
-                  !RegisterForm.get('tAAdminEmail').hasError('pattern') &&
-                  RegisterForm.get('tAAdminEmail').dirty &&
-                  !uniqueEmail
-                ">
-                هذا البريد الالكتروني مستخدم من قبل
               </em>
             </div>
           </div>

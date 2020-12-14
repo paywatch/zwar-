@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { threadId } from 'worker_threads';
 
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { ProgramService } from '../../services/program.service';
@@ -20,6 +21,8 @@ export class BasicsComponent implements OnInit {
   basics: any;
   categories: any[];
   programs: any;
+  selectedBasic: any;
+  Basics$: any[];
 
   constructor(
     private router: Router,
@@ -29,11 +32,12 @@ export class BasicsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initForm();
+    this.patchForm();
     setTimeout(() => {
-      this.patchForm();
-    }, 2000);
+      this.getBasicData();
+    }, 1000);
     this.getAllCategory();
+    this.initForm();
   }
 
   initForm() {
@@ -49,10 +53,19 @@ export class BasicsComponent implements OnInit {
 
   patchForm() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
-    if (this.basics) {
-      this.basicsForm.patchValue(this.basics);
-    }
   }
+
+  getBasicData() {
+    this.programService.getProgramBasics().subscribe(basics => {
+      this.Basics$ = basics;
+      if (this.basics) {
+        this.selectedBasic = basics.find(b => b.programName == this.basics.programName);
+        console.log(this.selectedBasic);
+        this.basicsForm.patchValue(this.selectedBasic);
+      }
+    });
+  }
+
 
   getAllCategory() {
     this.programService.getAllCategory().subscribe(category => {
@@ -63,15 +76,32 @@ export class BasicsComponent implements OnInit {
 
   createProgram() {
     const payload = this.basicsForm.value;
-    this.programService.createProgram(payload)
-      .subscribe(
-        (data) => {
-          this.toastr.success('تمت الاضافه بنجاح');
-          this.router.navigate(['/program/residential']);
-        },
-        (error) => {
-          this.toastr.error('لقد حدث خطأ ما');
-        }
-      );
+    const result = this.Basics$.find(b => b.programName == payload.programName);
+    if (!result) {
+      this.programService.createProgram(payload)
+        .subscribe(
+          (data) => {
+            this.toastr.success('تمت الاضافه بنجاح');
+            this.router.navigate(['/program/residential']);
+          }
+        );
+    }
+    else {
+      this.toastr.error('لقد حدث خطأ ما');
+    }
   }
+
+  updateBasic() {
+    const id = this.selectedBasic.id;
+    console.log(id);
+    this.selectedBasic = this.basicsForm.value;
+    this.selectedBasic.id = id;
+    this.programService.updateBasicData(this.selectedBasic);
+    this.router.navigate(['/program/residential']);
+  }
+
+  deleteBasic() {
+    this.programService.deleteBasic(this.selectedBasic);
+  }
+
 }

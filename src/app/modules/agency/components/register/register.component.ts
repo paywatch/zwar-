@@ -19,8 +19,6 @@ export class RegisterComponent implements OnInit {
   message: string;
   countries: any;
   agency: any;
-  uniqueEmail: boolean = true;
-  uniquePhone: boolean = true;
   uniqueUsername: boolean = true;
 
   constructor(
@@ -96,21 +94,8 @@ export class RegisterComponent implements OnInit {
 
   register() {
     const payload = this.RegisterForm.value;
-    this.agency.map(a => {
-      if (a.userName == payload.userName) {
-        this.uniqueUsername = false;
-      }
-      if (a.tAAdminEmail == payload.tAAdminEmail) {
-        this.uniqueEmail = false;
-      }
-      if (a.tAAdminMobileNo == payload.tAAdminMobileNo) {
-        this.uniquePhone = false;
-      }
-    });
-    if (!this.uniqueUsername || !this.uniquePhone || !this.uniqueEmail) {
-      return;
-    }
-    else {
+    const result = this.agency.find(a => a.userName === payload.userName);
+    if (!result) {
       this.agencyService.registerAgency(payload).subscribe(res => {
         if (res) {
           this.router.navigate(['/agency/main']);
@@ -120,6 +105,9 @@ export class RegisterComponent implements OnInit {
           this.toast.error('SomeThing Went Wrong');
         }
       });
+    }
+    else {
+      this.toast.error('error');
     }
   }
 }

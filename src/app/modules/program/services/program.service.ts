@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 
 import { UtilsService } from '../../core/services/utils/utils.service';
 import { Program } from '../models/program';
+import { resolve } from 'dns';
 
 
 @Injectable()
@@ -40,6 +41,9 @@ export class ProgramService {
 
   transportationWayCollection: AngularFirestoreCollection<any>;
   transportationWay: Observable<any>;
+
+  programBasics: Observable<any>;
+  basicDoc: AngularFirestoreDocument<any>;
 
   constructor(
     private http: HttpClient,
@@ -76,6 +80,18 @@ export class ProgramService {
   getAllTransportation() {
     this.transportationWay = this.afs.collection('transportationWay').valueChanges();
     return this.transportationWay;
+  }
+
+  getProgramBasics() {
+    return this.programBasics = this.afs.collection('basics').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
   }
 
   getProgram() {
@@ -138,6 +154,18 @@ export class ProgramService {
   deleteProgram(program: Program) {
     this.programDoc = this.afs.doc(`program/${program.programId}`);
     this.programDoc.delete();
+  }
+
+  updateBasicData(basic) {
+    this.basicDoc = this.afs.doc(`basics/${basic.id}`);
+    this.basicDoc.update(basic).then(res => {
+      console.log(res);
+    });
+  }
+
+  deleteBasic(basicData) {
+    this.basicDoc = this.afs.doc(`basics/${basicData.id}`);
+    this.basicDoc.delete();
   }
 
   updateProgram(item: Program) {
