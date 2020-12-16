@@ -596,19 +596,19 @@
             </div>
           </div>
 
-          <div class="btn-group mt-5">
-            <a (click)="deleteResidential()" routerLink="/" class="btn btn-default px-0"> الغاء </a>
+          <div class="btn-group mt-5 justify-content-end">
             <div>
-              <a routerLink="/program/basics" class="btn btn-outline-primary ml-3">السابق</a>
+              <a routerLink="/program/basics" class="btn btn-outline-primary mb-2">السابق</a>
               <button class="btn btn-primary ml-3" type="submit" (click)="createHotels()"
-                [disabled]="!residentailForm.valid">
+                [disabled]="!residentailForm.valid" *ngIf="!selecetdHotel">
                 التالي
               </button>
             </div>
           </div>
         </form>
-        <div class="row justify-content-end update">
-          <button (click)="updateHotels()" class="btn btn-secondary ml-3">
+        <div class="row justify-content-between">
+          <a (click)="deleteResidential()" routerLink="/" class="btn btn-default px-0"> الغاء </a>
+          <button (click)="updateHotels()" class="btn btn-primary ml-3">
             تعديل
           </button>
         </div>

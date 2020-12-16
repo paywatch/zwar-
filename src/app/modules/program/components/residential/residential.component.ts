@@ -122,18 +122,11 @@ export class ResidentialComponent implements OnInit {
 
   createHotels() {
     const hotels = { ...this.residentailForm.value, ...this.madinaForm.value };
-    const result = this.hotelsData.find(h => h.hotelName == hotels.hotelName);
-    console.log(result);
-    if (!result) {
-      this.programservice.createResidential(hotels)
-        .subscribe((res) => {
-          this.router.navigate(['/program/transportation']);
-          this.toaster.success('تمت الاضافه');
-        });
-    }
-    else {
-      this.toaster.error('هذا الاسم موجود من قبل');
-    }
+    this.programservice.createResidential(hotels)
+      .subscribe((res) => {
+        this.router.navigate(['/program/transportation']);
+        this.toaster.success('تمت الاضافه');
+      });
   }
 
   updateHotels() {

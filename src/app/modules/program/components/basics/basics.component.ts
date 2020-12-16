@@ -76,19 +76,13 @@ export class BasicsComponent implements OnInit {
 
   createProgram() {
     const payload = this.basicsForm.value;
-    const result = this.Basics$.find(b => b.programName == payload.programName);
-    if (!result) {
-      this.programService.createProgram(payload)
-        .subscribe(
-          (data) => {
-            this.toastr.success('تمت الاضافه بنجاح');
-            this.router.navigate(['/program/residential']);
-          }
-        );
-    }
-    else {
-      this.toastr.error('لقد حدث خطأ ما');
-    }
+    this.programService.createProgram(payload)
+      .subscribe(
+        (data) => {
+          this.toastr.success('تمت الاضافه بنجاح');
+          this.router.navigate(['/program/residential']);
+        }
+      );
   }
 
   updateBasic() {

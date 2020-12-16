@@ -180,19 +180,18 @@
               </div>
             </div>
 
-            <div class="btn-group mt-5">
-              <a *ngIf="selectedBasic" (click)="deleteBasic()" class="btn btn-default px-0" [routerLink]="['/profile/programs']">
-                الغاء
-              </a>
-              <div>
-                <button *ngIf="!selectedBasic" class="btn btn-primary ml-3" [disabled]="!basicsForm.valid" type="submit">
-                  التالي
-                </button>
-              </div>
+            <div class="btn-group mt-5 justify-content-end">
+              <button *ngIf="!selectedBasic" class="btn btn-primary ml-3" [disabled]="!basicsForm.valid" type="submit">
+                التالي
+              </button>
             </div>
           </form>
-          <div class="row justify-content-end ml-1 pt-2 mb-5">
-            <button  *ngIf="selectedBasic" (click)="updateBasic()" class="btn btn-secondary ml-3" [disabled]="!basicsForm.valid">
+          <div class="row justify-content-between ml-1 pt-2 mb-5">
+            <a (click)="deleteBasic()" class="btn btn-default px-0" [routerLink]="['/profile/programs']">
+              الغاء
+            </a>
+            <button *ngIf="selectedBasic" (click)="updateBasic()" class="btn btn-secondary ml-3"
+              [disabled]="!basicsForm.valid">
               تعديل
             </button>
           </div>

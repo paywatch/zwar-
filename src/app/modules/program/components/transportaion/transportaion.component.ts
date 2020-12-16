@@ -67,7 +67,7 @@ export class TransportaionComponent implements OnInit {
     this.programService.getProgramTransportation().subscribe(transportation => {
       this.transportationData = transportation;
       if (this.transportations) {
-        const find = this.transportationData.find(t => t.id == this.transportations.id);
+        const find = this.transportationData.find(t => t.airlineID == this.transportations.airlineID);
         this.selectedTransportation = find;
         this.transportationFrom.patchValue(this.selectedTransportation);
         console.log(this.selectedTransportation);
@@ -88,19 +88,13 @@ export class TransportaionComponent implements OnInit {
 
   submit() {
     const payload = this.transportationFrom.value;
-    const result = this.transportationData.find(t => t.id == this.transportations.id);
-    console.log(result);
-    if (!result) {
-      this.programService.createTransportation(payload).subscribe(
-        (data) => {
-          this.router.navigate(['/program/visits']);
-          this.toast.success('تمت الاضافه');
-        }
-      );
-    }
-    else {
-      this.toast.error('error');
-    }
+    this.programService.createTransportation(payload).subscribe(
+      (data) => {
+        this.router.navigate(['/program/visits']);
+        this.toast.success('تمت الاضافه');
+      },
+      (error) => this.toast.error('حدث خطأ')
+    );
   }
 
   updateTransportation() {
