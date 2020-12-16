@@ -31,8 +31,8 @@ export class VisitsComponent implements OnInit {
   }
 
   getBasics () {
-    this.basics = JSON.parse(sessionStorage.getItem('basics'));
-    this.visits = JSON.parse(sessionStorage.getItem('visit'));
+    this.basics = JSON.parse(sessionStorage.getItem('basics')) || {};
+    this.visits = JSON.parse(sessionStorage.getItem('visit')) || {};
   }
 
   patchForm() {

@@ -120,8 +120,6 @@ export class ResidentialComponent implements OnInit {
     });
   }
 
-
-
   createHotels() {
     const hotels = { ...this.residentailForm.value, ...this.madinaForm.value };
     const result = this.hotelsData.find(h => h.hotelName == hotels.hotelName);
@@ -146,5 +144,10 @@ export class ResidentialComponent implements OnInit {
     this.programservice.updateProgramHotel(this.selecetdHotel);
     this.router.navigate(['/program/transportation']);
     this.toaster.success('تم التعديل');
+  }
+
+  deleteResidential() {
+    this.programservice.deleteResidential(this.selecetdHotel);
+    this.toaster.success('تم الحذف');
   }
 }

@@ -186,20 +186,38 @@ export class ProgramService {
 
   updateBasicData(basic) {
     this.basicDoc = this.afs.doc(`basics/${basic.id}`);
-    this.basicDoc.update(basic).then(res => {
-      console.log(res);
-    });
+    this.basicDoc.update(basic);
+    sessionStorage.removeItem('basics');
+    sessionStorage.setItem('basics', JSON.stringify(basic));
   }
 
   updateProgramHotel(hotel) {
     this.hotelDoc = this.afs.doc(`/hotels/${hotel.id}`);
-    this.hotelDoc.update(hotel).then(
-    );
+    this.hotelDoc.update(hotel);
+    sessionStorage.removeItem('hotels');
+    sessionStorage.setItem('hotels', JSON.stringify(hotel));
+  }
+
+  updateTransportation(item) {
+    this.transportationDoc = this.afs.doc(`transportation/${item.id}`);
+    this.transportationDoc.update(item);
+    sessionStorage.removeItem('residence');
+    sessionStorage.setItem('residence', JSON.stringify(item));
+  }
+
+  deleteTransportation(item) {
+    this.transportationDoc = this.afs.doc(`transportation${item.id}`);
+    this.transportationDoc.delete();
   }
 
   deleteBasic(basicData) {
     this.basicDoc = this.afs.doc(`basics/${basicData.id}`);
     this.basicDoc.delete();
+  }
+
+  deleteResidential(hotel) {
+    this.hotelDoc = this.afs.doc(`/hotels/${hotel.id}`);
+    this.hotelDoc.delete();
   }
 
   updateProgram(item: Program) {
