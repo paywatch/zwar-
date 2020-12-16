@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, pipe } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 import { UtilsService } from '../../core/services/utils/utils.service';
 import { Program } from '../models/program';
 import { resolve } from 'dns';
+import { threadId } from 'worker_threads';
 
 
 @Injectable()
@@ -17,9 +18,11 @@ export class ProgramService {
 
   hotelCollection: AngularFirestoreCollection<any>;
   hotels: Observable<any>;
+  hotelDoc: AngularFirestoreDocument<any>;
 
   transportationCollection: AngularFirestoreCollection<any>;
   transportation: Observable<any>;
+  transportationDoc: AngularFirestoreDocument<any>;
 
   visitsCollection: AngularFirestoreCollection<any>;
   visits: Observable<any>;
@@ -94,6 +97,31 @@ export class ProgramService {
     );
   }
 
+  getProgramHotel() {
+    return this.hotels = this.afs.collection('hotels').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
+  }
+
+  getProgramTransportation() {
+    return this.transportation = this.afs.collection('transportation').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
+  }
+
   getProgram() {
     return this.program = this.afs.collection('program').snapshotChanges().pipe(
       map(changes => {
@@ -161,6 +189,12 @@ export class ProgramService {
     this.basicDoc.update(basic).then(res => {
       console.log(res);
     });
+  }
+
+  updateProgramHotel(hotel) {
+    this.hotelDoc = this.afs.doc(`/hotels/${hotel.id}`);
+    this.hotelDoc.update(hotel).then(
+    );
   }
 
   deleteBasic(basicData) {

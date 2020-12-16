@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter, NgZone } fro
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { threadId } from 'worker_threads';
 
 import { ProgramService } from '../../services/program.service';
 
@@ -18,6 +19,8 @@ export class ResidentialComponent implements OnInit {
   hideMadinaData: boolean;
   residential: any;
   hotelStars: any;
+  selecetdHotel: any;
+  hotelsData: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,10 +32,12 @@ export class ResidentialComponent implements OnInit {
     this.initResidentialForm();
     this.getBasicsData();
     this.initMadinaResidence();
-    setTimeout(() => {
-      this.patchFormValue();
-    }, 2000);
+    this.patchFormValue();
     this.getAllHotelStars();
+    this.getAllProgramHotel();
+    setTimeout(() => {
+      this.getAllProgramHotel();
+    }, 1000);
   }
 
   getBasicsData() {
@@ -41,11 +46,6 @@ export class ResidentialComponent implements OnInit {
 
   patchFormValue() {
     this.residential = JSON.parse(sessionStorage.getItem('hotels'));
-    if (this.residential) {
-      console.log('yes');
-      this.residentailForm.patchValue(this.residential);
-      this.madinaForm.patchValue(this.residential);
-    }
   }
 
   get hotel() {
@@ -107,13 +107,44 @@ export class ResidentialComponent implements OnInit {
     });
   }
 
+
+  getAllProgramHotel() {
+    this.programservice.getProgramHotel().subscribe(hotel => {
+      this.hotelsData = hotel;
+      if (this.residential) {
+        this.selecetdHotel = this.hotelsData.find(h => h.hotelName == this.residential.hotelName);
+        console.log(this.selecetdHotel);
+        this.residentailForm.patchValue(this.selecetdHotel);
+        this.madinaForm.patchValue(this.selecetdHotel);
+      }
+    });
+  }
+
+
+
   createHotels() {
-    sessionStorage.removeItem('submit');
     const hotels = { ...this.residentailForm.value, ...this.madinaForm.value };
-    this.programservice.createResidential(hotels)
-      .subscribe((res) => {
-        this.router.navigate(['/program/transportation']);
-        this.toaster.success('تمت الاضافه');
-      }, (error) => this.toaster.error(error));
+    const result = this.hotelsData.find(h => h.hotelName == hotels.hotelName);
+    console.log(result);
+    if (!result) {
+      this.programservice.createResidential(hotels)
+        .subscribe((res) => {
+          this.router.navigate(['/program/transportation']);
+          this.toaster.success('تمت الاضافه');
+        });
+    }
+    else {
+      this.toaster.error('هذا الاسم موجود من قبل');
+    }
+  }
+
+  updateHotels() {
+    const id = this.selecetdHotel.id;
+    const hotels = { ...this.residentailForm.value, ...this.madinaForm.value };
+    this.selecetdHotel = hotels;
+    this.selecetdHotel.id = id;
+    this.programservice.updateProgramHotel(this.selecetdHotel);
+    this.router.navigate(['/program/transportation']);
+    this.toaster.success('تم التعديل');
   }
 }

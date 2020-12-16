@@ -98,6 +98,7 @@ export class BasicsComponent implements OnInit {
     this.selectedBasic.id = id;
     this.programService.updateBasicData(this.selectedBasic);
     this.router.navigate(['/program/residential']);
+    this.toastr.success('تم التعديل');
   }
 
   deleteBasic() {

@@ -15,6 +15,8 @@ export class TransportaionComponent implements OnInit {
   basics: any;
   airplane: any;
   transports: any;
+  transportations: any;
+  transportationData: any[];
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +32,9 @@ export class TransportaionComponent implements OnInit {
     }, 1000);
     this.getAllAirplanes();
     this.getAllTransportation();
+    setTimeout(() => {
+      this.getProgramTransportation();
+    }, 1000);
   }
 
   initForm() {
@@ -48,14 +53,21 @@ export class TransportaionComponent implements OnInit {
 
   patchForm() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
-    const transportation = JSON.parse(sessionStorage.getItem('residence'));
-    transportation ? this.transportation.patchValue(transportation) : {};
+    this.transportations = JSON.parse(sessionStorage.getItem('residence'));
   }
 
   getAllAirplanes() {
     this.programService.getAllAirplaneCompany().subscribe(airplane => {
       this.airplane = airplane;
       console.log(this.airplane);
+    });
+  }
+
+  getProgramTransportation() {
+    this.programService.getProgramTransportation().subscribe(transportation => {
+      this.transportationData = transportation;
+      const find = this.transportationData.find(t => t.airlineID == this.transportations.airlineID);
+      console.log(find);
     });
   }
 

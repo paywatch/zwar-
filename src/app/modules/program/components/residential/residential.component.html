@@ -98,7 +98,7 @@
                     <div class="col-md-4">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> نجوم الفندق </label>
-                        <select  class="form-control" formControlName="hotelStars">
+                        <select class="form-control" formControlName="hotelStars">
                           <option>اختر</option>
                           <option *ngFor="let star of hotelStars" [value]="star.id">{{star.name}}</option>
                         </select>
@@ -260,11 +260,13 @@
                         </label>
                         <div class="mt-2">
                           <div class="custom-control custom-radio  d-inline-block">
-                            <input type="radio" id="dinnerIncluded" [value]="true" name="dinnerIncluded" formControlName="dinnerIncluded">
+                            <input type="radio" id="dinnerIncluded" [value]="true" name="dinnerIncluded"
+                              formControlName="dinnerIncluded">
                             <label for="dinnerIncluded">نعم مشمول</label>
                           </div>
                           <div class="custom-control custom-radio  d-inline-block  mx-3">
-                            <input type="radio" [value]="false" id="dinnerNotIncluded" name="dinnerIncluded" formControlName="dinnerIncluded">
+                            <input type="radio" [value]="false" id="dinnerNotIncluded" name="dinnerIncluded"
+                              formControlName="dinnerIncluded">
                             <label for="dinnerNotIncluded">يجب دفع سعر الوجبة
                             </label>
                           </div>
@@ -276,7 +278,8 @@
                         <label class="d-block col-form-label"> تفاصيل وجبة العشاء (اختياري) </label>
                         <input type="text" class="form-control" formControlName="dinnerDetails">
                       </div>
-                      <em *ngIf="hotel.get('dinnerDetails').hasError('maxlength') &&  hotel.get('breakfastDetails').dirty">
+                      <em
+                        *ngIf="hotel.get('dinnerDetails').hasError('maxlength') &&  hotel.get('breakfastDetails').dirty">
                         حد اقصي 50 رقم
                       </em>
                     </div>
@@ -347,10 +350,12 @@
                             <span class="input-group-text">ايام</span>
                           </div>
                         </div>
-                        <em *ngIf="hotels.get('MHotelNights').hasError('required') && hotels.get('MHotelNights').touched">
+                        <em
+                          *ngIf="hotels.get('MHotelNights').hasError('required') && hotels.get('MHotelNights').touched">
                           هذا الحقل إجباري
                         </em>
-                        <em *ngIf="hotels.get('MHotelNights').hasError('maxlength') && hotels.get('MHotelNights').touched">
+                        <em
+                          *ngIf="hotels.get('MHotelNights').hasError('maxlength') && hotels.get('MHotelNights').touched">
                           حد اقصي 20 رقم
                         </em>
                         <em *ngIf="!hotels.get('MHotelNights').hasError('required') &&
@@ -439,11 +444,13 @@
                         </label>
                         <div class="mt-2">
                           <div class="custom-control custom-radio  d-inline-block ">
-                            <input type="radio" id="yes2" name="MBreakfastIncluded" [value]="true" formControlName="MBreakfastIncluded">
+                            <input type="radio" id="yes2" name="MBreakfastIncluded" [value]="true"
+                              formControlName="MBreakfastIncluded">
                             <label for="yes2"> نعم مشمول </label>
                           </div>
                           <div class="custom-control custom-radio  d-inline-block  mx-3">
-                            <input type="radio" id="no2" name="MBreakfastIncluded" [value]="false" formControlName="MBreakfastIncluded">
+                            <input type="radio" id="no2" name="MBreakfastIncluded" [value]="false"
+                              formControlName="MBreakfastIncluded">
                             <label for="no2">
                               يجب دفع سعر الوجبة
                             </label>
@@ -536,8 +543,7 @@
                             <label for="MDinner">نعم مشمول</label>
                           </div>
                           <div class="custom-control custom-radio  d-inline-block  mx-3">
-                            <input type="radio" [value]="false" id="Mdinner"
-                                   formControlName="MDinnerIncluded">
+                            <input type="radio" [value]="false" id="Mdinner" formControlName="MDinnerIncluded">
                             <label for="Mdinner">يجب دفع سعر الوجبة
                             </label>
                           </div>
@@ -549,7 +555,8 @@
                         <label class="d-block col-form-label"> تفاصيل وجبة العشاء (اختياري) </label>
                         <input type="text" class="form-control" formControlName="MDinnerDetails">
                       </div>
-                      <em *ngIf="hotels.get('MDinnerDetails').hasError('maxlength') &&  hotels.get('MDinnerDetails').touched">
+                      <em
+                        *ngIf="hotels.get('MDinnerDetails').hasError('maxlength') &&  hotels.get('MDinnerDetails').touched">
                         حد اقصي 50 رقم
                       </em>
                     </div>
@@ -593,12 +600,18 @@
             <a routerLink="/" class="btn btn-default px-0"> الغاء </a>
             <div>
               <a routerLink="/program/basics" class="btn btn-outline-primary ml-3">السابق</a>
-              <button class="btn btn-primary ml-3" type="submit" (click)="createHotels()" [disabled]="!residentailForm.valid">
+              <button class="btn btn-primary ml-3" type="submit" (click)="createHotels()"
+                [disabled]="!residentailForm.valid">
                 التالي
               </button>
             </div>
           </div>
         </form>
+        <div class="row justify-content-end update">
+          <button (click)="updateHotels()" class="btn btn-secondary ml-3">
+            تعديل
+          </button>
+        </div>
       </div>
     </div>
   </div>
