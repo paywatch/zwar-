@@ -190,10 +190,13 @@
             </div>
           </section>
           <div class="btn-group mt-5">
-            <a class="btn btn-default px-0" (click)="back()"> الغاء </a>
+            <a class="btn btn-default px-0" (click)="deletePackageBasic()"> الغاء </a>
             <div>
-              <button class="btn btn-primary ml-3" [disabled]="!baseForm.valid">
+              <button *ngIf="!selectedBasic" class="btn btn-primary ml-3" [disabled]="!baseForm.valid">
                 التالي
+              </button>
+              <button *ngIf="selectedBasic" (click)="updatePackageBasic()" class="btn btn-secondary ml-3">
+                تعديل
               </button>
             </div>
           </div>

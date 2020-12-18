@@ -71,7 +71,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let room of rooms">
-                    <td>{{room.roomTypeID}}</td>
+                    <td>{{room.roomName}}</td>
                     <td>{{room.roomPriceAdult}}</td>
                     <td>{{room.roomPriceKids}}</td>
                     <td>{{room.roomTypeInfants}}</td>
@@ -91,10 +91,13 @@
           </div>
         </section>
         <div class="btn-group mt-5">
-          <a class="btn btn-default px-0"> الغاء </a>
+          <a class="btn btn-default px-0" (click)="deletePackageRoom"> الغاء </a>
           <div>
             <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
-            <button class="btn btn-primary ml-3" [disabled]="!rooms.length" (click)="submit()">التالي</button>
+            <button *ngIf="!selectedRoom" class="btn btn-primary ml-3" [disabled]="!rooms?.length" (click)="submit()">التالي</button>
+            <button *ngIf="selectedRoom" (click)="updatePackageRoom()" class="btn btn-secondary ml-3">
+              تعديل
+            </button>
           </div>
         </div>
       </div>

@@ -20,6 +20,8 @@ export class GroupComponent implements OnInit {
   group: any;
   groupForm: FormGroup;
   matwafUrl: string;
+  GroupID: any;
+  selectedGroup: any;
 
   constructor(
     private fb: FormBuilder,
@@ -30,8 +32,10 @@ export class GroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.getProgramGroup();
+    this.patchForm();
     setTimeout(() => {
-      this.patchForm();
+      this.getProgramGroup();
     }, 1000);
     this.loadBasicInfo();
   }
@@ -42,8 +46,8 @@ export class GroupComponent implements OnInit {
       mutawefPhone: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]+/)]],
       groupLeadName: ['', [Validators.required, Validators.maxLength(50)]],
       groupLeadPhone: ['', [Validators.required,
-        Validators.maxLength(20),
-        Validators.pattern(/^[0-9]+/)]],
+      Validators.maxLength(20),
+      Validators.pattern(/^[0-9]+/)]],
       mutawefPicture: [maxSize(500)],
     }, {
       validators: CheckPhoneNumber('mutawefPhone', 'groupLeadPhone')
@@ -52,16 +56,24 @@ export class GroupComponent implements OnInit {
 
   patchForm() {
     this.group = JSON.parse(sessionStorage.getItem('group'));
-    this.group ? this.groupForm.patchValue(this.group) : {};
+    this.GroupID = JSON.parse(sessionStorage.getItem('groupID')) || {};
   }
 
   loadBasicInfo() {
-    this.basics = JSON.parse(sessionStorage.getItem('basics'));
-    console.log(this.basics);
+    this.basics = JSON.parse(sessionStorage.getItem('ID'));
   }
 
   back() {
-    this.router.navigate(['/package/base/', this.basics.programId]);
+    this.router.navigate(['/package/base/', this.basics]);
+  }
+
+  getProgramGroup() {
+    this.packageService.getMatwaf().subscribe(matwaf => {
+      if (this.group) {
+        this.selectedGroup = matwaf.find(m => m.id == this.GroupID);
+        this.groupForm.patchValue(this.selectedGroup);
+      }
+    });
   }
 
   createGroup() {
@@ -76,5 +88,19 @@ export class GroupComponent implements OnInit {
         (err) => {
           this.toast.error('لقد حدث خطأ ما');
         });
+  }
+
+  updatePackageMatwaf() {
+    this.selectedGroup = this.groupForm.value;
+    this.selectedGroup.id = this.GroupID;
+    this.packageService.updatePackageMatwaf(this.selectedGroup);
+    this.router.navigate(['/package/room-data']);
+    this.toast.success('تم التعديل');
+  }
+
+  deleteMatwaf() {
+    this.packageService.deletePackageMatwaf(this.selectedGroup);
+    this.toast.info('تم الحذف');
+    this.groupForm.reset();
   }
 }

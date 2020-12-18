@@ -179,22 +179,18 @@
                 </em>
               </div>
             </div>
-
-            <div class="btn-group mt-5 justify-content-end">
+            <div class="btn-group mt-5">
+              <a (click)="deleteBasic()" class="btn btn-default px-0" [routerLink]="['/profile/programs']">
+                الغاء
+              </a>
               <button *ngIf="!selectedBasic" class="btn btn-primary ml-3" [disabled]="!basicsForm.valid" type="submit">
                 التالي
               </button>
+              <button *ngIf="selectedBasic" (click)="updateBasic()" class="btn btn-secondary ml-3">
+                تعديل
+              </button>
             </div>
           </form>
-          <div class="row justify-content-between ml-1 pt-2 mb-5">
-            <a (click)="deleteBasic()" class="btn btn-default px-0" [routerLink]="['/profile/programs']">
-              الغاء
-            </a>
-            <button *ngIf="selectedBasic" (click)="updateBasic()" class="btn btn-secondary ml-3"
-              [disabled]="!basicsForm.valid">
-              تعديل
-            </button>
-          </div>
         </section>
       </div>
     </div>

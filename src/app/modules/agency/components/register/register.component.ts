@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, throwError } from 'rxjs';
 
 import { Password } from '../../../../_helpers/password.validator';
 import { MustMatch } from '../../../../_helpers/must-match.validator';
 import { AgencyService } from '../../services/agency/agency.service';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-register',
@@ -14,12 +14,14 @@ import { AgencyService } from '../../services/agency/agency.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  RegisterForm: FormGroup;
 
+  RegisterForm: FormGroup;
   message: string;
   countries: any;
   agency: any;
-  uniqueUsername: boolean = true;
+  agencyID: string;
+  selectedAgency: any;
+  registerData: any;
 
   constructor(
     private router: Router,
@@ -32,6 +34,10 @@ export class RegisterComponent implements OnInit {
     this.initForm();
     this.getAlCountries();
     this.getAgency();
+    this.getSessioStorageData();
+    setTimeout(() => {
+      this.getAgency();
+    }, 1000);
   }
 
   initForm() {
@@ -78,17 +84,26 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  getSessioStorageData() {
+    this.registerData = JSON.parse(sessionStorage.getItem('register')) || {};
+    this.agencyID = JSON.parse(sessionStorage.getItem('agecyID')) || {};
+  }
+
   getAlCountries() {
     this.agencyService.getAllCountries().subscribe(country => {
       this.countries = country;
-      console.log(this.countries);
     });
   }
 
   getAgency() {
     this.agencyService.getALlAgency().subscribe(agency => {
-      this.agency = agency;
-      console.log(this.agency);
+      if (this.registerData) {
+        this.agency = agency;
+        this.selectedAgency = agency.find(a => a.id == this.agencyID);
+        if (this.selectedAgency) {
+          this.RegisterForm.patchValue(this.selectedAgency);
+        }
+      }
     });
   }
 
@@ -109,5 +124,18 @@ export class RegisterComponent implements OnInit {
     else {
       this.toast.error('error');
     }
+  }
+
+  updateAgency() {
+    this.selectedAgency = this.RegisterForm.value;
+    this.selectedAgency.id = this.agencyID;
+    this.agencyService.updateAgencyData(this.selectedAgency);
+    this.router.navigate(['/agency/main']);
+    this.toast.success('تم التعديل');
+  }
+
+  deleteAgency() {
+    this.agencyService.deleteAgencyData(this.selectedAgency);
+    this.toast.info('تم الحذف');
   }
 }

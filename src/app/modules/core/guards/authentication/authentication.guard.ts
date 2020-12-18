@@ -1,33 +1,26 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, ActivatedRouteSnapshot, Router, Route, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/modules/auth/services/auth/auth.service';
 
-import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate, CanLoad {
+export class AuthenticationGuard implements CanActivate {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService) { }
-
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.isAuthenticated();
+    private afAuth: AngularFireAuth,
+    private authSerive: AuthService) {
   }
 
-  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
-    return this.isAuthenticated();
-  }
-
-  private isAuthenticated() {
-    if () {
-      // NOT IMPLEMENT YET;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (!this.authSerive.isloggin()) {
+      this.router.navigate(['/auth/login']);
+      return false;
     }
     else {
-      this.router.navigate(['/users/login']);
-      return false;
+      return true;
     }
   }
 }

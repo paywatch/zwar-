@@ -14,9 +14,12 @@ export class RoomDataComponent implements OnInit {
   roomForm: FormGroup;
   basics: any;
   roomType: any;
-  rooms: any[];
+  rooms: any[] = [];
   payload: any;
   roomData: any;
+  roomID: string;
+  selectedRoom: any;
+  roomPayload: any;
 
   constructor(
     private fb: FormBuilder,
@@ -26,8 +29,13 @@ export class RoomDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.getRoomType();
+    setTimeout(() => {
+      this.getRoomType();
+    }, 2000);
     this.getSessionStorageData();
+    setTimeout(() => {
+      this.getPackageRoom();
+    }, 1000);
   }
 
   initForm() {
@@ -43,43 +51,49 @@ export class RoomDataComponent implements OnInit {
   getRoomType() {
     this.packageService.getRoomType().subscribe(roomType => {
       this.roomType = roomType;
-      console.log(this.roomData);
+      console.log(this.rooms);
+      this.rooms = this.rooms.map(r => {
+        r.roomName = roomType.find(t => t.id == r.roomTypeID).name;
+        return r;
+      });
     });
   }
 
   getSessionStorageData() {
     this.roomData = JSON.parse(sessionStorage.getItem('room'));
-    this.roomData ? this.rooms = [].concat(this.roomData) : this.rooms = [];
-    console.log(this.rooms);
+    this.roomID = JSON.parse(sessionStorage.getItem('roomID')) || {};
+  }
+
+  getPackageRoom() {
+    this.packageService.getRooms().subscribe(rooms => {
+      if (this.roomData) {
+        this.selectedRoom = rooms.find(r => r.id == this.roomID);
+        this.selectedRoom ? this.rooms = [].concat(this.selectedRoom) : this.rooms = [];
+      }
+    });
   }
 
   resetForm() {
     this.roomForm.reset();
   }
 
-  navigate() {
-    this.router.navigate(['/package/confirm']);
-  }
-
-  deleteRoom(id) {
-    this.rooms = this.rooms.filter(room => room.$$ID != id);
-  }
-
   back() {
     this.router.navigate(['/package/group']);
   }
 
-
   addRoom() {
     if (this.roomForm.valid) {
       this.payload = this.roomForm.value;
-      this.payload.$$ID = this.rooms.length;
+      this.payload.$$ID = this.rooms.length + 1;
       this.rooms.push(this.payload);
     }
   }
 
+  deleteRoom(id) {
+    this.rooms = this.rooms.filter(room => room.$$ID !== id);
+  }
+
   editRoom(index) {
-    console.log(index);
     const room = this.rooms.find(r => r.$$ID === index);
     this.roomForm.patchValue(room);
   }
@@ -95,5 +109,18 @@ export class RoomDataComponent implements OnInit {
         (err) => {
           this.toast.error('لقد حدث خطأ ما');
         });
+  }
+
+  updatePackageRoom() {
+    this.roomPayload = { ...this.rooms };
+    this.selectedRoom = this.roomPayload;
+    this.packageService.updatePackageRoom(this.selectedRoom);
+    this.toast.success('تم التعديل');
+    this.router.navigate(['/package/confirm']);
+  }
+
+  deletePackageRoom() {
+    this.packageService.deletePackageRoom(this.selectedRoom);
+    this.toast.info('تم الحذف');
   }
 }

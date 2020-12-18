@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProgramService } from '../../services/program.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-visits',
@@ -14,6 +15,8 @@ export class VisitsComponent implements OnInit {
   visitForm: FormGroup;
   basics: any;
   visits: any;
+  visitID: any;
+  selectedVisit: any;
 
   constructor(
     private fb: FormBuilder,
@@ -25,20 +28,18 @@ export class VisitsComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getBasics();
-    setTimeout(() => {
-      this.patchForm();
-    }, 1000);
+    if (this.visits) {
+      setTimeout(() => {
+        this.getProgramVisit();
+      }, 1000);
+    }
   }
 
-  getBasics () {
+  getBasics() {
     this.basics = JSON.parse(sessionStorage.getItem('basics')) || {};
     this.visits = JSON.parse(sessionStorage.getItem('visit')) || {};
+    this.visitID = JSON.parse(sessionStorage.getItem('visitID'));
   }
-
-  patchForm() {
-    this.visits ? this.visitForm.patchValue(this.visits) : {};
-  }
-
 
   initForm() {
     this.visitForm = this.fb.group({
@@ -64,6 +65,31 @@ export class VisitsComponent implements OnInit {
 
   back() {
     this.router.navigate(['/program/transportation']);
+  }
+
+  getProgramVisit() {
+    this.programService.getProgramVisit().subscribe(visit => {
+      if (this.visits) {
+        this.selectedVisit = visit.find(v => v.id == this.visitID);
+        console.log(this.selectedVisit);
+        this.visitForm.patchValue(this.selectedVisit);
+      }
+    });
+  }
+
+  updateProgramVisit() {
+    this.selectedVisit = this.visitForm.value;
+    this.selectedVisit.id = this.visitID;
+    console.log(this.selectedVisit);
+    this.programService.updateProgramVisit(this.selectedVisit);
+    this.router.navigate(['/program/confirmation']);
+    this.toast.success('تم التعديل');
+  }
+
+  deleteProgramVisit() {
+    this.programService.deleteProgramVisit(this.selectedVisit);
+    this.visitForm.reset();
+    this.router.navigate(['program/transportation']);
   }
 
   submit() {

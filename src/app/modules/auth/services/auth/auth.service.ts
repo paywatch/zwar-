@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import firebase from 'firebase/app';
+import { map } from 'rxjs/operators';
 
 
 import { AuthService as CoreService } from '../../../core/services/auth/auth.service';
@@ -10,10 +11,16 @@ import { AuthService as CoreService } from '../../../core/services/auth/auth.ser
 @Injectable()
 export class AuthService {
 
+  userCollection: AngularFirestoreCollection<any>;
+  user: any;
+
   constructor(
     private http: HttpClient,
     private coreService: CoreService,
-    private AfAuth: AngularFireAuth) { }
+    private AfAuth: AngularFireAuth,
+    private afs: AngularFirestore) {
+    this.getAuth();
+  }
 
   login(email: string, password: string) {
     return new Promise((resolve, reject) => {
@@ -29,6 +36,15 @@ export class AuthService {
         .then(userData => resolve(userData),
           err => reject(err));
     });
+  }
+
+  getAuth() {
+    this.user = JSON.parse(sessionStorage.getItem('user')) || {};
+    console.log(this.user);
+  }
+
+  isloggin(): boolean {
+    return !!this.user;
   }
 
   logOut() {

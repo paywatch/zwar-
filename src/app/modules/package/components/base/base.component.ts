@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +21,8 @@ export class BaseComponent implements OnInit {
   airPorts: any;
   seasons: any;
   umrahDirection: any;
+  packageBasicID: string;
+  selectedBasic: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,6 +37,10 @@ export class BaseComponent implements OnInit {
     this.getAirPorts();
     this.getUmrahSeason();
     this.getUmrahDirection();
+    this.getPackageBasicData();
+    setTimeout(() => {
+      this.getPackageBasicData();
+    });
   }
 
   initForm(): void {
@@ -57,7 +64,7 @@ export class BaseComponent implements OnInit {
     const Id = this.activatedRoute.snapshot.paramMap.get('programId');
     sessionStorage.setItem('ID', JSON.stringify(Id));
     this.base = JSON.parse(sessionStorage.getItem('base'));
-    this.base ? this.baseForm.patchValue(this.base) : {};
+    this.packageBasicID = JSON.parse(sessionStorage.getItem('packageBasicID')) || {};
   }
 
   getAirPorts() {
@@ -80,6 +87,16 @@ export class BaseComponent implements OnInit {
     });
   }
 
+  getPackageBasicData() {
+    this.packageService.getbaseData().subscribe(basic => {
+      if (this.base) {
+        this.selectedBasic = basic.find(b => b.id == this.packageBasicID);
+        console.log(this.selectedBasic);
+        this.baseForm.patchValue(this.selectedBasic);
+      }
+    });
+  }
+
   createPackage() {
     const payload = this.baseForm.value;
     this.packageService.createPackage(payload)
@@ -93,5 +110,18 @@ export class BaseComponent implements OnInit {
 
           this.toast.error('لقد حدث خطأ ما');
         });
+  }
+
+  updatePackageBasic() {
+    this.selectedBasic = this.baseForm.value;
+    this.selectedBasic.id = this.packageBasicID;
+    this.packageService.updatePackageBasic(this.selectedBasic);
+    this.router.navigate(['/package/group']);
+    this.toast.success('تم التعديل');
+  }
+
+  deletePackageBasic() {
+    this.packageService.deletePackageBasic(this.selectedBasic);
+    this.toast.info('تم الحذف');
   }
 }

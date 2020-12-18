@@ -149,10 +149,13 @@
 
           </section>
           <div class="btn-group mt-5">
-            <a class="btn btn-default px-0" (click)="reset()"> الغاء </a>
+            <a class="btn btn-default px-0" (click)="deleteMatwaf()"> الغاء </a>
             <div>
               <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
-              <button class="btn btn-primary ml-3" [disabled]="!groupForm.valid">التالي</button>
+              <button *ngIf="!selectedGroup" class="btn btn-primary ml-3" [disabled]="!groupForm.valid">التالي</button>
+              <button *ngIf="selectedGroup" (click)="updatePackageMatwaf()" class="btn btn-secondary ml-3">
+                تعديل
+              </button>
             </div>
           </div>
         </form>

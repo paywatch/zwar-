@@ -26,6 +26,7 @@ export class ProgramService {
 
   visitsCollection: AngularFirestoreCollection<any>;
   visits: Observable<any>;
+  visitDoc: AngularFirestoreDocument<any>;
 
   ProgramCollection: AngularFirestoreCollection<Program>;
   program: Observable<Program[]>;
@@ -122,6 +123,19 @@ export class ProgramService {
       );
   }
 
+  getProgramVisit() {
+    return this.visits = this.afs.collection('visits').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
+  }
+
   getProgram() {
     return this.program = this.afs.collection('program').snapshotChanges().pipe(
       map(changes => {
@@ -135,7 +149,12 @@ export class ProgramService {
   }
 
   createProgram(payload) {
-    this.basicsCollection.add(payload);
+    this.basicsCollection.add(payload).then(res => {
+      if (res) {
+        console.log(res.id);
+        sessionStorage.setItem('basicID', JSON.stringify(res.id));
+      }
+    });
     return of(true)
       .pipe(
         tap(program => sessionStorage.setItem('basics', JSON.stringify(payload)))
@@ -143,21 +162,27 @@ export class ProgramService {
   }
 
   createResidential(payload) {
-    this.hotelCollection.add(payload);
+    this.hotelCollection.add(payload).then(res => {
+      sessionStorage.setItem('hotelID', JSON.stringify(res.id));
+    });
     return of(true).pipe(
       tap((programsHotels) => sessionStorage.setItem('hotels', JSON.stringify(payload)))
     );
   }
 
   createTransportation(payload) {
-    this.transportationCollection.add(payload);
+    this.transportationCollection.add(payload).then(res => {
+      sessionStorage.setItem('residenceID', JSON.stringify(res.id));
+    });
     return of(true).pipe(
       tap(res => sessionStorage.setItem('residence', JSON.stringify(payload)))
     );
   }
 
   createVisit(payload) {
-    this.visitsCollection.add(payload);
+    this.visitsCollection.add(payload).then(res => {
+      sessionStorage.setItem('visitID', JSON.stringify(res.id));
+    });
     return of(true)
       .pipe(
         tap(data => sessionStorage.setItem('visit', JSON.stringify(payload)))
@@ -177,11 +202,6 @@ export class ProgramService {
       .pipe(
         tap(program => sessionStorage.setItem('publish', JSON.stringify(publish)))
       );
-  }
-
-  deleteProgram(program: Program) {
-    this.programDoc = this.afs.doc(`program/${program.programId}`);
-    this.programDoc.delete();
   }
 
   updateBasicData(basic) {
@@ -205,9 +225,9 @@ export class ProgramService {
     sessionStorage.setItem('residence', JSON.stringify(item));
   }
 
-  deleteTransportation(item) {
-    this.transportationDoc = this.afs.doc(`transportation${item.id}`);
-    this.transportationDoc.delete();
+  updateProgramVisit(item) {
+    this.visitDoc = this.afs.doc(`visits/${item.id}`);
+    this.visitDoc.update(item);
   }
 
   deleteBasic(basicData) {
@@ -220,9 +240,23 @@ export class ProgramService {
     this.hotelDoc.delete();
   }
 
+  deleteTransportation(item) {
+    this.transportationDoc = this.afs.doc(`transportation${item.id}`);
+    this.transportationDoc.delete();
+  }
+
+  deleteProgramVisit(item) {
+    this.visitDoc = this.afs.doc(`visits/${item.id}`);
+    this.visitDoc.delete();
+  }
+
   updateProgram(item: Program) {
     this.programDoc = this.afs.doc(`program/${item.programId}`);
     this.programDoc.update(item);
   }
-}
 
+  deleteProgram(program: Program) {
+    this.programDoc = this.afs.doc(`program/${program.programId}`);
+    this.programDoc.delete();
+  }
+}

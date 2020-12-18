@@ -21,6 +21,7 @@ export class ResidentialComponent implements OnInit {
   hotelStars: any;
   selecetdHotel: any;
   hotelsData: any[];
+  hotelID: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,6 +47,7 @@ export class ResidentialComponent implements OnInit {
 
   patchFormValue() {
     this.residential = JSON.parse(sessionStorage.getItem('hotels'));
+    this.hotelID = JSON.parse(sessionStorage.getItem('hotelID'));
   }
 
   get hotel() {
@@ -112,7 +114,7 @@ export class ResidentialComponent implements OnInit {
     this.programservice.getProgramHotel().subscribe(hotel => {
       this.hotelsData = hotel;
       if (this.residential) {
-        this.selecetdHotel = this.hotelsData.find(h => h.hotelName == this.residential.hotelName);
+        this.selecetdHotel = this.hotelsData.find(h => h.id == this.hotelID);
         console.log(this.selecetdHotel);
         this.residentailForm.patchValue(this.selecetdHotel);
         this.madinaForm.patchValue(this.selecetdHotel);

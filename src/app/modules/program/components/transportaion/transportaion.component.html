@@ -162,15 +162,13 @@
           <a (click)="deleteTransportation()" class="btn btn-default px-0"> الغاء </a>
           <div>
             <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
-            <button class="btn btn-primary ml-3" (click)="submit()">
+            <button *ngIf="!selectedTransportation" class="btn btn-primary ml-3" (click)="submit()">
               التالي
             </button>
+            <button *ngIf="selectedTransportation" (click)="updateTransportation()" class="btn btn-secondary ml-3">
+              تعديل
+            </button>
           </div>
-        </div>
-        <div class="row justify-content-end ml-5 mt-1">
-          <button (click)="updateTransportation()" class="btn btn-primary ml-3">
-            تعديل
-          </button>
         </div>
       </div>
     </div>

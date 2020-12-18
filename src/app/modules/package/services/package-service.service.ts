@@ -14,6 +14,7 @@ export class PackageService {
 
   baseCollection: AngularFirestoreCollection<any>;
   base: Observable<any>;
+  baseDoc: AngularFirestoreDocument<any>;
 
   internalAirportCollection: AngularFirestoreCollection<any>;
   internalAirport: Observable<any>;
@@ -26,11 +27,13 @@ export class PackageService {
 
   matwafCollection: AngularFirestoreCollection<any>;
   matwaf: Observable<any>;
+  matwafDoc: AngularFirestoreDocument<any>;
 
   roomCollection: AngularFirestoreCollection<any>;
-  roomType: Observable<any>;
-
   existRoooms: Observable<any>;
+  roomType: Observable<any>;
+  roomDoc: AngularFirestoreDocument<any>;
+
   packageCollection: AngularFirestoreCollection<any>;
 
   program: Observable<any>;
@@ -67,24 +70,48 @@ export class PackageService {
     return this.umrahDirection;
   }
 
-  getRooms() {
-    this.existRoooms = this.afs.collection('roomData').valueChanges();
-    return this.existRoooms;
-  }
-
-  getMatwaf() {
-    this.matwaf = this.afs.collection('matwafData').valueChanges();
-    return this.matwaf;
-  }
-
-  getbaseData() {
-    this.base = this.afs.collection('packageBasic').valueChanges();
-    return this.base;
-  }
-
   getRoomType() {
     this.roomType = this.afs.collection('roomType').valueChanges();
     return this.roomType;
+  }
+
+  getbaseData() {
+    return this.base = this.afs.collection('packageBasic').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
+  }
+
+  getMatwaf() {
+    return this.matwaf = this.afs.collection('matwafData').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
+  }
+
+  getRooms() {
+    return this.existRoooms = this.afs.collection('roomsData').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getProgram() {
@@ -106,14 +133,22 @@ export class PackageService {
   }
 
   createPackage(payload) {
-    this.baseCollection.add(payload);
+    this.baseCollection.add(payload).then(res => {
+      if (res) {
+        sessionStorage.setItem('packageBasicID', JSON.stringify(res.id));
+      }
+    });
     return of(true).pipe(
       tap(packag => sessionStorage.setItem('base', JSON.stringify(payload)))
     );
   }
 
   createGroup(payload) {
-    this.matwafCollection.add(payload);
+    this.matwafCollection.add(payload).then(res => {
+      if (res) {
+        sessionStorage.setItem('groupID', JSON.stringify(res.id));
+      }
+    });
     return of(true)
       .pipe(
         tap(group => sessionStorage.setItem('group', JSON.stringify(payload)))
@@ -121,7 +156,12 @@ export class PackageService {
   }
 
   createRooms(rooms) {
-    this.roomCollection.add(rooms);
+    this.roomCollection.add(rooms).then(res => {
+      if (res) {
+        console.log(res.id);
+        sessionStorage.setItem('roomID', JSON.stringify(res.id));
+      }
+    });
     return of(true)
       .pipe(tap(room => sessionStorage.setItem('room', JSON.stringify(rooms))));
   }
@@ -133,13 +173,44 @@ export class PackageService {
     );
   }
 
+  updatePackage(item: Package) {
+    this.packageDocs = this.afs.doc(`package/${item.id}`);
+    this.packageDocs.update(item);
+  }
+
   deletePackage(item: Package) {
     this.packageDocs = this.afs.doc(`package/${item.id}`);
     this.packageDocs.delete();
   }
 
-  updatePackage(item: Package) {
-    this.packageDocs = this.afs.doc(`package/${item.id}`);
-    this.packageDocs.update(item);
+  updatePackageBasic(item) {
+    this.baseDoc = this.afs.doc(`packageBasic/${item.id}`);
+    this.baseDoc.update(item);
   }
+
+  updatePackageMatwaf(item) {
+    this.matwafDoc = this.afs.doc(`matwafData/${item.id}`);
+    this.matwafDoc.update(item);
+  }
+
+  updatePackageRoom(item) {
+    this.roomDoc = this.afs.doc(`roomsData/${item[0].id}`);
+    this.roomDoc.update(item);
+  }
+
+  deletePackageBasic(item) {
+    this.baseDoc = this.afs.doc(`packageBasic/${item.id}`);
+    this.baseDoc.delete();
+  }
+
+  deletePackageMatwaf(item) {
+    this.matwafDoc = this.afs.doc(`matwafData/${item.id}`);
+    this.matwafDoc.delete();
+  }
+
+  deletePackageRoom(item) {
+    this.roomDoc = this.afs.doc(`roomsData/${item[0].id}`);
+    this.roomDoc.delete();
+  }
+
 }

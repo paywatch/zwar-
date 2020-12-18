@@ -17,6 +17,7 @@ import {
 } from './components';
 import { CoreService } from './core.service';
 import { AuthGuard } from '../agency/auth-gard/auth-gard.service';
+import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { AuthGuard } from '../agency/auth-gard/auth-gard.service';
     NgHttpLoaderModule,
   ],
   providers: [
+    AuthenticationGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: EndPointInterceptor,

@@ -11,6 +11,7 @@ export class AgencyService {
 
   registerCollection: AngularFirestoreCollection<any>;
   register: Observable<any>;
+  registerDoc: AngularFirestoreDocument<any>;
 
   agencyCollection: AngularFirestoreCollection<any>;
   agency: Observable<any>;
@@ -50,9 +51,27 @@ export class AgencyService {
     return this.countries;
   }
 
+  getAgencyType() {
+    this.agencyType = this.afs.collection('agencyType').valueChanges();
+    return this.agencyType;
+  }
+
+  getDistrictList() {
+    this.DistrictList = this.afs.collection('districtList').valueChanges();
+    return this.DistrictList;
+  }
+
   getALlAgency() {
-    this.agency = this.afs.collection('agency').valueChanges();
-    return this.agency;
+    return this.agency = this.afs.collection('agency').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getBasicData() {
@@ -63,16 +82,6 @@ export class AgencyService {
   getLicense() {
     this.license = this.afs.collection('license').valueChanges();
     return this.license;
-  }
-
-  getAgencyType() {
-    this.agencyType = this.afs.collection('agencyType').valueChanges();
-    return this.agencyType;
-  }
-
-  getDistrictList() {
-    this.DistrictList = this.afs.collection('districtList').valueChanges();
-    return this.DistrictList;
   }
 
   getBranch() {
@@ -93,7 +102,11 @@ export class AgencyService {
   }
 
   registerAgency(payload) {
-    this.agencyCollection.add(payload);
+    this.agencyCollection.add(payload).then(res => {
+      if (res) {
+        sessionStorage.setItem('agecyID', JSON.stringify(res.id));
+      }
+    });
     return of(true).pipe(
       tap(data => sessionStorage.setItem('register', JSON.stringify(payload)))
     );
@@ -127,13 +140,24 @@ export class AgencyService {
     );
   }
 
-  deleteAgency(agency) {
-    this.confirmDoc = this.afs.doc(`confirm/${agency.id}`);
-    this.confirmDoc.delete();
+  updateAgencyData(item) {
+    this.registerDoc = this.afs.doc(`agency/${item.id}`);
+    this.registerDoc.update(item);
   }
 
   updateAgency(agency) {
     this.confirmDoc = this.afs.doc(`confirm/${agency.id}`);
     this.confirmDoc.update(agency);
   }
+
+  deleteAgencyData(item) {
+    this.registerDoc = this.afs.doc(`agency/${item.id}`);
+    this.registerDoc.delete();
+  }
+
+  deleteAgency(agency) {
+    this.confirmDoc = this.afs.doc(`confirm/${agency.id}`);
+    this.confirmDoc.delete();
+  }
+
 }

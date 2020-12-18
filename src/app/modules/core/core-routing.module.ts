@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '../agency/auth-gard/auth-gard.service';
 import { PlainComponent, LayoutComponent } from './components';
+import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 
 const routes: Routes = [
   {
@@ -22,7 +22,6 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () =>
           import('../profile/profile.module').then((m) => m.ProfileModule),
-        // canLoad: [AuthGuard],
       },
       {
         path: 'agency',
@@ -36,6 +35,7 @@ const routes: Routes = [
       },
       {
         path: 'package',
+        canActivate: [AuthenticationGuard],
         loadChildren: () =>
           import('../package/package.module').then((m) => m.PackageModule),
       },
@@ -58,4 +58,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
-export class CoreRoutingModule {}
+export class CoreRoutingModule { }

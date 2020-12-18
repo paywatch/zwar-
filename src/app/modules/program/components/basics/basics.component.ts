@@ -23,6 +23,7 @@ export class BasicsComponent implements OnInit {
   programs: any;
   selectedBasic: any;
   Basics$: any[];
+  basicID: any;
 
   constructor(
     private router: Router,
@@ -53,13 +54,14 @@ export class BasicsComponent implements OnInit {
 
   patchForm() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
+    this.basicID = JSON.parse(sessionStorage.getItem('basicID'));
   }
 
   getBasicData() {
     this.programService.getProgramBasics().subscribe(basics => {
       this.Basics$ = basics;
       if (this.basics) {
-        this.selectedBasic = basics.find(b => b.programName == this.basics.programName);
+        this.selectedBasic = basics.find(b => b.id == this.basicID);
         console.log(this.selectedBasic);
         this.basicsForm.patchValue(this.selectedBasic);
       }
@@ -90,6 +92,7 @@ export class BasicsComponent implements OnInit {
     console.log(id);
     this.selectedBasic = this.basicsForm.value;
     this.selectedBasic.id = id;
+    console.log(this.selectedBasic);
     this.programService.updateBasicData(this.selectedBasic);
     this.router.navigate(['/program/residential']);
     this.toastr.success('تم التعديل');
