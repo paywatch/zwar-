@@ -27,6 +27,8 @@ export class MainComponent implements OnInit {
   editIndex: number;
   countries: any;
   agencyType: any;
+  basicID: any;
+  selectedBasic: any;
 
   constructor(
     private fb: FormBuilder,
@@ -38,21 +40,19 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllAgencyData();
+    this.getCountries();
+    this.getAgencyType();
     setTimeout(() => {
-      this.getAllAgencyData();
+      this.getAgencyBasicData();
     }, 1000);
     this.initForm();
     this.initOwnerForm();
-    this.getCountries();
-    this.getAgencyType();
   }
 
   getAllAgencyData() {
     this.agencyData = JSON.parse(sessionStorage.getItem('agencyBasic'));
-    if (this.agencyData) {
-      this.myForm.patchValue(this.agencyData);
-    }
-    this.ownerList = this.agencyData && this.agencyData.ownerList ? this.agencyData.ownerList : [];
+    this.basicID = JSON.parse(sessionStorage.getItem('basicID')) || {};
   }
 
   getCountries() {
@@ -88,6 +88,14 @@ export class MainComponent implements OnInit {
     });
   }
 
+  initOwnerForm() {
+    this.ownerForm = this.fb.group({
+      tAOwnerFullName: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]],
+      tAOwnerNationalID: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
+      tAOwnerPhoneNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]]
+    });
+  }
+
   // callLogo() {
   //   const logoFile = JSON.parse(sessionStorage.getItem('tALogo'));
   //   const fileName = logoFile ? logoFile.newName : null;
@@ -98,11 +106,16 @@ export class MainComponent implements OnInit {
   //   }
   // }
 
-  initOwnerForm() {
-    this.ownerForm = this.fb.group({
-      tAOwnerFullName: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]],
-      tAOwnerNationalID: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
-      tAOwnerPhoneNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]]
+  getAgencyBasicData() {
+    this.agencyService.getBasicData().subscribe(basics => {
+      if (this.agencyData) {
+        this.selectedBasic = basics.find(b => b.id == this.basicID);
+        console.log(this.selectedBasic);
+        if (this.selectedBasic) {
+          this.myForm.patchValue(this.selectedBasic);
+          this.ownerList = this.selectedBasic && this.selectedBasic.ownerList ? this.selectedBasic.ownerList : [];
+        }
+      }
     });
   }
 
@@ -123,6 +136,19 @@ export class MainComponent implements OnInit {
           this.myForm.reset();
         }
       });
+  }
+
+  updateAgencyBasic() {
+    this.selectedBasic = this.myForm.value;
+    this.selectedBasic.id = this.basicID;
+    console.log(this.selectedBasic);
+    this.agencyService.updateBasicAgency(this.selectedBasic);
+    this.router.navigate(['/agency/license']);
+    this.toast.success('تم التعديل');
+  }
+
+  deleteAgencyBasic() {
+    this.agencyService.deleteAgencyBasic(this.selectedBasic)
   }
 
   // logoChange(input: any, fileName) {

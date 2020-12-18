@@ -18,6 +18,9 @@ export class LicenseComponent implements OnInit {
   myForm: FormGroup;
   main: any;
   files: any;
+  licenseID: any;
+  license: any;
+  selectedLicense: any;
 
   constructor(
     private fb: FormBuilder,
@@ -28,13 +31,19 @@ export class LicenseComponent implements OnInit {
   ngOnInit(): void {
     this.files = {};
     this.initForm();
-    const license = JSON.parse(sessionStorage.getItem('licence'));
-    this.main = JSON.parse(sessionStorage.getItem('agencyBasic'));
-
-    license ? this.myForm.patchValue(license) : {};
+    this.getSessionData();
+    setTimeout(() => {
+      this.getAllLicenseData();
+    }, 1000);
     this.changeMinTourAuth();
     this.changeFTAVMember();
     this.changeFITTMember();
+  }
+
+  getSessionData() {
+    this.license = JSON.parse(sessionStorage.getItem('licence'));
+    this.main = JSON.parse(sessionStorage.getItem('agencyBasic'));
+    this.licenseID = JSON.parse(sessionStorage.getItem('licenseID')) || {};
   }
 
   initForm() {
@@ -62,6 +71,19 @@ export class LicenseComponent implements OnInit {
       ]
     }
     );
+  }
+
+  getAllLicenseData() {
+    this.agencyService.getLicense().subscribe(license => {
+      console.log(license);
+      if (this.license) {
+        this.selectedLicense = license.find(l => l.id == this.licenseID);
+        console.log(this.selectedLicense);
+        if (this.selectedLicense) {
+          this.myForm.patchValue(this.selectedLicense);
+        }
+      }
+    });
   }
 
   get $$isMinTourAuth() {

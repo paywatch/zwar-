@@ -15,6 +15,7 @@ export class AgencyService {
 
   agencyCollection: AngularFirestoreCollection<any>;
   agency: Observable<any>;
+  agencyDoc: AngularFirestoreDocument<any>;
 
   countries: Observable<any>;
   agencyType: Observable<any>;
@@ -61,8 +62,8 @@ export class AgencyService {
     return this.DistrictList;
   }
 
-  getALlAgency() {
-    return this.agency = this.afs.collection('agency').snapshotChanges()
+  getBasicData() {
+    return this.register = this.afs.collection('register').snapshotChanges()
       .pipe(
         map(changes => {
           return changes.map((a: any) => {
@@ -74,19 +75,43 @@ export class AgencyService {
       );
   }
 
-  getBasicData() {
-    this.register = this.afs.collection('register').valueChanges();
-    return this.register;
-  }
-
   getLicense() {
-    this.license = this.afs.collection('license').valueChanges();
-    return this.license;
+    return this.license = this.afs.collection('license').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getBranch() {
-    this.branch = this.afs.collection('branch').valueChanges();
-    return this.branch;
+    return this.branch = this.afs.collection('branch').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
+  }
+
+  getALlAgency() {
+    return this.agency = this.afs.collection('agency').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getAllData() {
@@ -113,21 +138,30 @@ export class AgencyService {
   }
 
   addAgency(payload) {
-    this.registerCollection.add(payload);
+    this.registerCollection.add(payload).then(res => {
+      if (res) {
+        sessionStorage.setItem('basicID', JSON.stringify(res.id));
+      }
+    });
     return of(true).pipe(
       tap(data => sessionStorage.setItem('agencyBasic', JSON.stringify(payload)))
     );
   }
 
   saveLicence(payload) {
-    this.licenseCollection.add(payload);
+    this.licenseCollection.add(payload).then(res => {
+      if (res) {
+        sessionStorage.setItem('licenseID', JSON.stringify(res.id));
+      }
+    });
     return of(true).pipe(
       tap(data => sessionStorage.setItem('licence', JSON.stringify(payload)))
     );
   }
 
   saveBranch(payload) {
-    this.branchCollection.add(payload);
+    this.branchCollection.add(payload).then(res => {
+    });
     return of(true).pipe(
       tap(data => sessionStorage.setItem('branches', JSON.stringify(payload)))
     );
@@ -145,6 +179,11 @@ export class AgencyService {
     this.registerDoc.update(item);
   }
 
+  updateBasicAgency(item) {
+    this.agencyDoc = this.afs.doc(`register/${item.id}`);
+    this.agencyDoc.update(item);
+  }
+
   updateAgency(agency) {
     this.confirmDoc = this.afs.doc(`confirm/${agency.id}`);
     this.confirmDoc.update(agency);
@@ -153,6 +192,11 @@ export class AgencyService {
   deleteAgencyData(item) {
     this.registerDoc = this.afs.doc(`agency/${item.id}`);
     this.registerDoc.delete();
+  }
+
+  deleteAgencyBasic(item) {
+    this.agencyDoc = this.afs.doc(`register/${item.id}`);
+    this.agencyDoc.delete();
   }
 
   deleteAgency(agency) {
