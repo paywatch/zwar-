@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
 import { ProgramRoutingModule } from './program-routing.module';
-import { ProgramService } from './services/program.service';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,6 @@ import { ProgramService } from './services/program.service';
     ProgramRoutingModule
   ],
   providers: [
-    ProgramService
   ]
 })
 export class ProgramModule { }

@@ -418,7 +418,7 @@
               <label class="d-block col-form-label"> نجوم الفندق </label>
               <div class="form-group">
                 <select type="text" class="form-control" formControlName="MHotelStars">
-                  <option **ngFor="let item of hotelStars">
+                  <option *ngFor="let item of hotelStars">
                     {{item.name}}
                   </option>
                 </select>

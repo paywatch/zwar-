@@ -16,6 +16,9 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPrograms();
+    setTimeout(() => {
+      this.getAirplane();
+    }, 1000);
   }
 
   getPrograms() {
@@ -30,18 +33,17 @@ export class EditComponent implements OnInit {
     });
   }
 
+  getAirplane() {
+    this.programService.getAllAirplaneCompany().subscribe(airplane => {
+      this.programs = this.programs.map((p: any) => {
+        p.airplaneName = airplane.find(a => a.id == p.airlineID).name;
+        return p;
+      });
+    });
+  }
+
   onRowDelete(event, program) {
     console.log(program);
     this.programService.deleteProgram(program);
   }
-
-  // getProgram(programId) {
-  //   this.programService.getProgram(programId)
-  //     .subscribe((program) => {
-  //       sessionStorage.setItem('basics', JSON.stringify(this.extractBasics(program)));
-  //       sessionStorage.setItem('residential', JSON.stringify(this.extractBasics(program)));
-  //       sessionStorage.setItem('basics', JSON.stringify(this.extractBasics(program)));
-  //       sessionStorage.setItem('basics', JSON.stringify(this.extractBasics(program)));
-  //     });
-  // }
 }

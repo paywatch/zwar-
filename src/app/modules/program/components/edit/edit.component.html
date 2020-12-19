@@ -6,46 +6,44 @@
 				<li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة </a></li>
 			</ol>
 		</nav>
-		<div class="row justify-content-center" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
+		<div class="table-responsive" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
 			data-aos-delay="100">
-			<div class="col-sm-12 col-md-10 col-lg-10">
-				<table class="table  table-responsive table-striped ">
-					<thead class="bg-secondary">
-						<tr>
-							<th>اسم البرنامج</th>
-							<th>سعر البرنامج</th>
-							<th>عام العمره</th>
-							<th>اسم الفندق</th>
-							<th>شركه الطيران</th>
-							<th>تفاصيل</th>
-							<th>عرض</th>
-							<th>حذف</th>
-						</tr>
-					</thead>
-					<tr *ngFor="let program of programs">
-						<td>{{program.programName}}</td>
-						<td>{{program.programPrice}}</td>
-						<td>{{program.programUmrahYear}}</td>
-						<td>{{program.hotelName}}</td>
-						<td>{{program.airlineID}}</td>
-						<td style="text-align:center">
-							<a [routerLink]="['/program/update',program.programId]">
-								<i class="fa fa-pen"></i>
-							</a>
-						</td>
-						<td>
-							<a [routerLink]="['/program/view/',program.programId]">
-								<i class="far fa-eye"></i>
-							</a>
-						</td>
-						<td style="text-align:center">
-							<a class="table-action text-danger" (click)="onRowDelete($event,program)">
-								<i class="fas fa-trash"></i>
-							</a>
-						</td>
+			<table class="table  table-bordered table-light table-striped">
+				<thead class="bg-secondary">
+					<tr>
+						<th>اسم البرنامج</th>
+						<th>سعر البرنامج</th>
+						<th>عام العمره</th>
+						<th>اسم الفندق</th>
+						<th>شركه الطيران</th>
+						<th>تفاصيل</th>
+						<th>عرض</th>
+						<th>حذف</th>
 					</tr>
-				</table>
-			</div>
+				</thead>
+				<tr *ngFor="let program of programs">
+					<td>{{program.programName}}</td>
+					<td>{{program.programPrice}}</td>
+					<td>{{program.programUmrahYear}}</td>
+					<td>{{program.hotelName}}</td>
+					<td>{{program.airplaneName}}</td>
+					<td style="text-align:center">
+						<a [routerLink]="['/program/update',program.programId]">
+							<i class="fa fa-pen"></i>
+						</a>
+					</td>
+					<td>
+						<a [routerLink]="['/program/view/',program.programId]">
+							<i class="far fa-eye"></i>
+						</a>
+					</td>
+					<td style="text-align:center">
+						<a class="table-action text-danger" (click)="onRowDelete($event,program)">
+							<i class="fas fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </div>

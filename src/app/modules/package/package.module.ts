@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
-import { PackageService } from './services/package-service.service';
 import { PackageRoutingModule } from './package-routing.module';
 
 
@@ -14,7 +13,6 @@ import { PackageRoutingModule } from './package-routing.module';
     PackageRoutingModule
   ],
   providers: [
-    PackageService
   ]
 })
 export class PackageModule { }

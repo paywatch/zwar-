@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouteReuseStrategy } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProgramService } from '../../services/program.service';
 
@@ -9,7 +9,7 @@ import { ProgramService } from '../../services/program.service';
   styleUrls: ['./confirmation.component.css']
 })
 export class ConfirmationComponent implements OnInit {
-
+  user: any;
   basics: any;
   residential: any;
   transportation: any;
@@ -28,7 +28,6 @@ export class ConfirmationComponent implements OnInit {
     this.getAllHotelStars();
     this.getAllAirplanes();
     this.getAllTransportation();
-    console.log(this.program);
   }
 
   collectAllData() {
@@ -36,7 +35,8 @@ export class ConfirmationComponent implements OnInit {
     this.residential = JSON.parse(sessionStorage.getItem('hotels'));
     this.transportation = JSON.parse(sessionStorage.getItem('residence'));
     this.visit = JSON.parse(sessionStorage.getItem('visit'));
-
+    this.user = JSON.parse(sessionStorage.getItem('user')) || {};
+    console.log(this.user);
     this.program = {
       ...this.basics,
       ...this.residential,
@@ -73,6 +73,8 @@ export class ConfirmationComponent implements OnInit {
   }
 
   confirm() {
+    this.program.uid = this.user.user.uid;
+    console.log(this.program.uid);
     this.programService.AddProgram(this.program).subscribe(program => {
       sessionStorage.removeItem('basics');
       sessionStorage.removeItem('hotels');

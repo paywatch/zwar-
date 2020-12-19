@@ -6,46 +6,43 @@
         <li class="breadcrumb-item"><a href="Search_results.html">برامج العمرة </a></li>
       </ol>
     </nav>
-    <div class="row justify-content-center" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
-      data-aos-delay="100">
-      <div class="col-sm-12 col-md-10 col-lg-10">
-        <table class="table table-hover table-striped ">
-          <thead class="bg-secondary">
-            <tr>
-              <th> اسم وكالة السفر </th>
-              <th>الموقع الالكتروني </th>
-              <th>رقم السجل </th>
-              <th>تاريخ انشاء السجل </th>
-              <th>الدولة </th>
-              <th>تفاصيل</th>
-              <th>عرض</th>
-              <th>حذف</th>
-            </tr>
-          </thead>
-          <tr *ngFor="let agency of agencies">
-            <td>{{agency.tAName}}</td>
-            <td>{{agency.tAWebsite}}</td>
-            <td>{{agency.tACommeRegNo}}</td>
-            <td>{{agency.tACommRegIssueDate}}</td>
-            <td>{{agency.countryId}}</td>
-            <td style="text-align:center">
-              <a [routerLink]="['/agency/update', agency.id]">
-                <i class="fa fa-pen"></i>
-              </a>
-            </td>
-            <td>
-              <a [routerLink]="['/agency/review', agency.id]">
-                <i class="far fa-eye"></i>
-              </a>
-            </td>
-            <td style="text-align:center">
-              <a class="table-action text-danger" (click)="onRowDelete($event, agency)">
-                <i class="fas fa-trash"></i>
-              </a>
-            </td>
+    <div class="table-responsive" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
+      <table class="table table-bordered table-light table-striped">
+        <thead class="bg-secondary">
+          <tr>
+            <th> اسم وكالة السفر </th>
+            <th>الموقع الالكتروني </th>
+            <th>رقم السجل </th>
+            <th>تاريخ انشاء السجل </th>
+            <th>الدولة </th>
+            <th>تفاصيل</th>
+            <th>عرض</th>
+            <th>حذف</th>
           </tr>
-        </table>
-      </div>
+        </thead>
+        <tr *ngFor="let agency of agencies">
+          <td>{{agency.tAName}}</td>
+          <td>{{agency.tAWebsite}}</td>
+          <td>{{agency.tACommeRegNo}}</td>
+          <td>{{agency.tACommRegIssueDate}}</td>
+          <td>{{agency.countryId}}</td>
+          <td style="text-align:center">
+            <a [routerLink]="['/agency/update', agency.id]">
+              <i class="fa fa-pen"></i>
+            </a>
+          </td>
+          <td>
+            <a [routerLink]="['/agency/review', agency.id]">
+              <i class="far fa-eye"></i>
+            </a>
+          </td>
+          <td style="text-align:center">
+            <a class="table-action text-danger" (click)="onRowDelete($event, agency)">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>

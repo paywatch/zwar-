@@ -35,7 +35,6 @@ const routes: Routes = [
       },
       {
         path: 'package',
-        canActivate: [AuthenticationGuard],
         loadChildren: () =>
           import('../package/package.module').then((m) => m.PackageModule),
       },

@@ -30,6 +30,7 @@ export class DisplayComponent implements OnInit {
   ngOnInit(): void {
     this.getSessionStorgeData();
     this.getFullAgencyData();
+    this.getAllCountries();
   }
 
   getSessionStorgeData() {
@@ -45,10 +46,15 @@ export class DisplayComponent implements OnInit {
       ...this.licenses,
       ...this.branches
     };
-    console.log(this.agency);
     if (!this.agency) {
       this.router.navigate(['/']);
     }
+  }
+
+  getAllCountries() {
+    this.agencyService.getAllCountries().subscribe(countries => {
+      this.agency.countryName = countries.find(c => c.id == this.agency.countryId).name;
+    });
   }
 
   confirm() {
