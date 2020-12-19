@@ -15,10 +15,13 @@ export class BranchesComponent implements OnInit {
 
   main: any;
   // city: string;
-  taBranchesList: any[];
+  taBranchesList: any[] = [];
   districtList: any;
   myForm: FormGroup;
   newBranch: any;
+  found: any;
+  brachID: any;
+  selectedBranch: any;
 
   constructor(
     private fb: FormBuilder,
@@ -30,12 +33,16 @@ export class BranchesComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getSessionStorageDaTA();
+    setTimeout(() => {
+      this.getAllAgencyBranchs();
+    }, 1000);
   }
 
   getSessionStorageDaTA() {
     this.loadDistrictList();
-    const found = JSON.parse(sessionStorage.getItem('branches'));
-    found ? this.taBranchesList = found : this.taBranchesList = [];
+    this.found = JSON.parse(sessionStorage.getItem('branches'));
+    this.brachID = JSON.parse(sessionStorage.getItem('branchID')) || {};
+    console.log(this.brachID);
   }
 
   initForm() {
@@ -55,6 +62,21 @@ export class BranchesComponent implements OnInit {
     });
   }
 
+  getAllAgencyBranchs() {
+    this.agencyService.getBranch().subscribe(branches => {
+      if (this.found) {
+        this.selectedBranch = branches.find(b => b.id == this.brachID);
+        console.log(this.selectedBranch);
+        if (this.selectedBranch) {
+          this.taBranchesList = [].concat(this.selectedBranch);
+        }
+        else {
+          this.taBranchesList = [];
+        }
+      }
+    });
+  }
+
   SaveData() {
     if (this.myForm.valid) {
       this.newBranch = this.myForm.value;
@@ -64,8 +86,27 @@ export class BranchesComponent implements OnInit {
     }
   }
 
+  updateBranchData() {
+    this.selectedBranch = {...this.taBranchesList};
+    console.log(this.selectedBranch[0].id);
+    this.selectedBranch.id = this.brachID;
+    this.agencyService.updateBranchData(this.selectedBranch);
+    this.toast.success('تم التعديل');
+    this.router.navigate(['agency/display']);
+  }
+
+  deleteBranchData() {
+    this.agencyService.updateBranchData(this.selectedBranch);
+    this.toast.info('تم الحذف');
+  }
+
   onRowDelete(id) {
     this.taBranchesList = this.taBranchesList.filter((branch: any) => branch.$$ID !== id);
+  }
+
+  updateAgencyBranch() {
+    this.selectedBranch = this.taBranchesList;
+    console.log(this.selectedBranch);
   }
 
   createBrnaches() {

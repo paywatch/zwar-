@@ -129,31 +129,17 @@ export class LicenseComponent implements OnInit {
       });
   }
 
-  // loadFile(fileName) {
-  //   const file = JSON.parse(sessionStorage.getItem(fileName));
-  //   this.files[fileName] = file && file.originalName ? file.originalName.split(':').pop() : null;
+  updateLicenseData() {
+    this.selectedLicense = this.myForm.value;
+    this.selectedLicense.id = this.licenseID;
+    this.agencyService.updateLicenseData(this.selectedLicense);
+    this.router.navigate(['/agency/branches']);
+    this.toast.success('تم التعديل');
+  }
 
-  //   const fileUrl = file && file.newName ? file.newName : '';
-  //   this.myForm.get(fileName).setValue(fileUrl);
-  // }
-
-  // onPdfChange(input, fileName) {
-  //   console.log(fileName);
-  //   this.onSelectFile(input, fileName).subscribe(res => {
-  //     this.loadFile(fileName);
-  //   });
-  // }
-
-  // onSelectFile(input: any, fileName) {
-  //   return this.utilsService.uploadFile(input, fileName)
-  //     .pipe(
-  //       tap((res) => {
-  //         if (res) {
-  //           this.myForm.get(fileName).setValue(res.newName);
-  //         }
-  //       })
-  //     );
-  // }
+  deleteLicenseData() {
+    this.agencyService.deleteLicenseData(this.selectedLicense);
+  }
 
   changeMinTourAuth() {
     if (this.$$isMinTourAuth) {
