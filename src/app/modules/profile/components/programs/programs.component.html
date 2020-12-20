@@ -103,7 +103,7 @@
             </p>
           </div>
 
-          <div class="page-inner" *ngIf="program">
+          <div class="page-inner">
             <div class="table-responsive">
               <table class="table table-bordered table-light table-striped">
                 <thead>
@@ -115,10 +115,11 @@
                     <th scope="col"> عام العمرة </th>
                     <th scope="col"> الحالة </th>
                     <th scope="col" width="5%" class="text-center">عرض</th>
+                    <th scope="col" width="5%" class="text-center">الباقات</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let program of program">
+                  <tr *ngFor="let program of programsList$">
                     <td> {{program.programId}} </td>
                     <td> {{program.programName}} </td>
                     <td> {{program.categoryName}} </td>
@@ -131,6 +132,12 @@
                       <span *ngIf="!program.programActive" class="badge badge-light">
                         مجمد
                       </span>
+                    </td>
+                    <td class="text-center">
+                      <a [routerLink]="['/profile/packages', program.programId]" class="view-action" title="View item"><i
+                          class="fa fa-box-alt"></i>
+                        <span class="d-none">View item</span>
+                      </a>
                     </td>
                     <td class="text-center">
                       <a [routerLink]="['/program/view', program.programId]" class="view-action" title="View item"><i

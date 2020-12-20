@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { PackageService } from 'src/app/modules/package/services/package-service.service';
+import { ProgramService } from '../../../../modules/program/services/program.service';
 
-import { ProfileService } from '../../services/profile/profile.service';
 
 
 @Component({
@@ -13,17 +13,59 @@ import { ProfileService } from '../../services/profile/profile.service';
 })
 export class PackagesComponent implements OnInit {
 
-  packagesList$: Observable<any>;
+  packagesList$: any;
   programId: string;
+  packages: any;
+  selectedPackages: any;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private profileService: ProfileService) { }
+    private packageService: PackageService) { }
 
   ngOnInit(): void {
+    this.programId = this.activatedRoute.snapshot.params['programId'];
+    this.getAllPackage();
+    setTimeout(() => {
+      this.getSeasonName();
+      this.getAirport();
+    }, 1000);
+    this.getSinglePackage();
+  }
+
+  getAllPackage() {
+    this.packageService.getPackage().subscribe(packages => {
+      this.packagesList$ = packages;
+      console.log(this.packagesList$);
+    });
+  }
+
+  getAirport() {
+    this.packageService.getAirPorts().subscribe(airport => {
+      this.packagesList$ = this.packagesList$.map(p => {
+        p.airportName = airport.find(a => a.id == p.localAirportID).name;
+        return p;
+      });
+    });
+  }
+
+  getSeasonName() {
+    this.packageService.getUmrahSeason().subscribe(season => {
+      this.packagesList$ = this.packagesList$.map(p => {
+        p.seasonName = season.find(s => s.id == p.packageSeasonID).name;
+        return p;
+      });
+    });
+  }
+
+  getSinglePackage() {
+    this.packageService.getPackage().subscribe(packages => {
+      this.selectedPackages = packages.find(p => p.ID == this.programId);
+      console.log(this.selectedPackages);
+    });
   }
 
   createNewPackage() {
+    this.router.navigate(['/package/base/', this.programId]);;
   }
 }

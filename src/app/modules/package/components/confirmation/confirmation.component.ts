@@ -24,7 +24,7 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBasicData();
-    this.ID = JSON.parse(sessionStorage.getItem('ID'));
+    this.ID = JSON.parse(sessionStorage.getItem('ID')) || {};
     this.getAirPorts();
     this.getUmrahSeason();
     this.getUmrahDirection();

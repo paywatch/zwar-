@@ -1,12 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import firebase from 'firebase/app';
-import { map } from 'rxjs/operators';
-
-
-import { AuthService as CoreService } from '../../../core/services/auth/auth.service';
 
 @Injectable()
 export class AuthService {
@@ -15,11 +11,7 @@ export class AuthService {
   user: any;
 
   constructor(
-    private http: HttpClient,
-    private coreService: CoreService,
-    private AfAuth: AngularFireAuth,
-    private afs: AngularFirestore) {
-    this.getAuth();
+    private AfAuth: AngularFireAuth) {
   }
 
   login(email: string, password: string) {
@@ -43,7 +35,7 @@ export class AuthService {
     console.log(this.user);
   }
 
-  isloggin(): boolean {
+  isloggin() {
     return !!this.user;
   }
 
@@ -79,4 +71,5 @@ export class AuthService {
         });
     });
   }
+
 }
