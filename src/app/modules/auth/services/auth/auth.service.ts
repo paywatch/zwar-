@@ -64,7 +64,24 @@ export class AuthService {
       this.AfAuth.auth
         .signInWithPopup(provider)
         .then(res => {
-          resolve(res);
+          resolve(sessionStorage.setItem('user', JSON.stringify(res)));
+        }, err => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  doFacebookLogin() {
+    return new Promise<any>((resolve, reject) => {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      this.AfAuth.auth
+        .signInWithPopup(provider)
+        .then(res => {
+          if (res.credential) {
+            const token = res.credential.accessToken;
+          }
+          resolve(sessionStorage.setItem('user', JSON.stringify(res)));
         }, err => {
           console.log(err);
           reject(err);

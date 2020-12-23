@@ -9,4 +9,4 @@ export * from './congratulations/congratulations.component';
 export * from './edit/edit.component';
 export * from './update/update.component';
 export * from './requestlist/requestlist.component';
-
+export * from './view-request/view-request.component';

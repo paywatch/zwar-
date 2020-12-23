@@ -12,7 +12,7 @@
         <h1 class="h1 text-primary mb-4">
           ادارة باقات العمرة
           <a class="mx-2" data-toggle="collapse" href="#advSearch" role="button" aria-expanded="false"
-            aria-controls="advSearch"> <i class="fal fa-fw  search-icon fa-search"></i></a>
+            aria-controls="advSearch" (click)="clearSearchResult()"> <i class="fal fa-fw  search-icon fa-search"></i></a>
         </h1>
         <a (click)="createNewPackage()" class="btn btn-outline-primary btn-hover"> اضافة باقة <i
             class="fal fa-plus fa-fw"></i></a>
@@ -23,26 +23,62 @@
           <div class="col-md-6 col-lg-4">
             <div class="form-group ">
               <label class="d-block col-form-label"> رقم الباقة </label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" name="packageID" [(ngModel)]="packageID" ngDefaultControl>
             </div>
           </div>
 
           <div class="col-md-6 col-lg-4">
             <div class="form-group ">
               <label class="d-block col-form-label"> تاريخ الذهاب </label>
-              <input type="text" class="form-control form-date">
+              <input type="text" class="form-control form-date" name="packageTravelDate" [(ngModel)]="packageTravelDate"
+                ngDefaultControl>
             </div>
           </div>
           <div class="col-md-6 col-lg-4">
             <div class="form-group ">
               <label class="d-block col-form-label"> تاريخ العودة </label>
-              <input type="text" class="form-control form-date">
+              <input type="text" class="form-control form-date" name="packageReturnedDate"
+                [(ngModel)]="packageReturnedDate" ngDefaultControl>
             </div>
           </div>
 
         </div>
         <div class="mt-2 text-right">
-          <a class="btn btn-block-mobile btn-primary">بحـــث</a>
+          <a class="btn btn-block-mobile btn-primary" (click)="searchResult()">بحـــث</a>
+        </div>
+
+        <div class="table-responsive" *ngIf="packageSearchResult">
+          <table class="table table-bordered table-light table-striped">
+            <thead>
+              <tr>
+                <th scope="col"> رقم الباقة </th>
+                <th scope="col"> المطار الداخلي </th>
+                <th scope="col"> تاريخ الذهاب </th>
+                <th scope="col"> تاريخ العودة </th>
+                <th scope="col"> موسم العمرة </th>
+                <th scope="col"> المسار </th>
+                <th scope="col"> الحالة </th>
+                <th scope="col" width="5%" class="text-center">عرض</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="row"> {{packageSearchResult.id}} </td>
+                <td>{{packageSearchResult.airportName}}</td>
+                <td>{{packageSearchResult.packageDepartureDate}}</td>
+                <td>{{packageSearchResult.packageReturnDate}}</td>
+                <td>{{packageSearchResult.seasonName}}</td>
+                <td>{{packageSearchResult.directionName}}</td>
+                <td><span class="badge badge-success">جديد</span></td>
+                <td>
+                  <a [routerLink]="['/package/view',programId]" class="view-action" title="View item"><i
+                      class="fal fa-eye fa-fw fa-1x"></i>
+                    <span class="d-none">View item</span>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -83,8 +119,8 @@
                   <td>{{package.directionName}}</td>
                   <td><span class="badge badge-success">جديد</span></td>
                   <td>
-                    <a [routerLink]="['/package/view',programId]" class="view-action"
-                      title="View item"><i class="fal fa-eye fa-fw fa-1x"></i>
+                    <a [routerLink]="['/package/view',package.id]" class="view-action" title="View item"><i
+                        class="fal fa-eye fa-fw fa-1x"></i>
                       <span class="d-none">View item</span>
                     </a>
                   </td>

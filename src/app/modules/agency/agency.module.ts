@@ -5,8 +5,6 @@ import { SharedModule } from '../shared/shared.module';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-// import { NG_ASYNC_VALIDATORS } from '@angular/forms';
-// import { usernameAvailable } from 'src/app/_helpers/usernameAvailable.validator';
 
 
 @NgModule({

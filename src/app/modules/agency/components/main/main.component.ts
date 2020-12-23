@@ -83,6 +83,7 @@ export class MainComponent implements OnInit {
       $$commRegFile: [null],
       tALogo: [''],
       $$logoFile: [null],
+      number: ['', [Validators.required, Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)]]
     }, {
       validators: GreaterThan('tACommRegIssueDate', 'tACommRegExpiryDate')
     });

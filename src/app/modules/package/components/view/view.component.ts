@@ -20,6 +20,7 @@ export class ViewComponent implements OnInit {
 
   ngOnInit(): void {
     const ID = this.activatedRoute.snapshot.params['id'];
+    console.log(ID);
     this.getSessionStorageData();
     this.getPackage(ID);
   }

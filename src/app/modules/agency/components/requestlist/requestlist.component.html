@@ -112,9 +112,11 @@
                   <td>{{item.tACommRegIssueDate}}</td>
                   <td>{{item.countryId}}</td>
                   <td>{{item.tAType}}</td>
-                  <td><span class="badge badge-info">جديد</span></td>
+                  <td><span class="badge badge-info">
+                    {{item.status}}
+                  </span></td>
                   <td class="text-center">
-                    <a href="view_request.html" class="view-action" title="View item"><i
+                    <a [routerLink]="['/agency/view-request', item.id]" class="view-action" title="View item"><i
                         class="fal fa-eye fa-fw fa-1x"></i>
                       <span class="d-none">View item</span>
                     </a>

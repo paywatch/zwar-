@@ -60,6 +60,7 @@ export class DisplayComponent implements OnInit {
   confirm() {
     this.agency.userID = this.user.user.uid;
     console.log(this.agency.userID);
+    this.agency.status = 'جديد';
     this.agencyService.confirm(this.agency).subscribe(res => {
       if (res) {
         this.router.navigate(['agency/edit']);

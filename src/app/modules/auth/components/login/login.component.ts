@@ -48,4 +48,10 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/profile']);
     });
   }
+
+  facebookLogin() {
+    this.authService.doFacebookLogin().then(res => {
+      this.router.navigate(['/profile']);
+    });
+  }
 }

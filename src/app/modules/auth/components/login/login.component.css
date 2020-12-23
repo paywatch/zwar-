@@ -11,3 +11,8 @@
   position: absolute;
   bottom: 12.4rem;
 }
+
+.Gmail,
+.Facebook {
+  font-size: 1.4rem;
+}

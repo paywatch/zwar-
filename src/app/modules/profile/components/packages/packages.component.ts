@@ -17,6 +17,10 @@ export class PackagesComponent implements OnInit {
   programId: string;
   packages: any;
   selectedPackages: any;
+  packageID: any;
+  packageTravelDate: any;
+  packageReturnedDate: any;
+  packageSearchResult: any;
 
   constructor(
     private router: Router,
@@ -31,6 +35,18 @@ export class PackagesComponent implements OnInit {
       this.getAirport();
     }, 1000);
     this.getSinglePackage();
+  }
+
+  searchResult() {
+    const find = this.packagesList$.find(p => p.id == this.packageID || p.packageDepartureDate == this.packageTravelDate || p.packageReturnDate == this.packageReturnedDate);
+    this.packageSearchResult = find;
+  }
+
+  clearSearchResult() {
+    this.packageTravelDate = '';
+    this.packageReturnedDate = '';
+    this.packageID = '';
+    this.packageSearchResult = null;
   }
 
   getAllPackage() {

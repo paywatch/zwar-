@@ -12,7 +12,8 @@ import {
   CongratulationsComponent,
   EditComponent,
   UpdateComponent,
-  RequestlistComponent
+  RequestlistComponent,
+  ViewRequestComponent
 } from './components';
 
 const routes: Routes = [
@@ -59,6 +60,10 @@ const routes: Routes = [
   {
     path: 'request-list',
     component: RequestlistComponent
+  },
+  {
+    path: 'view-request/:id',
+    component: ViewRequestComponent
   }
 ];
 
@@ -78,6 +83,7 @@ export class AgencyRoutingModule {
     CongratulationsComponent,
     EditComponent,
     UpdateComponent,
-    RequestlistComponent
+    RequestlistComponent,
+    ViewRequestComponent
   ];
 }

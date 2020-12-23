@@ -191,6 +191,29 @@
                   </div>
                 </div>
                 <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="d-block col-form-label">رقم الوكالة</label>
+                      <input type="text" class="form-control" formControlName="number">
+                    </div>
+                    <em *ngIf="myForm.get('number').hasError('required') && 
+                               myForm.get('number').touched">
+                      هذا الحقل إجباري
+                    </em>
+                    <em *ngIf="!myForm.get('number').hasError('required') &&
+                                myForm.get('number').hasError('maxlength') &&
+                                myForm.get('number').touched">
+                      حد اقصي 4 ارقام
+                    </em>
+                    <em *ngIf="!myForm.get('number').hasError('required') &&
+                               !myForm.get('number').hasError('maxlength') &&
+                                myForm.get('number').hasError('pattern') &&
+                                myForm.get('number').touched">
+                      ارقام فقط
+                    </em>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label class="d-block col-form-label"> نبذة عن وكالة السفر </label>
@@ -285,7 +308,8 @@
             <a routerLink="/" class="btn btn-default px-0"> الغاء التسجيل</a>
             <div>
               <button class="btn btn-outline-primary ml-3" [routerLink]="['/agency/register']">السابق</button>
-              <button *ngIf="!selectedBasic" class="btn btn-primary ml-3" [disabled]="!myForm.valid" type="submit">التالي
+              <button *ngIf="!selectedBasic" class="btn btn-primary ml-3" [disabled]="!myForm.valid"
+                type="submit">التالي
               </button>
               <button *ngIf="selectedBasic" (click)="updateAgencyBasic()" class="btn btn-secondary ml-3">
                 تعديل

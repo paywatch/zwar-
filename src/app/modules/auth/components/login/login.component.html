@@ -28,12 +28,26 @@
               <input type="submit" value="تسجيل الدخول" [disabled]="!loginForm.valid"
                 class="btn btn-primary btn-block" />
             </div>
-            <div class="d-flex justify-content-between">
-              <input value="تسجيل حساب" [routerLink]="['/auth/register']" class="btn btn-primary btn-block" />
-            </div>
             <div class="row justify-content-between">
-              <a [routerLink]="['/auth/resetpassword']"> هل نسيت كلمه السر</a>
-              <a (click)="googleLogin()">تسجيل الدخول من خلال جوجل</a>
+              <a class="text-muted" [routerLink]="['/auth/register']">تسجيل حساب</a>
+              <a class="text-muted" [routerLink]="['/auth/resetpassword']"> هل نسيت كلمه السر</a>
+            </div>
+            <div class="column">
+              <h4 class="mt-2 text-muted">
+                يمكن تسجيل الدخول من خلال التطبيقات الاتيه
+              </h4>
+              <div class="row">
+                <div class="gmail">
+                  <a class="mr-4 Gmail" (click)="googleLogin()">
+                    <i class="fa fa-mail-bulk"></i>
+                  </a>
+                </div>
+                <div class="facebook">
+                  <a class="mr-4 facebook" class="Facebook" (click)="facebookLogin()">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </div>
+              </div>
             </div>
           </form>
         </div>

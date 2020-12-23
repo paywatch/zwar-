@@ -1,0 +1,346 @@
+<div class="page-layout" *ngIf="agency">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item active" aria-current="page"> </li>
+      </ol>
+    </nav>
+    <div class="page-title row justify-content-between mr-3 ml-2">
+      <h1 class="h1 text-primary"> طلب رقم {{agency.number}} </h1>
+      <div class="dropdown action-droplist mb-3">
+        <a class="btn btn-outline-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> العمليات </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <button (click)="freezAccount()" class="dropdown-item" data-toggle="modal" data-target="#freez"><span> تجميد
+              الحساب</span><i class="fal fa-lock-alt fa-fw text-primary"></i> </button>
+          <button class="dropdown-item" (click)="blockAccount()" data-toggle="modal" data-target="#ban"><span> حظر الحساب</span><i
+              class="fal fa-ban fa-fw text-primary"></i> </button>
+        </div>
+      </div>
+    </div>
+    <div class="page-inner">
+      <div class="wizard-details">
+        <section id="essential" class="pt-5">
+          <h3 class="text-primary"> البيانات الاساسية </h3>
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> اسم وكالة السفر </label>
+                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.tAName">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> الدولة </label>
+                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.countryName">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> تصنيف الوكالة </label>
+                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.tAType">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> الموقع الالكتروني </label>
+                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.tAWebsite">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> رقم السجل التجاري </label>
+                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.tACommeRegNo">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="d-block col-form-label"> ارفاق ملف السجل التجاري </label>
+                    <a class="underline p-1 d-inline-block" [href]="commRegFile?.url" target="_blank">
+                      {{commRegFile?.name}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> تاريخ انشاء السجل التجاري </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tACommRegIssueDate">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label  "> تاريخ انتهاء السجل التجاري </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tACommRegExpiryDate">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> نبذة عن وكالة السفر </label>
+                    <textarea class="form-control-plaintext" rows="4">  {{agency.tADescription}}   </textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 mb-5 offset-lg-1">
+              <div class="bg-white border flag-info overflow-hidden py-5 round">
+                <span class="p-4 d-block">
+                  <img class="" [src]="logoUrl" alt="company logo">
+                </span>
+              </div>
+            </div>
+          </div>
+          <hr class="my-4 mx-n4">
+          <h3 class="text-primary"> بيانات مالك / ملاك وكالة السفر </h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <th>اسم المالك</th>
+                <th>رقم الهوية</th>
+                <th> رقم الجوال</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of  agency.ownerList">
+                  <td>{{item.tAOwnerFullName}}</td>
+                  <td>{{item.tAOwnerNationalID}}</td>
+                  <td>{{item.tAOwnerPhoneNo}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <hr class="my-5 mx-n4">
+        <section class="mt-5" id="license">
+          <h3 class="text-primary"> ترخيص وزارة السياحة </h3>
+          <div class="row" *ngIf="!agency.$$isMinTourAuth">
+            <div class="col">
+              <h4>لا يوجد ترخيص</h4>
+            </div>
+          </div>
+          <div class="row" *ngIf="agency.$$isMinTourAuth">
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> رقم الترخيص </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAMinTourAuthNo">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group" *ngIf="tAMinTourAuthFile">
+                    <label class="d-block col-form-label"> ملف الترخيص </label>
+                    <a class="underline p-1 d-inline-block" [href]="tAMinTourAuthFile.url" target="_blank">
+                      {{tAMinTourAuthFile.name}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="d-block col-form-label"> تاريخ انشاء الترخيص </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAMinTourAuthIssueDate">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label  "> تاريخ انتهاء الترخيص </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAMinTourAuthExpiryDate">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-4 mx-n4">
+          <h3 class="text-primary"> التسجيل في FTAV </h3>
+          <div class="row" *ngIf="!agency.$$isFTAVMember">
+            <div class="col">
+              <h4>غير مسجل</h4>
+            </div>
+          </div>
+          <div class="row" *ngIf="agency.$$isFTAVMember">
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> رقم العضوية </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAFTAVMemberNo">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group" *ngIf="tAFTAVMemberFile">
+                    <label class="d-block col-form-label"> ملف العضوية </label>
+                    <a class="underline p-1 d-inline-block" [href]="tAFTAVMemberFile?.url" target="_blank">
+                      {{tAFTAVMemberFile?.name}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label  "> تاريخ انشاء العضوية </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAFTAVMemberIssueDate">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label  "> تاريخ انتهاء العضوية </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAFTAVMemberExpiryDate">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-4 mx-n4">
+          <h3 class="text-primary"> التسجيل في الجامعة التونسية لوكالات الأسفار والسياحة </h3>
+          <div class="row" *ngIf="!agency.$$isFITTMember">
+            <div class="col">
+              <h4>غير مسجل</h4>
+            </div>
+          </div>
+          <div class="row" *ngIf="agency.$$isFITTMember">
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label"> رقم العضوية </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAFITTMemberNo">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group" *ngIf="tAFITTMemberFile">
+                    <label class="d-block col-form-label"> ملف العضوية </label>
+                    <a class="underline p-1 d-inline-block" [href]="tAFITTMemberFile?.url" target="_blank">
+                      {{ tAFITTMemberFile?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label "> تاريخ انشاء العضوية </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAFITTMemberIssueDate">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group ">
+                    <label class="d-block col-form-label  "> تاريخ انتهاء العضوية </label>
+                    <input type="text" class="form-control-plaintext" [value]="agency.tAFITTMemberExpiryDate">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <hr class="my-5 mx-n4">
+        <section class="mt-5" id="branches">
+          <div *ngIf="selectedBranch">
+            <h3 class="text-primary"> بيانات التواصل </h3>
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> رقم الهاتف </label>
+                      <input type="number" class="form-control-plaintext" [value]="agency.tABranchPhoneNo">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> رقم الجوال </label>
+                      <input type="number" class="form-control-plaintext" [value]="agency.tABranchMobileNo">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> رقم الفاكس </label>
+                      <input type="number" class="form-control-plaintext" [value]="agency.tABranchFaxNo">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="d-block col-form-label"> البريد الالكتروني </label>
+                      <input type="email" class="form-control-plaintext" [value]="agency.tABranchEmail">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4 mx-n4">
+          </div>
+          <h3 class="text-primary"> بيانات الفروع </h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>اسم الفرع</th>
+                  <th>المدينة</th>
+                  <th>الشارع</th>
+                  <th>نوع الفرع</th>
+                  <th>الاحداثيات</th>
+                  <th>الجوال</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="cursor: pointer;">
+                  <td>{{agency.tABranchName}}</td>
+                  <td>{{agency?.tADistrictID}}</td>
+                  <td>{{agency.tABranchAddress}}</td>
+                  <td>{{agency.tABranchType ? 'رئيسى': 'عادى'}}</td>
+                  <td>{{agency.tABranchLongitude + ' , ' + agency.tABranchLatitude}}</td>
+                  <td>{{agency.tABranchPhoneNo}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          <div class="branch-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d104888.4757581263!2d10.663058829797!3d34.76151547712517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13002cda1486c695%3A0x22dfe0a62c50ce6f!2sSfax%2C%20Tunisia!5e0!3m2!1sen!2ssa!4v1570107555457!5m2!1sen!2ssa"
+              width="100%" height="216" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+          </div>
+        </section>
+
+
+        <section class="bg-light  mx-n4 p-4 px-4 mt-5">
+          <div class="custom-control custom-checkbox mr-sm-2 mb-3">
+            <input type="checkbox" [(ngModel)]="responsablity" class="custom-control-input" id="xx">
+            <label class="custom-control-label" for="xx">
+              اقر بمسوؤليتي عن صحة البيانات السابقة والتي تتوافق مع البيانات المسجلة حكوميا
+            </label>
+          </div>
+          <div class="custom-control custom-checkbox mr-sm-2">
+            <input type="checkbox" [(ngModel)]="terms" class="custom-control-input" id="ss">
+            <label class="custom-control-label" for="ss">
+              اقر بالموافقة على الشروط والاحكام الخاصة بتسجيل الوكالة بعد قراءتها
+            </label>
+          </div>
+        </section>
+
+        <div class="row justify-content-between mt-3">
+          <button (click)="deleteAgency()" class="btn btn-outline-primary ml-3">الغاء</button>
+          <div>
+            <a [routerLink]="['/agency/update', agency.id]" class="btn btn-outline-primary ml-3">ارجاع الطلب للتحديث</a>
+            <button (click)="dismissAgency()" class="btn btn-outline-primary ml-3">رفض</button>
+            <button (click)="acceptAgency()" class="btn btn-primary ml-3">قبول</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
