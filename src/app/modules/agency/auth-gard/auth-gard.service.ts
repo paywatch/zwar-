@@ -1,7 +1,9 @@
 import {
   Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot, CanLoad, Route, UrlSegment, UrlTree
+  CanLoad,
+  Route,
+  UrlSegment,
+  UrlTree
 } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -9,21 +11,20 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanLoad {
+  user: any;
 
   constructor(private router: Router) {
-    console.log('constractor...', sessionStorage.getItem('auth'));
+    this.user = JSON.parse(localStorage.getItem('user')) || {};
   }
-
   canLoad(route: Route, segments: UrlSegment[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    console.log('can load...');
-    const auth = JSON.parse(sessionStorage.getItem('agencyID'));
-    // console.log('can load',  auth);
-    if (auth) {
-      return true;
-    }
-
-    else {
+    if (Object.keys(this.user).length === 0 && this.user.constructor === Object) {
+      console.log('yes');
       this.router.navigate(['/auth/login']);
+      return false;
+    }
+    else {
+      console.log('no');
+      return true;
     }
   }
 }

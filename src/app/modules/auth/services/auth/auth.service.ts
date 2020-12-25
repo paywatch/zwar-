@@ -11,13 +11,15 @@ export class AuthService {
   user: any;
 
   constructor(
-    private AfAuth: AngularFireAuth) {
+    private AfAuth: AngularFireAuth,
+    private afs: AngularFirestore) {
+    this.userCollection = this.afs.collection('user');
   }
 
   login(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.AfAuth.auth.signInWithEmailAndPassword(email, password)
-        .then(userData => resolve(sessionStorage.setItem('user', JSON.stringify(userData))),
+        .then(userData => resolve(localStorage.setItem('user', JSON.stringify(userData))),
           err => reject(err));
     });
   }
@@ -31,16 +33,16 @@ export class AuthService {
   }
 
   getAuth() {
-    this.user = JSON.parse(sessionStorage.getItem('user')) || {};
+    this.user = JSON.parse(localStorage.getItem('user')) || {};
     console.log(this.user);
   }
 
-  isloggin() {
+  isLoggIn(): boolean {
     return !!this.user;
   }
 
   logOut() {
-    this.AfAuth.auth.singOut();
+    return this.AfAuth.auth.singOut();
   }
 
   resetPassword(email) {
@@ -64,7 +66,7 @@ export class AuthService {
       this.AfAuth.auth
         .signInWithPopup(provider)
         .then(res => {
-          resolve(sessionStorage.setItem('user', JSON.stringify(res)));
+          resolve(localStorage.setItem('user', JSON.stringify(res)));
         }, err => {
           console.log(err);
           reject(err);
@@ -81,7 +83,24 @@ export class AuthService {
           if (res.credential) {
             const token = res.credential.accessToken;
           }
-          resolve(sessionStorage.setItem('user', JSON.stringify(res)));
+          resolve(localStorage.setItem('user', JSON.stringify(res)));
+        }, err => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  doGithubLogin() {
+    return new Promise<any>((resolve, reject) => {
+      const provider = new firebase.auth.GithubAuthProvider();
+      this.AfAuth.auth
+        .signInWithPopup(provider)
+        .then(res => {
+          if (res.credential) {
+            const token = res.credential.accessToken;
+          }
+          resolve(localStorage.setItem('user', JSON.stringify(res)));
         }, err => {
           console.log(err);
           reject(err);

@@ -54,4 +54,10 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/profile']);
     });
   }
+
+  githubLogin() {
+    this.authService.doGithubLogin().then(res => {
+      this.router.navigate(['/profile']);
+    });
+  }
 }

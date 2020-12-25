@@ -18,6 +18,8 @@ import {
 import { CoreService } from './core.service';
 import { ProgramService } from '../program/services/program.service';
 import { PackageService } from '../package/services/package-service.service';
+import { AuthenticationGuard } from './guards/authentication/authentication.guard';
+import { AuthGuard } from '../agency/auth-gard/auth-gard.service';
 
 
 @NgModule({
@@ -55,6 +57,7 @@ import { PackageService } from '../package/services/package-service.service';
       useClass: IdToNumberInterceptor,
       multi: true
     },
+    AuthGuard,
     ProgramService,
     PackageService,
     UtilsService,

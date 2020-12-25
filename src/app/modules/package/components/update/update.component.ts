@@ -6,6 +6,11 @@ import { GreaterThan } from '../../../../_helpers/greater-than.validator';
 import { Package } from '../../models/package';
 import { PackageService } from '../../services/package-service.service';
 
+
+// IMPORT MOMENT FOR FORMAT DATE IN NICE WAY;
+import * as moment from 'moment';
+
+
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
@@ -89,6 +94,8 @@ export class UpdateComponent implements OnInit {
 
   submit() {
     this.singlePackage = this.packageForm.value;
+    this.singlePackage.packageDepartureDate = moment(this.singlePackage.packageDepartureDate).format('DD/MM/YYYY');
+    this.singlePackage.packageReturnDate = moment(this.singlePackage.packageReturnDate).format('DD/MM/YYYY');
     this.singlePackage.id = this.ID;
     console.log(this.singlePackage);
     this.packageService.updatePackage(this.singlePackage);

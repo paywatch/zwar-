@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../../auth/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
+  providers: [AuthService]
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
@@ -33,13 +34,13 @@ export class HeaderComponent implements OnInit {
   }
 
   getUser() {
-    this.user = JSON.parse(sessionStorage.getItem('user')) || {};
+    this.user = JSON.parse(localStorage.getItem('user')) || {};
     console.log(this.user);
   }
 
   logOut() {
     // this.authService.logOut();
+    localStorage.removeItem('user');
     this.router.navigate(['/auth/login']);
-    sessionStorage.removeItem('user');
   }
 }

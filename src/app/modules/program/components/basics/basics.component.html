@@ -179,6 +179,16 @@
                 </em>
               </div>
             </div>
+            <div class="mk-custom-file-upload">
+              <p class="text-primary display-3"> رفع بانر برنامج العمرة <i class="fal fa-fw fa-upload"></i></p>
+              <p class="text-muted small"> صيغة jpg,png,svg </p>
+              <p class="text-muted small">
+                الحجم المفضل
+                <span> 1024px X 126px</span> </p>
+              <input type="file" multiple class="gallery-photo-add" (change)="programBanner($event)">
+              <img *ngIf="downloadURL | async" style="width: 10rem; height: 7rem;" [src]="downloadURL | async" alt="">
+              <div class="upload-gallery full"></div>
+            </div>
             <div class="btn-group mt-5">
               <a (click)="deleteBasic()" class="btn btn-default px-0" [routerLink]="['/profile/programs']">
                 الغاء

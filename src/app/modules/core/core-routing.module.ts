@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../agency/auth-gard/auth-gard.service';
 import { PlainComponent, LayoutComponent } from './components';
+import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 
 const routes: Routes = [
   {
@@ -31,6 +33,7 @@ const routes: Routes = [
         path: 'program',
         loadChildren: () =>
           import('../program/program.module').then((m) => m.ProgramModule),
+        canLoad: [AuthGuard]
       },
       {
         path: 'package',

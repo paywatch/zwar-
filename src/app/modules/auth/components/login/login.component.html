@@ -36,15 +36,20 @@
               <h4 class="mt-2 text-muted">
                 يمكن تسجيل الدخول من خلال التطبيقات الاتيه
               </h4>
-              <div class="row">
-                <div class="gmail">
+              <div class="row justify-content-between">
+                <div>
                   <a class="mr-4 Gmail" (click)="googleLogin()">
                     <i class="fa fa-mail-bulk"></i>
                   </a>
                 </div>
-                <div class="facebook">
-                  <a class="mr-4 facebook" class="Facebook" (click)="facebookLogin()">
+                <div>
+                  <a class="mr-4" class="Facebook" (click)="facebookLogin()">
                     <i class="fa fa-facebook"></i>
+                  </a>
+                </div>
+                <div>
+                  <a class="mr-4" class="github" (click)="githubLogin()">
+                    <i class="fa fa-github-square"></i>
                   </a>
                 </div>
               </div>

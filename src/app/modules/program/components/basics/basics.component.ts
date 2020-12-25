@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { ToastrService } from 'ngx-toastr';
-import { threadId } from 'worker_threads';
+import firebase from 'firebase/app';
+import { AngularFireStorage } from '@angular/fire/storage';
 
-import { UtilsService } from '../../../core/services/utils/utils.service';
+
 import { ProgramService } from '../../services/program.service';
+import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -24,13 +28,18 @@ export class BasicsComponent implements OnInit {
   selectedBasic: any;
   Basics$: any[];
   basicID: any;
+  feasturedStream: any;
+  uploadPercent: Observable<number>;
+  downloadURL: Observable<string>;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private programService: ProgramService,
-  ) { }
+    private db: AngularFireStorage
+  ) {
+  }
 
   ngOnInit(): void {
     this.patchForm();
@@ -55,6 +64,18 @@ export class BasicsComponent implements OnInit {
   patchForm() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
     this.basicID = JSON.parse(sessionStorage.getItem('basicID'));
+  }
+
+  programBanner(event: any) {
+    const file = event.target.files[0];
+    const filePath = '/photos/url';
+    const ref = this.db.ref(filePath);
+    const task = ref.put(file);
+
+    this.uploadPercent = task.percentageChanges();
+    task.snapshotChanges().pipe(
+      finalize(() => this.downloadURL = ref.getDownloadURL())
+    ).subscribe();
   }
 
   getBasicData() {

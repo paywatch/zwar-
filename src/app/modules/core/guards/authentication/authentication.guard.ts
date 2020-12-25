@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth/auth.service';
 
 
@@ -15,7 +14,7 @@ export class AuthenticationGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (!this.authSerive.isloggin) {
+    if (!this.authSerive.isLoggIn) {
       this.router.navigate(['/auth/login']);
       return false;
     }
