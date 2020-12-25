@@ -1,10 +1,11 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AfterToday } from '../../../../_helpers/afterToday.validator';
 import { GreaterThan } from '../../../../_helpers/greater-than.validator';
+import * as moment from 'moment';
+
 
 import { PackageService } from '../../services/package-service.service';
 
@@ -99,6 +100,8 @@ export class BaseComponent implements OnInit {
 
   createPackage() {
     const payload = this.baseForm.value;
+    payload.packageDepartureDate = moment(payload.packageDepartureDate).format('DD/MM/YYYY');
+    payload.packageReturnDate = moment(payload.packageReturnDate).format('DD/MM/YYYY');
     this.packageService.createPackage(payload)
       .subscribe((res) => {
         if (res) {

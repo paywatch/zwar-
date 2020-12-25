@@ -7,6 +7,8 @@ import { GreaterThan } from '../../../../_helpers/greater-than.validator';
 import { LessThanToday } from '../../../../_helpers/lessThanToday.validator';
 import { AgencyService } from '../../services/agency/agency.service';
 
+// IMPORT MOMENT FOR FORMAT DATE IN NICE WAY;
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-license',
@@ -54,8 +56,8 @@ export class LicenseComponent implements OnInit {
       tAMinTourAuthExpiryDate: ['', Validators.required],
       tAMinTourAuthFile: [''],
       $$isFTAVMember: [true],
-      tAFTAVMemberIssueDate: ['', [Validators.required, LessThanToday]],
       tAFTAVMemberNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
+      tAFTAVMemberIssueDate: ['', [Validators.required, LessThanToday]],
       tAFTAVMemberExpiryDate: ['', Validators.required],
       tAFTAVMemberFile: [''],
       $$isFITTMember: [true],
@@ -118,6 +120,12 @@ export class LicenseComponent implements OnInit {
     };
 
     const payload = { ...emptyForm, ...this.myForm.value };
+    payload.tAMinTourAuthIssueDate = moment(payload.tAMinTourAuthIssueDate).format('DD/MM/YYYY');
+    payload.tAMinTourAuthExpiryDate = moment(payload.tAMinTourAuthExpiryDate).format('DD/MM/YYYY');
+    payload.tAFTAVMemberIssueDate = moment(payload.tAFTAVMemberIssueDate).format('DD/MM/YYYY');
+    payload.tAFTAVMemberExpiryDate = moment(payload.tAFTAVMemberExpiryDate).format('DD/MM/YYYY');
+    payload.tAFITTMemberIssueDate = moment(payload.tAFITTMemberIssueDate).format('DD/MM/YYYY');
+    payload.tAFITTMemberExpiryDate = moment(payload.tAFITTMemberExpiryDate).format('DD/MM/YYYY');
     this.agencyService.saveLicence(payload)
       .subscribe((response: any) => {
         if (response) {

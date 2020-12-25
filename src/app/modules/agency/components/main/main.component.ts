@@ -7,6 +7,8 @@ import { GreaterThan } from '../../../../_helpers/greater-than.validator';
 import { LessThanToday } from '../../../../_helpers/lessThanToday.validator';
 import { AgencyService } from '../../services/agency/agency.service';
 
+// IMPORT MOMENT FOR FORMAT DATE IN NICE WAY;
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-main',
@@ -74,7 +76,6 @@ export class MainComponent implements OnInit {
       countryId: ['', Validators.required],
       tAType: ['', Validators.required],
       tAWebsite: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/(https?:\/\/)?(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)|(https?:\/\/)?(www\.)?(?!ww)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)]],
-      // tslint:disable-next-line:max-line-length
       tACommeRegNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]], // regular express for only numbers
       tACommRegIssueDate: ['', [Validators.required, LessThanToday]],
       tACommRegExpiryDate: ['', Validators.required],
@@ -128,6 +129,8 @@ export class MainComponent implements OnInit {
 
     const payload = this.myForm.value;
     payload.ownerList = this.ownerList;
+    payload.tACommRegIssueDate = moment(payload.tACommRegIssueDate).format('DD/MM/YYYY');
+    payload.tACommRegExpiryDate = moment(payload.tACommRegExpiryDate).format('DD/MM/YYYY');
 
     this.agencyService.addAgency(payload)
       .subscribe((response: any) => {
@@ -149,7 +152,7 @@ export class MainComponent implements OnInit {
   }
 
   deleteAgencyBasic() {
-    this.agencyService.deleteAgencyBasic(this.selectedBasic)
+    this.agencyService.deleteAgencyBasic(this.selectedBasic);
   }
 
   // logoChange(input: any, fileName) {

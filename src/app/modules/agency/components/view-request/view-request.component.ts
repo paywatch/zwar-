@@ -11,6 +11,7 @@ import { AgencyService } from '../../services/agency/agency.service';
 export class ViewRequestComponent implements OnInit {
 
   agency: any;
+  agencyNeedUpdate: boolean;
 
   constructor(
     private agencyService: AgencyService,
@@ -21,6 +22,9 @@ export class ViewRequestComponent implements OnInit {
   ngOnInit(): void {
     const ID = this.activatedRoute.snapshot.params['id'];
     this.getAllAgencyData(ID);
+    setTimeout(() => {
+      this.checkAgencyData();
+    }, 2000);
   }
 
   getAllAgencyData(id) {
@@ -36,6 +40,15 @@ export class ViewRequestComponent implements OnInit {
     this.agencyService.updateAgency(this.agency);
     this.toast.success('تم قبول الطلب');
     this.router.navigate(['/agency/request-list']);
+  }
+
+  checkAgencyData() {
+    const entries = Object.values(this.agency);
+    for (const key of entries) {
+      if (key == '' || null) {
+        this.agencyNeedUpdate = true;
+      }
+    }
   }
 
   dismissAgency() {

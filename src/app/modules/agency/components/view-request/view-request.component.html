@@ -1,11 +1,20 @@
 <div class="page-layout" *ngIf="agency">
-  <div class="container ">
+  <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
         <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
         <li class="breadcrumb-item active" aria-current="page"> </li>
       </ol>
     </nav>
+    <div *ngIf="agencyNeedUpdate" class="alert alert-danger align-items-center big-alert d-flex flex-column flex-md-row mb-3 mx-n4 p-4">
+      <i class="fal fa-4x fa-file-exclamation fa-fw text-danger mr-0 mr-md-4"></i>
+      <div>
+        <h3 class="mb-3">طلبك يحتاج الى تحديث بعض البيانات</h3>
+        <p class="text-muted m-0">
+          يرجي تحديث بيانات الافرع حيث انه بالكشف عنها وجد ان بعض البيانات ناقصة وبعضها غير دقيقة
+        </p>
+      </div>
+    </div>
     <div class="page-title row justify-content-between mr-3 ml-2">
       <h1 class="h1 text-primary"> طلب رقم {{agency.number}} </h1>
       <div class="dropdown action-droplist mb-3">
@@ -14,8 +23,8 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <button (click)="freezAccount()" class="dropdown-item" data-toggle="modal" data-target="#freez"><span> تجميد
               الحساب</span><i class="fal fa-lock-alt fa-fw text-primary"></i> </button>
-          <button class="dropdown-item" (click)="blockAccount()" data-toggle="modal" data-target="#ban"><span> حظر الحساب</span><i
-              class="fal fa-ban fa-fw text-primary"></i> </button>
+          <button class="dropdown-item" (click)="blockAccount()" data-toggle="modal" data-target="#ban"><span> حظر
+              الحساب</span><i class="fal fa-ban fa-fw text-primary"></i> </button>
         </div>
       </div>
     </div>
@@ -27,7 +36,7 @@
             <div class="col-lg-8">
               <div class="row">
                 <div class="col-md-6">
-                  <div class="form-group ">
+                  <div class="form-group">
                     <label class="d-block col-form-label"> اسم وكالة السفر </label>
                     <input type="text" readonly="" class="form-control-plaintext" [value]="agency.tAName">
                   </div>
@@ -35,7 +44,7 @@
                 <div class="col-md-6">
                   <div class="form-group ">
                     <label class="d-block col-form-label"> الدولة </label>
-                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.countryName">
+                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.countryId">
                   </div>
                 </div>
               </div>

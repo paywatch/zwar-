@@ -71,8 +71,9 @@ export class VisitsComponent implements OnInit {
     this.programService.getProgramVisit().subscribe(visit => {
       if (this.visits) {
         this.selectedVisit = visit.find(v => v.id == this.visitID);
-        console.log(this.selectedVisit);
-        this.visitForm.patchValue(this.selectedVisit);
+        if (this.selectedVisit) {
+          this.visitForm.patchValue(this.selectedVisit);
+        }
       }
     });
   }

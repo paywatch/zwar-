@@ -6,6 +6,9 @@ import { GreaterThan } from '../../../../_helpers/greater-than.validator';
 import { LessThanToday } from '../../../../_helpers/lessThanToday.validator';
 import { AgencyService } from '../../services/agency/agency.service';
 
+// IMPORT MOMENT FOR FORMAT DATE IN NICE WAY;
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
@@ -37,9 +40,6 @@ export class UpdateComponent implements OnInit {
     this.getAgencyType();
     this.getCountries();
     this.getDistrictList();
-    this.agencyForm.valueChanges.subscribe(f => {
-      console.log(f);
-    });
   }
 
   initForm() {
@@ -191,6 +191,14 @@ export class UpdateComponent implements OnInit {
 
   submit() {
     this.agency = this.agencyForm.value;
+    this.agency.tACommRegIssueDate = moment(this.agency.tACommRegIssueDate).format('DD/MM/YYYY');
+    this.agency.tACommRegExpiryDate = moment(this.agency.tACommRegExpiryDate).format('DD/MM/YYYY');
+    this.agency.tAMinTourAuthIssueDate = moment(this.agency.tAMinTourAuthIssueDate).format('DD/MM/YYYY');
+    this.agency.tAMinTourAuthExpiryDate = moment(this.agency.tAMinTourAuthExpiryDate).format('DD/MM/YYYY');
+    this.agency.tAFTAVMemberIssueDate = moment(this.agency.tAFTAVMemberIssueDate).format('DD/MM/YYYY');
+    this.agency.tAFTAVMemberExpiryDate = moment(this.agency.tAFTAVMemberExpiryDate).format('DD/MM/YYYY');
+    this.agency.tAFITTMemberIssueDate = moment(this.agency.tAFITTMemberIssueDate).format('DD/MM/YYYY');
+    this.agency.tAFITTMemberExpiryDate = moment(this.agency.tAFITTMemberExpiryDate).format('DD/MM/YYYY');
     this.agency.id = this.ID;
     this.agencyService.updateAgency(this.agency);
     this.toaster.info('تم التعديل');
