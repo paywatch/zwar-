@@ -17,6 +17,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     ConfirmDialogModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ModalModule.forRoot(),
+    TooltipModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase, 'zowar'),
     AngularFireDatabaseModule,
     AngularFireStorageModule,

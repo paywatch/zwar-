@@ -32,6 +32,7 @@
     "moment": "^2.29.1",
     "ng-http-loader": "^8.0.0",
     "ng2-tel-input": "^2.3.0",
+    "ngx-bootstrap": "^6.2.0",
     "ngx-toastr": "^13.0.0",
     "primeicons": "^4.0.0",
     "primeng": "^10.0.0",

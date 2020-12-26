@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +18,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
   styleUrls: ['./basics.component.css']
 })
 export class BasicsComponent implements OnInit {
-
+  modalRef: BsModalRef;
   basicsForm: FormGroup;
   basics: any;
   categories: any[];
@@ -42,7 +43,8 @@ export class BasicsComponent implements OnInit {
     private toastr: ToastrService,
     private programService: ProgramService,
     private db: AngularFireStorage,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private modalService: BsModalService
   ) {
   }
 
@@ -76,6 +78,12 @@ export class BasicsComponent implements OnInit {
   patchForm() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
     this.basicID = JSON.parse(sessionStorage.getItem('basicID'));
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,
+      {
+      class: 'modal-dialog-centered' });
   }
 
   programBanner(event: any) {
