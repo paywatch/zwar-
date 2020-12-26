@@ -35,7 +35,7 @@ export class ConfirmationComponent implements OnInit {
     this.residential = JSON.parse(sessionStorage.getItem('hotels'));
     this.transportation = JSON.parse(sessionStorage.getItem('residence'));
     this.visit = JSON.parse(sessionStorage.getItem('visit'));
-    this.user = JSON.parse(sessionStorage.getItem('user')) || {};
+    this.user = JSON.parse(localStorage.getItem('user')) || {};
     console.log(this.user);
     this.program = {
       ...this.basics,
@@ -73,6 +73,7 @@ export class ConfirmationComponent implements OnInit {
   }
 
   confirm() {
+    console.log(this.user);
     this.program.uid = this.user.user.uid;
     console.log(this.program.uid);
     this.programService.AddProgram(this.program).subscribe(program => {

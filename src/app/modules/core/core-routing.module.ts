@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -33,7 +34,6 @@ const routes: Routes = [
         path: 'program',
         loadChildren: () =>
           import('../program/program.module').then((m) => m.ProgramModule),
-        canLoad: [AuthGuard]
       },
       {
         path: 'package',

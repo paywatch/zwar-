@@ -1,30 +1,26 @@
 import {
   Router,
-  CanLoad,
-  Route,
-  UrlSegment,
-  UrlTree
+  CanActivate
 } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable()
-export class AuthGuard implements CanLoad {
+export class AuthGuard implements CanActivate {
   user: any;
 
-  constructor(private router: Router) {
-    this.user = JSON.parse(localStorage.getItem('user')) || {};
+  constructor(private router: Router, private toast: ToastrService) {
   }
-  canLoad(route: Route, segments: UrlSegment[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    if (Object.keys(this.user).length === 0 && this.user.constructor === Object) {
-      console.log('yes');
-      this.router.navigate(['/auth/login']);
-      return false;
+  canActivate(): boolean {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if (this.user) {
+      return true;
     }
     else {
-      console.log('no');
-      return true;
+      this.router.navigate(['/auth/login']);
+      this.toast.warning('قم بتسجيل الدخول');
+      return false;
     }
   }
 }

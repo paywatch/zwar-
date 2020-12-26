@@ -10,8 +10,8 @@
         <div class="page-title bg-light d-flex justify-content-between align-items-center mb-4">
           <h1 class="h1 text-primary mb-4">
             ادارة برامج العمرة
-            <a class="mx-2" data-toggle="collapse" href="#advSearch" (click)="resetForm()" role="button" aria-expanded="false"
-              aria-controls="advSearch"> <i class="fal fa-fw  search-icon fa-search"></i></a>
+            <a class="mx-2" data-toggle="collapse" href="#advSearch" (click)="resetForm()" role="button"
+              aria-expanded="false" aria-controls="advSearch"> <i class="fal fa-fw  search-icon fa-search"></i></a>
           </h1>
           <a routerLink="/program/basics" class="btn btn-outline-primary btn-hover"> اضافة برنامج <i
               class="fal fa-plus fa-fw"></i></a>
@@ -28,7 +28,8 @@
             <div class="col-md-6 col-lg-4">
               <div class="form-group ">
                 <label class="d-block col-form-label"> موسم العمرة </label>
-                <select class="form-control" [(ngModel)]="programSeason" name="programSeason" ngDefaultControl (change)="($event.target.value)">
+                <select class="form-control" [(ngModel)]="programSeason" name="programSeason" ngDefaultControl
+                  (change)="($event.target.value)">
                   <option *ngFor="let item of season">
                     {{item.name}}
                   </option>
@@ -74,8 +75,7 @@
                       </span>
                     </td>
                     <td class="text-center">
-                      <a class="view-action" title="View item"><i
-                          class="fal fa-eye fa-fw fa-1x"></i>
+                      <a class="view-action" title="View item"><i class="fal fa-eye fa-fw fa-1x"></i>
                         <span class="d-none">View item</span>
                       </a>
                     </td>
@@ -136,8 +136,8 @@
                       </span>
                     </td>
                     <td class="text-center">
-                      <a [routerLink]="['/profile/packages', program.programId]" class="view-action" title="View item"><i
-                          class="fa fa-box-alt"></i>
+                      <a [routerLink]="['/profile/packages', program.programId]" class="view-action"
+                        title="View item"><i class="fa fa-box-alt"></i>
                         <span class="d-none">View item</span>
                       </a>
                     </td>
@@ -155,116 +155,4 @@
         </div>
       </div>
     </div>
-
-    <footer class="footer ">
-      <div class="footer-top">
-        <div class="container border-bottom">
-          <div class="pr-lg-3 row">
-            <div class="col-lg-8">
-              <div class="d-flex justify-content-start align-items-center py-0 py-lg-4">
-                <i class="fal  fa-5x fa-mobile text-primary"></i>
-                <div class="ml-4">
-                  <h4 class=" display-3 my-3"> تطبيق زوار متوفر الآن في المتاجر الالكترونية لاندوريد وأبل </h4>
-                  <p class="text-light"> حمل التطبيق لتصلك كل التنبيهات الخاصة بعمليات حجزك وسفرك </p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-lg-4 py-3 py-lg-5 d-flex justify-content-around justify-content-lg-between px-2 px-lg-0 footer-apps">
-              <a href="#android" class="d-inline-block "> <img src="./assets/images/android.png" class="round"
-                  width="180" alt="Android store"> </a>
-              <a href="#ios" class="d-inline-block "> <img src="./assets/images/ios.png" class="round" width="180"
-                  alt="Apple store"> </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-middle">
-        <div class="container">
-          <div class="pr-lg-3 row">
-            <div
-              class="align-items-center col-lg-8 d-flex flex-row justify-content-center justify-content-lg-start py-2 py-lg-0">
-              <p class="d-inline-block my-3"> نوفر اشهر طرق الدفع </p>
-              <ul class="d-flex flex-row justify-content-between payment-list px-3">
-                <li>
-                  <span href="#" class="d-block p-4 px-3">
-                    <img src="./assets/images/visa.svg" width="90" alt="Visa">
-                    <span class="d-none">Visa</span>
-                  </span>
-                </li>
-                <li>
-                  <span href="#" class="d-block p-3 pr-3">
-                    <img src="./assets/images/mastercard.svg" width="75" alt="mastercard">
-                    <span class="d-none">mastercard</span>
-                  </span>
-                </li>
-                <li>
-                  <span class="d-block p-3">
-                    <img src="./assets/images/american-express.svg" width="44" alt="american-express">
-                    <span class="d-none">american-express</span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div
-              class="align-items-center col-lg-4 d-flex flex-row justify-content-center justify-content-lg-between px-2 px-lg-0 py-2 py-lg-0">
-              <p class="d-inline-block my-3 "> تواصل معنا </p>
-              <ul class="social-media d-flex flex-row justify-content-between ml-5">
-                <li>
-                  <a href="#twitter">
-                    <i class="fab fa-fw fa-2x fa-twitter-square"></i>
-                    <span class="d-none">twitter</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#facebook">
-                    <i class="fab fa-fw fa-2x fa-facebook-square"></i>
-                    <span class="d-none">Facebook</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#linkedin">
-                    <i class="fa fa-fw fa-2x fa-linkedin-square"></i>
-                    <span class="d-none">linkedin</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#youtube">
-                    <i class="fab fa-fw fa-2x fa-youtube-square"></i>
-                    <span class="d-none">youtube</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#instagram">
-                    <i class="fab fa-fw fa-2x fa-instagram-square"></i>
-                    <span class="d-none">instagram</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div class="container">
-          <div class="pr-lg-3 row">
-            <div class="col-md-7 col-lg-8">
-              <ul class="footer-bottom-list  d-flex flex-row align-items-between">
-                <li><a href="#" class="d-inline-block pr-3 pr-md-4 py-1 py-md-3"> عن عمــرة </a> </li>
-                <li><a href="#" class="d-inline-block pr-3 pr-md-4 py-1 py-md-3"> أسئلة وأجوبة </a> </li>
-                <li><a href="#" class="d-inline-block pr-3 pr-md-4 py-1 py-md-3"> الشروط والاحكام </a> </li>
-                <li><a href="sitemap.html" class="d-inline-block pr-3 pr-md-4 py-1 py-md-3"> دليل المستخدم </a> </li>
-              </ul>
-            </div>
-            <div
-              class="col-md-5 col-lg-4 d-flex flex-row align-items-center justify-content-between  px-4 px-md-2 px-lg-0">
-              <p class="copyrights  pr-4 py-3 m-0"> جميع الحقوق محفوظة © 2018 لشركة علم </p>
-              <a href="https://www.elm.sa/ar/Pages/default.aspx" target="_blank">
-                <img width="50" src="./assets/images/elm-logo.svg" alt="elm logo">
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
   </div>

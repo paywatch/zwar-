@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { ToastrService } from 'ngx-toastr';
-import firebase from 'firebase/app';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 
 import { ProgramService } from '../../services/program.service';
-import { finalize } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { finalize, map, tap } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 
 @Component({
@@ -20,8 +19,6 @@ import { Observable } from 'rxjs';
 export class BasicsComponent implements OnInit {
 
   basicsForm: FormGroup;
-  // categories$: Observable<any[]>;
-  // paths$: Observable<any[]>;
   basics: any;
   categories: any[];
   programs: any;
@@ -31,13 +28,21 @@ export class BasicsComponent implements OnInit {
   feasturedStream: any;
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
+  programUrl: string;
+
+  uploads: any[];
+  allPercentage: Observable<any>;
+  files: Observable<any>;
+  selectedProgramBannerFile: any;
+
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private programService: ProgramService,
-    private db: AngularFireStorage
+    private db: AngularFireStorage,
+    private afs: AngularFirestore
   ) {
   }
 
@@ -48,6 +53,13 @@ export class BasicsComponent implements OnInit {
     }, 1000);
     this.getAllCategory();
     this.initForm();
+    this.files = this.afs.collection('files').valueChanges();
+    if (this.files) {
+      this.files.subscribe(file => {
+        this.selectedProgramBannerFile = file;
+        console.log(this.selectedProgramBannerFile);
+      });
+    }
   }
 
   initForm() {
@@ -67,15 +79,62 @@ export class BasicsComponent implements OnInit {
   }
 
   programBanner(event: any) {
-    const file = event.target.files[0];
-    const filePath = '/photos/url';
-    const ref = this.db.ref(filePath);
-    const task = ref.put(file);
 
-    this.uploadPercent = task.percentageChanges();
-    task.snapshotChanges().pipe(
-      finalize(() => this.downloadURL = ref.getDownloadURL())
-    ).subscribe();
+    this.uploads = [];
+    const filelist = event.target.files;
+    const allPercentage: Observable<number>[] = [];
+
+    for (const file of filelist) {
+
+      const path = `files/${file.name}`;
+      const ref = this.db.ref(path);
+      const task = this.db.upload(path, file);
+      // tslint:disable-next-line:variable-name
+      const _percentage$ = task.percentageChanges();
+      allPercentage.push(_percentage$);
+
+      // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
+      const uploadTrack = {
+        fileName: file.name,
+        percentage: _percentage$
+      };
+
+      // push each upload into the array
+      this.uploads.push(uploadTrack);
+      console.log(this.uploads);
+
+      // for every upload do whatever you want in firestore with the uploaded file
+      const t = task.then((f) => {
+        return f.ref.getDownloadURL().then((url) => {
+          return this.afs.collection('files').add({
+            name: f.metadata.name,
+            // tslint:disable-next-line:object-literal-shorthand
+            url: url
+          });
+        });
+      });
+
+      this.allPercentage = combineLatest(allPercentage)
+        .pipe(
+          map((percentages) => {
+            let result = 0;
+            for (const percentage of percentages) {
+              result = result + percentage;
+            }
+            return result / percentages.length;
+          }),
+          tap(console.log)
+        );
+    }
+    // const file = event.target.files[0];
+    // const filePath = '/photos/url';
+    // const ref = this.db.ref(filePath);
+    // const task = ref.put(file);
+
+    // this.uploadPercent = task.percentageChanges();
+    // task.snapshotChanges().pipe(
+    //   finalize(() => this.downloadURL = ref.getDownloadURL())
+    // ).subscribe();
   }
 
   getBasicData() {
@@ -99,6 +158,7 @@ export class BasicsComponent implements OnInit {
 
   createProgram() {
     const payload = this.basicsForm.value;
+    payload.programUrl = this.selectedProgramBannerFile;
     this.programService.createProgram(payload)
       .subscribe(
         (data) => {
@@ -110,9 +170,9 @@ export class BasicsComponent implements OnInit {
 
   updateBasic() {
     const id = this.selectedBasic.id;
-    console.log(id);
     this.selectedBasic = this.basicsForm.value;
     this.selectedBasic.id = id;
+    this.selectedBasic.programUrl = this.selectedProgramBannerFile;
     console.log(this.selectedBasic);
     this.programService.updateBasicData(this.selectedBasic);
     this.router.navigate(['/program/residential']);

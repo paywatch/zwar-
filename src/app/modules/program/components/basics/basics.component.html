@@ -186,8 +186,17 @@
                 الحجم المفضل
                 <span> 1024px X 126px</span> </p>
               <input type="file" multiple class="gallery-photo-add" (change)="programBanner($event)">
-              <img *ngIf="downloadURL | async" style="width: 10rem; height: 7rem;" [src]="downloadURL | async" alt="">
-              <div class="upload-gallery full"></div>
+              <div class="upload-gallery full">
+                <div *ngFor="let upload of uploads">
+                  <h3>Upload of {{upload.fileName}}</h3>
+                  <p> Progress: {{upload.percentage | async}}</p>
+                  <h2>{{allPercentage | async}}</h2>
+                </div>
+                <div *ngFor="let file of selectedBasic?.programUrl">
+                  <h3>{{file.name}}</h3>
+                  <p><img style="width: 3rem; height: 4rem;" [src]="file.url" /></p>
+                </div>
+              </div>
             </div>
             <div class="btn-group mt-5">
               <a (click)="deleteBasic()" class="btn btn-default px-0" [routerLink]="['/profile/programs']">
