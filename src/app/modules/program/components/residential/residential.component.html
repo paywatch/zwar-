@@ -300,22 +300,16 @@
                     </div>
                   </div>
 
-                  <!-- <div class="mk-custom-file-upload">
+                  <div class="mk-custom-file-upload">
                     <p class="text-primary display-3">رفع صور فندق مكة
                       <i class="fal fa-fw fa-upload"></i>
                     </p>
                     <p class="text-muted small"> صيغة jpg,png,svg </p>
-                    <input type="file" multiple class="gallery-photo-add">
+                    <input type="file" multiple class="gallery-photo-add" (change)="uploadMeccaImage($event)">
                     <div class="upload-gallery"></div>
-                  </div> -->
-                  <!-- <div>
-                    <div *ngFor="let img of hotel.get('tblHotelPictureSet').controls">
-                      <img src="http://placehold.it/300x200" width="200">
-                    </div>
-                  </div> -->
+                  </div>
                 </section>
               </div>
-              <!-- <hr class="my-5 mx-n4" *ngIf="i < hotels.length - 1"> -->
             </div>
           </div>
         </form>
@@ -371,13 +365,9 @@
                     <div class="col-md-4">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> نجوم الفندق </label>
-                        <select *ngFor="let star of hotelStars" class="form-control" formControlName="MHotelStars">
+                        <select class="form-control" formControlName="MHotelStars">
                           <option>اختر</option>
-                          <option>{{star.stars1}}</option>
-                          <option>{{star.stars2}}</option>
-                          <option>{{star.stars3}}</option>
-                          <option>{{star.stars4}}</option>
-                          <option>{{star.stars5}}</option>
+                          <option *ngFor="let star of hotelStars" [value]="star.id">{{star.name}}</option>
                         </select>
                         <em *ngIf="hotels.get('MHotelStars').hasError('required') && hotels.get('MHotelStars').dirty">
                           هذا الحقل إجباري
@@ -577,19 +567,14 @@
                     </div>
                   </div>
 
-                  <!-- <div class="mk-custom-file-upload">
+                  <div class="mk-custom-file-upload">
                     <p class="text-primary display-3">رفع صور فندق المدينة
                       <i class="fal fa-fw fa-upload"></i>
                     </p>
                     <p class="text-muted small"> صيغة jpg,png,svg </p>
                     <input type="file" multiple class="gallery-photo-add">
                     <div class="upload-gallery"></div>
-                  </div> -->
-                  <!-- <div>
-                    <div *ngFor="let img of hotel.get('tblHotelPictureSet').controls">
-                      <img src="http://placehold.it/300x200" width="200">
-                    </div>
-                  </div> -->
+                  </div>
                 </section>
               </div>
               <!-- <hr class="my-5 mx-n4" *ngIf="i < hotels.length - 1"> -->
@@ -597,7 +582,7 @@
           </div>
 
           <div class="btn-group mt-5 justify-content-between">
-          <a (click)="deleteResidential()" routerLink="/" class="btn btn-default px-0"> الغاء </a>
+            <a (click)="deleteResidential()" routerLink="/" class="btn btn-default px-0"> الغاء </a>
             <div>
               <a routerLink="/program/basics" class="btn btn-outline-primary mb-2">السابق</a>
               <button class="btn btn-primary ml-3 mb-2" type="submit" (click)="createHotels()"

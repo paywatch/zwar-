@@ -7,7 +7,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 
 
 import { ProgramService } from '../../services/program.service';
-import { finalize, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 
@@ -35,6 +35,7 @@ export class BasicsComponent implements OnInit {
   allPercentage: Observable<any>;
   files: Observable<any>;
   selectedProgramBannerFile: any;
+  imageId: any;
 
 
   constructor(
@@ -52,16 +53,25 @@ export class BasicsComponent implements OnInit {
     this.patchForm();
     setTimeout(() => {
       this.getBasicData();
+      this.getFileFromStorage();
     }, 1000);
+    setTimeout(() => {
+      this.getSpecifieImage();
+    }, 2000);
     this.getAllCategory();
     this.initForm();
-    this.files = this.afs.collection('files').valueChanges();
-    if (this.files) {
-      this.files.subscribe(file => {
-        this.selectedProgramBannerFile = file;
-        console.log(this.selectedProgramBannerFile);
-      });
-    }
+  }
+
+  getFileFromStorage() {
+    return this.files = this.afs.collection('files').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
   }
 
   initForm() {
@@ -78,12 +88,24 @@ export class BasicsComponent implements OnInit {
   patchForm() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
     this.basicID = JSON.parse(sessionStorage.getItem('basicID'));
+    this.imageId = JSON.parse(sessionStorage.getItem('programBannerID')) || {};
+    console.log(this.imageId);
+  }
+
+  getSpecifieImage() {
+    this.getFileFromStorage().subscribe(res => {
+      console.log(res);
+      const find = res.find(r => r.id == this.imageId);
+      this.selectedProgramBannerFile = find;
+      console.log(this.selectedProgramBannerFile);
+    });
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template,
       {
-      class: 'modal-dialog-centered' });
+        class: 'modal-dialog-centered'
+      });
   }
 
   programBanner(event: any) {
@@ -118,6 +140,8 @@ export class BasicsComponent implements OnInit {
             name: f.metadata.name,
             // tslint:disable-next-line:object-literal-shorthand
             url: url
+          }).then(res => {
+            sessionStorage.setItem('programBannerID', JSON.stringify(res.id));
           });
         });
       });
@@ -166,7 +190,6 @@ export class BasicsComponent implements OnInit {
 
   createProgram() {
     const payload = this.basicsForm.value;
-    payload.programUrl = this.selectedProgramBannerFile;
     this.programService.createProgram(payload)
       .subscribe(
         (data) => {

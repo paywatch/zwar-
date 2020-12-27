@@ -1,10 +1,13 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter, NgZone } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { threadId } from 'worker_threads';
-
+import { combineLatest, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { ProgramService } from '../../services/program.service';
+
+import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-residential',
@@ -22,12 +25,19 @@ export class ResidentialComponent implements OnInit {
   selecetdHotel: any;
   hotelsData: any[];
   hotelID: any;
+  uploads: any;
+  allPercentage: any;
+  files: Observable<any>;
+  MeccaImageID: any;
+  selectedMeccaFile: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private programservice: ProgramService,
-    private toaster: ToastrService) { }
+    private toaster: ToastrService,
+    private afs: AngularFirestore,
+    private db: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.initResidentialForm();
@@ -38,7 +48,11 @@ export class ResidentialComponent implements OnInit {
     this.getAllProgramHotel();
     setTimeout(() => {
       this.getAllProgramHotel();
+      this.getFileFromStorage();
     }, 1000);
+    setTimeout(() => {
+      this.getSpecifieImage();
+    }, 2000);
   }
 
   getBasicsData() {
@@ -48,6 +62,81 @@ export class ResidentialComponent implements OnInit {
   patchFormValue() {
     this.residential = JSON.parse(sessionStorage.getItem('hotels'));
     this.hotelID = JSON.parse(sessionStorage.getItem('hotelID'));
+    this.MeccaImageID = JSON.parse(sessionStorage.getItem('MeccaImageID')) || {};
+  }
+
+
+  getFileFromStorage() {
+    return this.files = this.afs.collection('MeccaFiles').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
+  }
+
+  getSpecifieImage() {
+    this.getFileFromStorage().subscribe(res => {
+      console.log(res);
+      const find = res.find(r => r.id == this.MeccaImageID);
+      this.selectedMeccaFile = find;
+      console.log(this.selectedMeccaFile);
+    });
+  }
+
+  uploadMeccaImage(event: any) {
+
+    this.uploads = [];
+    const filelist = event.target.files;
+    const allPercentage: Observable<number>[] = [];
+
+    for (const file of filelist) {
+
+      const path = `MeccaFiles/${file.name}`;
+      const ref = this.db.ref(path);
+      const task = this.db.upload(path, file);
+      // tslint:disable-next-line:variable-name
+      const _percentage$ = task.percentageChanges();
+      allPercentage.push(_percentage$);
+
+      // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
+      const uploadTrack = {
+        fileName: file.name,
+        percentage: _percentage$
+      };
+
+      // push each upload into the array
+      this.uploads.push(uploadTrack);
+      console.log(this.uploads);
+
+      // for every upload do whatever you want in firestore with the uploaded file
+      const t = task.then((f) => {
+        return f.ref.getDownloadURL().then((url) => {
+          return this.afs.collection('MeccaFiles').add({
+            name: f.metadata.name,
+            // tslint:disable-next-line:object-literal-shorthand
+            url: url
+          }).then(res => {
+            sessionStorage.setItem('MeccaImageID', JSON.stringify(res.id));
+          });
+        });
+      });
+
+      this.allPercentage = combineLatest(allPercentage)
+        .pipe(
+          map((percentages) => {
+            let result = 0;
+            for (const percentage of percentages) {
+              result = result + percentage;
+            }
+            return result / percentages.length;
+          }),
+          tap(console.log)
+        );
+    }
   }
 
   get hotel() {

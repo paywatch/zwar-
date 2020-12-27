@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
-    // this.authService.logOut();
+    this.authService.logOut();
     localStorage.removeItem('user');
     this.router.navigate(['/auth/login']);
   }

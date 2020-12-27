@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   logOut() {
-    return this.AfAuth.auth.singOut();
+    return this.AfAuth.auth.signOut();
   }
 
   resetPassword(email) {
