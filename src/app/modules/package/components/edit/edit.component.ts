@@ -11,6 +11,9 @@ export class EditComponent implements OnInit {
 
   packages: any[];
 
+  // totalItems = 64;
+  // currentPage = 4;
+
   constructor(
     private router: Router,
     private packageService: PackageService,
@@ -18,9 +21,11 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPackage();
-    this.getAirport();
-    this.getUmrahSeason();
-    this.getUmrahDirection();
+    setTimeout(() => {
+      this.getAirport();
+      this.getUmrahDirection();
+      this.getUmrahSeason();
+    }, 1000);
   }
 
   getPackage() {

@@ -191,6 +191,8 @@ export class PackageService {
   updatePackageMatwaf(item) {
     this.matwafDoc = this.afs.doc(`matwafData/${item.id}`);
     this.matwafDoc.update(item);
+    sessionStorage.removeItem('group');
+    sessionStorage.setItem('group', JSON.stringify(item));
   }
 
   updatePackageRoom(item) {

@@ -57,16 +57,18 @@ export class ConfirmationComponent implements OnInit {
     this.programService.getAllStars().subscribe(stars => {
       const found = stars.find(star => star.id == this.residential.hotelStars);
       const madinaHotel = stars.find(star => star.id == this.residential.MHotelStars);
-      console.log(madinaHotel);
-      this.program.madianHotelStar = madinaHotel.name;
-      this.program.hotelStar = found.name;
-      console.log();
+      if (this.program.MHotelStars) {
+        this.program.madianHotelStar = madinaHotel.name;
+      }
+      if (this.program.hotelStars) {
+        this.program.hotelStar = found.name;
+      }
     });
   }
 
   getAllAirplanes() {
     this.programService.getAllAirplaneCompany().subscribe(airplane => {
-      this.program.airlineNAme = airplane.find(air => air.id == this.transportation.airlineID).name;      
+      this.program.airlineNAme = airplane.find(air => air.id == this.transportation.airlineID).name;
     });
   }
 
@@ -85,6 +87,13 @@ export class ConfirmationComponent implements OnInit {
       sessionStorage.removeItem('hotels');
       sessionStorage.removeItem('residence');
       sessionStorage.removeItem('visit');
+      sessionStorage.removeItem('basicID');
+      sessionStorage.removeItem('visitID');
+      sessionStorage.removeItem('residenceID');
+      sessionStorage.removeItem('hotelID');
+      sessionStorage.removeItem('programBannerID');
+      sessionStorage.removeItem('MadinaImageID');
+      sessionStorage.removeItem('MeccaImageID');
       sessionStorage.setItem('program', JSON.stringify(this.program));
       this.router.navigate(['program/congratulation']);
     });

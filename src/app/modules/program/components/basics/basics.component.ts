@@ -7,7 +7,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 
 
 import { ProgramService } from '../../services/program.service';
-import { finalize, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 

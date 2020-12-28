@@ -19,6 +19,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     AngularFirestoreModule,
     AngularFireAuthModule,
     ModalModule.forRoot(),
+    PaginationModule.forRoot(),
     TooltipModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase, 'zowar'),
     AngularFireDatabaseModule,

@@ -137,15 +137,15 @@
               <div class="col-md-12">
                 <div class="form-group ">
                   <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
-                    <span *ngIf="program.breakfastAvailable">
-                      فطور
-                    </span>
-                    <span *ngIf="program.lunchAvailable">
-                      غداء
-                    </span>
-                    <span *ngIf="program.dinnerAvailable">
-                      عشاء
-                    </span>
+                  <span *ngIf="program.breakfastAvailable">
+                    فطور
+                  </span>
+                  <span *ngIf="program.lunchAvailable">
+                    غداء
+                  </span>
+                  <span *ngIf="program.dinnerAvailable">
+                    عشاء
+                  </span>
                 </div>
               </div>
             </div>
@@ -230,14 +230,14 @@
 
             <div class="row">
               <div class="col-md-12">
-                <!-- <div class="form-group ">
+                <div class="form-group ">
                   <label class="d-block col-form-label"> صور فندق مكة </label>
                   <div class="prog-photo-gal">
 
                     <div class="item custom-control custom-radio  ">
                       <input id="first1" name="aa31" type="radio" class="custom-control-input" required="" checked>
                       <label class="custom-control-label" for="first1">
-                        <img [src]="hotel.logo" alt="">
+                        <img [src]="program.selectedMeccaFile.url" alt="">
                         <span class="ttl">الصورة
                           الرئيسية للفندق</span>
                         <span class="ttl-hover">تعيين كصورة
@@ -245,7 +245,7 @@
                       </label>
                     </div>
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </section>
@@ -284,15 +284,15 @@
               <div class="col-md-12">
                 <div class="form-group ">
                   <label class="d-block col-form-label"> الوجبات المتوفرة في الفندق </label>
-                    <span *ngIf="program.MBreakfastAvailable">
-                      فطور
-                    </span>
-                    <span *ngIf="program.MLunchAvailable">
-                      غداء
-                    </span>
-                    <span *ngIf="program.MDinnerAvailable">
-                      عشاء
-                    </span>
+                  <span *ngIf="program.MBreakfastAvailable">
+                    فطور
+                  </span>
+                  <span *ngIf="program.MLunchAvailable">
+                    غداء
+                  </span>
+                  <span *ngIf="program.MDinnerAvailable">
+                    عشاء
+                  </span>
                 </div>
               </div>
             </div>
@@ -377,14 +377,14 @@
 
             <div class="row">
               <div class="col-md-12">
-                <!-- <div class="form-group ">
-                  <label class="d-block col-form-label"> صور فندق مكة </label>
+                <div class="form-group ">
+                  <label class="d-block col-form-label"> صور فندق المدينة </label>
                   <div class="prog-photo-gal">
 
                     <div class="item custom-control custom-radio  ">
                       <input id="first1" name="aa31" type="radio" class="custom-control-input" required="" checked>
                       <label class="custom-control-label" for="first1">
-                        <img [src]="hotel.logo" alt="">
+                        <img [src]="program.selectedMadinaFile.url">
                         <span class="ttl">الصورة
                           الرئيسية للفندق</span>
                         <span class="ttl-hover">تعيين كصورة
@@ -392,7 +392,7 @@
                       </label>
                     </div>
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </section>
@@ -463,40 +463,35 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.MaccaMusieum">
-                         متحف مكة
+                  <label class="d-block col-form-label" *ngIf="program.MaccaMusieum">
+                    متحف مكة
                   </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.Thour">
+                  <label class="d-block col-form-label" *ngIf="program.Thour">
                     جبل الطور
                   </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.MoulaTomb">
+                  <label class="d-block col-form-label" *ngIf="program.MoulaTomb">
                     مقبرة المعلاه
                   </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.HaramenSharefen">
-                         معرض عمارة الحرمين الشريفين
+                  <label class="d-block col-form-label" *ngIf="program.HaramenSharefen">
+                    معرض عمارة الحرمين الشريفين
                   </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.NourMountain">
+                  <label class="d-block col-form-label" *ngIf="program.NourMountain">
                     جبل النور
                   </label>
                 </div>
@@ -518,41 +513,36 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.MasjedZuElqeblaten">
-                         مسجد القبلتين
+                  <label class="d-block col-form-label" *ngIf="program.MasjedZuElqeblaten">
+                    مسجد القبلتين
                   </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.Qebaa">
+                  <label class="d-block col-form-label" *ngIf="program.Qebaa">
                     مسجد قباء
                   </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.SevenMasjed">
+                  <label class="d-block col-form-label" *ngIf="program.SevenMasjed">
                     المساجد السبعة
                   </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.ElGenValley">
-                      وادي الجن
+                  <label class="d-block col-form-label" *ngIf="program.ElGenValley">
+                    وادي الجن
                   </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="d-block col-form-label"
-                         *ngIf="program.PrinitHolyQuran">
-                         مجمع الملك فهد لطباعة المصحف الشريف
+                  <label class="d-block col-form-label" *ngIf="program.PrinitHolyQuran">
+                    مجمع الملك فهد لطباعة المصحف الشريف
                   </label>
                 </div>
               </div>

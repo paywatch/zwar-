@@ -47,7 +47,7 @@ export class ResidentialComponent implements OnInit {
     private afs: AngularFirestore,
     private db: AngularFireStorage,
     private modalService: BsModalService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.initResidentialForm();
@@ -319,8 +319,12 @@ export class ResidentialComponent implements OnInit {
     const hotels = { ...this.residentailForm.value, ...this.madinaForm.value };
     this.selecetdHotel = hotels;
     this.selecetdHotel.id = id;
-    this.selecetdHotel.selectedMeccaFile = this.selectedMeccaFile;
-    this.selecetdHotel.selectedMadinaFile = this.selectedMadinaFile;
+    if (this.selectedMeccaFile) {
+      this.selecetdHotel.selectedMeccaFile = this.selectedMeccaFile;
+    }
+    if (this.selectedMadinaFile) {
+      this.selecetdHotel.selectedMadinaFile = this.selectedMadinaFile;
+    }
     this.programservice.updateProgramHotel(this.selecetdHotel);
     this.router.navigate(['/program/transportation']);
     this.toaster.success('تم التعديل');
