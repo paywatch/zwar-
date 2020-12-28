@@ -30,6 +30,10 @@ export class ResidentialComponent implements OnInit {
   files: Observable<any>;
   MeccaImageID: any;
   selectedMeccaFile: any;
+  Madinauploads: any[];
+  Madinafiles: Observable<any[]>;
+  MadinaImageID: any;
+  selectedMadinaFile: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,9 +53,11 @@ export class ResidentialComponent implements OnInit {
     setTimeout(() => {
       this.getAllProgramHotel();
       this.getFileFromStorage();
+      this.getMadinaFileFromStorage();
     }, 1000);
     setTimeout(() => {
       this.getSpecifieImage();
+      this.getMadinaSpecifieImage();
     }, 2000);
   }
 
@@ -63,6 +69,7 @@ export class ResidentialComponent implements OnInit {
     this.residential = JSON.parse(sessionStorage.getItem('hotels'));
     this.hotelID = JSON.parse(sessionStorage.getItem('hotelID'));
     this.MeccaImageID = JSON.parse(sessionStorage.getItem('MeccaImageID')) || {};
+    this.MadinaImageID = JSON.parse(sessionStorage.getItem('MadinaImageID')) || {};
   }
 
 
@@ -121,6 +128,85 @@ export class ResidentialComponent implements OnInit {
             url: url
           }).then(res => {
             sessionStorage.setItem('MeccaImageID', JSON.stringify(res.id));
+          });
+        });
+      });
+
+      this.allPercentage = combineLatest(allPercentage)
+        .pipe(
+          map((percentages) => {
+            let result = 0;
+            for (const percentage of percentages) {
+              result = result + percentage;
+            }
+            return result / percentages.length;
+          }),
+          tap(console.log)
+        );
+    }
+  }
+
+  getMadinaFileFromStorage() {
+    return this.Madinafiles = this.afs.collection('MaddinaFiles').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
+  }
+
+  getMadinaSpecifieImage() {
+    this.getMadinaFileFromStorage().subscribe(res => {
+      console.log(res);
+      const find = res.find(r => r.id == this.MadinaImageID);
+      this.selectedMadinaFile = find;
+      console.log(this.selectedMeccaFile);
+    });
+  }
+
+  uploadMAdinaImage(event) {
+
+    this.Madinauploads = [];
+    const filelist = event.target.files;
+    const allPercentage: Observable<number>[] = [];
+
+    for (const file of filelist) {
+
+      const path = `MaddinaFiles/${file.name}`;
+      const ref = this.db.ref(path);
+      const task = this.db.upload(path, file);
+      // tslint:disable-next-line:variable-name
+      const _percentage$ = task.percentageChanges();
+      allPercentage.push(_percentage$);
+
+      // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
+      const uploadTrack = {
+        fileName: file.name,
+        percentage: _percentage$
+      };
+
+      // push each upload into the array
+      this.Madinauploads.push(uploadTrack);
+      console.log(this.Madinauploads);
+
+      // for every upload do whatever you want in firestore with the uploaded file
+      const t = task.then((f) => {
+        return f.ref.getDownloadURL().then((url) => {
+          return this.afs.collection('MaddinaFiles').add({
+            name: f.metadata.name,
+            // tslint:disable-next-line:object-literal-shorthand
+            url: url
+          }).then(res => {
+            const id = [];
+            for (const k in res) {
+              if (true) {
+                id.push(res.id);
+              }
+            }
+            sessionStorage.setItem('MadinaImageID', JSON.stringify(res.id));
           });
         });
       });
