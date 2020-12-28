@@ -249,7 +249,7 @@
               </div>
             </div>
           </section>
-          <section *ngIf="program.programPathID === 'madina'">
+          <section *ngIf="program?.programPathID === 'madina'">
             <h3 class="text-primary"> الاقامة في المدينة </h3>
             <div class="row">
               <div class="col-md-12">
@@ -263,7 +263,7 @@
               <div class="col-md-4">
                 <div class="form-group ">
                   <label class="d-block col-form-label"> نجوم الفندق </label>
-                  {{program.MHotelStars}}
+                  {{program.madianHotelStar}}
                 </div>
               </div>
               <div class="col-md-4">

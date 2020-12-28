@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { combineLatest, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { ProgramService } from '../../services/program.service';
 
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-residential',
@@ -16,6 +17,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class ResidentialComponent implements OnInit {
 
+  modalRef: BsModalRef;
   basics: any;
   residentailForm: FormGroup;
   madinaForm: FormGroup;
@@ -34,6 +36,8 @@ export class ResidentialComponent implements OnInit {
   Madinafiles: Observable<any[]>;
   MadinaImageID: any;
   selectedMadinaFile: any;
+  uploadPercent: Observable<number>;
+  downloadURL: Observable<any>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +45,9 @@ export class ResidentialComponent implements OnInit {
     private programservice: ProgramService,
     private toaster: ToastrService,
     private afs: AngularFirestore,
-    private db: AngularFireStorage) { }
+    private db: AngularFireStorage,
+    private modalService: BsModalService
+    ) { }
 
   ngOnInit(): void {
     this.initResidentialForm();
@@ -60,6 +66,15 @@ export class ResidentialComponent implements OnInit {
       this.getMadinaSpecifieImage();
     }, 2000);
   }
+
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,
+      {
+        class: 'modal-dialog-centered'
+      });
+  }
+
 
   getBasicsData() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
@@ -200,12 +215,6 @@ export class ResidentialComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            const id = [];
-            for (const k in res) {
-              if (true) {
-                id.push(res.id);
-              }
-            }
             sessionStorage.setItem('MadinaImageID', JSON.stringify(res.id));
           });
         });
@@ -284,7 +293,6 @@ export class ResidentialComponent implements OnInit {
     });
   }
 
-
   getAllProgramHotel() {
     this.programservice.getProgramHotel().subscribe(hotel => {
       this.hotelsData = hotel;
@@ -311,6 +319,8 @@ export class ResidentialComponent implements OnInit {
     const hotels = { ...this.residentailForm.value, ...this.madinaForm.value };
     this.selecetdHotel = hotels;
     this.selecetdHotel.id = id;
+    this.selecetdHotel.selectedMeccaFile = this.selectedMeccaFile;
+    this.selecetdHotel.selectedMadinaFile = this.selectedMadinaFile;
     this.programservice.updateProgramHotel(this.selecetdHotel);
     this.router.navigate(['/program/transportation']);
     this.toaster.success('تم التعديل');

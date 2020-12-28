@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouteReuseStrategy } from '@angular/router';
+import { LOADIPHLPAPI } from 'dns';
 import { environment } from 'src/environments/environment';
 import { ProgramService } from '../../services/program.service';
 
@@ -55,6 +56,9 @@ export class ConfirmationComponent implements OnInit {
   getAllHotelStars() {
     this.programService.getAllStars().subscribe(stars => {
       const found = stars.find(star => star.id == this.residential.hotelStars);
+      const madinaHotel = stars.find(star => star.id == this.residential.MHotelStars);
+      console.log(madinaHotel);
+      this.program.madianHotelStar = madinaHotel.name;
       this.program.hotelStar = found.name;
       console.log();
     });

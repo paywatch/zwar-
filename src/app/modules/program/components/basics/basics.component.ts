@@ -7,7 +7,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 
 
 import { ProgramService } from '../../services/program.service';
-import { map, tap } from 'rxjs/operators';
+import { finalize, map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 
@@ -165,7 +165,9 @@ export class BasicsComponent implements OnInit {
 
     // this.uploadPercent = task.percentageChanges();
     // task.snapshotChanges().pipe(
-    //   finalize(() => this.downloadURL = ref.getDownloadURL())
+    //   finalize(() => {
+    //     return this.downloadURL = ref.getDownloadURL();
+    //   })
     // ).subscribe();
   }
 
