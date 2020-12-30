@@ -49,6 +49,15 @@ export class ProgramService {
   programBasics: Observable<any>;
   basicDoc: AngularFirestoreDocument<any>;
 
+  files: Observable<any[]>;
+  filesCollection: AngularFirestoreCollection<any>;
+
+  Madinafiles: Observable<any[]>;
+  MadinafilesCollection: AngularFirestoreCollection<any>;
+
+  Meccafiles: Observable<any[]>;
+  MeccafilesCollection: AngularFirestoreCollection<any>;
+
   constructor(
     private http: HttpClient,
     public afs: AngularFirestore,
@@ -64,6 +73,46 @@ export class ProgramService {
     this.visitsCollection = this.afs.collection('visits');
     this.ProgramCollection = this.afs.collection('program');
     this.publishCollection = this.afs.collection('publish');
+    this.filesCollection = this.afs.collection('files');
+    this.MadinafilesCollection = this.afs.collection('MaddinaFiles');
+    this.MeccafilesCollection = this.afs.collection('MeccaFiles');
+  }
+
+  getFileFromStorage() {
+    return this.files = this.afs.collection('files').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
+  }
+
+  getMadinaFileFromStorage() {
+    return this.Madinafiles = this.afs.collection('MaddinaFiles').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
+  }
+
+
+  getMeccaFileFromStorage() {
+    return this.Meccafiles = this.afs.collection('MeccaFiles').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
   }
 
   getAllCategory() {

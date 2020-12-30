@@ -58,13 +58,9 @@ export class ResidentialComponent implements OnInit {
     this.getAllProgramHotel();
     setTimeout(() => {
       this.getAllProgramHotel();
-      this.getFileFromStorage();
-      this.getMadinaFileFromStorage();
-    }, 1000);
-    setTimeout(() => {
       this.getSpecifieImage();
       this.getMadinaSpecifieImage();
-    }, 2000);
+    }, 1000);
   }
 
 
@@ -88,20 +84,8 @@ export class ResidentialComponent implements OnInit {
   }
 
 
-  getFileFromStorage() {
-    return this.files = this.afs.collection('MeccaFiles').snapshotChanges().pipe(
-      map(changes => {
-        return changes.map((a: any) => {
-          const data = a.payload.doc.data();
-          data.id = a.payload.doc.id;
-          return data;
-        });
-      })
-    );
-  }
-
   getSpecifieImage() {
-    this.getFileFromStorage().subscribe(res => {
+    this.programservice.getMeccaFileFromStorage().subscribe(res => {
       console.log(res);
       const find = res.find(r => r.id == this.MeccaImageID);
       this.selectedMeccaFile = find;
@@ -161,20 +145,9 @@ export class ResidentialComponent implements OnInit {
     }
   }
 
-  getMadinaFileFromStorage() {
-    return this.Madinafiles = this.afs.collection('MaddinaFiles').snapshotChanges().pipe(
-      map(changes => {
-        return changes.map((a: any) => {
-          const data = a.payload.doc.data();
-          data.id = a.payload.doc.id;
-          return data;
-        });
-      })
-    );
-  }
 
   getMadinaSpecifieImage() {
-    this.getMadinaFileFromStorage().subscribe(res => {
+    this.programservice.getMadinaFileFromStorage().subscribe(res => {
       console.log(res);
       const find = res.find(r => r.id == this.MadinaImageID);
       this.selectedMadinaFile = find;

@@ -33,6 +33,8 @@ export class AgencyService {
   confirmationCollection: AngularFirestoreCollection<any>;
   confirmReister: Observable<any>;
   confirmDoc: AngularFirestoreDocument<any>;
+  agencyFiles: Observable<any[]>;
+  agencyFilesCollection: AngularFirestoreCollection<any>;
 
 
   constructor(
@@ -47,6 +49,20 @@ export class AgencyService {
     this.licenseCollection = this.afs.collection('license');
     this.branchCollection = this.afs.collection('branch');
     this.confirmationCollection = this.afs.collection('confirm');
+    this.agencyFilesCollection = this.afs.collection('agencyFile');
+  }
+
+
+  commRegFileChange() {
+    return this.agencyFiles = this.afs.collection('agencyFile').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
   }
 
   getAllCountries() {

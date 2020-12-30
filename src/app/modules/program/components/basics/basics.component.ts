@@ -3,13 +3,14 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AngularFireStorage } from '@angular/fire/storage';
 
 
 import { ProgramService } from '../../services/program.service';
 import { map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
+
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Component({
@@ -33,7 +34,6 @@ export class BasicsComponent implements OnInit {
 
   uploads: any[];
   allPercentage: Observable<any>;
-  files: Observable<any>;
   selectedProgramBannerFile: any;
   imageId: any;
 
@@ -53,26 +53,12 @@ export class BasicsComponent implements OnInit {
     this.patchForm();
     setTimeout(() => {
       this.getBasicData();
-      this.getFileFromStorage();
-    }, 1000);
-    setTimeout(() => {
       this.getSpecifieImage();
-    }, 2000);
+    }, 1000);
     this.getAllCategory();
     this.initForm();
   }
 
-  getFileFromStorage() {
-    return this.files = this.afs.collection('files').snapshotChanges().pipe(
-      map(changes => {
-        return changes.map((a: any) => {
-          const data = a.payload.doc.data();
-          data.id = a.payload.doc.id;
-          return data;
-        });
-      })
-    );
-  }
 
   initForm() {
     this.basicsForm = this.fb.group({
@@ -93,11 +79,11 @@ export class BasicsComponent implements OnInit {
   }
 
   getSpecifieImage() {
-    this.getFileFromStorage().subscribe(res => {
+    this.programService.getFileFromStorage().subscribe(res => {
       console.log(res);
       const find = res.find(r => r.id == this.imageId);
       this.selectedProgramBannerFile = find;
-      console.log(this.selectedProgramBannerFile);
+      console.log(this.selectedProgramBannerFile); 
     });
   }
 
@@ -109,6 +95,7 @@ export class BasicsComponent implements OnInit {
   }
 
   programBanner(event: any) {
+    console.log(event);
 
     this.uploads = [];
     const filelist = event.target.files;

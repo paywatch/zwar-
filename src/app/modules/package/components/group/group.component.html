@@ -136,9 +136,7 @@
                   <input type="file" multiple class="gallery-photo-add" (change)="matwafChange($event)">
                   <div class="upload-gallery full">
                     <div *ngFor="let upload of uploads">
-                      <h3>Upload of {{upload.fileName}}</h3>
                       <p> Progress: {{upload.percentage | async}}</p>
-                      <h2>{{allPercentage | async}}</h2>
                     </div>
                   </div>
                   <p class="text-light small m-0">

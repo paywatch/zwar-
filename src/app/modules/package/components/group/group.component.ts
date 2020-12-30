@@ -49,12 +49,9 @@ export class GroupComponent implements OnInit {
     this.patchForm();
     setTimeout(() => {
       this.getProgramGroup();
-      this.getFileFromStorage();
-    }, 1000);
-    this.loadBasicInfo();
-    setTimeout(() => {
       this.getMatwafImage();
     }, 1000);
+    this.loadBasicInfo();
   }
 
   initForm() {
@@ -94,19 +91,6 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  getFileFromStorage() {
-    return this.files = this.afs.collection('MatwafImage').snapshotChanges().pipe(
-      map(changes => {
-        return changes.map((a: any) => {
-          const data = a.payload.doc.data();
-          data.id = a.payload.doc.id;
-          return data;
-        });
-      })
-    );
-
-  }
-
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template,
       {
@@ -115,7 +99,7 @@ export class GroupComponent implements OnInit {
   }
 
   getMatwafImage() {
-    this.getFileFromStorage().subscribe(image => {
+    this.packageService.getMatwafFileFromStorage().subscribe(image => {
       const find = image.find(i => i.id == this.MatwafImageID);
       this.matwafImage = find;
       console.log(this.matwafImage);

@@ -40,6 +40,8 @@ export class PackageService {
 
   package: Observable<Package[]>;
   packageDocs: AngularFirestoreDocument<Package>;
+  matwafFiles: Observable<any[]>;
+  matwafFilesCollection: AngularFirestoreCollection<any>;
 
   constructor(
     private http: HttpClient,
@@ -53,6 +55,19 @@ export class PackageService {
     this.matwafCollection = this.afs.collection('matwafData');
     this.roomCollection = this.afs.collection('roomsData');
     this.packageCollection = this.afs.collection('package');
+    this.matwafFilesCollection = this.afs.collection('MatwafImage');
+  }
+
+  getMatwafFileFromStorage() {
+    return this.matwafFiles = this.afs.collection('MatwafImage').snapshotChanges().pipe(
+      map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+    );
   }
 
   getAirPorts() {

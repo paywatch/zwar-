@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
 
 import { GreaterThan } from '../../../../_helpers/greater-than.validator';
 import { LessThanToday } from '../../../../_helpers/lessThanToday.validator';
 import { AgencyService } from '../../services/agency/agency.service';
 
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+
 // IMPORT MOMENT FOR FORMAT DATE IN NICE WAY;
 import * as moment from 'moment';
+import { combineLatest, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -31,12 +38,21 @@ export class MainComponent implements OnInit {
   agencyType: any;
   basicID: any;
   selectedBasic: any;
+  uploads: any[];
+  allPercentage: Observable<unknown>;
+  mainFile: any;
+  selectedMainFile: any;
+  modalRef: BsModalRef;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private agencyService: AgencyService,
     private toast: ToastrService,
+    private db: AngularFireStorage,
+    private afs: AngularFirestore,
+    private modalService: BsModalService
+
   ) {
 
   }
@@ -47,6 +63,7 @@ export class MainComponent implements OnInit {
     this.getAgencyType();
     setTimeout(() => {
       this.getAgencyBasicData();
+      this.getAgencyFile();
     }, 1000);
     this.initForm();
     this.initOwnerForm();
@@ -98,6 +115,77 @@ export class MainComponent implements OnInit {
     });
   }
 
+  getFileFromStorage() {
+    this.mainFile = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,
+      {
+        class: 'modal-dialog-centered'
+      });
+  }
+
+  getAgencyFile() {
+    this.agencyService.commRegFileChange().subscribe(files => {
+      const find = files.find(file => file.id == this.mainFile);
+      this.selectedMainFile = find;
+      console.log(this.selectedMainFile);
+    });
+  }
+
+  logoChange(event) {
+
+    this.uploads = [];
+    const filelist = event.target.files;
+    const allPercentage: Observable<number>[] = [];
+
+    for (const file of filelist) {
+
+      const path = `agencyFile/${file.name}`;
+      const ref = this.db.ref(path);
+      const task = this.db.upload(path, file);
+      // tslint:disable-next-line:variable-name
+      const _percentage$ = task.percentageChanges();
+      allPercentage.push(_percentage$);
+
+      // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
+      const uploadTrack = {
+        fileName: file.name,
+        percentage: _percentage$
+      };
+
+      // push each upload into the array
+      this.uploads.push(uploadTrack);
+      console.log(this.uploads);
+
+      // for every upload do whatever you want in firestore with the uploaded file
+      const t = task.then((f) => {
+        return f.ref.getDownloadURL().then((url) => {
+          return this.afs.collection('agencyFile').add({
+            name: f.metadata.name,
+            // tslint:disable-next-line:object-literal-shorthand
+            url: url
+          }).then(res => {
+            sessionStorage.setItem('agencyFile', JSON.stringify(res.id));
+          });
+        });
+      });
+
+      this.allPercentage = combineLatest(allPercentage)
+        .pipe(
+          map((percentages) => {
+            let result = 0;
+            for (const percentage of percentages) {
+              result = result + percentage;
+            }
+            return result / percentages.length;
+          }),
+          tap(console.log)
+        );
+    }
+  }
+
   // callLogo() {
   //   const logoFile = JSON.parse(sessionStorage.getItem('tALogo'));
   //   const fileName = logoFile ? logoFile.newName : null;
@@ -145,6 +233,10 @@ export class MainComponent implements OnInit {
   updateAgencyBasic() {
     this.selectedBasic = this.myForm.value;
     this.selectedBasic.id = this.basicID;
+    // tslint:disable-next-line:no-unused-expression
+    if (this.selectedMainFile) {
+      this.selectedBasic.selectedMainFile = this.selectedMainFile;
+    }
     console.log(this.selectedBasic);
     this.agencyService.updateBasicAgency(this.selectedBasic);
     this.router.navigate(['/agency/license']);

@@ -141,13 +141,12 @@
                         إرفاق ملف السجل التجاري
                       </label>
                       <label class="form-control" for="commRegFile">
-                        {{comFile || 'اختر ملف'}}
+                        {{'اختر ملف'}}
                       </label>
                       <span class="form-control form-upload" class="d-none">
                         <input type="file" id="commRegFile" formControlName="$$commRegFile" accept="application/pdf"
-                          (change)="commRegFileChange($event, 'tACommRegFile')">
+                          (change)="commRegFileChange($event)">
                       </span>
-                      <span class="text-muted small"> صيغة PDF </span>
                       <span class="text-danger small"
                         *ngIf="myForm.controls['tACommRegFile'].hasError('required') && myForm.get('tACommRegFile').dirty">
                         هذا الحقل إجباري
@@ -243,22 +242,44 @@
                     <span class="d-block">شعار الوكالة</span>
                   </div>
                   <div class="file-input-mask">
-                    <input id="upload-photo" class="d-none" type="file" accept=".jpg, .jpeg, .png"
-                      formControlName="$$logoFile" (change)="logoChange($event, 'tALogo' )">
-                    <span class="text-danger small" *ngIf="myForm.controls['tALogo'].hasError('required')">
-                      هذا الحقل إجباري
-                    </span>
-                    <span class="text-danger small" *ngIf="myForm.controls['$$logoFile'].hasError('maxSize')">
-                      حد اقصي 500 كيلو بايت
-                    </span>
+                    <input id="upload-photo" class="d-none" type="file" accept=".jpg, .jpeg, .png" (change)="logoChange($event)">
+                  </div>
+                  <div *ngFor="let upload of uploads">
+                    <p> Progress: {{upload.percentage | async}}</p>
+                    <h2>{{allPercentage | async}}</h2>
                   </div>
                 </label>
                 <span class="text-muted small"> صيغة jpg,png</span>
                 <span class="p-4 d-block">
-                  <img *ngIf="logoUrl" [src]="logoUrl" alt="company logo">
+                  <img *ngIf="selectedMainFile" [src]="selectedMainFile.url" alt="company logo">
                 </span>
+
+                <a type="button" (click)="openModal(template)">
+                  <h4>
+                    شعار الوكالة
+                  </h4>
+                  <i style="width: 7rem; font-size: 2.6rem;" class="fa fa-desktop"></i>
+                </a>
+
+                <ng-template #template>
+                  <div class="modal-header">
+                    <h4 class="modal-title pull-left">
+                      شعار الوكالة
+                    </h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="column text-center" *ngIf="selectedProgramBannerFile">
+                      <p><img style="width: 100%; height: 23rem;" [src]="selectedProgramBannerFile.url" /></p>
+                    </div>
+                  </div>
+                </ng-template>
               </div>
             </div>
+
+
           </section>
 
           <hr class="my-5">
@@ -294,7 +315,33 @@
                 </tr>
               </table>
             </div>
-            <div *ngIf="!ownerList.length"
+            <div *ngIf="selectedBasic">
+              <table class="table">
+                <tr>
+                  <th> اسم المالك</th>
+                  <th>رقم الجوال</th>
+                  <th>رقم الهوية </th>
+                  <th>تعديل</th>
+                  <th>حذف</th>
+                </tr>
+                <tr *ngFor="let owner of selectedBasic.ownerList; let i = index">
+                  <td>{{owner.tAOwnerFullName}}</td>
+                  <td>{{owner.tAOwnerPhoneNo}}</td>
+                  <td>{{owner.tAOwnerNationalID}}</td>
+                  <td>
+                    <a class="table-action text-success" (click)="onRowEdit(i)">
+                      <i class="fal fa-fw fa-pencil-alt"></i>
+                    </a>
+                  </td>
+                  <td>
+                    <a class="table-action text-danger" (click)="onRowDelete(owner.tAOwnerNationalID)">
+                      <i class="fal fa-fw fa-trash-alt"></i>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div *ngIf="!ownerList.length && !selectedBasic"
               class="demo-1 align-items-center bg-light border  display-4 flex-column justify-content-center mb-5 p-5 round text-center text-muted">
               <i class="fal fa-fw fa-4x text-muted fa-users mb-4"></i>
               <p class="text-muted m-0">
