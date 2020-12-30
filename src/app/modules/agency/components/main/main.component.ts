@@ -61,6 +61,7 @@ export class MainComponent implements OnInit {
     this.getAllAgencyData();
     this.getCountries();
     this.getAgencyType();
+    this.getFileFromStorage();
     setTimeout(() => {
       this.getAgencyBasicData();
       this.getAgencyFile();
