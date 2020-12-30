@@ -86,13 +86,12 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> ملف الترخيص </label>
-                        <label class="form-control" for="minAuthFile"> {{files['tAMinTourAuthFile'] || 'اختر ملف'}}
+                        <label class="form-control" for="minAuthFile"> {{'اختر ملف'}}
                         </label>
                         <span class="form-control form-upload" class="d-none">
-                          <input type="file" accept=".pdf" id="minAuthFile"
-                            (change)="onPdfChange($event,'tAMinTourAuthFile')">
+                          <input type="file" id="minAuthFile"
+                            (change)="onPdfChange($event)">
                         </span>
-                        <span class="text-muted small"> صيغة PDF </span>
                         <span class="text-danger small"
                           *ngIf="myForm.controls['tAMinTourAuthFile'].hasError('required')">
                           Required
@@ -185,12 +184,11 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> ملف العضوية </label>
-                        <label class="form-control"> {{files['tAFTAVMemberFile'] || 'اختر ملف'}}
+                        <label class="form-control"> {{'اختر ملف'}}
                           <span class="form-control form-upload" class="d-none">
-                            <input type="file" accept=".pdf" (change)="onPdfChange($event, 'tAFTAVMemberFile')">
+                            <input type="file" (change)="onFtavChange($event)">
                           </span>
                         </label>
-                        <span class="text-muted small"> صيغة PDF </span>
                         <span class="text-danger small"
                           *ngIf="myForm.controls['tAFTAVMemberFile'].hasError('required')">
                           Required
@@ -279,16 +277,11 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label class="d-block col-form-label"> ملف العضوية </label>
-                        <label class="form-control"> {{files['tAFITTMemberFile'] || 'اختر ملف'}}
+                        <label class="form-control"> {{'اختر ملف'}}
                           <span class="form-control form-upload" class="d-none">
-                            <input type="file" accept=".pdf" (change)="onPdfChange($event, 'tAFITTMemberFile')">
+                            <input type="file" (change)="AddtunisFiles($event)">
                           </span>
                         </label>
-                        <span class="text-muted small"> صيغة PDF </span>
-                        <span class="text-danger small"
-                          *ngIf="myForm.controls['tAFITTMemberFile'].hasError('required')">
-                          Required
-                        </span>
                       </div>
                     </div>
                   </div>

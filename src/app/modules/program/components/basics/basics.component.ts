@@ -13,7 +13,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 
-@Component({
+@Component({  
   selector: 'app-basics',
   templateUrl: './basics.component.html',
   styleUrls: ['./basics.component.css']
@@ -83,7 +83,7 @@ export class BasicsComponent implements OnInit {
       console.log(res);
       const find = res.find(r => r.id == this.imageId);
       this.selectedProgramBannerFile = find;
-      console.log(this.selectedProgramBannerFile); 
+      console.log(this.selectedProgramBannerFile);
     });
   }
 

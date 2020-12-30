@@ -43,6 +43,9 @@ export class MainComponent implements OnInit {
   mainFile: any;
   selectedMainFile: any;
   modalRef: BsModalRef;
+  comRegFile: any;
+  selectedComRegFile: any;
+  comRegUploads: any[];
 
   constructor(
     private fb: FormBuilder,
@@ -61,10 +64,10 @@ export class MainComponent implements OnInit {
     this.getAllAgencyData();
     this.getCountries();
     this.getAgencyType();
-    this.getFileFromStorage();
     setTimeout(() => {
       this.getAgencyBasicData();
       this.getAgencyFile();
+      this.getComRegFile();
     }, 1000);
     this.initForm();
     this.initOwnerForm();
@@ -73,6 +76,8 @@ export class MainComponent implements OnInit {
   getAllAgencyData() {
     this.agencyData = JSON.parse(sessionStorage.getItem('agencyBasic'));
     this.basicID = JSON.parse(sessionStorage.getItem('basicID')) || {};
+    this.mainFile = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
+    this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || {};
   }
 
   getCountries() {
@@ -116,10 +121,6 @@ export class MainComponent implements OnInit {
     });
   }
 
-  getFileFromStorage() {
-    this.mainFile = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
-  }
-
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template,
       {
@@ -128,7 +129,7 @@ export class MainComponent implements OnInit {
   }
 
   getAgencyFile() {
-    this.agencyService.commRegFileChange().subscribe(files => {
+    this.agencyService.getAgencyImage().subscribe(files => {
       const find = files.find(file => file.id == this.mainFile);
       this.selectedMainFile = find;
       console.log(this.selectedMainFile);
@@ -187,6 +188,63 @@ export class MainComponent implements OnInit {
     }
   }
 
+  getComRegFile() {
+    this.agencyService.getComRegFile().subscribe(images => {
+      this.selectedComRegFile = images.find(image => image.id == this.comRegFile);
+    });
+  }
+
+  commRegFileChange(event) {
+    this.comRegUploads = [];
+    const filelist = event.target.files;
+    const allPercentage: Observable<number>[] = [];
+
+    for (const file of filelist) {
+
+      const path = `comRegFile/${file.name}`;
+      const ref = this.db.ref(path);
+      const task = this.db.upload(path, file);
+      // tslint:disable-next-line:variable-name
+      const _percentage$ = task.percentageChanges();
+      allPercentage.push(_percentage$);
+
+      // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
+      const uploadTrack = {
+        fileName: file.name,
+        percentage: _percentage$
+      };
+
+      // push each upload into the array
+      this.comRegUploads.push(uploadTrack);
+      console.log(this.uploads);
+
+      // for every upload do whatever you want in firestore with the uploaded file
+      const t = task.then((f) => {
+        return f.ref.getDownloadURL().then((url) => {
+          return this.afs.collection('comRegFile').add({
+            name: f.metadata.name,
+            // tslint:disable-next-line:object-literal-shorthand
+            url: url
+          }).then(res => {
+            sessionStorage.setItem('comRegFile', JSON.stringify(res.id));
+          });
+        });
+      });
+
+      this.allPercentage = combineLatest(allPercentage)
+        .pipe(
+          map((percentages) => {
+            let result = 0;
+            for (const percentage of percentages) {
+              result = result + percentage;
+            }
+            return result / percentages.length;
+          }),
+          tap(console.log)
+        );
+    }
+  }
+
   // callLogo() {
   //   const logoFile = JSON.parse(sessionStorage.getItem('tALogo'));
   //   const fileName = logoFile ? logoFile.newName : null;
@@ -218,9 +276,8 @@ export class MainComponent implements OnInit {
 
     const payload = this.myForm.value;
     payload.ownerList = this.ownerList;
-    payload.tACommRegIssueDate = moment(payload.tACommRegIssueDate).format('DD/MM/YYYY');
-    payload.tACommRegExpiryDate = moment(payload.tACommRegExpiryDate).format('DD/MM/YYYY');
-
+    payload.tACommRegIssueDate = moment(payload.tACommRegIssueDate).format('MM/DD/YYYY');
+    payload.tACommRegExpiryDate = moment(payload.tACommRegExpiryDate).format('MM/DD/YYYY');
     this.agencyService.addAgency(payload)
       .subscribe((response: any) => {
         if (response) {
@@ -237,6 +294,9 @@ export class MainComponent implements OnInit {
     // tslint:disable-next-line:no-unused-expression
     if (this.selectedMainFile) {
       this.selectedBasic.selectedMainFile = this.selectedMainFile;
+    }
+    if (this.selectedComRegFile) {
+      this.selectedBasic.selectedComRegFile = this.selectedComRegFile;
     }
     console.log(this.selectedBasic);
     this.agencyService.updateBasicAgency(this.selectedBasic);

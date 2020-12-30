@@ -135,23 +135,47 @@
                       </span>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-5">
                     <div class="form-group ">
                       <label class="d-block col-form-label">
-                        إرفاق ملف السجل التجاري
+                        إرفاق صورة السجل التجاري
                       </label>
                       <label class="form-control" for="commRegFile">
-                        {{'اختر ملف'}}
+                        {{'اختر ملف' || selectedComRegFile.name}}
                       </label>
                       <span class="form-control form-upload" class="d-none">
-                        <input type="file" id="commRegFile" formControlName="$$commRegFile" accept="application/pdf"
-                          (change)="commRegFileChange($event)">
+                        <input type="file" id="commRegFile" (change)="commRegFileChange($event)">
                       </span>
+                      
                       <span class="text-danger small"
                         *ngIf="myForm.controls['tACommRegFile'].hasError('required') && myForm.get('tACommRegFile').dirty">
                         هذا الحقل إجباري
                       </span>
+                      <div *ngFor="let upload of comRegUploads">
+                        <p> Progress: {{upload.percentage | async}}</p>
+                      </div>
                     </div>
+                  </div>
+                  <div class="col-md-1">
+
+                    <a type="button" (click)="openModal(template)">
+                      <i style="width: 7rem; font-size: 2.6rem;" class="fa fa-desktop comfile"></i>
+                    </a>
+
+                    <ng-template #template>
+                      <div class="modal-header">
+                        <h4 class="modal-title pull-left">
+                        </h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="column text-center" *ngIf="selectedComRegFile">
+                          <img [src]="selectedComRegFile.url" alt="company logo">
+                        </div>
+                      </div>
+                    </ng-template>
                   </div>
                 </div>
 

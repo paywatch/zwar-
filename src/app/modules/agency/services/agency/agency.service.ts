@@ -35,6 +35,14 @@ export class AgencyService {
   confirmDoc: AngularFirestoreDocument<any>;
   agencyFiles: Observable<any[]>;
   agencyFilesCollection: AngularFirestoreCollection<any>;
+  agencyComRegFile: Observable<any[]>;
+  agencyComRegFileCollection: AngularFirestoreCollection<any>;
+  agencyTourismFile: Observable<any[]>;
+  agencyTourismFileCollection: AngularFirestoreCollection<any>;
+  agencyFtavFile: Observable<any[]>;
+  agencyFtavFileCollection: AngularFirestoreCollection<unknown>;
+  agencyTunisFile: Observable<any[]>;
+  agencyTunisFileCollection: AngularFirestoreCollection<unknown>;
 
 
   constructor(
@@ -50,10 +58,13 @@ export class AgencyService {
     this.branchCollection = this.afs.collection('branch');
     this.confirmationCollection = this.afs.collection('confirm');
     this.agencyFilesCollection = this.afs.collection('agencyFile');
+    this.agencyComRegFileCollection = this.afs.collection('comRegFile');
+    this.agencyTourismFileCollection = this.afs.collection('tourismFiles');
+    this.agencyFtavFileCollection = this.afs.collection('FtavFiles');
+    this.agencyTunisFileCollection = this.afs.collection('tunisFiles');
   }
 
-
-  commRegFileChange() {
+  getAgencyImage() {
     return this.agencyFiles = this.afs.collection('agencyFile').snapshotChanges().pipe(
       map(changes => {
         return changes.map((a: any) => {
@@ -63,6 +74,58 @@ export class AgencyService {
         });
       })
     );
+  }
+
+  getComRegFile() {
+    return this.agencyComRegFile = this.afs.collection('comRegFile').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
+  }
+
+  getTourismFile() {
+    return this.agencyTourismFile = this.afs.collection('tourismFiles').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
+  }
+
+  getFtavFile() {
+    return this.agencyFtavFile = this.afs.collection('FtavFiles').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
+  }
+
+  getTunisFile() {
+    return this.agencyTunisFile = this.afs.collection('tunisFiles').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getAllCountries() {
