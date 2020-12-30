@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Program } from '../../models/program';
 import { ProgramService } from '../../services/program.service';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @Component({
   selector: 'app-edit',
@@ -11,7 +11,10 @@ import { ProgramService } from '../../services/program.service';
 export class EditComponent implements OnInit {
 
   programs: Program[];
-
+  page = 1;
+  pageSize = 5;
+  // tslint:disable-next-line:ban-types
+  totalRec: any;
   constructor(private programService: ProgramService) { }
 
   ngOnInit(): void {
@@ -26,6 +29,7 @@ export class EditComponent implements OnInit {
       if (res) {
         this.programs = res;
         console.log(this.programs);
+        this.totalRec = res.length;
       }
       else {
         this.programs = [];

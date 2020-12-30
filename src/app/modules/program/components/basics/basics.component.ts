@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-
 import { ProgramService } from '../../services/program.service';
 import { map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
@@ -13,7 +12,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 
-@Component({  
+@Component({
   selector: 'app-basics',
   templateUrl: './basics.component.html',
   styleUrls: ['./basics.component.css']

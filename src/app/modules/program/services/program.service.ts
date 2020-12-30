@@ -6,8 +6,6 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 
 import { UtilsService } from '../../core/services/utils/utils.service';
 import { Program } from '../models/program';
-import { resolve } from 'dns';
-import { threadId } from 'worker_threads';
 
 
 @Injectable()

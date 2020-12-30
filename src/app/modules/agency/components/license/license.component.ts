@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,8 @@ import { combineLatest, Observable } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { map, tap } from 'rxjs/operators';
-import { setEmitFlags } from 'typescript';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-license',
@@ -38,6 +39,8 @@ export class LicenseComponent implements OnInit {
   tunisUploads: any[];
   selectedTunisFile: any;
   tunisFilesID: any;
+  modalRef: BsModalRef;
+
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +48,7 @@ export class LicenseComponent implements OnInit {
     private agencyService: AgencyService,
     private toast: ToastrService,
     private afs: AngularFirestore,
+    private modalService: BsModalService,
     private db: AngularFireStorage,
   ) { }
 
@@ -61,6 +65,13 @@ export class LicenseComponent implements OnInit {
     this.changeMinTourAuth();
     this.changeFTAVMember();
     this.changeFITTMember();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,
+      {
+        class: 'modal-dialog-centered'
+      });
   }
 
   getSessionData() {

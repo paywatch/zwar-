@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouteReuseStrategy } from '@angular/router';
-import { LOADIPHLPAPI } from 'dns';
-import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 import { ProgramService } from '../../services/program.service';
 
 @Component({

@@ -6,7 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Password } from '../../../../_helpers/password.validator';
 import { MustMatch } from '../../../../_helpers/must-match.validator';
 import { AgencyService } from '../../services/agency/agency.service';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-register',

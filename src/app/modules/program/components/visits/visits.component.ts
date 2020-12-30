@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProgramService } from '../../services/program.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { threadId } from 'worker_threads';
 
 @Component({
-  selector: 'app-visits',
+  selector: 'app-visits',  
   templateUrl: './visits.component.html',
   styleUrls: ['./visits.component.css']
 })
