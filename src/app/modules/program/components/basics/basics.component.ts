@@ -78,10 +78,10 @@ export class BasicsComponent implements OnInit {
   }
 
   getSpecifieImage() {
+    console.log(this.imageId);
     this.programService.getFileFromStorage().subscribe(res => {
-      console.log(res);
-      const find = res.find(r => r.id == this.imageId);
-      this.selectedProgramBannerFile = find;
+      this.imageId = this.imageId.map(m => res.find(r => r.id == m));
+      this.selectedProgramBannerFile = this.imageId;
       console.log(this.selectedProgramBannerFile);
     });
   }
@@ -127,7 +127,10 @@ export class BasicsComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            sessionStorage.setItem('programBannerID', JSON.stringify(res.id));
+            let files = JSON.parse(sessionStorage.getItem('programBannerID'));
+            files = files ? files : [];
+            files.push(res.id);
+            sessionStorage.setItem('programBannerID', JSON.stringify(files));
           });
         });
       });

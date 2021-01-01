@@ -6,8 +6,8 @@
 				<li class="breadcrumb-item"><a [routerLink]="['/profile/programs']">برامج العمرة </a></li>
 			</ol>
 		</nav>
-		<div class="table-responsive" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000"
-			data-aos-delay="100">
+		<div class="table-responsive" *ngIf="programs && programs.length" data-aos="fade-up" data-aos-offset="100"
+			data-aos-duration="1000" data-aos-delay="100">
 			<table class="table  table-bordered table-light table-striped">
 				<thead class="bg-secondary">
 					<tr>
@@ -21,7 +21,7 @@
 						<th>حذف</th>
 					</tr>
 				</thead>
-				<tr *ngFor="let program of programs">
+				<tr *ngFor="let program of programs | paginate: { itemsPerPage: 3, currentPage: page}">
 					<td>{{program.programName}}</td>
 					<td>{{program.programPrice}}</td>
 					<td>{{program.programUmrahYear}}</td>
@@ -44,6 +44,7 @@
 					</td>
 				</tr>
 			</table>
+			<pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
 		</div>
 	</div>
 </div>

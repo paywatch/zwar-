@@ -12,6 +12,7 @@ import { AgencyService } from '../../services/agency/agency.service';
 export class EditComponent implements OnInit {
 
   agencies: any;
+  page;
 
   constructor(
     private router: Router,

@@ -21,7 +21,7 @@
             <th>حذف</th>
           </tr>
         </thead>
-        <tr *ngFor="let package of packages">
+        <tr *ngFor="let package of packages | paginate: { itemsPerPage: 3, currentPage: page}">
           <td>{{package.airportNAme}}</td>
           <td>{{package.umrahSeasonName}}</td>
           <td>{{package.packageDirectionName}}</td>
@@ -44,6 +44,7 @@
           </td>
         </tr>
       </table>
+			<pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
     </div>
     <div class="row">
       <div class="col-xs-12 col-12">

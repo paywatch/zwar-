@@ -11,8 +11,7 @@ export class EditComponent implements OnInit {
 
   packages: any[];
 
-  // totalItems = 64;
-  // currentPage = 4;
+  page = 1;
 
   constructor(
     private router: Router,

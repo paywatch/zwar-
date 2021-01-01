@@ -21,7 +21,7 @@
             <th>حذف</th>
           </tr>
         </thead>
-        <tr *ngFor="let agency of agencies">
+        <tr *ngFor="let agency of agencies |  paginate: { itemsPerPage: 2, currentPage: page}">
           <td>{{agency.tAName}}</td>
           <td>{{agency.tAWebsite}}</td>
           <td>{{agency.tACommeRegNo}}</td>
@@ -44,6 +44,7 @@
           </td>
         </tr>
       </table>
+			<pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
     </div>
   </div>
 </div>

@@ -19,7 +19,6 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -32,7 +31,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     DialogModule,
     TableModule,
-    ConfirmDialogModule,
+    ConfirmDialogModule, 
     AngularFirestoreModule,
     AngularFireAuthModule,
     ModalModule.forRoot(),
@@ -40,7 +39,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AngularFireModule.initializeApp(environment.firebase, 'zowar'),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    NgxPaginationModule,
     CoreModule
   ],
   providers: [],
