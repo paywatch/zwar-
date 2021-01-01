@@ -158,8 +158,10 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class="column text-center" *ngIf="matwafImage">
-                      <p><img style="width: 100%; height: 23rem;" [src]="matwafImage.url" /></p>
+                    <div class="row justify-content-center" *ngIf="matwafImage">
+                      <div *ngFor="let item of matwafImage">
+                        <p><img width="100" height="100" [src]="item.url" class="mr-3"/></p>
+                      </div>
                     </div>
                   </div>
                 </ng-template>

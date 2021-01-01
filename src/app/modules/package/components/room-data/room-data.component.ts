@@ -14,7 +14,7 @@ export class RoomDataComponent implements OnInit {
   roomForm: FormGroup;
   basics: any;
   roomType: any;
-  rooms: any[] = [];
+  rooms: any[];
   payload: any;
   roomData: any;
   roomID: string;
@@ -29,13 +29,13 @@ export class RoomDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    setTimeout(() => {
-      this.getRoomType();
-    }, 2000);
     this.getSessionStorageData();
     setTimeout(() => {
       this.getPackageRoom();
     }, 1000);
+    setTimeout(() => {
+      this.getRoomType();
+    }, 2000);
   }
 
   initForm() {
@@ -51,11 +51,12 @@ export class RoomDataComponent implements OnInit {
   getRoomType() {
     this.packageService.getRoomType().subscribe(roomType => {
       this.roomType = roomType;
-      console.log(this.rooms);
+      this.rooms = this.rooms ? this.rooms : [];
       this.rooms = this.rooms.map(r => {
         r.roomName = roomType.find(t => t.id == r.roomTypeID).name;
         return r;
       });
+      console.log(this.rooms);
     });
   }
 

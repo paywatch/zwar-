@@ -86,9 +86,8 @@ export class ResidentialComponent implements OnInit {
 
   getSpecifieImage() {
     this.programservice.getMeccaFileFromStorage().subscribe(res => {
-      console.log(res);
-      const find = res.find(r => r.id == this.MeccaImageID);
-      this.selectedMeccaFile = find;
+      this.MeccaImageID = this.MeccaImageID.map(m => res.find(r => r.id == m));
+      this.selectedMeccaFile = this.MeccaImageID;
       console.log(this.selectedMeccaFile);
     });
   }
@@ -126,7 +125,10 @@ export class ResidentialComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            sessionStorage.setItem('MeccaImageID', JSON.stringify(res.id));
+            let files = JSON.parse(sessionStorage.getItem('MeccaImageID'));
+            files = files ? files : [];
+            files.push(res.id);
+            sessionStorage.setItem('MeccaImageID', JSON.stringify(files));
           });
         });
       });
@@ -148,9 +150,8 @@ export class ResidentialComponent implements OnInit {
 
   getMadinaSpecifieImage() {
     this.programservice.getMadinaFileFromStorage().subscribe(res => {
-      console.log(res);
-      const find = res.find(r => r.id == this.MadinaImageID);
-      this.selectedMadinaFile = find;
+      this.MadinaImageID = this.MadinaImageID.map(m => res.find(r => r.id == m));
+      this.selectedMadinaFile = this.MadinaImageID;
       console.log(this.selectedMeccaFile);
     });
   }
@@ -188,7 +189,10 @@ export class ResidentialComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            sessionStorage.setItem('MadinaImageID', JSON.stringify(res.id));
+            let files = JSON.parse(sessionStorage.getItem('MadinaImageID'));
+            files = files ? files : [];
+            files.push(res.id);
+            sessionStorage.setItem('MadinaImageID', JSON.stringify(files));
           });
         });
       });

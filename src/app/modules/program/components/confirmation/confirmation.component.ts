@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProgramService } from '../../services/program.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-confirmation',
@@ -15,11 +16,14 @@ export class ConfirmationComponent implements OnInit {
   visit: any;
   residance: any;
   program: any;
+  modalRef: BsModalRef;
 
 
   constructor(
     private router: Router,
-    private programService: ProgramService) { }
+    private programService: ProgramService,
+    private modalService: BsModalService,
+    ) { }
 
   ngOnInit(): void {
     this.collectAllData();
@@ -42,6 +46,14 @@ export class ConfirmationComponent implements OnInit {
       ...this.transportation,
       ...this.visit
     };
+    console.log(this.program);
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,
+      {
+        class: 'modal-dialog-centered'
+      });
   }
 
   getAllCategory() {

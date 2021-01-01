@@ -100,9 +100,11 @@ export class GroupComponent implements OnInit {
 
   getMatwafImage() {
     this.packageService.getMatwafFileFromStorage().subscribe(image => {
-      const find = image.find(i => i.id == this.MatwafImageID);
-      this.matwafImage = find;
-      console.log(this.matwafImage);
+      if (this.MatwafImageID) {
+        this.MatwafImageID = this.MatwafImageID.map(m => image.find(i => i.id == m));
+        this.matwafImage = this.MatwafImageID;
+        console.log(this.matwafImage);
+      }
     });
   }
 
@@ -139,7 +141,10 @@ export class GroupComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            sessionStorage.setItem('MatwafImage', JSON.stringify(res.id));
+            let files = JSON.parse(sessionStorage.getItem('MatwafImage'));
+            files = files ? files : [];
+            files.push(res.id);
+            sessionStorage.setItem('MatwafImage', JSON.stringify(files));
           });
         });
       });

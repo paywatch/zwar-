@@ -169,7 +169,10 @@ export class MainComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            sessionStorage.setItem('agencyFile', JSON.stringify(res.id));
+            let files = JSON.parse(sessionStorage.getItem('agencyFile'));
+            files = files ? files : [];
+            files.push(files);
+            sessionStorage.setItem('agencyFile', JSON.stringify(files));
           });
         });
       });
@@ -226,7 +229,10 @@ export class MainComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            sessionStorage.setItem('comRegFile', JSON.stringify(res.id));
+            let files = JSON.parse(sessionStorage.getItem('comRegFile'));
+            files = files ? files : [];
+            files.push(res.id);
+            sessionStorage.setItem('comRegFile', JSON.stringify(files));
           });
         });
       });

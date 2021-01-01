@@ -100,8 +100,8 @@ export class BaseComponent implements OnInit {
 
   createPackage() {
     const payload = this.baseForm.value;
-    payload.packageDepartureDate = moment(payload.packageDepartureDate).format('DD/MM/YYYY');
-    payload.packageReturnDate = moment(payload.packageReturnDate).format('DD/MM/YYYY');
+    payload.packageDepartureDate = moment(payload.packageDepartureDate).format('MM/DD/YYYY');
+    payload.packageReturnDate = moment(payload.packageReturnDate).format('MM/DD/YYYY');
     this.packageService.createPackage(payload)
       .subscribe((res) => {
         if (res) {
