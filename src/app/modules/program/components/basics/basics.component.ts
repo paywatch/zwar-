@@ -80,7 +80,6 @@ export class BasicsComponent implements OnInit {
     this.programService.getFileFromStorage().subscribe(res => {
       this.imageId = this.imageId.map(m => res.find(r => r.id == m));
       this.selectedProgramBannerFile = this.imageId;
-      console.log(this.selectedProgramBannerFile);
     });
   }
 
@@ -192,7 +191,9 @@ export class BasicsComponent implements OnInit {
     const id = this.selectedBasic.id;
     this.selectedBasic = this.basicsForm.value;
     this.selectedBasic.id = id;
-    this.selectedBasic.programUrl = this.selectedProgramBannerFile;
+    if (this.selectedProgramBannerFile && this.selectedProgramBannerFile !== undefined) {
+      this.selectedBasic.programUrl = this.selectedProgramBannerFile;
+    }
     console.log(this.selectedBasic);
     this.programService.updateBasicData(this.selectedBasic);
     this.router.navigate(['/program/residential']);
@@ -202,5 +203,4 @@ export class BasicsComponent implements OnInit {
   deleteBasic() {
     this.programService.deleteBasic(this.selectedBasic);
   }
-
 }

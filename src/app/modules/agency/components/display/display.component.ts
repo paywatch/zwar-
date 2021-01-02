@@ -133,9 +133,9 @@ export class DisplayComponent implements OnInit {
         this.toast.success('Added Successfullty');
         sessionStorage.removeItem('agencyBasic');
         sessionStorage.removeItem('basicID');
-        sessionStorage.removeItem('licence');
+        sessionStorage.removeItem('license');
         sessionStorage.removeItem('licenseID');
-        sessionStorage.removeItem('branches');
+        sessionStorage.removeItem('branch');
         sessionStorage.removeItem('branchID');
         sessionStorage.removeItem('register');
       }
