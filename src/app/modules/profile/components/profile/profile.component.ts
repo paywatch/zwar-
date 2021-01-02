@@ -11,7 +11,7 @@ import { AgencyService } from 'src/app/modules/agency/services/agency/agency.ser
 export class ProfileComponent implements OnInit {
 
   agency: any;
-  companyLogo: string;
+  companyLogo: any;
   comRegFile: string;
   modalRef: BsModalRef;
   modalTourismRef: BsModalRef;
@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
 
   getSessionStorageData() {
     this.companyLogo = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
+    console.log(this.companyLogo);
     this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || {};
     this.tourismFile = JSON.parse(sessionStorage.getItem('tourismFiles')) || {};
     this.FtavFiles = JSON.parse(sessionStorage.getItem('FtavFiles')) || {};
@@ -55,8 +56,8 @@ export class ProfileComponent implements OnInit {
 
   getCompanyLogo() {
     this.agencyService.getAgencyImage().subscribe(images => {
-      const find = images.find(image => image.id == this.companyLogo);
-      this.agency.companyLogo = find;
+      this.companyLogo = this.companyLogo.map(logo => images.find(image => image.id == logo));
+      this.agency.companyLogo = this.companyLogo;
     });
   }
 

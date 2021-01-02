@@ -4,6 +4,7 @@
     <a [routerLink]="['/profile/programs']">برامج العمرة</a>
     <a [routerLink]="['/agency/request-list']">وكالات السفر</a>
     <a [routerLink]="['/package/edit']">الباقات</a>
+    <a (click)="logOut()">تسجيل خروج</a>
   </div>
   <div class="d-sm-block d-md-none">
     <span style="font-size:30px;" class="ml-5 d-flex justify-content-end" (click)="openNav()">&#9776;</span>

@@ -131,15 +131,13 @@ export class DisplayComponent implements OnInit {
       if (res) {
         this.router.navigate(['agency/edit']);
         this.toast.success('Added Successfullty');
-        sessionStorage.removeItem('licence');
-        sessionStorage.removeItem('branches');
         sessionStorage.removeItem('agencyBasic');
+        sessionStorage.removeItem('basicID');
+        sessionStorage.removeItem('licence');
         sessionStorage.removeItem('licenseID');
+        sessionStorage.removeItem('branches');
         sessionStorage.removeItem('branchID');
-        sessionStorage.removeItem('confirm');
-        sessionStorage.getItem('basicID');
-        sessionStorage.removeItem('comRegFile');
-        sessionStorage.getItem('agencyFile');
+        sessionStorage.removeItem('register');
       }
       else {
         this.toast.error('Something Went Wrong');
