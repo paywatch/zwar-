@@ -90,8 +90,8 @@
                 <div class="col-md-6">
                   <div class="form-group ">
                     <label class="d-block col-form-label"> ارفاق ملف السجل التجاري </label>
-                    <a class="underline p-1 d-inline-block" [href]="agency.regFileUrl">
-                      {{agency.tacommRegFile}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.comRegFile?.url">
+                      {{agency.comRegFile?.name}}
                     </a>
                   </div>
                 </div>
@@ -122,7 +122,7 @@
             <div class="col-lg-3 col-md-4 mb-5 offset-lg-1">
               <div class="bg-white border flag-info overflow-hidden py-5 round">
                 <span class="p-4 d-block">
-                  <img [src]="agency.logoUrl" alt="company logo">
+                  <img [src]="agency.companyLogo?.url" alt="company logo">
                 </span>
               </div>
             </div>
@@ -163,8 +163,9 @@
                 <div class="col-md-6">
                   <div class="form-group ">
                     <label class="d-block col-form-label"> ملف الترخيص </label>
-                    <a class="underline p-1 d-inline-block" [href]="agency?.tblTAAuthMembership?.tAMinTourAuthFileUrl">
-                      {{agency?.tblTAAuthMembership?.tAMinTourAuthFile}} </a>
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.tourismFile?.url">
+                      {{agency?.tourismFile?.name}}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -198,8 +199,8 @@
                 <div class="col-md-6">
                   <div class="form-group ">
                     <label class="d-block col-form-label"> ملف العضوية </label>
-                    <a class="underline p-1 d-inline-block" [href]="agency?.tAFTAVMemberFileUrl">
-                      {{agency?.tblTAAuthMembership?.tAFTAVMemberFile}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.FtavFiles?.url">
+                      {{agency.FtavFiles?.name}}
                     </a>
                   </div>
                 </div>
@@ -234,8 +235,8 @@
                 <div class="col-md-6">
                   <div class="form-group ">
                     <label class="d-block col-form-label"> ملف العضوية </label>
-                    <a class="underline p-1 d-inline-block" [href]="agency?.tAFITTMemberFileUrl">
-                      {{agency?.tblTAAuthMembership?.tAFITTMemberFile}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.tunisFiles?.url">
+                      {{agency.tunisFiles?.name}}
                     </a>
                   </div>
                 </div>

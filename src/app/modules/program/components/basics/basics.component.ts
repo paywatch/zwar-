@@ -74,11 +74,9 @@ export class BasicsComponent implements OnInit {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
     this.basicID = JSON.parse(sessionStorage.getItem('basicID'));
     this.imageId = JSON.parse(sessionStorage.getItem('programBannerID')) || {};
-    console.log(this.imageId);
   }
 
   getSpecifieImage() {
-    console.log(this.imageId);
     this.programService.getFileFromStorage().subscribe(res => {
       this.imageId = this.imageId.map(m => res.find(r => r.id == m));
       this.selectedProgramBannerFile = this.imageId;

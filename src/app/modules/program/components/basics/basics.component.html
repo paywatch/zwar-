@@ -188,9 +188,7 @@
               <input type="file" multiple class="gallery-photo-add" (change)="programBanner($event)">
               <div class="upload-gallery full">
                 <div *ngFor="let upload of uploads">
-                  <h3>Upload of {{upload.fileName}}</h3>
-                  <p> Progress: {{upload.percentage | async}}</p>
-                  <h2>{{allPercentage | async}}</h2>
+                  <h2 class="mr-2">{{allPercentage | async}}</h2>
                 </div>
               </div>  
             </div>
@@ -210,7 +208,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <div *ngIf="selectedProgramBannerFile" class="row">
+                <div *ngIf="selectedProgramBannerFile" class="row justify-content-center">
                   <div *ngFor="let item of selectedProgramBannerFile">
                     <p><img [src]="item.url" width="100" height="100" class="mr-4"/></p>
                   </div>

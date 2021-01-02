@@ -87,9 +87,9 @@
           class="demo-1 align-items-center bg-light border  display-4 flex-column justify-content-center mb-5 p-5 round text-center text-muted">
           <i class="fal fa-fw fa-4x text-muted fa-users mb-4"></i>
           <p class="text-muted m-0" *ngIf="!selectedPackages">
-            لم تقم باضفـــــة برامج بعد
-            <a class="d-inline-block border-bottom" data-toggle="modal" data-target="#addbranch">
-              اضافة برنامج جديد ؟
+            لم تقم باضافـــــة باقة بعد
+            <a class="d-inline-block border-bottom" data-toggle="modal" data-target="#addbranch" [routerLink]="['/package/base',programId]">
+              اضافة باقة جديده ؟
             </a>
           </p>
         </div>
@@ -110,7 +110,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let package of packagesList$">
+                <tr *ngFor="let package of packagesList$ |  paginate: { itemsPerPage: 4, currentPage: page}">
                   <td scope="row"> {{package.id}} </td>
                   <td>{{package.airportName}}</td>
                   <td>{{package.packageDepartureDate}}</td>
@@ -127,6 +127,7 @@
                 </tr>
               </tbody>
             </table>
+            <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
           </div>
         </div>
       </div>

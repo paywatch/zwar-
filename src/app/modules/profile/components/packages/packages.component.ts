@@ -21,6 +21,7 @@ export class PackagesComponent implements OnInit {
   packageTravelDate: any;
   packageReturnedDate: any;
   packageSearchResult: any;
+  page = 1;
 
   constructor(
     private router: Router,

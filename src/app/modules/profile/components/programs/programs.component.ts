@@ -18,6 +18,7 @@ export class ProgramsComponent implements OnInit {
   programYear: any;
   programSeason: any;
   searchResult: any;
+  page = 1;
 
   constructor(
     private programService: ProgramService,

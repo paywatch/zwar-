@@ -121,7 +121,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let program of programsList$">
+                  <tr *ngFor="let program of programsList$ |  paginate: { itemsPerPage: 4, currentPage: page}">
                     <td> {{program.programId}} </td>
                     <td> {{program.programName}} </td>
                     <td> {{program.categoryName}} </td>
@@ -150,6 +150,7 @@
                   </tr>
                 </tbody>
               </table>
+              <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
             </div>
           </div>
         </div>

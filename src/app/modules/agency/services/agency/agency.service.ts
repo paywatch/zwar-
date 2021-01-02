@@ -40,10 +40,9 @@ export class AgencyService {
   agencyTourismFile: Observable<any[]>;
   agencyTourismFileCollection: AngularFirestoreCollection<any>;
   agencyFtavFile: Observable<any[]>;
-  agencyFtavFileCollection: AngularFirestoreCollection<unknown>;
+  agencyFtavFileCollection: AngularFirestoreCollection<any>;
   agencyTunisFile: Observable<any[]>;
-  agencyTunisFileCollection: AngularFirestoreCollection<unknown>;
-
+  agencyTunisFileCollection: AngularFirestoreCollection<any>;
 
   constructor(
     private http: HttpClient,
@@ -261,21 +260,29 @@ export class AgencyService {
   updateAgencyData(item) {
     this.registerDoc = this.afs.doc(`agency/${item.id}`);
     this.registerDoc.update(item);
+    sessionStorage.removeItem('agency');
+    sessionStorage.setItem('agency', JSON.stringify(item));
   }
 
   updateBasicAgency(item) {
     this.agencyDoc = this.afs.doc(`register/${item.id}`);
     this.agencyDoc.update(item);
+    sessionStorage.removeItem('register');
+    sessionStorage.setItem('register', JSON.stringify(item));
   }
 
   updateLicenseData(item) {
     this.licenseDoc = this.afs.doc(`license/${item.id}`);
     this.licenseDoc.update(item);
+    sessionStorage.removeItem('license');
+    sessionStorage.setItem('license', JSON.stringify(item));
   }
 
   updateBranchData(item) {
     this.branchDoc = this.afs.doc(`branch/${item.id}`);
     this.branchDoc.update(item);
+    sessionStorage.removeItem('branch');
+    sessionStorage.setItem('branch', JSON.stringify(item));
   }
 
   updateAgency(agency) {

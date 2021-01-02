@@ -83,8 +83,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="d-block col-form-label"> ارفاق ملف السجل التجاري </label>
-                    <a class="underline p-1 d-inline-block" [href]="commRegFile?.url" target="_blank">
-                      {{commRegFile?.name}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.comRegFile?.url">
+                      {{agency.comRegFile?.name}}
                     </a>
                   </div>
                 </div>
@@ -113,9 +113,30 @@
               </div>
             </div>
             <div class="col-lg-3 col-md-4 mb-5 offset-lg-1">
-              <div class="bg-white border flag-info overflow-hidden py-5 round">
+              <div class="bg-white flag-info overflow-hidden py-5 round">
                 <span class="p-4 d-block">
-                  <img class="" [src]="logoUrl" alt="company logo">
+
+                  <a type="button" (click)="openModal(template)">
+                    <h4>
+                      شعار الوكالة
+                    </h4>
+                    <i style="width: 7rem; font-size: 2.6rem;" class="fa fa-desktop"></i>
+                  </a>
+
+                  <ng-template #template>
+                    <div class="modal-header">
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row justify-content-center" *ngIf="agency.companyLogo">
+                        <div *ngFor="let items of agency.companyLogo">
+                          <img [src]="items?.url" alt="company logo" width="100" height="100" class="mr-2">
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
                 </span>
               </div>
             </div>
@@ -157,10 +178,10 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group" *ngIf="tAMinTourAuthFile">
+                  <div class="form-group" *ngIf="agency?.tourismFile">
                     <label class="d-block col-form-label"> ملف الترخيص </label>
-                    <a class="underline p-1 d-inline-block" [href]="tAMinTourAuthFile.url" target="_blank">
-                      {{tAMinTourAuthFile.name}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.tourismFile?.url">
+                      {{agency?.tourismFile?.name}}
                     </a>
                   </div>
                 </div>
@@ -198,10 +219,10 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group" *ngIf="tAFTAVMemberFile">
+                  <div class="form-group" *ngIf="agency?.FtavFiles">
                     <label class="d-block col-form-label"> ملف العضوية </label>
-                    <a class="underline p-1 d-inline-block" [href]="tAFTAVMemberFile?.url" target="_blank">
-                      {{tAFTAVMemberFile?.name}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.FtavFiles?.url">
+                      {{agency?.FtavFiles?.name}}
                     </a>
                   </div>
                 </div>
@@ -316,8 +337,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  style="cursor: pointer;">
+                <tr style="cursor: pointer;">
                   <td>{{agency.tABranchName}}</td>
                   <td>{{agency?.tADistrictID}}</td>
                   <td>{{agency.tABranchAddress}}</td>
@@ -339,25 +359,26 @@
 
 
         <section class="bg-light  mx-n4 p-4 px-4 mt-5">
-					<div class="custom-control custom-checkbox mr-sm-2 mb-3">
-						<input type="checkbox" [(ngModel)]="responsablity" class="custom-control-input" id="xx">
-						<label class="custom-control-label" for="xx">
-							اقر بمسوؤليتي عن صحة البيانات السابقة والتي تتوافق مع البيانات المسجلة حكوميا
-						</label>
-					</div>
-					<div class="custom-control custom-checkbox mr-sm-2">
-						<input type="checkbox" [(ngModel)]="terms" class="custom-control-input" id="ss">
-						<label class="custom-control-label" for="ss">
-							اقر بالموافقة على الشروط والاحكام الخاصة بتسجيل الوكالة بعد قراءتها
-						</label>
-					</div>
-				</section>
+          <div class="custom-control custom-checkbox mr-sm-2 mb-3">
+            <input type="checkbox" [(ngModel)]="responsablity" class="custom-control-input" id="xx">
+            <label class="custom-control-label" for="xx">
+              اقر بمسوؤليتي عن صحة البيانات السابقة والتي تتوافق مع البيانات المسجلة حكوميا
+            </label>
+          </div>
+          <div class="custom-control custom-checkbox mr-sm-2">
+            <input type="checkbox" [(ngModel)]="terms" class="custom-control-input" id="ss">
+            <label class="custom-control-label" for="ss">
+              اقر بالموافقة على الشروط والاحكام الخاصة بتسجيل الوكالة بعد قراءتها
+            </label>
+          </div>
+        </section>
 
         <div class="btn-group">
           <a routerLink="/" class="btn btn-default px-0"> الغاء التسجيل</a>
           <div>
             <a routerLink="/agency/branches" class="btn btn-outline-primary ml-3">السابق</a>
-            <button class="btn btn-primary ml-3" [disabled]="!terms || !responsablity" (click)="confirm()">تأكيد</button>
+            <button class="btn btn-primary ml-3" [disabled]="!terms || !responsablity"
+              (click)="confirm()">تأكيد</button>
           </div>
         </div>
       </div>
