@@ -43,4 +43,12 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('user');
     this.router.navigate(['/auth/login']);
   }
+
+  openNav() {
+    document.getElementById("mySidenav").style.width = "100%";
+  }
+
+  closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
 }

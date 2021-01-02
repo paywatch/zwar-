@@ -1,10 +1,20 @@
 <header class="header">
+  <div id="mySidenav" class="sidenav column">
+    <a class="closebtn" (click)="closeNav()">&times;</a>
+    <a [routerLink]="['/profile/programs']">برامج العمرة</a>
+    <a [routerLink]="['/agency/request-list']">وكالات السفر</a>
+    <a [routerLink]="['/package/edit']">الباقات</a>
+  </div>
+  <div class="d-sm-block d-md-none">
+    <span style="font-size:30px;" class="ml-5 d-flex justify-content-end" (click)="openNav()">&#9776;</span>
+  </div>
   <div class="container ">
-    <button class="con navbar-toggle" type="button">
+    <!-- <button class="con navbar-toggle" type="button">
       <div class="bar top"></div>
       <div class="bar middle"></div>
       <div class="bar bottom"></div>
-    </button>
+    </button> -->
+
     <div class="d-flex header-inner ">
       <a class="logo" routerLink="/">
         <h1 class="d-none"> زوار </h1>
@@ -12,18 +22,18 @@
       </a>
       <div class="main-nav py-4">
         <ul class="d-flex top-nav  p-0 m-0">
-            <li *ngIf="isLoggedIn">
-              <a routerLink="/profile" class="d-block mr-3 ">
-                <i class="fal fa-fw fa-file-alt mr-2 "></i>
-                <span> حساب وكالة السفر</span>
-              </a>
-            </li>
-            <li *ngIf="isLoggedIn">
-              <a [routerLink]="['/profile/programs']" class="d-block mr-3 ">
-                <i class="fal fa-fw fa-cubes mr-2 "></i>
-                <span> برامج العمرة </span>
-              </a>
-            </li>
+          <li *ngIf="isLoggedIn">
+            <a routerLink="/profile" class="d-block mr-3 ">
+              <i class="fal fa-fw fa-file-alt mr-2 "></i>
+              <span> حساب وكالة السفر</span>
+            </a>
+          </li>
+          <li *ngIf="isLoggedIn">
+            <a [routerLink]="['/profile/programs']" class="d-block mr-3 ">
+              <i class="fal fa-fw fa-cubes mr-2 "></i>
+              <span> برامج العمرة </span>
+            </a>
+          </li>
           <li *ngIf="!isLoggedIn">
             <a class="d-block mr-3 ">
               <i class="fal fa-fw fa-thumbs-up mr-2 "></i>
@@ -84,8 +94,8 @@
             </div>
           </li>
           <li class="dropdown username" *ngIf="isLoggedIn">
-            <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
               <i class="fal fa-fw fa-1x fa-user"></i>
               <span> {{user.user.email}} </span>
               <i class="fal fa-fw fa-1x fa-angle-down"></i>

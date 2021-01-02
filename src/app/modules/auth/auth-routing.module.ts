@@ -7,7 +7,7 @@ import {
   ForgotPasswordComponent,
   RegisterComponent,
   ResetpasswordComponent,
-  ChangepasswordComponent
+  ChangepasswordComponent,
 } from './components';
 
 const routes: Routes = [
