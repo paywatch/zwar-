@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AgencyService } from '../../services/agency/agency.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-view-request',
@@ -12,19 +14,86 @@ export class ViewRequestComponent implements OnInit {
 
   agency: any;
   agencyNeedUpdate: boolean;
+  companyLogo: any;
+  comRegFile: any;
+  tourismFile: any;
+  FtavFiles: any;
+  tunisFilesID: any;
+  modalRef: BsModalRef;
 
   constructor(
     private agencyService: AgencyService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private toast: ToastrService) { }
+    private toast: ToastrService,
+    private modalService: BsModalService
+  ) { }
 
   ngOnInit(): void {
     const ID = this.activatedRoute.snapshot.params['id'];
     this.getAllAgencyData(ID);
+    this.getLocalStorageData();
     setTimeout(() => {
       this.checkAgencyData();
+      this.getCompanyLogo();
+      this.getComRegFile();
+      this.getTourismFile();
+      this.getFtavFiles();
+      this.getTounisFile();
     }, 2000);
+  }
+
+  getLocalStorageData() {
+    this.companyLogo = JSON.parse(localStorage.getItem('agencyFile')) || {};
+    this.comRegFile = JSON.parse(localStorage.getItem('comRegFile')) || {};
+    this.tourismFile = JSON.parse(localStorage.getItem('tourismFiles')) || {};
+    this.FtavFiles = JSON.parse(localStorage.getItem('FtavFiles')) || {};
+    this.tunisFilesID = JSON.parse(localStorage.getItem('tunisFilesID')) || {};
+  }
+
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,
+      {
+        class: 'modal-dialog-centered'
+      });
+  }
+
+  getCompanyLogo() {
+    this.agencyService.getAgencyImage().subscribe(images => {
+      this.companyLogo = this.companyLogo.map(logo => images.find(image => image.id == logo));
+      this.agency.companyLogo = this.companyLogo; 
+    });
+  }
+
+  getComRegFile() {
+    this.agencyService.getComRegFile().subscribe(files => {
+      const find = files.find(file => file.id == this.comRegFile);
+      this.agency.comRegFile = find;
+      console.log(this.agency.comRegFile);
+    });
+  }
+
+  getTourismFile() {
+    this.agencyService.getTourismFile().subscribe(files => {
+      const find = files.find(file => file.id == this.tourismFile);
+      this.agency.tourismFile = find;
+      console.log(this.agency.tourismFile);
+    });
+  }
+
+  getFtavFiles() {
+    this.agencyService.getFtavFile().subscribe(files => {
+      const find = files.find(file => file.id == this.FtavFiles);
+      this.agency.FtavFiles = find;
+    });
+  }
+
+  getTounisFile() {
+    this.agencyService.getTunisFile().subscribe(files => {
+      const find = files.find(file => file.id == this.tunisFilesID);
+      this.agency.tunisFiles = find;
+    });
   }
 
   getAllAgencyData(id) {
@@ -74,6 +143,11 @@ export class ViewRequestComponent implements OnInit {
 
   deleteAgency() {
     this.router.navigate(['/agency/request-list']);
+    localStorage.removeItem('tourismFiles');
+    localStorage.removeItem('FtavFiles');
+    localStorage.removeItem('comRegFile');
+    localStorage.removeItem('agencyFile');
+    localStorage.removeItem('tunisFilesID');
     this.agencyService.deleteAgency(this.agency);
   }
 }

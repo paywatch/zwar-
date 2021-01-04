@@ -45,10 +45,10 @@ export class HeaderComponent implements OnInit {
   }
 
   openNav() {
-    document.getElementById("mySidenav").style.width = "100%";
+    document.getElementById('mySidenav').style.width = '100%';
   }
 
   closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById('mySidenav').style.width = '0';
   }
 }

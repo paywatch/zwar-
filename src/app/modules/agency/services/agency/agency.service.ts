@@ -235,7 +235,7 @@ export class AgencyService {
       }
     });
     return of(true).pipe(
-      tap(data => sessionStorage.setItem('licence', JSON.stringify(payload)))
+      tap(data => sessionStorage.setItem('license', JSON.stringify(payload)))
     );
   }
 
@@ -246,15 +246,14 @@ export class AgencyService {
       }
     });
     return of(true).pipe(
-      tap(data => sessionStorage.setItem('branches', JSON.stringify(payload)))
+      tap(data => sessionStorage.setItem('branch', JSON.stringify(payload)))
     );
   }
 
   confirm(payload) {
-    this.confirmationCollection.add(payload);
-    return of(true).pipe(
-      tap(data => sessionStorage.setItem('confirm', JSON.stringify(payload)))
-    );
+    this.confirmationCollection.add(payload).then(res => {
+      console.log(res);
+    });
   }
 
   updateAgencyData(item) {

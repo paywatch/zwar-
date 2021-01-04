@@ -94,8 +94,6 @@ export class UpdateComponent implements OnInit {
 
   submit() {
     this.singlePackage = this.packageForm.value;
-    this.singlePackage.packageDepartureDate = moment(this.singlePackage.packageDepartureDate).format('DD/MM/YYYY');
-    this.singlePackage.packageReturnDate = moment(this.singlePackage.packageReturnDate).format('DD/MM/YYYY');
     this.singlePackage.id = this.ID;
     console.log(this.singlePackage);
     this.packageService.updatePackage(this.singlePackage);

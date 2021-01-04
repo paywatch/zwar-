@@ -32,6 +32,11 @@ export class EditComponent implements OnInit {
 
   onRowDelete(event, agency) {
     this.agencyService.deleteAgency(agency);
+    localStorage.removeItem('tourismFiles');
+    localStorage.removeItem('FtavFiles');
+    localStorage.removeItem('comRegFile');
+    localStorage.removeItem('agencyFile');
+    localStorage.removeItem('tunisFilesID');
     this.toast.info('تم الحذف');
   }
 }

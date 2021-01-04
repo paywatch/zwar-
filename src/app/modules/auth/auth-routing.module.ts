@@ -34,7 +34,7 @@ const routes: Routes = [
   {
     path: 'changePassword',
     component: ChangepasswordComponent
-  }
+  },
 ];
 
 @NgModule({
@@ -48,6 +48,6 @@ export class AuthRoutingModule {
     ForgotPasswordComponent,
     RegisterComponent,
     ResetpasswordComponent,
-    ChangepasswordComponent
+    ChangepasswordComponent,
   ];
 }

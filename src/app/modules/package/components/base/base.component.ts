@@ -65,6 +65,7 @@ export class BaseComponent implements OnInit {
     const Id = this.activatedRoute.snapshot.paramMap.get('programId');
     sessionStorage.setItem('ID', JSON.stringify(Id));
     this.base = JSON.parse(sessionStorage.getItem('base'));
+    console.log(this.base);
     this.packageBasicID = JSON.parse(sessionStorage.getItem('packageBasicID')) || {};
   }
 
@@ -100,8 +101,6 @@ export class BaseComponent implements OnInit {
 
   createPackage() {
     const payload = this.baseForm.value;
-    payload.packageDepartureDate = moment(payload.packageDepartureDate).format('MM/DDYYYY');
-    payload.packageReturnDate = moment(payload.packageReturnDate).format('MM/DD/YYYY');
     this.packageService.createPackage(payload)
       .subscribe((res) => {
         if (res) {

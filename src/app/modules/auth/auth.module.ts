@@ -9,7 +9,7 @@ import { AuthService } from './services/auth/auth.service';
   declarations: [
     ...AuthRoutingModule.components,
   ],
-  imports: [
+  imports: [ 
     SharedModule,
     AuthRoutingModule
   ],

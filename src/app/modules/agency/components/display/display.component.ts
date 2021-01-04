@@ -33,7 +33,7 @@ export class DisplayComponent implements OnInit {
     private toast: ToastrService,
     private agencyService: AgencyService,
     private modalService: BsModalService
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -54,11 +54,11 @@ export class DisplayComponent implements OnInit {
     this.licenses = JSON.parse(sessionStorage.getItem('licence')) || {};
     this.branches = JSON.parse(sessionStorage.getItem('branches')) || {};
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.companyLogo = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
-    this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || {};
-    this.tourismFile = JSON.parse(sessionStorage.getItem('tourismFiles')) || {};
-    this.FtavFiles = JSON.parse(sessionStorage.getItem('FtavFiles')) || {};
-    this.tunisFilesID = JSON.parse(sessionStorage.getItem('tunisFilesID')) || {};
+    this.companyLogo = JSON.parse(localStorage.getItem('agencyFile')) || {};
+    this.comRegFile = JSON.parse(localStorage.getItem('comRegFile')) || {};
+    this.tourismFile = JSON.parse(localStorage.getItem('tourismFiles')) || {};
+    this.FtavFiles = JSON.parse(localStorage.getItem('FtavFiles')) || {};
+    this.tunisFilesID = JSON.parse(localStorage.getItem('tunisFilesID')) || {};
   }
 
   getFullAgencyData() {
@@ -125,24 +125,20 @@ export class DisplayComponent implements OnInit {
 
   confirm() {
     this.agency.userID = this.user.user.uid;
-    console.log(this.agency.userID);
+    console.log(this.agency);
     this.agency.status = 'جديد';
-    this.agencyService.confirm(this.agency).subscribe(res => {
-      if (res) {
-        this.router.navigate(['agency/edit']);
-        this.toast.success('Added Successfullty');
-        sessionStorage.removeItem('agencyBasic');
-        sessionStorage.removeItem('basicID');
-        sessionStorage.removeItem('license');
-        sessionStorage.removeItem('licenseID');
-        sessionStorage.removeItem('branch');
-        sessionStorage.removeItem('branchID');
-        sessionStorage.removeItem('register');
-      }
-      else {
-        this.toast.error('Something Went Wrong');
-      }
-    });
+    this.agencyService.confirm(this.agency);
+    this.router.navigate(['agency/edit']);
+    this.toast.success('تم الاضافه بنجاح');
+    sessionStorage.removeItem('license');
+    sessionStorage.removeItem('licenseID');
+    sessionStorage.removeItem('branches');
+    sessionStorage.removeItem('branchID');
+    sessionStorage.removeItem('register');
+    sessionStorage.removeItem('agecyID');
+    sessionStorage.removeItem('agency');
+    sessionStorage.removeItem('agencyBasic');
+    sessionStorage.removeItem('basicID');
   }
 }
 

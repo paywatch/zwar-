@@ -1,5 +1,4 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { setServers } from 'dns';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AgencyService } from 'src/app/modules/agency/services/agency/agency.service';
 
@@ -39,12 +38,12 @@ export class ProfileComponent implements OnInit {
   }
 
   getSessionStorageData() {
-    this.companyLogo = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
+    this.companyLogo = JSON.parse(localStorage.getItem('agencyFile')) || {};
     console.log(this.companyLogo);
-    this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || {};
-    this.tourismFile = JSON.parse(sessionStorage.getItem('tourismFiles')) || {};
-    this.FtavFiles = JSON.parse(sessionStorage.getItem('FtavFiles')) || {};
-    this.tunisFilesID = JSON.parse(sessionStorage.getItem('tunisFilesID')) || {};
+    this.comRegFile = JSON.parse(localStorage.getItem('comRegFile')) || {};
+    this.tourismFile = JSON.parse(localStorage.getItem('tourismFiles')) || {};
+    this.FtavFiles = JSON.parse(localStorage.getItem('FtavFiles')) || {};
+    this.tunisFilesID = JSON.parse(localStorage.getItem('tunisFilesID')) || {};
   }
 
   openModal(template: TemplateRef<any>) {

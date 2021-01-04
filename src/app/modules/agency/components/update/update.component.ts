@@ -90,7 +90,7 @@ export class UpdateComponent implements OnInit {
       GreaterThan('tAMinTourAuthIssueDate', 'tAMinTourAuthExpiryDate'),
       GreaterThan('tAFTAVMemberIssueDate', 'tAFTAVMemberExpiryDate'),
       GreaterThan('tAFITTMemberIssueDate', 'tAFITTMemberExpiryDate')
-       ]
+      ]
     });
   }
 
@@ -161,7 +161,6 @@ export class UpdateComponent implements OnInit {
       this.agencyForm.get('tAFTAVMemberIssueDate').enable();
       this.agencyForm.get('tAFTAVMemberExpiryDate').enable();
       this.agencyForm.get('tAFTAVMemberFile').enable();
-
     }
     else {
       this.agencyForm.get('tAFTAVMemberNo').disable();
@@ -191,14 +190,6 @@ export class UpdateComponent implements OnInit {
 
   submit() {
     this.agency = this.agencyForm.value;
-    this.agency.tACommRegIssueDate = moment(this.agency.tACommRegIssueDate).format('DD/MM/YYYY');
-    this.agency.tACommRegExpiryDate = moment(this.agency.tACommRegExpiryDate).format('DD/MM/YYYY');
-    this.agency.tAMinTourAuthIssueDate = moment(this.agency.tAMinTourAuthIssueDate).format('DD/MM/YYYY');
-    this.agency.tAMinTourAuthExpiryDate = moment(this.agency.tAMinTourAuthExpiryDate).format('DD/MM/YYYY');
-    this.agency.tAFTAVMemberIssueDate = moment(this.agency.tAFTAVMemberIssueDate).format('DD/MM/YYYY');
-    this.agency.tAFTAVMemberExpiryDate = moment(this.agency.tAFTAVMemberExpiryDate).format('DD/MM/YYYY');
-    this.agency.tAFITTMemberIssueDate = moment(this.agency.tAFITTMemberIssueDate).format('DD/MM/YYYY');
-    this.agency.tAFITTMemberExpiryDate = moment(this.agency.tAFITTMemberExpiryDate).format('DD/MM/YYYY');
     this.agency.id = this.ID;
     this.agencyService.updateAgency(this.agency);
     this.toaster.info('تم التعديل');

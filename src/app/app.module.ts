@@ -36,9 +36,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     AngularFireAuthModule,
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebase, 'zowar'),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebase, 'zowar'),
     CoreModule
   ],
   providers: [],

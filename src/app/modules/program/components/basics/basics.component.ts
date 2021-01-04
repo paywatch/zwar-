@@ -78,8 +78,10 @@ export class BasicsComponent implements OnInit {
 
   getSpecifieImage() {
     this.programService.getFileFromStorage().subscribe(res => {
-      this.imageId = this.imageId.map(m => res.find(r => r.id == m));
-      this.selectedProgramBannerFile = this.imageId;
+      if (this.imageId) {
+        this.imageId = this.imageId.map(m => res.find(r => r.id == m));
+        this.selectedProgramBannerFile = this.imageId;
+      }
     });
   }
 
@@ -191,10 +193,11 @@ export class BasicsComponent implements OnInit {
     const id = this.selectedBasic.id;
     this.selectedBasic = this.basicsForm.value;
     this.selectedBasic.id = id;
-    if (this.selectedProgramBannerFile && this.selectedProgramBannerFile !== undefined) {
+    if (this.selectedProgramBannerFile) {
       this.selectedBasic.programUrl = this.selectedProgramBannerFile;
     }
-    console.log(this.selectedBasic);
+    this.selectedBasic.programUrl = this.selectedBasic.programUrl ? this.selectedBasic.programUrl : [];
+    console.log(this.selectedBasic.programUrl);
     this.programService.updateBasicData(this.selectedBasic);
     this.router.navigate(['/program/residential']);
     this.toastr.success('تم التعديل');
