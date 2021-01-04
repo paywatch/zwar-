@@ -26,7 +26,7 @@ export class ViewRequestComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toast: ToastrService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
   ) { }
 
   ngOnInit(): void {
@@ -45,19 +45,16 @@ export class ViewRequestComponent implements OnInit {
       });
   }
 
-  getCompanyLogo() {
-    this.agencyService.getAgencyImage().subscribe(images => {
-      this.companyLogo = this.companyLogo.map(logo => images.find(image => image.id == logo));
-      this.agency.companyLogo = this.companyLogo;
-    });
-  }
-
   getAllAgencyData(id) {
     this.agencyService.getAllData().subscribe(agency => {
       const found = agency.find(a => a.id == id);
       this.agency = found;
       console.log(this.agency);
     });
+  }
+
+  getCoutry() {
+
   }
 
   acceptAgency() {

@@ -40,7 +40,7 @@ export class BranchesComponent implements OnInit {
 
   getSessionStorageDaTA() {
     this.loadDistrictList();
-    this.found = JSON.parse(sessionStorage.getItem('branches'));
+    this.found = JSON.parse(sessionStorage.getItem('branch'));
     this.brachID = JSON.parse(sessionStorage.getItem('branchID')) || {};
     console.log(this.brachID);
   }

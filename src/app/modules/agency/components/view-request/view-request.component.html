@@ -6,7 +6,8 @@
         <li class="breadcrumb-item active" aria-current="page"> </li>
       </ol>
     </nav>
-    <div *ngIf="agencyNeedUpdate" class="alert alert-danger align-items-center big-alert d-flex flex-column flex-md-row mb-3 mx-n4 p-4">
+    <div *ngIf="agencyNeedUpdate"
+      class="alert alert-danger align-items-center big-alert d-flex flex-column flex-md-row mb-3 mx-n4 p-4">
       <i class="fal fa-4x fa-file-exclamation fa-fw text-danger mr-0 mr-md-4"></i>
       <div>
         <h3 class="mb-3">طلبك يحتاج الى تحديث بعض البيانات</h3>
@@ -72,8 +73,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="d-block col-form-label"> ارفاق ملف السجل التجاري </label>
-                    <a class="underline p-1 d-inline-block" [href]="commRegFile?.url" target="_blank">
-                      {{commRegFile?.name}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.comRegFile?.url">
+                      {{agency?.comRegFile?.name}}
                     </a>
                   </div>
                 </div>
@@ -103,7 +104,7 @@
             </div>
             <div class="col-lg-3 col-md-4 mb-5 offset-lg-1">
               <div class="bg-white flag-info overflow-hidden py-5 round">
-               
+
                 <a type="button" (click)="openModal(template)">
                   <h4>
                     شعار الوكالة
@@ -164,10 +165,10 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group" *ngIf="tAMinTourAuthFile">
+                  <div class="form-group" *ngIf="agency.tourismFile">
                     <label class="d-block col-form-label"> ملف الترخيص </label>
-                    <a class="underline p-1 d-inline-block" [href]="tAMinTourAuthFile.url" target="_blank">
-                      {{tAMinTourAuthFile.name}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency.tourismFile.url">
+                      {{agency?.tourismFile?.name}}
                     </a>
                   </div>
                 </div>
@@ -205,10 +206,10 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group" *ngIf="tAFTAVMemberFile">
+                  <div class="form-group" *ngIf="agency.FtavFiles">
                     <label class="d-block col-form-label"> ملف العضوية </label>
-                    <a class="underline p-1 d-inline-block" [href]="tAFTAVMemberFile?.url" target="_blank">
-                      {{tAFTAVMemberFile?.name}}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.FtavFiles?.url">
+                      {{agency?.FtavFiles?.name}}
                     </a>
                   </div>
                 </div>
@@ -246,10 +247,10 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group" *ngIf="tAFITTMemberFile">
+                  <div class="form-group" *ngIf="agency.tunisFiles">
                     <label class="d-block col-form-label"> ملف العضوية </label>
-                    <a class="underline p-1 d-inline-block" [href]="tAFITTMemberFile?.url" target="_blank">
-                      {{ tAFITTMemberFile?.name }}
+                    <a class="underline p-1 d-inline-block" target="_blank" [href]="agency?.tunisFiles?.url">
+                      {{ agency?.tunisFiles.name }}
                     </a>
                   </div>
                 </div>

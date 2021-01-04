@@ -75,7 +75,7 @@ export class LicenseComponent implements OnInit {
   }
 
   getSessionData() {
-    this.license = JSON.parse(sessionStorage.getItem('licence'));
+    this.license = JSON.parse(sessionStorage.getItem('license'));
     this.main = JSON.parse(sessionStorage.getItem('agencyBasic'));
     this.licenseID = JSON.parse(sessionStorage.getItem('licenseID')) || {};
     this.tourismFiles = JSON.parse(sessionStorage.getItem('tourismFiles')) || {};
@@ -89,18 +89,14 @@ export class LicenseComponent implements OnInit {
       tAMinTourAuthNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
       tAMinTourAuthIssueDate: ['', [Validators.required, LessThanToday]],
       tAMinTourAuthExpiryDate: ['', Validators.required],
-      tAMinTourAuthFile: [''],
       $$isFTAVMember: [true],
       tAFTAVMemberNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
       tAFTAVMemberIssueDate: ['', [Validators.required, LessThanToday]],
       tAFTAVMemberExpiryDate: ['', Validators.required],
-      tAFTAVMemberFile: [''],
       $$isFITTMember: [true],
       tAFITTMemberNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
       tAFITTMemberIssueDate: ['', [Validators.required, LessThanToday]],
       tAFITTMemberExpiryDate: ['', Validators.required],
-      tAFITTMemberFile: [''],
-      taid: [''],
     }, {
       validators: [GreaterThan('tAMinTourAuthIssueDate', 'tAMinTourAuthExpiryDate'),
       GreaterThan('tAFTAVMemberIssueDate', 'tAFTAVMemberExpiryDate'),
