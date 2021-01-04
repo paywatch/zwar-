@@ -32,23 +32,9 @@ export class ViewRequestComponent implements OnInit {
   ngOnInit(): void {
     const ID = this.activatedRoute.snapshot.params['id'];
     this.getAllAgencyData(ID);
-    this.getLocalStorageData();
     setTimeout(() => {
       this.checkAgencyData();
-      this.getCompanyLogo();
-      this.getComRegFile();
-      this.getTourismFile();
-      this.getFtavFiles();
-      this.getTounisFile();
     }, 2000);
-  }
-
-  getLocalStorageData() {
-    this.companyLogo = JSON.parse(localStorage.getItem('agencyFile')) || {};
-    this.comRegFile = JSON.parse(localStorage.getItem('comRegFile')) || {};
-    this.tourismFile = JSON.parse(localStorage.getItem('tourismFiles')) || {};
-    this.FtavFiles = JSON.parse(localStorage.getItem('FtavFiles')) || {};
-    this.tunisFilesID = JSON.parse(localStorage.getItem('tunisFilesID')) || {};
   }
 
 
@@ -62,37 +48,7 @@ export class ViewRequestComponent implements OnInit {
   getCompanyLogo() {
     this.agencyService.getAgencyImage().subscribe(images => {
       this.companyLogo = this.companyLogo.map(logo => images.find(image => image.id == logo));
-      this.agency.companyLogo = this.companyLogo; 
-    });
-  }
-
-  getComRegFile() {
-    this.agencyService.getComRegFile().subscribe(files => {
-      const find = files.find(file => file.id == this.comRegFile);
-      this.agency.comRegFile = find;
-      console.log(this.agency.comRegFile);
-    });
-  }
-
-  getTourismFile() {
-    this.agencyService.getTourismFile().subscribe(files => {
-      const find = files.find(file => file.id == this.tourismFile);
-      this.agency.tourismFile = find;
-      console.log(this.agency.tourismFile);
-    });
-  }
-
-  getFtavFiles() {
-    this.agencyService.getFtavFile().subscribe(files => {
-      const find = files.find(file => file.id == this.FtavFiles);
-      this.agency.FtavFiles = find;
-    });
-  }
-
-  getTounisFile() {
-    this.agencyService.getTunisFile().subscribe(files => {
-      const find = files.find(file => file.id == this.tunisFilesID);
-      this.agency.tunisFiles = find;
+      this.agency.companyLogo = this.companyLogo;
     });
   }
 

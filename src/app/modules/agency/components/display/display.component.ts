@@ -54,11 +54,11 @@ export class DisplayComponent implements OnInit {
     this.licenses = JSON.parse(sessionStorage.getItem('licence')) || {};
     this.branches = JSON.parse(sessionStorage.getItem('branches')) || {};
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.companyLogo = JSON.parse(localStorage.getItem('agencyFile')) || {};
-    this.comRegFile = JSON.parse(localStorage.getItem('comRegFile')) || {};
-    this.tourismFile = JSON.parse(localStorage.getItem('tourismFiles')) || {};
-    this.FtavFiles = JSON.parse(localStorage.getItem('FtavFiles')) || {};
-    this.tunisFilesID = JSON.parse(localStorage.getItem('tunisFilesID')) || {};
+    this.companyLogo = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
+    this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || {};
+    this.tourismFile = JSON.parse(sessionStorage.getItem('tourismFiles')) || {};
+    this.FtavFiles = JSON.parse(sessionStorage.getItem('FtavFiles')) || {};
+    this.tunisFilesID = JSON.parse(sessionStorage.getItem('tunisFilesID')) || {};
   }
 
   getFullAgencyData() {

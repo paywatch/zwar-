@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AgencyService } from '../../services/agency/agency.service';
@@ -15,7 +14,6 @@ export class EditComponent implements OnInit {
   page;
 
   constructor(
-    private router: Router,
     private agencyService: AgencyService,
     private toast: ToastrService) { }
 
@@ -32,11 +30,11 @@ export class EditComponent implements OnInit {
 
   onRowDelete(event, agency) {
     this.agencyService.deleteAgency(agency);
-    localStorage.removeItem('tourismFiles');
-    localStorage.removeItem('FtavFiles');
-    localStorage.removeItem('comRegFile');
-    localStorage.removeItem('agencyFile');
-    localStorage.removeItem('tunisFilesID');
+    sessionStorage.removeItem('tourismFiles');
+    sessionStorage.removeItem('FtavFiles');
+    sessionStorage.removeItem('comRegFile');
+    sessionStorage.removeItem('agencyFile');
+    sessionStorage.removeItem('tunisFilesID');
     this.toast.info('تم الحذف');
   }
 }

@@ -76,8 +76,8 @@ export class MainComponent implements OnInit {
   getAllAgencyData() {
     this.agencyData = JSON.parse(sessionStorage.getItem('agencyBasic'));
     this.basicID = JSON.parse(sessionStorage.getItem('basicID')) || {};
-    this.comRegFile = JSON.parse(localStorage.getItem('comRegFile')) || {};
-    this.mainFile = JSON.parse(localStorage.getItem('agencyFile')) || {};
+    this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || {};
+    this.mainFile = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
   }
 
   getCountries() {
@@ -166,10 +166,10 @@ export class MainComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            let files = JSON.parse(localStorage.getItem('agencyFile'));
+            let files = JSON.parse(sessionStorage.getItem('agencyFile'));
             files = files ? files : [];
             files.push(res.id);
-            localStorage.setItem('agencyFile', JSON.stringify(files));
+            sessionStorage.setItem('agencyFile', JSON.stringify(files));
           });
         });
       });
@@ -228,7 +228,7 @@ comRegFileChange(event) {
           // tslint:disable-next-line:object-literal-shorthand
           url: url
         }).then(res => {
-          localStorage.setItem('comRegFile', JSON.stringify(res.id));
+          sessionStorage.setItem('comRegFile', JSON.stringify(res.id));
         });
       });
     });

@@ -78,9 +78,9 @@ export class LicenseComponent implements OnInit {
     this.license = JSON.parse(sessionStorage.getItem('licence'));
     this.main = JSON.parse(sessionStorage.getItem('agencyBasic'));
     this.licenseID = JSON.parse(sessionStorage.getItem('licenseID')) || {};
-    this.tourismFiles = JSON.parse(localStorage.getItem('tourismFiles')) || {};
-    this.FtavFiles = JSON.parse(localStorage.getItem('FtavFiles')) || {};
-    this.tunisFilesID = JSON.parse(localStorage.getItem('tunisFilesID')) || {};
+    this.tourismFiles = JSON.parse(sessionStorage.getItem('tourismFiles')) || {};
+    this.FtavFiles = JSON.parse(sessionStorage.getItem('FtavFiles')) || {};
+    this.tunisFilesID = JSON.parse(sessionStorage.getItem('tunisFilesID')) || {};
   }
 
   initForm() {
@@ -164,7 +164,7 @@ export class LicenseComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            localStorage.setItem('tourismFiles', JSON.stringify(res.id));
+            sessionStorage.setItem('tourismFiles', JSON.stringify(res.id));
           });
         });
       });
@@ -224,7 +224,7 @@ export class LicenseComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            localStorage.setItem('FtavFiles', JSON.stringify(res.id));
+            sessionStorage.setItem('FtavFiles', JSON.stringify(res.id));
           });
         });
       });
@@ -285,7 +285,7 @@ export class LicenseComponent implements OnInit {
             // tslint:disable-next-line:object-literal-shorthand
             url: url
           }).then(res => {
-            localStorage.setItem('tunisFilesID', JSON.stringify(res.id));
+            sessionStorage.setItem('tunisFilesID', JSON.stringify(res.id));
           });
         });
       });
