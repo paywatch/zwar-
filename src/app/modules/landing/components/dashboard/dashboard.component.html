@@ -1,0 +1,36 @@
+<div class="page-layout" dir="rtl">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']">الرئيسية</a></li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/profile/programs']">برامج العمرة</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <a [routerLink]="['/program/basics']">
+            إنشاء برنامج عمرة جديد
+          </a>
+        </li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h2>
+        بيانات البرامج و الباقات وكالات السفر
+      </h2>
+    </div>
+    <div class="page-inner overflow-hidden">
+      <div class="wizard-details">
+        <section>
+          <div class="row">
+            <div class="col-md-6">
+              <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+              <canvas id="pieChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

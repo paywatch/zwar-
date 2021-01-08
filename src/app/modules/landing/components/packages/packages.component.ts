@@ -16,10 +16,6 @@ export class PackagesComponent implements OnInit {
   constructor(private landingService: LandingService) { }
 
   ngOnInit(): void {
-    this.packages$ = this.landingService.getPakcage({
-      programPrice: 1000,
-      programPriceEnd: 1100,
-    });
   }
 
 }

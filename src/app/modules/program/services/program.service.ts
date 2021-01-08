@@ -49,6 +49,7 @@ export class ProgramService {
 
   files: Observable<any[]>;
   filesCollection: AngularFirestoreCollection<any>;
+  filesDoc: AngularFirestoreDocument<any>;
 
   Madinafiles: Observable<any[]>;
   MadinafilesCollection: AngularFirestoreCollection<any>;
@@ -306,4 +307,5 @@ export class ProgramService {
     this.programDoc = this.afs.doc(`program/${program.programId}`);
     this.programDoc.delete();
   }
+
 }

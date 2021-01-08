@@ -58,7 +58,6 @@ export class BasicsComponent implements OnInit {
     this.initForm();
   }
 
-
   initForm() {
     this.basicsForm = this.fb.group({
       programName: ['', [Validators.required, Validators.maxLength(100)]],
