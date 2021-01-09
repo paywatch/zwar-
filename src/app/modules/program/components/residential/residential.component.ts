@@ -76,18 +76,21 @@ export class ResidentialComponent implements OnInit {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
   }
 
+
   patchFormValue() {
     this.residential = JSON.parse(sessionStorage.getItem('hotels'));
     this.hotelID = JSON.parse(sessionStorage.getItem('hotelID'));
-    this.MeccaImageID = JSON.parse(sessionStorage.getItem('MeccaImageID')) || {};
-    this.MadinaImageID = JSON.parse(sessionStorage.getItem('MadinaImageID')) || {};
+    this.MeccaImageID = JSON.parse(sessionStorage.getItem('MeccaImageID')) || [];
+    this.MadinaImageID = JSON.parse(sessionStorage.getItem('MadinaImageID')) || [];
   }
 
 
   getSpecifieImage() {
     this.programservice.getMeccaFileFromStorage().subscribe(res => {
-      this.MeccaImageID = this.MeccaImageID.map(m => res.find(r => r.id == m));
-      this.selectedMeccaFile = this.MeccaImageID;
+      if (this.MeccaImageID) {
+        const meccaSet = new Set(this.MeccaImageID);
+        this.selectedMeccaFile = res.filter(item => meccaSet.has(item.id));
+      }
       console.log(this.selectedMeccaFile);
     });
   }
@@ -150,8 +153,10 @@ export class ResidentialComponent implements OnInit {
 
   getMadinaSpecifieImage() {
     this.programservice.getMadinaFileFromStorage().subscribe(res => {
-      this.MadinaImageID = this.MadinaImageID.map(m => res.find(r => r.id == m));
-      this.selectedMadinaFile = this.MadinaImageID;
+      if (this.MadinaImageID) {
+        const madinaImage = new Set(this.MadinaImageID);
+        this.selectedMadinaFile = res.filter(item => madinaImage.has(item.id));
+      }
       console.log(this.selectedMeccaFile);
     });
   }

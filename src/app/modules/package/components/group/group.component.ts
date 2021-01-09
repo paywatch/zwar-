@@ -69,9 +69,9 @@ export class GroupComponent implements OnInit {
   }
 
   patchForm() {
-    this.group = JSON.parse(sessionStorage.getItem('group'));
+    this.group = JSON.parse(sessionStorage.getItem('group')) || {};
     this.GroupID = JSON.parse(sessionStorage.getItem('groupID')) || {};
-    this.MatwafImageID = JSON.parse(sessionStorage.getItem('MatwafImage')) || {};
+    this.MatwafImageID = JSON.parse(sessionStorage.getItem('MatwafImage')) || [];
   }
 
   loadBasicInfo() {
@@ -99,10 +99,10 @@ export class GroupComponent implements OnInit {
   }
 
   getMatwafImage() {
-    this.packageService.getMatwafFileFromStorage().subscribe(image => {
+    this.packageService.getMatwafFileFromStorage().subscribe(res => {
       if (this.MatwafImageID) {
-        this.MatwafImageID = this.MatwafImageID.map(m => image.find(i => i.id == m));
-        this.matwafImage = this.MatwafImageID;
+        const matwafImage = new Set(this.MatwafImageID);
+        this.matwafImage = res.filter(item => matwafImage.has(item.id));
         console.log(this.matwafImage);
       }
     });
