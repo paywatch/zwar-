@@ -72,14 +72,14 @@ export class BasicsComponent implements OnInit {
   patchForm() {
     this.basics = JSON.parse(sessionStorage.getItem('basics'));
     this.basicID = JSON.parse(sessionStorage.getItem('basicID'));
-    this.imageId = JSON.parse(sessionStorage.getItem('programBannerID')) || {};
+    this.imageId = JSON.parse(sessionStorage.getItem('programBannerID')) || [];
   }
 
   getSpecifieImage() {
     this.programService.getFileFromStorage().subscribe(res => {
       if (this.imageId) {
-        this.imageId = this.imageId.map(m => res.find(r => r.id == m));
-        this.selectedProgramBannerFile = this.imageId;
+        const imageSet = new Set(this.imageId);
+        this.selectedProgramBannerFile = res.filter(item =>  imageSet.has(item.id));
       }
     });
   }
@@ -192,11 +192,11 @@ export class BasicsComponent implements OnInit {
     const id = this.selectedBasic.id;
     this.selectedBasic = this.basicsForm.value;
     this.selectedBasic.id = id;
+    console.log(this.selectedProgramBannerFile);
     if (this.selectedProgramBannerFile) {
       this.selectedBasic.programUrl = this.selectedProgramBannerFile;
     }
-    this.selectedBasic.programUrl = this.selectedBasic.programUrl ? this.selectedBasic.programUrl : [];
-    console.log(this.selectedBasic.programUrl);
+    console.log(this.selectedBasic);
     this.programService.updateBasicData(this.selectedBasic);
     this.router.navigate(['/program/residential']);
     this.toastr.success('تم التعديل');
