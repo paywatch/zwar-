@@ -273,7 +273,7 @@
                   <div class="modal-body">
                     <div class="row justify-content-center" *ngIf="selectedMainFile">
                       <div *ngFor="let items of selectedMainFile">
-                        <img [src]="items?.url" alt="company logo" width="100" height="100" class="mr-2">
+                        <img (click)="deleteAgencyImage(items)" [src]="items?.url" alt="company logo" width="100" height="100" class="mr-2">
                       </div>
                     </div>
                   </div>

@@ -40,8 +40,10 @@ export class PackageService {
 
   package: Observable<Package[]>;
   packageDocs: AngularFirestoreDocument<Package>;
+
   matwafFiles: Observable<any[]>;
   matwafFilesCollection: AngularFirestoreCollection<any>;
+  matwafImageDoc: AngularFirestoreDocument<any>;
 
   constructor(
     private http: HttpClient,
@@ -228,6 +230,11 @@ export class PackageService {
   deletePackageRoom(item) {
     this.roomDoc = this.afs.doc(`roomsData/${item[0].id}`);
     this.roomDoc.delete();
+  }
+
+  deleteMatwafImage(item) {
+    this.matwafImageDoc = this.afs.doc(`MatwafImage/${item.id}`);
+    this.matwafImageDoc.delete();
   }
 
 }

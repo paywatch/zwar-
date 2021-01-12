@@ -95,6 +95,13 @@ export class ResidentialComponent implements OnInit {
     });
   }
 
+  deleteMeccaFile(item) {
+    const path = `MeccaFiles/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.programservice.deleteMeccaImage(item);
+  }
+
   uploadMeccaImage(event: any) {
 
     this.uploads = [];
@@ -150,7 +157,6 @@ export class ResidentialComponent implements OnInit {
     }
   }
 
-
   getMadinaSpecifieImage() {
     this.programservice.getMadinaFileFromStorage().subscribe(res => {
       if (this.MadinaImageID) {
@@ -159,6 +165,13 @@ export class ResidentialComponent implements OnInit {
       }
       console.log(this.selectedMeccaFile);
     });
+  }
+
+  deleteMadinaFile(item) {
+    const path = `MaddinaFiles/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.programservice.deleteMadinaImage(item);
   }
 
   uploadMAdinaImage(event) {

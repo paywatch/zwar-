@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CheckPhoneNumber } from '../../../../_helpers/checkNumber.validator';
-import { maxSize } from 'src/app/_helpers/File.validator';
 
 import { PackageService } from '../../services/package-service.service';
 import { combineLatest, Observable } from 'rxjs';
@@ -62,7 +61,6 @@ export class GroupComponent implements OnInit {
       groupLeadPhone: ['', [Validators.required,
       Validators.maxLength(20),
       Validators.pattern(/^[0-9]+/)]],
-      mutawefPicture: [maxSize(500)],
     }, {
       validators: CheckPhoneNumber('mutawefPhone', 'groupLeadPhone')
     });
@@ -103,9 +101,15 @@ export class GroupComponent implements OnInit {
       if (this.MatwafImageID) {
         const matwafImage = new Set(this.MatwafImageID);
         this.matwafImage = res.filter(item => matwafImage.has(item.id));
-        console.log(this.matwafImage);
       }
     });
+  }
+
+  deleteMatwafImage(item) {
+    const path = `matwafFile/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.packageService.deleteMatwafImage(item);
   }
 
   matwafChange(event) {

@@ -76,8 +76,8 @@ export class MainComponent implements OnInit {
   getAllAgencyData() {
     this.agencyData = JSON.parse(sessionStorage.getItem('agencyBasic'));
     this.basicID = JSON.parse(sessionStorage.getItem('basicID')) || {};
-    this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || {};
-    this.mainFile = JSON.parse(sessionStorage.getItem('agencyFile')) || {};
+    this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || [];
+    this.mainFile = JSON.parse(sessionStorage.getItem('agencyFile')) || [];
   }
 
   getCountries() {
@@ -127,10 +127,20 @@ export class MainComponent implements OnInit {
 
   getAgencyFile() {
     this.agencyService.getAgencyImage().subscribe(files => {
-      this.mainFile = this.mainFile.map(m => files.find(file => file.id == m));
-      this.selectedMainFile = this.mainFile;
+      if (this.mainFile) {
+        const mainSet = new Set(this.mainFile);
+        this.selectedMainFile = files.filter(item => mainSet.has(item.id));
+      }
       console.log(this.selectedMainFile);
     });
+  }
+
+  deleteAgencyImage(item) {
+    const path = `agencyFile/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.agencyService.deleteAgencyImage(item);
+    this.selectedMainFile = this.selectedMainFile.filter(file => file.id !== item.id);
   }
 
   logoChange(event) {
@@ -190,209 +200,206 @@ export class MainComponent implements OnInit {
 
   getComRegFile() {
     this.agencyService.getComRegFile().subscribe(images => {
-    const find = images.find(image => image.id == this.comRegFile);
-    this.selectedComRegFile = find;
-    console.log(this.selectedComRegFile);
-  });
-}
+      const find = images.find(image => image.id == this.comRegFile);
+      this.selectedComRegFile = find;
+      console.log(this.selectedComRegFile);
+    });
+  }
 
-comRegFileChange(event) {
-  this.comRegUploads = [];
-  const filelist = event.target.files;
-  const allPercentage: Observable<number>[] = [];
+  comRegFileChange(event) {
+    this.comRegUploads = [];
+    const filelist = event.target.files;
+    const allPercentage: Observable<number>[] = [];
 
-  for (const file of filelist) {
+    for (const file of filelist) {
 
-    const path = `comRegFile/${file.name}`;
-    const ref = this.db.ref(path);
-    const task = this.db.upload(path, file);
-    // tslint:disable-next-line:variable-name
-    const _percentage$ = task.percentageChanges();
-    allPercentage.push(_percentage$);
+      const path = `comRegFile/${file.name}`;
+      const ref = this.db.ref(path);
+      const task = this.db.upload(path, file);
+      // tslint:disable-next-line:variable-name
+      const _percentage$ = task.percentageChanges();
+      allPercentage.push(_percentage$);
 
-    // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
-    const uploadTrack = {
-      fileName: file.name,
-      percentage: _percentage$
-    };
+      // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
+      const uploadTrack = {
+        fileName: file.name,
+        percentage: _percentage$
+      };
 
-    // push each upload into the array
-    this.comRegUploads.push(uploadTrack);
-    console.log(this.uploads);
+      // push each upload into the array
+      this.comRegUploads.push(uploadTrack);
+      console.log(this.uploads);
 
-    // for every upload do whatever you want in firestore with the uploaded file
-    const t = task.then((f) => {
-      return f.ref.getDownloadURL().then((url) => {
-        return this.afs.collection('comRegFile').add({
-          name: f.metadata.name,
-          // tslint:disable-next-line:object-literal-shorthand
-          url: url
-        }).then(res => {
-          sessionStorage.setItem('comRegFile', JSON.stringify(res.id));
+      // for every upload do whatever you want in firestore with the uploaded file
+      const t = task.then((f) => {
+        return f.ref.getDownloadURL().then((url) => {
+          return this.afs.collection('comRegFile').add({
+            name: f.metadata.name,
+            // tslint:disable-next-line:object-literal-shorthand
+            url: url
+          }).then(res => {
+            sessionStorage.setItem('comRegFile', JSON.stringify(res.id));
+          });
         });
       });
-    });
 
-    this.allPercentage = combineLatest(allPercentage)
-      .pipe(
-        map((percentages) => {
-          let result = 0;
-          for (const percentage of percentages) {
-            result = result + percentage;
-          }
-          return result / percentages.length;
-        }),
-        tap(console.log)
-      );
-  }
-}
-
-// callLogo() {
-//   const logoFile = JSON.parse(sessionStorage.getItem('tALogo'));
-//   const fileName = logoFile ? logoFile.newName : null;
-//   this.logoUrl = fileName ? `${environment.endpoint}/api/ph1/download/${fileName}` : '';
-
-//   if (fileName) {
-//     this.myForm.get('tALogo').setValue(fileName);
-//   }
-// }
-
-getAgencyBasicData() {
-  this.agencyService.getBasicData().subscribe(basics => {
-    if (this.agencyData) {
-      this.selectedBasic = basics.find(b => b.id == this.basicID);
-      console.log(this.selectedBasic);
-      if (this.selectedBasic) {
-        this.myForm.patchValue(this.selectedBasic);
-        this.ownerList = this.selectedBasic && this.selectedBasic.ownerList ? this.selectedBasic.ownerList : [];
-      }
+      this.allPercentage = combineLatest(allPercentage)
+        .pipe(
+          map((percentages) => {
+            let result = 0;
+            for (const percentage of percentages) {
+              result = result + percentage;
+            }
+            return result / percentages.length;
+          }),
+          tap(console.log)
+        );
     }
-  });
-}
-
-SaveData() {
-  if (!this.ownerList.length) {
-    this.toast.error('لابد من إدخال بيانات ملاك وكالة السفر');
-    return;
   }
 
-  const payload = this.myForm.value;
-  payload.ownerList = this.ownerList;
-  payload.tACommRegIssueDate = moment(payload.tACommRegIssueDate).format('MM/DD/YYYY');
-  payload.tACommRegExpiryDate = moment(payload.tACommRegExpiryDate).format('MM/DD/YYYY');
-  this.agencyService.addAgency(payload)
-    .subscribe((response: any) => {
-      if (response) {
-        this.toast.success('تم الحفظ بنجاح');
-        this.router.navigate(['agency/license']);
-        this.myForm.reset();
+  // callLogo() {
+  //   const logoFile = JSON.parse(sessionStorage.getItem('tALogo'));
+  //   const fileName = logoFile ? logoFile.newName : null;
+  //   this.logoUrl = fileName ? `${environment.endpoint}/api/ph1/download/${fileName}` : '';
+
+  //   if (fileName) {
+  //     this.myForm.get('tALogo').setValue(fileName);
+  //   }
+  // }
+
+  getAgencyBasicData() {
+    this.agencyService.getBasicData().subscribe(basics => {
+      if (this.agencyData) {
+        this.selectedBasic = basics.find(b => b.id == this.basicID);
+        console.log(this.selectedBasic);
+        if (this.selectedBasic) {
+          this.myForm.patchValue(this.selectedBasic);
+          this.ownerList = this.selectedBasic && this.selectedBasic.ownerList ? this.selectedBasic.ownerList : [];
+        }
       }
     });
-}
-
-updateAgencyBasic() {
-  this.selectedBasic = this.myForm.value;
-  this.selectedBasic.id = this.basicID;
-  // tslint:disable-next-line:no-non-null-assertion
-  if (this.selectedMainFile) {
-    console.log(this.selectedMainFile);
-    this.selectedBasic.selectedMainFile = this.selectedMainFile;
   }
-  // tslint:disable-next-line:no-non-null-assertion
-  if (this.selectedComRegFile) {
-    console.log(this.selectedComRegFile);
-    this.selectedBasic.selectedComRegFile = this.selectedComRegFile;
+
+  SaveData() {
+    if (!this.ownerList.length) {
+      this.toast.error('لابد من إدخال بيانات ملاك وكالة السفر');
+      return;
+    }
+
+    const payload = this.myForm.value;
+    payload.ownerList = this.ownerList;
+    this.agencyService.addAgency(payload)
+      .subscribe((response: any) => {
+        if (response) {
+          this.toast.success('تم الحفظ بنجاح');
+          this.router.navigate(['agency/license']);
+          this.myForm.reset();
+        }
+      });
   }
-  console.log(this.selectedBasic);
-  this.agencyService.updateBasicAgency(this.selectedBasic);
-  this.router.navigate(['/agency/license']);
-  this.toast.success('تم التعديل');
-}
 
-deleteAgencyBasic() {
-  this.agencyService.deleteAgencyBasic(this.selectedBasic);
-}
-
-// logoChange(input: any, fileName) {
-//   if (!this.myForm.get('$$logoFile').hasError('maxSize')) {
-//     this.onSelectFile(input, fileName).subscribe(() => this.callLogo());
-//   }
-// }
-
-// getComFile() {
-//   const comFile = JSON.parse(sessionStorage.getItem('tACommRegFile'));
-//   this.comFile = comFile && comFile.originalName ? comFile.originalName.split(':').pop() : null;
-//   if (comFile && comFile.newName) {
-//     this.myForm.get('tACommRegFile').setValue(comFile.newName);
-//   }
-// }
-
-// commRegFileChange(input: any, fileName) {
-//   if (!this.myForm.get('$$commRegFile').hasError('maxSize')) {
-//     this.onSelectFile(input, fileName).subscribe(() => this.getComFile());
-//   }
-// }
-
-// onSelectFile(input: any, fileName) {
-//   return this.utilsService.uploadFile(input, fileName)
-//     .pipe(
-//       tap((res) => {
-//         if (res) {
-//           this.myForm.get(fileName).setValue(res.newName);
-//         }
-//       })
-//     );
-// }
-
-showDialog() {
-  this.displayDialog = true;
-}
-
-saveOwner() {
-  console.log(this.editIndex + 1);
-  if (this.editIndex + 1) {
-    this._editOwner();
+  updateAgencyBasic() {
+    this.selectedBasic = this.myForm.value;
+    this.selectedBasic.id = this.basicID;
+    // tslint:disable-next-line:no-non-null-assertion
+    if (this.selectedMainFile) {
+      this.selectedBasic.selectedMainFile = this.selectedMainFile;
+    }
+    // tslint:disable-next-line:no-non-null-assertion
+    if (this.selectedComRegFile) {
+      console.log(this.selectedComRegFile);
+      this.selectedBasic.selectedComRegFile = this.selectedComRegFile;
+    }
+    console.log(this.selectedBasic);
+    this.agencyService.updateBasicAgency(this.selectedBasic);
+    this.router.navigate(['/agency/license']);
+    this.toast.success('تم التعديل');
   }
-  else {
-    this._saveOwner();
+
+  deleteAgencyBasic() {
+    this.agencyService.deleteAgencyBasic(this.selectedBasic);
   }
-}
 
-_saveOwner() {
-  const payload = this.ownerForm.value;
-  if (this.ownerForm.valid) {
-    payload.$$ID = this.ownerList.length + 1;
-    this.ownerList.push(payload);
+  // logoChange(input: any, fileName) {
+  //   if (!this.myForm.get('$$logoFile').hasError('maxSize')) {
+  //     this.onSelectFile(input, fileName).subscribe(() => this.callLogo());
+  //   }
+  // }
+
+  // getComFile() {
+  //   const comFile = JSON.parse(sessionStorage.getItem('tACommRegFile'));
+  //   this.comFile = comFile && comFile.originalName ? comFile.originalName.split(':').pop() : null;
+  //   if (comFile && comFile.newName) {
+  //     this.myForm.get('tACommRegFile').setValue(comFile.newName);
+  //   }
+  // }
+
+  // commRegFileChange(input: any, fileName) {
+  //   if (!this.myForm.get('$$commRegFile').hasError('maxSize')) {
+  //     this.onSelectFile(input, fileName).subscribe(() => this.getComFile());
+  //   }
+  // }
+
+  // onSelectFile(input: any, fileName) {
+  //   return this.utilsService.uploadFile(input, fileName)
+  //     .pipe(
+  //       tap((res) => {
+  //         if (res) {
+  //           this.myForm.get(fileName).setValue(res.newName);
+  //         }
+  //       })
+  //     );
+  // }
+
+  showDialog() {
+    this.displayDialog = true;
   }
-  this.onClose();
-}
 
-_editOwner() {
-  console.log('Edit existing owner');
-  const payload = this.ownerForm.value;
-  if (this.ownerForm.valid) {
-    this.ownerList[this.editIndex] = payload;
-    this.editIndex = -1;
-    this.ownerList = [...this.ownerList];
+  saveOwner() {
+    console.log(this.editIndex + 1);
+    if (this.editIndex + 1) {
+      this._editOwner();
+    }
+    else {
+      this._saveOwner();
+    }
   }
-  this.onClose();
-}
 
-onClose() {
-  this.ownerForm.reset();
-  this.displayDialog = false;
-}
+  _saveOwner() {
+    const payload = this.ownerForm.value;
+    if (this.ownerForm.valid) {
+      payload.$$ID = this.ownerList.length + 1;
+      this.ownerList.push(payload);
+    }
+    this.onClose();
+  }
 
-onRowDelete(ownerId) {
-  this.ownerList = this.ownerList.filter((owner: any) => {
-    return owner.tAOwnerNationalID !== ownerId;
-  });
-}
+  _editOwner() {
+    console.log('Edit existing owner');
+    const payload = this.ownerForm.value;
+    if (this.ownerForm.valid) {
+      this.ownerList[this.editIndex] = payload;
+      this.editIndex = -1;
+      this.ownerList = [...this.ownerList];
+    }
+    this.onClose();
+  }
 
-onRowEdit(index) {
-  const owner = this.ownerList[index];
-  this.ownerForm.patchValue(owner);
-  this.showDialog();
-  this.editIndex = index;
-}
+  onClose() {
+    this.ownerForm.reset();
+    this.displayDialog = false;
+  }
+
+  onRowDelete(ownerId) {
+    this.ownerList = this.ownerList.filter((owner: any) => {
+      return owner.tAOwnerNationalID !== ownerId;
+    });
+  }
+
+  onRowEdit(index) {
+    const owner = this.ownerList[index];
+    this.ownerForm.patchValue(owner);
+    this.showDialog();
+    this.editIndex = index;
+  }
 }

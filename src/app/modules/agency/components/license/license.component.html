@@ -97,10 +97,6 @@
                         <div *ngFor="let upload of tourismUploads">
                           <p> Progress: {{upload.percentage | async}}</p>
                         </div>
-                        <span class="text-danger small"
-                          *ngIf="myForm.controls['tAMinTourAuthFile'].hasError('required')">
-                          Required
-                        </span>
                       </div>
                     </div>
                     <div class="col-md-1">
@@ -222,10 +218,6 @@
                         <div *ngFor="let upload of FtavmUploads">
                           <p> Progress: {{upload.percentage | async}}</p>
                         </div>
-                        <span class="text-danger small"
-                          *ngIf="myForm.controls['tAFTAVMemberFile'].hasError('required')">
-                          Required
-                        </span>
                       </div>
                     </div>
                     <div class="col-md-1">

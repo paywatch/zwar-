@@ -31,6 +31,8 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+  
+
   getAgencyDetails(ID) {
     this.agencyService.getAllData().subscribe(agency => {
       this.agency = agency.find(a => a.userID == ID);

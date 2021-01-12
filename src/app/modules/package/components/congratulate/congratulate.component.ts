@@ -35,6 +35,14 @@ export class CongratulateComponent implements OnInit {
 
   details() {
     this.router.navigate(['package/edit']);
+    sessionStorage.removeItem('base');
+    sessionStorage.removeItem('group');
+    sessionStorage.removeItem('room');
+    sessionStorage.removeItem('roomID');
+    sessionStorage.removeItem('MatwafImage');
+    sessionStorage.removeItem('packageBasicID');
+    sessionStorage.removeItem('groupID');
+    sessionStorage.removeItem('groupID');
   }
 
   newOne() {

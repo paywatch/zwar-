@@ -318,17 +318,14 @@ export class LicenseComponent implements OnInit {
       tAMinTourAuthNo: '',
       tAMinTourAuthIssueDate: '',
       tAMinTourAuthExpiryDate: '',
-      tAMinTourAuthFile: '',
       $$isFTAVMember: '',
       tAFTAVMemberIssueDate: '',
       tAFTAVMemberNo: '',
       tAFTAVMemberExpiryDate: '',
-      tAFTAVMemberFile: '',
       $$isFITTMember: '',
       tAFITTMemberNo: '',
       tAFITTMemberIssueDate: '',
       tAFITTMemberExpiryDate: '',
-      tAFITTMemberFile: ''
     };
 
     const payload = { ...emptyForm, ...this.myForm.value };
@@ -378,14 +375,12 @@ export class LicenseComponent implements OnInit {
       this.myForm.get('tAMinTourAuthNo').enable();
       this.myForm.get('tAMinTourAuthIssueDate').enable();
       this.myForm.get('tAMinTourAuthExpiryDate').enable();
-      this.myForm.get('tAMinTourAuthFile').enable();
     }
     else {
       console.log('clear validators');
       this.myForm.get('tAMinTourAuthNo').disable();
       this.myForm.get('tAMinTourAuthIssueDate').disable();
       this.myForm.get('tAMinTourAuthExpiryDate').disable();
-      this.myForm.get('tAMinTourAuthFile').disable();
     }
 
     this.myForm.updateValueAndValidity();
@@ -399,14 +394,12 @@ export class LicenseComponent implements OnInit {
       this.myForm.get('tAFTAVMemberNo').enable();
       this.myForm.get('tAFTAVMemberIssueDate').enable();
       this.myForm.get('tAFTAVMemberExpiryDate').enable();
-      this.myForm.get('tAFTAVMemberFile').enable();
 
     }
     else {
       this.myForm.get('tAFTAVMemberNo').disable();
       this.myForm.get('tAFTAVMemberIssueDate').disable();
       this.myForm.get('tAFTAVMemberExpiryDate').disable();
-      this.myForm.get('tAFTAVMemberFile').disable();
     }
     this.myForm.updateValueAndValidity();
     // this.myForm.get('tAFTAVMemberIssueDate').updateValueAndValidity();
@@ -420,13 +413,11 @@ export class LicenseComponent implements OnInit {
       this.myForm.get('tAFITTMemberNo').enable();
       this.myForm.get('tAFITTMemberIssueDate').enable();
       this.myForm.get('tAFITTMemberExpiryDate').enable();
-      this.myForm.get('tAFITTMemberFile').enable();
 
     } else {
       this.myForm.get('tAFITTMemberNo').disable();
       this.myForm.get('tAFITTMemberIssueDate').disable();
       this.myForm.get('tAFITTMemberExpiryDate').disable();
-      this.myForm.get('tAFITTMemberFile').disable();
     }
     this.myForm.updateValueAndValidity();
     // this.myForm.get('tAFITTMemberIssueDate').updateValueAndValidity();

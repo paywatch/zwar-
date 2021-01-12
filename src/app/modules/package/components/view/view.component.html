@@ -29,62 +29,62 @@
       </ul>
       <section id="essential">
         <h3 class="text-primary"> البيانات الاساسية </h3>
-       <div>
-         <div class="row">
-           <div class="col-md-4">
-             <div class="form-group">
-               <label class="d-block col-form-label"> المطار الداخلي </label>
-               {{package.internalAirPort}}
-             </div>
-           </div>
-           <div class="col-md-4">
-             <div class="form-group ">
-               <label class="d-block col-form-label"> تاريخ الانطلاق </label>
-               {{package.packageDepartureDate}}
-             </div>
-           </div>
-           <div class="col-md-4">
-             <div class="form-group ">
-               <label class="d-block col-form-label"> تاريخ العودة </label>
-               {{package.packageReturnDate}}
-             </div>
-           </div>
-         </div>
-         <div class="row">
-           <div class="col-md-4">
-             <div class="form-group ">
-               <label class="d-block col-form-label"> موسم العمرة </label>
-               {{package.umrahSeasonName}}
-             </div>
-           </div>
-           <div class="col-md-4">
-             <div class="form-group ">
-               <label class="d-block col-form-label"> سعة الباقة </label>
-               {{package.packageCapacity}}
-             </div>
-           </div>
-           <div class="col-md-4"> 
-             <div class="form-group ">
-               <label class="d-block col-form-label"> عدد مقاعد السفر </label>
-               {{package.packageAvailableSeats}}
-             </div>
-           </div>
-         </div>
-         <div class="row">
-           <div class="col-md-4">
-             <div class="form-group ">
-               <label class="d-block col-form-label"> خط سير الرحلة </label>
-               {{package.directionName}}
-             </div>
-           </div>
-           <div class="col-md-4">
-             <div class="form-group ">
-               <label class="d-block col-form-label">هل هناك عرض على الباقة</label>
-               <input type="text" readonly="" class="form-control-plaintext" value=" لا يوجد عرض ">
-             </div>
-           </div>
-         </div>
-       </div>  
+        <div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="d-block col-form-label"> المطار الداخلي </label>
+                {{package.internalAirPort}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> تاريخ الانطلاق </label>
+                {{package.packageDepartureDate}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> تاريخ العودة </label>
+                {{package.packageReturnDate}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> موسم العمرة </label>
+                {{package.umrahSeasonName}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> سعة الباقة </label>
+                {{package.packageCapacity}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> عدد مقاعد السفر </label>
+                {{package.packageAvailableSeats}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> خط سير الرحلة </label>
+                {{package.directionName}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label class="d-block col-form-label">هل هناك عرض على الباقة</label>
+                <input type="text" readonly="" class="form-control-plaintext" value=" لا يوجد عرض ">
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       <hr class="my-4 mx-n4">
       <section id="groups">
@@ -122,10 +122,31 @@
           </div>
 
           <div class="col-md-4 col-lg-3 offset-lg-1  text-center   pt-3">
-            <div class="border border-primary mb-3">
-              <img src="ui/images/motawaf.jpg" alt="صورة المطوف ">
+            <div class="border-primary mb-3">
+              <a type="button" (click)="openModal(template)">
+                <h4>
+                  صوره المطوف
+                </h4>
+                <i style="width: 7rem; font-size: 2.6rem;" class="fa fa-desktop"></i>
+              </a>
+
+              <ng-template #template>
+                <div class="modal-header">
+                  <h4 class="modal-title pull-left">صورة المطوف </h4>
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row justify-content-center" *ngIf="package.matwafImage">
+                    <div *ngFor="let item of package.matwafImage">
+                      <p><img width="100" height="100" [src]="item.url"
+                          class="mr-3" /></p>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
             </div>
-            <p class="text-light"> صورة المطوف </p>
           </div>
         </div>
 
@@ -158,7 +179,7 @@
       </section>
       <div class="btn-group mt-5">
         <div>
-          <a  class="btn btn-outline-primary ml-3"[routerLink]="['/package/edit']">رجوع</a>
+          <a class="btn btn-outline-primary ml-3" [routerLink]="['/package/edit']">رجوع</a>
         </div>
       </div>
     </div>

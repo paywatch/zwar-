@@ -79,9 +79,17 @@ export class BasicsComponent implements OnInit {
     this.programService.getFileFromStorage().subscribe(res => {
       if (this.imageId) {
         const imageSet = new Set(this.imageId);
-        this.selectedProgramBannerFile = res.filter(item =>  imageSet.has(item.id));
+        this.selectedProgramBannerFile = res.filter(item => imageSet.has(item.id));
       }
     });
+  }
+
+  deleteImage(item) {
+    const path = `files/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.programService.deleteImage(item);
+    this.selectedProgramBannerFile = this.selectedProgramBannerFile.filter(items => items.id !== item.id);
   }
 
   openModal(template: TemplateRef<any>) {

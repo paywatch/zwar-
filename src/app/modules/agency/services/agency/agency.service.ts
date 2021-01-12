@@ -33,14 +33,20 @@ export class AgencyService {
   confirmationCollection: AngularFirestoreCollection<any>;
   confirmReister: Observable<any>;
   confirmDoc: AngularFirestoreDocument<any>;
+
   agencyFiles: Observable<any[]>;
   agencyFilesCollection: AngularFirestoreCollection<any>;
+  agencyFileDoc: AngularFirestoreDocument<any>;
+
   agencyComRegFile: Observable<any[]>;
   agencyComRegFileCollection: AngularFirestoreCollection<any>;
+
   agencyTourismFile: Observable<any[]>;
   agencyTourismFileCollection: AngularFirestoreCollection<any>;
+
   agencyFtavFile: Observable<any[]>;
   agencyFtavFileCollection: AngularFirestoreCollection<any>;
+
   agencyTunisFile: Observable<any[]>;
   agencyTunisFileCollection: AngularFirestoreCollection<any>;
 
@@ -312,6 +318,11 @@ export class AgencyService {
   deleteAgency(agency) {
     this.confirmDoc = this.afs.doc(`confirm/${agency.id}`);
     this.confirmDoc.delete();
+  }
+
+  deleteAgencyImage(item) {
+    this.agencyFileDoc = this.afs.doc(`agencyFile/${item.id}`);
+    this.agencyFileDoc.delete();
   }
 
 }

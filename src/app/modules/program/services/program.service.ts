@@ -49,13 +49,15 @@ export class ProgramService {
 
   files: Observable<any[]>;
   filesCollection: AngularFirestoreCollection<any>;
-  filesDoc: AngularFirestoreDocument<any>;
+  filesDoc: AngularFirestoreDocument<unknown>;
 
   Madinafiles: Observable<any[]>;
   MadinafilesCollection: AngularFirestoreCollection<any>;
+  madinaDoc: AngularFirestoreDocument<any>;
 
   Meccafiles: Observable<any[]>;
   MeccafilesCollection: AngularFirestoreCollection<any>;
+  meccaDoc: AngularFirestoreDocument<any>;
 
   constructor(
     private http: HttpClient,
@@ -72,7 +74,7 @@ export class ProgramService {
     this.visitsCollection = this.afs.collection('visits');
     this.ProgramCollection = this.afs.collection('program');
     this.publishCollection = this.afs.collection('publish');
-    this.filesCollection = this.afs.collection('files');
+    this.filesCollection = this.afs.collection('c');
     this.MadinafilesCollection = this.afs.collection('MaddinaFiles');
     this.MeccafilesCollection = this.afs.collection('MeccaFiles');
   }
@@ -308,4 +310,20 @@ export class ProgramService {
     this.programDoc.delete();
   }
 
+  deleteImage(item) {
+    console.log(item.id);
+    this.filesDoc = this.afs.doc(`files/${item.id}`);
+    this.filesDoc.delete();
+  }
+
+  deleteMeccaImage(item) {
+    this.meccaDoc = this.afs.doc(`MeccaFiles/${item.id}`);
+    this.meccaDoc.delete();
+  }
+
+  deleteMadinaImage(item) {
+    this.madinaDoc = this.afs.doc(`MaddinaFiles/${item.id}`);
+    this.madinaDoc.delete();
+    
+  }
 }
