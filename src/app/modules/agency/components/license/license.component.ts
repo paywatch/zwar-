@@ -32,12 +32,12 @@ export class LicenseComponent implements OnInit {
   tourismUploads: any[];
   allPercentage: Observable<unknown>;
   tourismFiles: any;
-  selectedTourismFile: any;
+  selectedTourismFile: any[];
   FtavmUploads: any[];
   FtavFiles: any;
-  selectedFtavFile: any;
+  selectedFtavFile: any[];
   tunisUploads: any[];
-  selectedTunisFile: any;
+  selectedTunisFile: any[];
   tunisFilesID: any;
   modalRef: BsModalRef;
 
@@ -127,6 +127,14 @@ export class LicenseComponent implements OnInit {
     });
   }
 
+  deleteTourismFile(item) {
+    const path = `tourismFiles/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.agencyService.deleteTourismFile(item);
+    this.selectedTourismFile = this.selectedTourismFile.filter(file => file.id !== item.id);
+  }
+
   onPdfChange(event) {
 
     this.tourismUploads = [];
@@ -185,6 +193,14 @@ export class LicenseComponent implements OnInit {
       this.selectedFtavFile = find;
       console.log(this.selectedFtavFile);
     });
+  }
+
+  deleteFtavFile(item) {
+    const path = `FtavFiles/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.agencyService.deleteFtavFile(item);
+    this.selectedFtavFile = this.selectedFtavFile.filter(file => file.id !== item.id);
   }
 
   onFtavChange(event) {
@@ -246,6 +262,14 @@ export class LicenseComponent implements OnInit {
       this.selectedTunisFile = find;
       console.log(this.selectedTunisFile);
     });
+  }
+
+  deleteTunisFile(item) {
+    const path = `tunisFiles/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.agencyService.deleteTunisFile(item);
+    this.selectedTunisFile = this.selectedTunisFile.filter(file => file.id !== item.id);
   }
 
   AddtunisFiles(event: any) {
@@ -329,12 +353,6 @@ export class LicenseComponent implements OnInit {
     };
 
     const payload = { ...emptyForm, ...this.myForm.value };
-    payload.tAMinTourAuthIssueDate = moment(payload.tAMinTourAuthIssueDate).format('MM/DD/YYYY');
-    payload.tAMinTourAuthExpiryDate = moment(payload.tAMinTourAuthExpiryDate).format('MM/DD/YYYY');
-    payload.tAFTAVMemberIssueDate = moment(payload.tAFTAVMemberIssueDate).format('MM/DD/YYYY');
-    payload.tAFTAVMemberExpiryDate = moment(payload.tAFTAVMemberExpiryDate).format('MM/DD/YYYY');
-    payload.tAFITTMemberIssueDate = moment(payload.tAFITTMemberIssueDate).format('MM/DD/YYYY');
-    payload.tAFITTMemberExpiryDate = moment(payload.tAFITTMemberExpiryDate).format('MM/DD/YYYY');
     this.agencyService.saveLicence(payload)
       .subscribe((response: any) => {
         if (response) {

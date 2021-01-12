@@ -113,7 +113,7 @@
                         </div>
                         <div class="modal-body">
                           <div class="column text-center" *ngIf="selectedTourismFile">
-                            <p><img style="width: 100%; height: 23rem;" [src]="selectedTourismFile.url" /></p>
+                            <p><img style="width: 100%; height: 23rem;" (click)="deleteTourismFile(selectedTourismFile)" [src]="selectedTourismFile.url" /></p>
                           </div>
                         </div>
                       </ng-template>
@@ -234,7 +234,7 @@
                         </div>
                         <div class="modal-body">
                           <div class="column text-center" *ngIf="selectedFtavFile">
-                            <p><img style="width: 100%; height: 23rem;" [src]="selectedFtavFile.url" /></p>
+                            <p><img style="width: 100%; height: 23rem;" (click)="deleteFtavFile(selectedFtavFile)" [src]="selectedFtavFile.url" /></p>
                           </div>
                         </div>
                       </ng-template>
@@ -350,7 +350,7 @@
                         </div>
                         <div class="modal-body">
                           <div class="column text-center" *ngIf="selectedTunisFile">
-                            <p><img style="width: 100%; height: 23rem;" [src]="selectedTunisFile.url" /></p>
+                            <p><img style="width: 100%; height: 23rem;" (click)="deleteTunisFile(selectedTunisFile)" [src]="selectedTunisFile.url" /></p>
                           </div>
                         </div>
                       </ng-template>

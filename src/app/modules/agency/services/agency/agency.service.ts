@@ -43,12 +43,15 @@ export class AgencyService {
 
   agencyTourismFile: Observable<any[]>;
   agencyTourismFileCollection: AngularFirestoreCollection<any>;
+  tourismDoc: AngularFirestoreDocument<any>;
 
   agencyFtavFile: Observable<any[]>;
   agencyFtavFileCollection: AngularFirestoreCollection<any>;
+  ftavDoc: AngularFirestoreDocument<any>;
 
   agencyTunisFile: Observable<any[]>;
   agencyTunisFileCollection: AngularFirestoreCollection<any>;
+  tunisDoc: AngularFirestoreDocument<any>;
 
   constructor(
     private http: HttpClient,
@@ -323,6 +326,21 @@ export class AgencyService {
   deleteAgencyImage(item) {
     this.agencyFileDoc = this.afs.doc(`agencyFile/${item.id}`);
     this.agencyFileDoc.delete();
+  }
+
+  deleteTourismFile(item) {
+    this.tourismDoc = this.afs.doc(`tourismFiles/${item.id}`);
+    this.tourismDoc.delete();
+  }
+
+  deleteFtavFile(item) {
+    this.ftavDoc = this.afs.doc(`FtavFiles/${item.id}`);
+    this.ftavDoc.delete();
+  }
+
+  deleteTunisFile(item) {
+    this.tunisDoc = this.afs.doc(`tunisFiles/${item.id}`);
+    this.tunisDoc.delete();
   }
 
 }
