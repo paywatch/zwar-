@@ -260,10 +260,10 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group" *ngIf="tAFITTMemberFile">
+                  <div class="form-group" *ngIf="agency?.tunisFiles">
                     <label class="d-block col-form-label"> ملف العضوية </label>
-                    <a class="underline p-1 d-inline-block" [href]="tAFITTMemberFile?.url" target="_blank">
-                      {{ tAFITTMemberFile?.name }}
+                    <a class="underline p-1 d-inline-block" [href]="agency?.tunisFiles?.url" target="_blank">
+                      {{ agency?.tunisFiles?.name }}
                     </a>
                   </div>
                 </div>

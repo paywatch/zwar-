@@ -104,6 +104,7 @@ export class MainComponent implements OnInit {
       tACommRegExpiryDate: ['', Validators.required],
       tADescription: ['', [Validators.required, Validators.maxLength(1000)]],
       tACommRegFile: [''],
+      companyLogo: ['', Validators.required],
       number: ['', [Validators.required, Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)]]
     }, {
       validators: GreaterThan('tACommRegIssueDate', 'tACommRegExpiryDate')
