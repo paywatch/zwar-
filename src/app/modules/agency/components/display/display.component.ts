@@ -53,6 +53,7 @@ export class DisplayComponent implements OnInit {
     this.basics = JSON.parse(sessionStorage.getItem('agencyBasic')) || {};
     this.license = JSON.parse(sessionStorage.getItem('license')) || {};
     this.branches = JSON.parse(sessionStorage.getItem('branch')) || {};
+    console.log(this.branches);
     this.user = JSON.parse(localStorage.getItem('user'));
     this.companyLogo = JSON.parse(sessionStorage.getItem('agencyFile')) || [];
     this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || [];
@@ -65,7 +66,7 @@ export class DisplayComponent implements OnInit {
     this.agency = {
       ...this.basics,
       ...this.license,
-      ...this.branches
+      barnch: this.branches
     };
     console.log(this.agency);
     if (!this.agency) {
@@ -82,8 +83,9 @@ export class DisplayComponent implements OnInit {
 
   getCompanyLogo() {
     this.agencyService.getAgencyImage().subscribe(images => {
-      this.companyLogo = this.companyLogo.map(logo => images.find(image => image.id == logo));
-      this.agency.companyLogo = this.companyLogo;
+      const companySet = new Set(this.companyLogo);
+      this.agency.companyLogo = images.filter(logo => companySet.has(logo.id));
+      console.log(this.agency.companyLogo);
     });
   }
 
@@ -137,7 +139,6 @@ export class DisplayComponent implements OnInit {
     sessionStorage.removeItem('register');
     sessionStorage.removeItem('agecyID');
     sessionStorage.removeItem('agency');
-    sessionStorage.removeItem('agencyBasic');
     sessionStorage.removeItem('basicID');
     sessionStorage.removeItem('tourismFiles');
     sessionStorage.removeItem('FtavFiles');

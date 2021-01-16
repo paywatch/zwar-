@@ -137,7 +137,7 @@ export class MainComponent implements OnInit {
 
   deleteAgencyImage(item) {
     console.log(item);
-    const path = `agencyFile/${item.name}`;
+    const path = `agencyFile/${item.name}`; 
     const ref = this.db.ref(path);
     ref.delete();
     this.agencyService.deleteAgencyImage(item);

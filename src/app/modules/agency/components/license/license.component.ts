@@ -132,7 +132,6 @@ export class LicenseComponent implements OnInit {
     const ref = this.db.ref(path);
     ref.delete();
     this.agencyService.deleteTourismFile(item);
-    this.selectedTourismFile = this.selectedTourismFile.filter(file => file.id !== item.id);
   }
 
   onPdfChange(event) {
@@ -200,7 +199,6 @@ export class LicenseComponent implements OnInit {
     const ref = this.db.ref(path);
     ref.delete();
     this.agencyService.deleteFtavFile(item);
-    this.selectedFtavFile = this.selectedFtavFile.filter(file => file.id !== item.id);
   }
 
   onFtavChange(event) {

@@ -331,7 +331,10 @@
                     <div class="modal-body">
                       <div class="row justify-content-center" *ngIf="selectedMeccaFile">
                         <div *ngFor="let item of selectedMeccaFile">
-                          <p><img width="100" (click)="deleteMeccaFile(item)" height="100" class="mr-2" [src]="item.url" /></p>
+                          <p><img width="100" height="100" class="mr-2" [src]="item.url" /></p>
+                          <a class="table-action text-danger" (click)="deleteMeccaFile(item)">
+                            <i class="fas fa-trash"></i>
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -627,7 +630,10 @@
                     <div class="modal-body">
                       <div class="row justify-content-center" *ngIf="selectedMadinaFile">
                         <div *ngFor="let item of selectedMadinaFile">
-                          <p><img width="100" (click)="deleteMadinaFile(item)" height="100" class="mr-2" [src]="item.url" /></p>
+                          <p><img width="100" height="100" class="mr-2" [src]="item.url" /></p>
+                          <a class="table-action text-danger" (click)="deleteMadinaFile(item)">
+                            <i class="fas fa-trash"></i>
+                          </a>
                         </div>
                       </div>
                     </div>

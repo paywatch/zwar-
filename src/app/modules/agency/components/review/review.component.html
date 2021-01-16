@@ -83,8 +83,8 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="d-block col-form-label"> ارفاق ملف السجل التجاري </label>
-										<a class="underline p-1 d-inline-block" [href]="commRegFile?.url" target="_blank">
-											{{commRegFile?.name}}
+										<a class="underline p-1 d-inline-block" [href]="agency?.comRegFile?.url" target="_blank">
+											{{agency?.comRegFile?.name}}
 										</a>
 									</div>
 								</div>
@@ -114,8 +114,8 @@
 						</div>
 						<div class="col-lg-3 col-md-4 mb-5 offset-lg-1">
 							<div class="bg-white border flag-info overflow-hidden py-5 round">
-								<span class="p-4 d-block">
-									<img class="" [src]="logoUrl" alt="company logo">
+								<span class="p-4 d-block" *ngFor="let item of agency?.companyLogo">
+									<img [src]="item.url" alt="company logo">
 								</span>
 							</div>
 						</div>
@@ -130,10 +130,10 @@
 								<th> رقم الجوال</th>
 							</thead>
 							<tbody>
-								<tr>
-									<td>{{agency.ownerList[0]}}</td>
-									<td>{{agency.ownerList[1]}}</td>
-									<td>{{agency.ownerList[2]}}</td>
+								<tr *ngFor="let item of agency?.ownerList">
+									<td>{{item.tAOwnerFullName}}</td>
+									<td>{{item.tAOwnerNationalID}}</td>
+									<td>{{item.tAOwnerPhoneNo}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -157,10 +157,10 @@
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group" *ngIf="tAMinTourAuthFile">
+									<div class="form-group" *ngIf="agency?.tourismFile">
 										<label class="d-block col-form-label"> ملف الترخيص </label>
-										<a class="underline p-1 d-inline-block" [href]="tAMinTourAuthFile.url" target="_blank">
-											{{tAMinTourAuthFile.name}}
+										<a class="underline p-1 d-inline-block" [href]="agency?.tourismFile?.url" target="_blank">
+											{{agency?.tourismFile?.name}}
 										</a>
 									</div>
 								</div>
@@ -198,10 +198,10 @@
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group" *ngIf="tAFTAVMemberFile">
+									<div class="form-group" *ngIf="agency?.FtavFiles">
 										<label class="d-block col-form-label"> ملف العضوية </label>
-										<a class="underline p-1 d-inline-block" [href]="tAFTAVMemberFile?.url" target="_blank">
-											{{tAFTAVMemberFile?.name}}
+										<a class="underline p-1 d-inline-block" [href]="agency?.FtavFiles?.url" target="_blank">
+											{{agency?.FtavFiles?.name}}
 										</a>
 									</div>
 								</div>
@@ -239,10 +239,10 @@
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group" *ngIf="tAFITTMemberFile">
+									<div class="form-group" *ngIf="agency?.tunisFiles">
 										<label class="d-block col-form-label"> ملف العضوية </label>
-										<a class="underline p-1 d-inline-block" [href]="tAFITTMemberFile?.url" target="_blank">
-											{{ tAFITTMemberFile?.name }}
+										<a class="underline p-1 d-inline-block" [href]="agency?.tunisFiles?.url" target="_blank">
+											{{ agency?.tunisFiles?.name }}
 										</a>
 									</div>
 								</div>

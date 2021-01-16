@@ -208,9 +208,14 @@
                 </button>
               </div>
               <div class="modal-body">
-                <div *ngIf="selectedProgramBannerFile" class="row justify-content-center">
+                <div *ngIf="selectedProgramBannerFile" class="row justify-content-center align-items-center">
                   <div *ngFor="let item of selectedProgramBannerFile">
-                    <p><img [src]="item.url" (click)="deleteImage(item)" width="100" height="100" class="mr-4" /></p>
+                    <p><img [src]="item.url" width="100" height="100" class="mr-4" /></p>
+                    <div>
+                      <a class="table-action text-danger" (click)="deleteImage(item)">
+                        <i class="fas fa-trash"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

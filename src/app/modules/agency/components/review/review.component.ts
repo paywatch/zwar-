@@ -14,6 +14,7 @@ export class ReviewComponent implements OnInit {
   agency: any;
   ID: string;
   agencyBasic: any;
+  companyLogo: any;
 
   constructor(
     private agencyService: AgencyService,
@@ -23,8 +24,11 @@ export class ReviewComponent implements OnInit {
   ngOnInit(): void {
     this.ID = this.activatedRoute.snapshot.params['id'];
     this.agencyBasic = JSON.parse(sessionStorage.getItem('agencyBasic'));
+    console.log(this.agencyBasic);
     this.getAgency(this.ID);
-    this.getCountry();
+    setTimeout(() => {
+      this.getCountry();
+    }, 2000);
   }
 
   getAgency(id) {
@@ -36,10 +40,13 @@ export class ReviewComponent implements OnInit {
 
   getCountry() {
     this.agencyService.getAllCountries().subscribe(country => {
-      this.agency.countryName = country.find(c => c.id == this.agencyBasic.countryId).name;
+      const find = country.find(c => c.id == this.agencyBasic.countryId).name;
+      this.agency.countryName = find;
       console.log(this.agency.countryName);
     });
   }
+
+
 
   backToLogin() {
     this.router.navigate(['/auth/login']);
