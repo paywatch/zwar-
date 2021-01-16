@@ -40,6 +40,7 @@ export class AgencyService {
 
   agencyComRegFile: Observable<any[]>;
   agencyComRegFileCollection: AngularFirestoreCollection<any>;
+  comRegDoc: AngularFirestoreDocument<any>;
 
   agencyTourismFile: Observable<any[]>;
   agencyTourismFileCollection: AngularFirestoreCollection<any>;
@@ -341,6 +342,11 @@ export class AgencyService {
   deleteTunisFile(item) {
     this.tunisDoc = this.afs.doc(`tunisFiles/${item.id}`);
     this.tunisDoc.delete();
+  }
+
+  deleteComRegFile(item) {
+    this.comRegDoc = this.afs.doc(`comRegFile/${item.id}`);
+    this.comRegDoc.delete();
   }
 
 }

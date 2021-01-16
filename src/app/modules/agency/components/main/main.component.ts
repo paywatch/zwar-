@@ -104,7 +104,6 @@ export class MainComponent implements OnInit {
       tACommRegExpiryDate: ['', Validators.required],
       tADescription: ['', [Validators.required, Validators.maxLength(1000)]],
       tACommRegFile: [''],
-      companyLogo: ['', Validators.required],
       number: ['', [Validators.required, Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)]]
     }, {
       validators: GreaterThan('tACommRegIssueDate', 'tACommRegExpiryDate')
@@ -137,6 +136,7 @@ export class MainComponent implements OnInit {
   }
 
   deleteAgencyImage(item) {
+    console.log(item);
     const path = `agencyFile/${item.name}`;
     const ref = this.db.ref(path);
     ref.delete();
@@ -205,6 +205,14 @@ export class MainComponent implements OnInit {
       this.selectedComRegFile = find;
       console.log(this.selectedComRegFile);
     });
+  }
+
+  deleteComRegFile(item) {
+    console.log(item);
+    const path = `comRegFile/${item.name}`;
+    const ref = this.db.ref(path);
+    ref.delete();
+    this.agencyService.deleteComRegFile(item);
   }
 
   comRegFileChange(event) {

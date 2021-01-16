@@ -143,13 +143,16 @@
                       <label *ngIf="!selectedComRegFile" class="form-control" for="commRegFile">
                         {{'اختر ملف'}}
                       </label>
-                      <a *ngIf="selectedComRegFile" class="form-control" for="commRegFile" target="_blank" [href]="selectedComRegFile.url">
+                      <a *ngIf="selectedComRegFile" class="form-control" for="commRegFile" target="_blank"
+                        [href]="selectedComRegFile.url">
                         {{ selectedComRegFile.name}}
                       </a>
                       <span class="form-control form-upload" class="d-none">
                         <input type="file" id="commRegFile" (change)="comRegFileChange($event)">
                       </span>
-
+                      <a class="table-action text-danger" (click)="deleteComRegFile(selectedComRegFile)">
+                        <i class="fas fa-trash"></i>
+                      </a>
                       <span class="text-danger small"
                         *ngIf="myForm.controls['tACommRegFile'].hasError('required') && myForm.get('tACommRegFile').dirty">
                         هذا الحقل إجباري
@@ -271,9 +274,15 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class="row justify-content-center" *ngIf="selectedMainFile">
+                    <div class="column justify-content-center align-items-center" *ngIf="selectedMainFile">
                       <div *ngFor="let items of selectedMainFile">
-                        <img (click)="deleteAgencyImage(items)" [src]="items?.url" alt="company logo" width="100" height="100" class="mr-2">
+                        <img [src]="items?.url" alt="company logo" width="100"
+                          height="100" class="mr-2">
+                        <div>
+                          <a class="table-action text-danger" (click)="deleteAgencyImage(items)">
+                            <i class="fas fa-trash"></i>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
