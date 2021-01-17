@@ -38,8 +38,9 @@ export class ProgramService {
   programCategoryDoc: AngularFirestoreDocument<any>;
 
   starsCollection: AngularFirestoreCollection<any>;
-
   hotelstarts: Observable<any>;
+  hotelStarDoc: AngularFirestoreDocument<any>;
+
   airPlaneCollection: AngularFirestoreCollection<any>;
   airPlaneCompany: Observable<any>;
 
@@ -77,6 +78,7 @@ export class ProgramService {
     this.ProgramCollection = this.afs.collection('program');
     this.publishCollection = this.afs.collection('publish');
     this.programCategoryCollection = this.afs.collection('programCategory');
+    this.starsCollection = this.afs.collection('hotel starts');
     this.filesCollection = this.afs.collection('files');
     this.MadinafilesCollection = this.afs.collection('MaddinaFiles');
     this.MeccafilesCollection = this.afs.collection('MeccaFiles');
@@ -132,8 +134,15 @@ export class ProgramService {
   }
 
   getAllStars() {
-    this.hotelstarts = this.afs.collection('hotel starts').valueChanges();
-    return this.hotelstarts;
+    return this.hotelstarts = this.afs.collection('hotel starts').snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+      );
   }
 
   getAllAirplaneCompany() {
@@ -264,8 +273,12 @@ export class ProgramService {
       );
   }
 
-  addCategory(payload){
+  addCategory(payload) {
     this.programCategoryCollection.add(payload);
+  }
+
+  AddHotelStar(payload) {
+    this.starsCollection.add(payload);
   }
 
   updateBasicData(basic) {
@@ -343,5 +356,10 @@ export class ProgramService {
   deleteprogramCategory(item) {
     this.programCategoryDoc = this.afs.doc(`programCategory/${item.id}`);
     this.programCategoryDoc.delete();
+  }
+
+  deleteHotelStar(item) {
+    this.hotelStarDoc = this.afs.doc(`hotel starts/${item.id}`);
+    this.hotelStarDoc.delete();
   }
 }
