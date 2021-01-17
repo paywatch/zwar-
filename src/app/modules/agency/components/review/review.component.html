@@ -317,12 +317,12 @@
 							</thead>
 							<tbody>
 								<tr style="cursor: pointer;">
-									<td>{{agency.tABranchName}}</td>
-									<td>{{agency?.tADistrictID}}</td>
-									<td>{{agency.tABranchAddress}}</td>
-									<td>{{agency.tABranchType ? 'رئيسى': 'عادى'}}</td>
-									<td>{{agency.tABranchLongitude + ' , ' + agency.tABranchLatitude}}</td>
-									<td>{{agency.tABranchPhoneNo}}</td>
+									<td>{{agency.branch[0].tABranchName}}</td>
+									<td>{{agency?.branch[0].tADistrictID}}</td>
+									<td>{{agency.branch[0].tABranchAddress}}</td>
+									<td>{{agency.branch[0].tABranchType ? 'رئيسى': 'عادى'}}</td>
+									<td>{{agency.branch[0].tABranchLongitude + ' , ' + agency.branch[0].tABranchLatitude}}</td>
+									<td>{{agency.branch[0].tABranchPhoneNo}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -336,25 +336,8 @@
 					</div>
 				</section>
 
-
-				<section class="bg-light  mx-n4 p-4 px-4 mt-5">
-					<div class="custom-control custom-checkbox mr-sm-2 mb-3">
-						<input type="checkbox" [(ngModel)]="responsablity" class="custom-control-input" id="xx">
-						<label class="custom-control-label" for="xx">
-							اقر بمسوؤليتي عن صحة البيانات السابقة والتي تتوافق مع البيانات المسجلة حكوميا
-						</label>
-					</div>
-					<div class="custom-control custom-checkbox mr-sm-2">
-						<input type="checkbox" [(ngModel)]="terms" class="custom-control-input" id="ss">
-						<label class="custom-control-label" for="ss">
-							اقر بالموافقة على الشروط والاحكام الخاصة بتسجيل الوكالة بعد قراءتها
-						</label>
-					</div>
-				</section>
-
 				<div class="row justify-content-between mt-3">
 					<a [routerLink]="['/agency/edit']" class="btn btn-outline-primary ml-3">الرجوع</a>
-					<a (click)="backToLogin()" class="btn btn-outline-primary ml-3">التاكيد</a>
 				</div>
 			</div>
 		</div>

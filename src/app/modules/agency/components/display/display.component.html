@@ -301,7 +301,7 @@
                   <div class="col-md-6">
                     <div class="form-group ">
                       <label class="d-block col-form-label"> رقم الجوال </label>
-                      <input type="number" class="form-control-plaintext" [value]="agency.tABranchMobileNo">
+                      <input type="number" class="form-control-plaintext" [value]="agency.branch.tABranchMobileNo">
                     </div>
                   </div>
                 </div>
@@ -338,12 +338,12 @@
               </thead>
               <tbody>
                 <tr style="cursor: pointer;">
-                  <td>{{agency.tABranchName}}</td>
-                  <td>{{agency?.tADistrictID}}</td>
-                  <td>{{agency.tABranchAddress}}</td>
+                  <td>{{agency?.branch.tABranchName}}</td>
+                  <td>{{agency?.branch.tADistrictID}}</td>
+                  <td>{{agency?.branch.tABranchAddress}}</td>
                   <td>{{agency.tABranchType ? 'رئيسى': 'عادى'}}</td>
-                  <td>{{agency.tABranchLongitude + ' , ' + agency.tABranchLatitude}}</td>
-                  <td>{{agency.tABranchPhoneNo}}</td>
+                  <td>{{agency.branch.tABranchLongitude + ' , ' + agency.branch.tABranchLatitude}}</td>
+                  <td>{{agency.branch.tABranchPhoneNo}}</td>
                 </tr>
               </tbody>
             </table>
