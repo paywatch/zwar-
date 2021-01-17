@@ -34,6 +34,8 @@ export class ProgramService {
   publish: Observable<any>;
 
   programCategory: Observable<any>;
+  programCategoryCollection: AngularFirestoreCollection<any>;
+  programCategoryDoc: AngularFirestoreDocument<any>;
 
   starsCollection: AngularFirestoreCollection<any>;
 
@@ -74,7 +76,8 @@ export class ProgramService {
     this.visitsCollection = this.afs.collection('visits');
     this.ProgramCollection = this.afs.collection('program');
     this.publishCollection = this.afs.collection('publish');
-    this.filesCollection = this.afs.collection('c');
+    this.programCategoryCollection = this.afs.collection('programCategory');
+    this.filesCollection = this.afs.collection('files');
     this.MadinafilesCollection = this.afs.collection('MaddinaFiles');
     this.MeccafilesCollection = this.afs.collection('MeccaFiles');
   }
@@ -117,8 +120,15 @@ export class ProgramService {
   }
 
   getAllCategory() {
-    this.programCategory = this.afs.collection('programCategory').valueChanges();
-    return this.programCategory;
+    return this.programCategory = this.afs.collection('programCategory').snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      })
+      );
   }
 
   getAllStars() {
@@ -254,6 +264,10 @@ export class ProgramService {
       );
   }
 
+  addCategory(payload){
+    this.programCategoryCollection.add(payload);
+  }
+
   updateBasicData(basic) {
     this.basicDoc = this.afs.doc(`basics/${basic.id}`);
     this.basicDoc.update(basic);
@@ -324,6 +338,10 @@ export class ProgramService {
   deleteMadinaImage(item) {
     this.madinaDoc = this.afs.doc(`MaddinaFiles/${item.id}`);
     this.madinaDoc.delete();
-    
+  }
+
+  deleteprogramCategory(item) {
+    this.programCategoryDoc = this.afs.doc(`programCategory/${item.id}`);
+    this.programCategoryDoc.delete();
   }
 }

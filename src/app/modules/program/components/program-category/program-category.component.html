@@ -1,0 +1,40 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a uhref="Search_results.html"> ادارة برامج العمرة </a></li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> اضافة تصنيف برنامج جديد </h1>
+    </div>
+    <div class="page-inner">
+      <div class="wizard-details">
+        <form [formGroup]="programCategories" (ngSubmit)="AddCategory()">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <label for="">اضافة تصنيف برنامج </label>
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+          </div>
+          <div class="row justify-content-center mt-2">
+            <button class="btn btn-primary text-center" type="submit">اضافة</button>
+          </div>
+        </form>
+        <div *ngFor="let item of categories" class="d-flex justify-content-between">
+          <div style="width: 100%;">
+            <ul class="list-group mt-2">
+              <li class="list-group-item">
+                {{item.name}}
+              </li>
+            </ul>
+          </div>
+            <a class="table-action text-danger mt-3" (click)="deleteItem(item)">
+              <i class="fas fa-trash"></i>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

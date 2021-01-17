@@ -12,7 +12,8 @@ import {
   CongratulationsComponent,
   ViewprogramComponent,
   EditComponent,
-  UpdateComponent
+  UpdateComponent,
+  ProgramCategoryComponent
 } from './components';
 
 const routes: Routes = [
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'update/:programId',
     component: UpdateComponent
+  },
+  {
+    path: 'programCategory',
+    component: ProgramCategoryComponent
   }
 ];
 
@@ -70,6 +75,7 @@ export class ProgramRoutingModule {
     CongratulationsComponent,
     ViewprogramComponent,
     EditComponent,
-    UpdateComponent
+    UpdateComponent,
+    ProgramCategoryComponent
   ];
 }

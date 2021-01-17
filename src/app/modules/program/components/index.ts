@@ -9,6 +9,7 @@ export * from './congratulations/congratulations.component';
 export * from './viewprogram/viewprogram.component';
 export * from './edit/edit.component';
 export * from './update/update.component';
+export * from './program-category/program-category.component';
 
 
 
