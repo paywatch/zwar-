@@ -43,9 +43,11 @@ export class ProgramService {
 
   airPlaneCollection: AngularFirestoreCollection<any>;
   airPlaneCompany: Observable<any>;
+  airplaneDoc: AngularFirestoreDocument<any>;
 
   transportationWayCollection: AngularFirestoreCollection<any>;
   transportationWay: Observable<any>;
+  transportationWayDoc: AngularFirestoreDocument<any>;
 
   programBasics: Observable<any>;
   basicDoc: AngularFirestoreDocument<any>;
@@ -79,6 +81,8 @@ export class ProgramService {
     this.publishCollection = this.afs.collection('publish');
     this.programCategoryCollection = this.afs.collection('programCategory');
     this.starsCollection = this.afs.collection('hotel starts');
+    this.airPlaneCollection = this.afs.collection('airplaneCompany');
+    this.transportationWayCollection = this.afs.collection('transportationWay');
     this.filesCollection = this.afs.collection('files');
     this.MadinafilesCollection = this.afs.collection('MaddinaFiles');
     this.MeccafilesCollection = this.afs.collection('MeccaFiles');
@@ -146,13 +150,25 @@ export class ProgramService {
   }
 
   getAllAirplaneCompany() {
-    this.airPlaneCompany = this.afs.collection('airplaneCompany').valueChanges();
-    return this.airPlaneCompany;
+    return this.airPlaneCompany = this.afs.collection('airplaneCompany').snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
   }
 
   getAllTransportation() {
-    this.transportationWay = this.afs.collection('transportationWay').valueChanges();
-    return this.transportationWay;
+    return this.transportationWay = this.afs.collection('transportationWay').snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
   }
 
   getProgramBasics() {
@@ -281,6 +297,14 @@ export class ProgramService {
     this.starsCollection.add(payload);
   }
 
+  addAirPlane(payload) {
+    this.airPlaneCollection.add(payload);
+  }
+
+  addTransportWay(payload) {
+    this.transportationWayCollection.add(payload);
+  }
+
   updateBasicData(basic) {
     this.basicDoc = this.afs.doc(`basics/${basic.id}`);
     this.basicDoc.update(basic);
@@ -361,5 +385,15 @@ export class ProgramService {
   deleteHotelStar(item) {
     this.hotelStarDoc = this.afs.doc(`hotel starts/${item.id}`);
     this.hotelStarDoc.delete();
+  }
+
+  deleteAirPlane(item) {
+    this.airplaneDoc = this.afs.doc(`airplaneCompany/${item.id}`);
+    this.airplaneDoc.delete();
+  }
+
+  deletetransportWay(item) {
+    this.transportationWayDoc = this.afs.doc(`transportationWay/${item.id}`);
+    this.transportationWayDoc.delete();
   }
 }

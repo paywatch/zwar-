@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { ProgramService } from '../../services/program.service';
   templateUrl: './hotel-stars.component.html',
   styleUrls: ['./hotel-stars.component.css']
 })
-export class HotelStarsComponent implements OnInit {
+export class HotelStarsComponent implements OnInit, OnDestroy {
 
   programHotelStar: FormGroup;
   sub: Subscription;
@@ -42,10 +42,16 @@ export class HotelStarsComponent implements OnInit {
   AddHotelStar() {
     const payload = this.programHotelStar.value;
     this.programService.AddHotelStar(payload);
+    this.toast.success('تمت الاضافه');
+    this.programHotelStar.reset();
   }
 
   deleteItem(item) {
     this.programService.deleteHotelStar(item);
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

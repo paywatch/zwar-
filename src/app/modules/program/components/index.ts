@@ -13,6 +13,8 @@ export * from './edit/edit.component';
 export * from './update/update.component';
 export * from './program-category/program-category.component';
 export * from './hotel-stars/hotel-stars.component';
+export * from './transport-way/transport-way.component';
+export * from './airplane-company/airplane-company.component';
 
 
 

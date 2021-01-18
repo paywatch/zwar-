@@ -14,7 +14,9 @@ import {
   EditComponent,
   UpdateComponent,
   ProgramCategoryComponent,
-  HotelStarsComponent
+  HotelStarsComponent,
+  TransportWayComponent,
+  AirplaneCompanyComponent
 } from './components';
 
 const routes: Routes = [
@@ -61,6 +63,14 @@ const routes: Routes = [
   {
     path: 'hotel-star',
     component: HotelStarsComponent
+  },
+  {
+    path: 'transport-way',
+    component: TransportWayComponent
+  },
+  {
+    path: 'airplane',
+    component: AirplaneCompanyComponent
   }
 ];
 
@@ -82,6 +92,8 @@ export class ProgramRoutingModule {
     EditComponent,
     UpdateComponent,
     ProgramCategoryComponent,
-    HotelStarsComponent
+    HotelStarsComponent,
+    AirplaneCompanyComponent,
+    TransportWayComponent
   ];
 }
