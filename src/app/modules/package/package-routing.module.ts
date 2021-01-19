@@ -9,7 +9,11 @@ import {
   CongratulateComponent,
   ViewComponent,
   EditComponent,
-  UpdateComponent
+  UpdateComponent,
+  UmrahSeasonComponent,
+  UmrahDirectionComponent,
+  InternalAirportComponent,
+  RoomTypeComponent
 } from './components';
 
 const routes: Routes = [
@@ -44,6 +48,22 @@ const routes: Routes = [
   {
     path: 'update/:id',
     component: UpdateComponent
+  },
+  {
+    path: 'internal-airport',
+    component: InternalAirportComponent
+  },
+  {
+    path: 'umrah-season',
+    component: UmrahSeasonComponent
+  },
+  {
+    path: 'umrah-direction',
+    component: UmrahDirectionComponent
+  },
+  {
+    path: 'room-type',
+    component: RoomTypeComponent
   }
 ];
 
@@ -60,6 +80,10 @@ export class PackageRoutingModule {
     CongratulateComponent,
     ViewComponent,
     EditComponent,
-    UpdateComponent
+    UpdateComponent,
+    UmrahSeasonComponent,
+    UmrahDirectionComponent,
+    InternalAirportComponent,
+    RoomTypeComponent
   ];
 }

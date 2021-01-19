@@ -18,12 +18,15 @@ export class PackageService {
 
   internalAirportCollection: AngularFirestoreCollection<any>;
   internalAirport: Observable<any>;
+  internalAirportDoc: AngularFirestoreDocument<any>;
 
   umrahSeasonCollection: AngularFirestoreCollection<any>;
   umrahSeason: Observable<any>;
+  umrahSeasonDoc: AngularFirestoreDocument<any>;
 
   umrahDirectionCollection: AngularFirestoreCollection<any>;
   umrahDirection: Observable<any>;
+  umrahDirectionDoc: AngularFirestoreDocument<any>;
 
   matwafCollection: AngularFirestoreCollection<any>;
   matwaf: Observable<any>;
@@ -33,6 +36,9 @@ export class PackageService {
   existRoooms: Observable<any>;
   roomType: Observable<any>;
   roomDoc: AngularFirestoreDocument<any>;
+
+  roomTypeCollection: AngularFirestoreCollection<any>;
+  roomTypeDoc: AngularFirestoreDocument<any>;
 
   packageCollection: AngularFirestoreCollection<any>;
 
@@ -58,6 +64,10 @@ export class PackageService {
     this.roomCollection = this.afs.collection('roomsData');
     this.packageCollection = this.afs.collection('package');
     this.matwafFilesCollection = this.afs.collection('MatwafImage');
+    this.internalAirportCollection = this.afs.collection('internalairport');
+    this.umrahSeasonCollection = this.afs.collection('omrahSeason');
+    this.umrahDirectionCollection = this.afs.collection('Umrah Direction');
+    this.roomTypeCollection = this.afs.collection('roomType');
   }
 
   getMatwafFileFromStorage() {
@@ -73,23 +83,51 @@ export class PackageService {
   }
 
   getAirPorts() {
-    this.internalAirport = this.afs.collection('internalairport').valueChanges();
-    return this.internalAirport;
+    return this.internalAirport = this.afs.collection('internalairport').snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
   }
 
   getUmrahSeason() {
-    this.umrahSeason = this.afs.collection('omrahSeason').valueChanges();
-    return this.umrahSeason;
+    return this.umrahSeason = this.afs.collection('omrahSeason').snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
   }
 
   getUmrahDirection() {
-    this.umrahDirection = this.afs.collection('Umrah Direction').valueChanges();
-    return this.umrahDirection;
+    return this.umrahDirection = this.afs.collection('Umrah Direction').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getRoomType() {
-    this.roomType = this.afs.collection('roomType').valueChanges();
-    return this.roomType;
+    return this.roomType = this.afs.collection('roomType').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getbaseData() {
@@ -190,6 +228,22 @@ export class PackageService {
     );
   }
 
+  AddAirPlane(payload) {
+    this.internalAirportCollection.add(payload);
+  }
+
+  addUmrahSeason(payload) {
+    this.umrahSeasonCollection.add(payload);
+  }
+
+  addUmrahDirection(payload) {
+    this.umrahDirectionCollection.add(payload);
+  }
+
+  addRoomType(payload) {
+    this.roomTypeCollection.add(payload);
+  }
+
   updatePackage(item: Package) {
     this.packageDocs = this.afs.doc(`package/${item.id}`);
     this.packageDocs.update(item);
@@ -237,4 +291,23 @@ export class PackageService {
     this.matwafImageDoc.delete();
   }
 
+  deleteAirPlane(item) {
+    this.internalAirportDoc = this.afs.doc(`internalairport/${item.id}`);
+    this.internalAirportDoc.delete();
+  }
+
+  deleteUmrahSeason(item) {
+    this.umrahSeasonDoc = this.afs.doc(`omrahSeason/${item.id}`);
+    this.umrahSeasonDoc.delete();
+  }
+
+  deleteUmrahDirection(item) {
+    this.umrahDirectionDoc = this.afs.doc(`Umrah Direction/${item.id}`);
+    this.umrahDirectionDoc.delete();
+  }
+
+  deleteRoomType(item) {
+    this.roomTypeDoc = this.afs.doc(`roomType/${item.id}`);
+    this.roomTypeDoc.delete();
+  }
 }
