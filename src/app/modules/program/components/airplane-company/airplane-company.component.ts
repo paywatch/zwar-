@@ -48,6 +48,7 @@ export class AirplaneCompanyComponent implements OnInit, OnDestroy {
 
   deleteItem(item) {
     this.programService.deleteAirPlane(item);
+    this.toast.error('تم الحذف');
   }
 
   ngOnDestroy() {

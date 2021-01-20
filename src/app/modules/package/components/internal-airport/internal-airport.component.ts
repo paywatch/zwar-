@@ -49,6 +49,7 @@ export class InternalAirportComponent implements OnInit, OnDestroy {
 
   deleteItem(item) {
     this.packageService.deleteAirPlane(item);
+    this.toast.error('تم الحذف');
   }
 
   ngOnDestroy() {

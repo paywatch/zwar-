@@ -1,12 +1,28 @@
 <header class="header">
   <div id="mySidenav" class="sidenav column">
     <a class="closebtn" (click)="closeNav()">&times;</a>
-    <a [routerLink]="['/profile/programs']">برامج العمرة</a>
-    <a [routerLink]="['/agency/request-list']">وكالات السفر</a>
-    <a [routerLink]="['/package/edit']">الباقات</a>
-    <a [routerLink]="['/home/dashboard']">رسوم بيانيه</a>
-    <a [routerLink]="['/program/programCategory']">تصنيفات البرامج</a>
-    <a [routerLink]="['/program/hotel-star']">نجوم الفنادق</a>
+    <a [routerLink]="['/profile/programs']" (click)="closeNav()">برامج العمرة</a>
+    <a [routerLink]="['/agency/request-list']" (click)="closeNav()">وكالات السفر</a>
+    <a [routerLink]="['/package/edit']" (click)="closeNav()">الباقات</a>
+    <a [routerLink]="['/home/dashboard']" (click)="closeNav()">رسوم بيانيه</a>
+    <li class="dropdown">
+      <a class="dropbtn">
+        الاعدادات
+      </a>
+      <div class="dropdown-content">
+        <a [routerLink]="['/agency/add-country']" (click)="closeNav()"> الدول</a>
+        <a [routerLink]="['/agency/add-city']" (click)="closeNav()"> المدن</a>
+        <a [routerLink]="['/agency/add-category']" (click)="closeNav()"> تصنيف الوكالات</a>
+        <a [routerLink]="['/program/programCategory']" (click)="closeNav()">تصنيفات البرامج</a>
+        <a [routerLink]="['/program/hotel-star']" (click)="closeNav()">نجوم الفنادق</a>
+        <a [routerLink]="['/program/transport-way']" (click)="closeNav()">طريقه التنقل</a>
+        <a [routerLink]="['/program/airplane']" (click)="closeNav()"> شركه الطيران</a>
+        <a [routerLink]="['/package/umrah-season']" (click)="closeNav()"> موسم العمرة</a>
+        <a [routerLink]="['/package/umrah-direction']" (click)="closeNav()"> اتجاه الرحله</a>
+        <a [routerLink]="['/package/internal-airport']" (click)="closeNav()"> المطار الداخلي</a>
+        <a [routerLink]="['/package/room-type']" (click)="closeNav()"> نوع الغرفه</a>
+      </div>
+    </li>
     <a (click)="logOut()">تسجيل خروج</a>
   </div>
   <div class="d-sm-block d-md-none">

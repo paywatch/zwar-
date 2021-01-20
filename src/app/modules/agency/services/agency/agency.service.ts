@@ -18,13 +18,20 @@ export class AgencyService {
   agencyDoc: AngularFirestoreDocument<any>;
 
   countries: Observable<any>;
+  countriesCollection: AngularFirestoreCollection<any>;
+  countriesDoc: AngularFirestoreDocument<any>;
+
   agencyType: Observable<any>;
+  agencyTypeCollection: AngularFirestoreCollection<any>;
+  agencyTypeDoc: AngularFirestoreDocument<any>;
 
   licenseCollection: AngularFirestoreCollection<any>;
   license: Observable<any>;
   licenseDoc: AngularFirestoreDocument<any>;
 
   DistrictList: Observable<any>;
+  districtListCollection: AngularFirestoreCollection<any>;
+  districtListDoc: AngularFirestoreDocument<any>;
 
   branchCollection: AngularFirestoreCollection<any>;
   branch: Observable<any>;
@@ -66,6 +73,9 @@ export class AgencyService {
     this.licenseCollection = this.afs.collection('license');
     this.branchCollection = this.afs.collection('branch');
     this.confirmationCollection = this.afs.collection('confirm');
+    this.countriesCollection = this.afs.collection('countries');
+    this.districtListCollection = this.afs.collection('districtList');
+    this.agencyTypeCollection = this.afs.collection('agencyType');
     this.agencyFilesCollection = this.afs.collection('agencyFile');
     this.agencyComRegFileCollection = this.afs.collection('comRegFile');
     this.agencyTourismFileCollection = this.afs.collection('tourismFiles');
@@ -138,18 +148,42 @@ export class AgencyService {
   }
 
   getAllCountries() {
-    this.countries = this.afs.collection('countries').valueChanges();
-    return this.countries;
+    return this.countries = this.afs.collection('countries').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getAgencyType() {
-    this.agencyType = this.afs.collection('agencyType').valueChanges();
-    return this.agencyType;
+    return this.agencyType = this.afs.collection('agencyType').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getDistrictList() {
-    this.DistrictList = this.afs.collection('districtList').valueChanges();
-    return this.DistrictList;
+    return this.DistrictList = this.afs.collection('districtList').snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map((a: any) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          });
+        })
+      );
   }
 
   getBasicData() {
@@ -266,6 +300,18 @@ export class AgencyService {
     });
   }
 
+  addCountry(payload) {
+    this.countriesCollection.add(payload);
+  }
+
+  addCity(payload) {
+    this.districtListCollection.add(payload);
+  }
+
+  addCategory(payload) {
+    this.agencyTypeCollection.add(payload);
+  }
+
   updateAgencyData(item) {
     this.registerDoc = this.afs.doc(`agency/${item.id}`);
     this.registerDoc.update(item);
@@ -349,4 +395,18 @@ export class AgencyService {
     this.comRegDoc.delete();
   }
 
+  deleteCountry(item) {
+    this.countriesDoc = this.afs.doc(`countries/${item.id}`);
+    this.countriesDoc.delete();
+  }
+
+  deleteCity(item) {
+    this.districtListDoc = this.afs.doc(`districtList/${item.id}`);
+    this.districtListDoc.delete();
+  }
+
+  deleteAgencyType(item) {
+    this.agencyTypeDoc = this.afs.doc(`agencyType/${item.id}`);
+    this.agencyTypeDoc.delete();
+  }
 }

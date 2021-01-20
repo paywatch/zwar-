@@ -47,6 +47,7 @@ export class TransportWayComponent implements OnInit, OnDestroy {
 
   deleteItem(item) {
     this.programService.deletetransportWay(item);
+    this.toast.error('تم الحذف');
   }
 
   ngOnDestroy() {

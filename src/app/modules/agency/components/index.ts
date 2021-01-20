@@ -10,3 +10,6 @@ export * from './edit/edit.component';
 export * from './update/update.component';
 export * from './requestlist/requestlist.component';
 export * from './view-request/view-request.component';
+export * from './add-city/add-city.component';
+export * from './add-country/add-country.component';
+export * from './agency-category/agency-category.component';

@@ -48,6 +48,7 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
 
   deleteItem(item) {
     this.programService.deleteHotelStar(item);
+    this.toast.error('تم الحذف');
   }
 
   ngOnDestroy() {

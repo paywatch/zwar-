@@ -47,6 +47,7 @@ export class UmrahDirectionComponent implements OnInit, OnDestroy {
 
   deleteItem(item) {
     this.packageService.deleteUmrahDirection(item);
+    this.toast.error('تم الحذف');
   }
 
   ngOnDestroy() {

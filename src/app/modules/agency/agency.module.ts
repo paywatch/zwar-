@@ -18,12 +18,5 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TableModule,
     ConfirmDialogModule,
   ],
-  // providers: [
-  //   {
-  //     provide: NG_ASYNC_VALIDATORS,
-  //     useExisting: usernameAvailable,
-  //     multi: true
-  //   }
-  // ]
 })
 export class AgencyModule { }

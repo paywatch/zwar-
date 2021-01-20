@@ -13,7 +13,10 @@ import {
   EditComponent,
   UpdateComponent,
   RequestlistComponent,
-  ViewRequestComponent
+  ViewRequestComponent,
+  AddCityComponent,
+  AddCountryComponent,
+  AgencyCategoryComponent
 } from './components';
 
 const routes: Routes = [
@@ -64,6 +67,18 @@ const routes: Routes = [
   {
     path: 'view-request/:id',
     component: ViewRequestComponent
+  },
+  {
+    path: 'add-country',
+    component: AddCountryComponent
+  },
+  {
+    path: 'add-city',
+    component: AddCityComponent
+  },
+  {
+    path: 'add-category',
+    component: AgencyCategoryComponent
   }
 ];
 
@@ -84,6 +99,9 @@ export class AgencyRoutingModule {
     EditComponent,
     UpdateComponent,
     RequestlistComponent,
-    ViewRequestComponent
+    ViewRequestComponent,
+    AddCityComponent,
+    AddCountryComponent,
+    AgencyCategoryComponent
   ];
 }

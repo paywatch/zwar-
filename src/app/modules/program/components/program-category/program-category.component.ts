@@ -27,6 +27,7 @@ export class ProgramCategoryComponent implements OnInit, OnDestroy {
 
   deleteItem(item) {
     this.programService.deleteprogramCategory(item);
+    this.toast.error('تم الحذف');
   }
 
   getAllCategories() {

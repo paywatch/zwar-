@@ -48,6 +48,7 @@ export class UmrahSeasonComponent implements OnInit, OnDestroy {
 
   deleteItem(item) {
     this.packageService.deleteUmrahSeason(item);
+    this.toast.error('تم الحذف');
   }
 
   ngOnDestroy() {

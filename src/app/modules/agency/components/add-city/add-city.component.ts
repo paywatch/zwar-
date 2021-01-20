@@ -2,51 +2,51 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { PackageService } from '../../services/package-service.service';
+import { AgencyService } from '../../services/agency/agency.service';
 
 @Component({
-  selector: 'app-room-type',
-  templateUrl: './room-type.component.html',
-  styleUrls: ['./room-type.component.css']
+  selector: 'app-add-city',
+  templateUrl: './add-city.component.html',
+  styleUrls: ['./add-city.component.css']
 })
-export class RoomTypeComponent implements OnInit, OnDestroy {
+export class AddCityComponent implements OnInit, OnDestroy {
 
-  roomTypeForm: FormGroup;
+  addCityForm: FormGroup;
   sub: Subscription;
-  roomType: any;
+  cities: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private toast: ToastrService,
-    private packageService: PackageService
+    private agencyService: AgencyService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
-    this.getRoomType();
+    this.getAllCities();
   }
 
   initForm() {
-    this.roomTypeForm = this.formBuilder.group({
+    this.addCityForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]]
     });
   }
 
-  getRoomType() {
-    this.sub = this.packageService.getRoomType().subscribe(res => {
-      this.roomType = res;
+  getAllCities() {
+    this.sub = this.agencyService.getDistrictList().subscribe(res => {
+      this.cities = res;
     });
   }
 
-  addRoomType() {
-    const payload = this.roomTypeForm.value;
-    this.packageService.addRoomType(payload);
+  addCities() {
+    const payload = this.addCityForm.value;
+    this.agencyService.addCity(payload);
     this.toast.success('تمت الاضافه');
-    this.roomTypeForm.reset();
+    this.addCityForm.reset();
   }
 
   deleteItem(item) {
-    this.packageService.deleteRoomType(item);
+    this.agencyService.deleteCity(item);
     this.toast.error('تم الحذف');
   }
 
