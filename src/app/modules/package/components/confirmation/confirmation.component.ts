@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PackageService } from '../../services/package-service.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-confirmation',
@@ -15,11 +17,15 @@ export class ConfirmationComponent implements OnInit {
   matwaf: any;
   room: any;
   ID: string;
+  matwafImage: any;
+  modalRef: any;
 
   constructor(
     private router: Router,
     private toast: ToastrService,
-    private packaService: PackageService) {
+    private packaService: PackageService,
+    private modalService: BsModalService
+    ) {
   }
 
   ngOnInit(): void {
@@ -29,23 +35,38 @@ export class ConfirmationComponent implements OnInit {
     this.getUmrahSeason();
     this.getUmrahDirection();
     this.getRoomType();
+    this.getMatwafImage();
   }
 
   getBasicData() {
     this.base = JSON.parse(sessionStorage.getItem('base')) || {};
     this.matwaf = JSON.parse(sessionStorage.getItem('group')) || {};
     this.room = JSON.parse(sessionStorage.getItem('room')) || {};
+    this.matwafImage = JSON.parse(sessionStorage.getItem('MatwafImage')) || [];
     this.package = {
       ...this.base,
       ...this.matwaf,
       ...this.room
     };
-    console.log(this.package);
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,
+      {
+        class: 'modal-dialog-centered'
+      });
   }
 
   getAirPorts() {
     this.packaService.getAirPorts().subscribe(airport => {
       this.package.internalAirPort = airport.find(air => air.id == this.base.localAirportID).name;
+    });
+  }
+
+  getMatwafImage() {
+    this.packaService.getMatwafFileFromStorage().subscribe(files => {
+      const matwafImage = new Set(this.matwafImage);
+      this.package.matwafImage = files.filter(file => matwafImage.has(file.id));
     });
   }
 
@@ -73,7 +94,6 @@ export class ConfirmationComponent implements OnInit {
 
   confirm() {
     this.package.ID = this.ID;
-    console.log(this.package.ID);
     this.packaService.addPackages(this.package)
       .subscribe(res => {
         this.router.navigate(['/package/congratulate']);

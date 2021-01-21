@@ -17,13 +17,16 @@ export class ConfirmationComponent implements OnInit {
   residance: any;
   program: any;
   modalRef: BsModalRef;
+  selectedMeccaFile: any;
+  selectedMadinaFile: any;
+  programbanner: any;
 
 
   constructor(
     private router: Router,
     private programService: ProgramService,
     private modalService: BsModalService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.collectAllData();
@@ -31,6 +34,9 @@ export class ConfirmationComponent implements OnInit {
     this.getAllHotelStars();
     this.getAllAirplanes();
     this.getAllTransportation();
+    this.getProgramBanner();
+    this.getMeccaBanner();
+    this.getMadinaBanner();
   }
 
   collectAllData() {
@@ -38,15 +44,16 @@ export class ConfirmationComponent implements OnInit {
     this.residential = JSON.parse(sessionStorage.getItem('hotels'));
     this.transportation = JSON.parse(sessionStorage.getItem('residence'));
     this.visit = JSON.parse(sessionStorage.getItem('visit'));
+    this.selectedMeccaFile = JSON.parse(sessionStorage.getItem('MeccaImageID')) || [];
+    this.selectedMadinaFile = JSON.parse(sessionStorage.getItem('MadinaImageID')) || [];
+    this.programbanner = JSON.parse(sessionStorage.getItem('programBannerID')) || [];
     this.user = JSON.parse(localStorage.getItem('user')) || {};
-    console.log(this.user);
     this.program = {
       ...this.basics,
       ...this.residential,
       ...this.transportation,
       ...this.visit
     };
-    console.log(this.program);
   }
 
   openModal(template: TemplateRef<any>) {
@@ -54,6 +61,27 @@ export class ConfirmationComponent implements OnInit {
       {
         class: 'modal-dialog-centered'
       });
+  }
+
+  getProgramBanner() {
+    this.programService.getFileFromStorage().subscribe(files => {
+      const programBannerSet = new Set(this.programbanner);
+      this.program.programbanner = files.filter(file => programBannerSet.has(file.id));
+    });
+  }
+
+  getMeccaBanner() {
+    this.programService.getMeccaFileFromStorage().subscribe(files => {
+      const meccaFiles = new Set(this.selectedMeccaFile);
+      this.program.selectedMeccaFile = files.filter(file => meccaFiles.has(file.id));
+    });
+  }
+
+  getMadinaBanner() {
+    this.programService.getMadinaFileFromStorage().subscribe(files => {
+      const madinaFiles = new Set(this.selectedMadinaFile);
+      this.program.selectedMadinaFile = files.filter(file => madinaFiles.has(file.id));
+    });
   }
 
   getAllCategory() {
