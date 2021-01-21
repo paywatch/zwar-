@@ -68,7 +68,6 @@ export class DisplayComponent implements OnInit {
       ...this.license,
       branch: this.branches
     };
-    console.log(this.agency);
     if (!this.agency) {
       this.router.navigate(['/']);
     }
@@ -134,7 +133,7 @@ export class DisplayComponent implements OnInit {
     this.toast.success('تم الاضافه بنجاح');
     sessionStorage.removeItem('license');
     sessionStorage.removeItem('licenseID');
-    sessionStorage.removeItem('branches');
+    sessionStorage.removeItem('branch');
     sessionStorage.removeItem('branchID');
     sessionStorage.removeItem('register');
     sessionStorage.removeItem('agecyID');
