@@ -43,7 +43,7 @@
             <div class="form-group ">
               <label class="d-block col-form-label"> تصنيف الوكالة </label>
               <select name="tAType" class="form-control" formControlName="tAType">
-                <option *ngFor="let item of agencyType" [value]="item.id">
+                <option *ngFor="let item of agencyType">
                   {{item.name}}
                 </option>
               </select>

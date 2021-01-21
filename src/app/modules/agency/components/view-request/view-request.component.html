@@ -2,8 +2,7 @@
   <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
-        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
-        <li class="breadcrumb-item active" aria-current="page"> </li>
+        <li class="breadcrumb-item"><a [routerLink]="['/home']">الرئيسية</a></li>
       </ol>
     </nav>
     <div *ngIf="agencyNeedUpdate"
@@ -12,7 +11,7 @@
       <div>
         <h3 class="mb-3">طلبك يحتاج الى تحديث بعض البيانات</h3>
         <p class="text-muted m-0">
-          يرجي تحديث بيانات الافرع حيث انه بالكشف عنها وجد ان بعض البيانات ناقصة وبعضها غير دقيقة
+          يرجي تحديث البيانات  حيث انه بالكشف عنها وجد ان بعض البيانات ناقصة وبعضها غير دقيقة
         </p>
       </div>
     </div>
@@ -45,7 +44,7 @@
                 <div class="col-md-6">
                   <div class="form-group ">
                     <label class="d-block col-form-label"> الدولة </label>
-                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.countryId">
+                    <input type="text" readonly="" class="form-control-plaintext" [value]="agency.countryName">
                   </div>
                 </div>
               </div>
@@ -325,12 +324,12 @@
               </thead>
               <tbody>
                 <tr style="cursor: pointer;">
-                  <td>{{agency.tABranchName}}</td>
-                  <td>{{agency?.tADistrictID}}</td>
-                  <td>{{agency.tABranchAddress}}</td>
-                  <td>{{agency.tABranchType ? 'رئيسى': 'عادى'}}</td>
-                  <td>{{agency.tABranchLongitude + ' , ' + agency.tABranchLatitude}}</td>
-                  <td>{{agency.tABranchPhoneNo}}</td>
+                  <td>{{agency?.branch.tABranchName}}</td>
+                  <td>{{agency?.branch.tADistrictID}}</td>
+                  <td>{{agency?.branch.tABranchAddress}}</td>
+                  <td>{{agency?.branch.tABranchType ? 'رئيسى': 'عادى'}}</td>
+                  <td>{{agency?.branch.tABranchLongitude + ' , ' + agency?.branch.tABranchLatitude}}</td>
+                  <td>{{agency?.branch.tABranchPhoneNo}}</td>
                 </tr>
               </tbody>
             </table>

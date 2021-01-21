@@ -88,7 +88,6 @@ export class BranchesComponent implements OnInit {
 
   updateBranchData() {
     this.selectedBranch = {...this.taBranchesList};
-    console.log(this.selectedBranch[0].id);
     this.selectedBranch.id = this.brachID;
     this.agencyService.updateBranchData(this.selectedBranch);
     this.toast.success('تم التعديل');

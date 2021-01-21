@@ -66,7 +66,7 @@ export class DisplayComponent implements OnInit {
     this.agency = {
       ...this.basics,
       ...this.license,
-      4: this.branches
+      branch: this.branches
     };
     console.log(this.agency);
     if (!this.agency) {
