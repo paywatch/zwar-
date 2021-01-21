@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +14,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 
 // IMPORT MOMENT FOR FORMAT DATE IN NICE WAY;
 import * as moment from 'moment';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 @Component({
@@ -23,7 +23,7 @@ import { map, tap } from 'rxjs/operators';
   styleUrls: ['./main.component.css']
 })
 
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
   myForm: FormGroup;
   ownerForm: FormGroup;
@@ -46,6 +46,7 @@ export class MainComponent implements OnInit {
   comRegFile: any;
   selectedComRegFile: any;
   comRegUploads: any[];
+  sub: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -81,14 +82,13 @@ export class MainComponent implements OnInit {
   }
 
   getCountries() {
-    this.agencyService.getAllCountries().subscribe(res => {
+    this.sub = this.agencyService.getAllCountries().subscribe(res => {
       this.countries = res;
-      console.log(this.countries);
     });
   }
 
   getAgencyType() {
-    this.agencyService.getAgencyType().subscribe(type => {
+    this.sub = this.agencyService.getAgencyType().subscribe(type => {
       this.agencyType = type;
     });
   }
@@ -131,7 +131,6 @@ export class MainComponent implements OnInit {
         const mainSet = new Set(this.mainFile);
         this.selectedMainFile = files.filter(item => mainSet.has(item.id));
       }
-      console.log(this.selectedMainFile);
     });
   }
 
@@ -203,7 +202,6 @@ export class MainComponent implements OnInit {
     this.agencyService.getComRegFile().subscribe(images => {
       const find = images.find(image => image.id == this.comRegFile);
       this.selectedComRegFile = find;
-      console.log(this.selectedComRegFile);
     });
   }
 
@@ -237,7 +235,6 @@ export class MainComponent implements OnInit {
 
       // push each upload into the array
       this.comRegUploads.push(uploadTrack);
-      console.log(this.uploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -280,7 +277,6 @@ export class MainComponent implements OnInit {
     this.agencyService.getBasicData().subscribe(basics => {
       if (this.agencyData) {
         this.selectedBasic = basics.find(b => b.id == this.basicID);
-        console.log(this.selectedBasic);
         if (this.selectedBasic) {
           this.myForm.patchValue(this.selectedBasic);
           this.ownerList = this.selectedBasic && this.selectedBasic.ownerList ? this.selectedBasic.ownerList : [];
@@ -365,7 +361,6 @@ export class MainComponent implements OnInit {
   }
 
   saveOwner() {
-    console.log(this.editIndex + 1);
     if (this.editIndex + 1) {
       this._editOwner();
     }
@@ -410,5 +405,9 @@ export class MainComponent implements OnInit {
     this.ownerForm.patchValue(owner);
     this.showDialog();
     this.editIndex = index;
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

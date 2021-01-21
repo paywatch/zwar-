@@ -55,9 +55,9 @@ export class GroupComponent implements OnInit {
 
   initForm() {
     this.groupForm = this.fb.group({
-      mutawefName: ['', [Validators.required, Validators.maxLength(50)]],
+      mutawefName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]],
       mutawefPhone: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]+/)]],
-      groupLeadName: ['', [Validators.required, Validators.maxLength(50)]],
+      groupLeadName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]],
       groupLeadPhone: ['', [Validators.required,
       Validators.maxLength(20),
       Validators.pattern(/^[0-9]+/)]],

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -6,13 +6,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Password } from '../../../../_helpers/password.validator';
 import { MustMatch } from '../../../../_helpers/must-match.validator';
 import { AgencyService } from '../../services/agency/agency.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   RegisterForm: FormGroup;
   message: string;
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnInit {
   agencyID: string;
   selectedAgency: any;
   registerData: any;
+  sub: Subscription;
 
   constructor(
     private router: Router,
@@ -46,7 +48,7 @@ export class RegisterComponent implements OnInit {
           '', [
             Validators.required,
             Validators.maxLength(20),
-            Validators.pattern(/^[A-Za-z0-9]*$/)],
+            Validators.pattern(/^[\u0621-\u064A0-9a-zA-Z ]+$/)]
         ],
         tAAdminMobileNo: [
           '', [
@@ -89,7 +91,7 @@ export class RegisterComponent implements OnInit {
   }
 
   getAlCountries() {
-    this.agencyService.getAllCountries().subscribe(country => {
+    this.sub = this.agencyService.getAllCountries().subscribe(country => {
       this.countries = country;
     });
   }
@@ -136,5 +138,9 @@ export class RegisterComponent implements OnInit {
   deleteAgency() {
     this.agencyService.deleteAgencyData(this.selectedAgency);
     this.toast.info('تم الحذف');
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

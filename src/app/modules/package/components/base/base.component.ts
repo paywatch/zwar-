@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -8,6 +8,7 @@ import * as moment from 'moment';
 
 
 import { PackageService } from '../../services/package-service.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { PackageService } from '../../services/package-service.service';
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.css']
 })
-export class BaseComponent implements OnInit {
+export class BaseComponent implements OnInit, OnDestroy {
 
   baseForm: FormGroup;
   base: any;
@@ -24,6 +25,7 @@ export class BaseComponent implements OnInit {
   umrahDirection: any;
   packageBasicID: string;
   selectedBasic: any;
+  sub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -65,26 +67,23 @@ export class BaseComponent implements OnInit {
     const Id = this.activatedRoute.snapshot.paramMap.get('programId');
     sessionStorage.setItem('ID', JSON.stringify(Id));
     this.base = JSON.parse(sessionStorage.getItem('base'));
-    console.log(this.base);
     this.packageBasicID = JSON.parse(sessionStorage.getItem('packageBasicID')) || {};
   }
 
   getAirPorts() {
-    this.packageService.getAirPorts().subscribe(airport => {
+    this.sub = this.packageService.getAirPorts().subscribe(airport => {
       this.airPorts = airport;
-      console.log(this.airPorts);
     });
   }
 
   getUmrahSeason() {
-    this.packageService.getUmrahSeason().subscribe(season => {
+    this.sub = this.packageService.getUmrahSeason().subscribe(season => {
       this.seasons = season;
-      console.log(this.seasons);
     });
   }
 
   getUmrahDirection() {
-    this.packageService.getUmrahDirection().subscribe(direction => {
+    this.sub = this.packageService.getUmrahDirection().subscribe(direction => {
       this.umrahDirection = direction;
     });
   }
@@ -125,5 +124,9 @@ export class BaseComponent implements OnInit {
   deletePackageBasic() {
     this.packageService.deletePackageBasic(this.selectedBasic);
     this.toast.info('تم الحذف');
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

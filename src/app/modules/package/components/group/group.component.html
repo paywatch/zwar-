@@ -56,6 +56,12 @@
                                   groupForm.get('mutawefName').dirty">
                         حد اقصي 50 حرف
                       </em>
+                      <em *ngIf="!groupForm.get('mutawefName').hasError('required') &&
+                                 !groupForm.get('mutawefName').hasError('maxlength') &&
+                                 groupForm.get('mutawefName').hasError('pattern') &&
+                                  groupForm.get('mutawefName').touched">
+                        حروف فقط
+                      </em>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -77,7 +83,7 @@
                       <em *ngIf="!groupForm.get('mutawefPhone').hasError('required') &&
                                  !groupForm.get('mutawefPhone').hasError('pattern') &&
                                   groupForm.get('mutawefPhone').hasError('maxlength') &&
-                                  groupForm.get('mutawefPhone').dirty">
+                                  groupForm.get('mutawefPhone').touched">
                         حد اقصي 20 رقم
                       </em>
                     </div>
@@ -94,8 +100,14 @@
                       </em>
                       <em *ngIf="!groupForm.get('groupLeadName').hasError('required') &&
                                   groupForm.get('groupLeadName').hasError('maxlength') &&
-                                  groupForm.get('groupLeadName').dirty">
+                                  groupForm.get('groupLeadName').touched">
                         حد اقصي 50 حرف
+                      </em>
+                      <em *ngIf="!groupForm.get('groupLeadName').hasError('required') &&
+                                 !groupForm.get('groupLeadName').hasError('maxlength') &&
+                                 groupForm.get('groupLeadName').hasError('pattern') &&
+                                 groupForm.get('groupLeadName').touched">
+                        حروف فقط
                       </em>
                     </div>
                   </div>

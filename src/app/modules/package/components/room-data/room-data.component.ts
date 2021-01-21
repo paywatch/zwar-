@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { PackageService } from '../../services/package-service.service';
 
 @Component({
@@ -56,7 +57,6 @@ export class RoomDataComponent implements OnInit {
         r.roomName = roomType.find(t => t.id == r.roomTypeID).name;
         return r;
       });
-      console.log(this.rooms);
     });
   }
 

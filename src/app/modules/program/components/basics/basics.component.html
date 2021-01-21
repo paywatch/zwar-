@@ -69,6 +69,12 @@
                             && basicsForm.get('programName').touched">
                   حد اقصي 100 ارقام
                 </em>
+                <em *ngIf="!basicsForm.get('programName').hasError('required') &&
+                           !basicsForm.get('programName').hasError('maxlength') &&
+                           basicsForm.get('programName').hasError('pattern')
+                            && basicsForm.get('programName').touched">
+                  حروف فقط
+                </em>
               </div>
               <div class="col-md-4">
                 <div class="form-group">

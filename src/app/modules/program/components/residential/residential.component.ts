@@ -1,8 +1,8 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { ProgramService } from '../../services/program.service';
 
@@ -15,7 +15,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './residential.component.html',
   styleUrls: ['./residential.component.css']
 })
-export class ResidentialComponent implements OnInit {
+export class ResidentialComponent implements OnInit,OnDestroy {
 
   modalRef: BsModalRef;
   basics: any;
@@ -38,6 +38,7 @@ export class ResidentialComponent implements OnInit {
   selectedMadinaFile: any;
   uploadPercent: Observable<number>;
   downloadURL: Observable<any>;
+  sub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -241,7 +242,7 @@ export class ResidentialComponent implements OnInit {
 
   initResidentialForm() {
     this.residentailForm = this.formBuilder.group({
-      hotelName: ['', [Validators.required, Validators.maxLength(50)]],
+      hotelName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]],
       hotelNights: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
       hotelStars: ['', Validators.required],
       distanceFromHaram: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
@@ -262,7 +263,7 @@ export class ResidentialComponent implements OnInit {
 
   initMadinaResidence() {
     this.madinaForm = this.formBuilder.group({
-      MHotelName: ['', [Validators.required, Validators.maxLength(50)]],
+      MHotelName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]],
       MHotelNights: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
       MHotelStars: ['', Validators.required],
       MDistanceFromHaram: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
@@ -282,7 +283,7 @@ export class ResidentialComponent implements OnInit {
   }
 
   getAllHotelStars() {
-    this.programservice.getAllStars().subscribe(stars => {
+    this.sub = this.programservice.getAllStars().subscribe(stars => {  
       this.hotelStars = stars;
       console.log(this.hotelStars);
     });
@@ -328,5 +329,9 @@ export class ResidentialComponent implements OnInit {
   deleteResidential() {
     this.programservice.deleteResidential(this.selecetdHotel);
     this.toaster.success('تم الحذف');
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

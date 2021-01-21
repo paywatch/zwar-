@@ -64,9 +64,10 @@
                           هذا الحقل إجباري
                         </em>
                         <em *ngIf="!hotel.get('hotelName').hasError('required') &&
-                                    hotel.get('hotelName').hasError('maxlength') &&
+                                   !hotel.get('hotelName').hasError('maxlength') &&
+                                    hotel.get('hotelName').hasError('pattern') &&
                                     hotel.get('hotelName').touched">
-                          حد اقصي 50 رقم
+                          حروف فقط
                         </em>
                       </div>
                     </div>
@@ -361,9 +362,10 @@
                           هذا الحقل إجباري
                         </em>
                         <em *ngIf="!hotels.get('MHotelName').hasError('required') &&
-                                    hotels.get('MHotelName').hasError('maxlength') &&
+                                   !hotels.get('MHotelName').hasError('maxlength') &&
+                                    hotels.get('MHotelName').hasError('pattern') &&
                                     hotels.get('MHotelName').touched">
-                          حد اقصي 50 رقم
+                          حروف فقط
                         </em>
                       </div>
                     </div>

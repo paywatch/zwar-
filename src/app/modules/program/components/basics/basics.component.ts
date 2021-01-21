@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ProgramService } from '../../services/program.service';
 import { map, tap } from 'rxjs/operators';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -17,7 +17,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
   templateUrl: './basics.component.html',
   styleUrls: ['./basics.component.css']
 })
-export class BasicsComponent implements OnInit {
+export class BasicsComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
   basicsForm: FormGroup;
   basics: any;
@@ -30,6 +30,7 @@ export class BasicsComponent implements OnInit {
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
   programUrl: string;
+  sub: Subscription;
 
   uploads: any[];
   allPercentage: Observable<any>;
@@ -60,7 +61,7 @@ export class BasicsComponent implements OnInit {
 
   initForm() {
     this.basicsForm = this.fb.group({
-      programName: ['', [Validators.required, Validators.maxLength(100)]],
+      programName: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]],
       programPathID: ['', Validators.required],
       programUmrahYear: ['', [Validators.required, Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)]],
       programCategoryID: ['', Validators.required],
@@ -179,7 +180,7 @@ export class BasicsComponent implements OnInit {
 
 
   getAllCategory() {
-    this.programService.getAllCategory().subscribe(category => {
+    this.sub = this.programService.getAllCategory().subscribe(category => {
       this.categories = category;
       console.log(category);
     });
@@ -212,5 +213,9 @@ export class BasicsComponent implements OnInit {
 
   deleteBasic() {
     this.programService.deleteBasic(this.selectedBasic);
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

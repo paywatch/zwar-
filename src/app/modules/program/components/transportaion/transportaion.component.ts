@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProgramService } from '../../services/program.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-transportaion',
   templateUrl: './transportaion.component.html',
   styleUrls: ['./transportaion.component.css']
 })
-export class TransportaionComponent implements OnInit {
+export class TransportaionComponent implements OnInit, OnDestroy {
 
   transportationFrom: FormGroup;
   basics: any;
@@ -19,6 +20,7 @@ export class TransportaionComponent implements OnInit {
   transportationData: any[];
   selectedTransportation: any;
   residenceID: any;
+  sub: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -58,9 +60,8 @@ export class TransportaionComponent implements OnInit {
   }
 
   getAllAirplanes() {
-    this.programService.getAllAirplaneCompany().subscribe(airplane => {
+    this.sub = this.programService.getAllAirplaneCompany().subscribe(airplane => {
       this.airplane = airplane;
-      console.log(this.airplane);
     });
   }
 
@@ -77,9 +78,8 @@ export class TransportaionComponent implements OnInit {
   }
 
   getAllTransportation() {
-    this.programService.getAllTransportation().subscribe(transport => {
+    this.sub = this.programService.getAllTransportation().subscribe(transport => {
       this.transports = transport;
-      console.log(transport);
     });
   }
 
@@ -110,5 +110,9 @@ export class TransportaionComponent implements OnInit {
 
   deleteTransportation() {
     this.programService.deleteTransportation(this.selectedTransportation);
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }
