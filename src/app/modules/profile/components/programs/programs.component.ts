@@ -44,6 +44,7 @@ export class ProgramsComponent implements OnInit {
       console.log(this.programsList$);
       const found = this.programsList$.find(p => p.uid == this.user.user.uid);
       this.program.push(found);
+      console.log(this.program);
     });
   }
 

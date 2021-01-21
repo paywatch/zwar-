@@ -24,7 +24,6 @@ export class EditComponent implements OnInit {
   getPrograms() {
     this.programService.getProgram().subscribe(res => {
       if (res) {
-        console.log(res);
         this.programs = res;
         console.log(this.programs);
       }
