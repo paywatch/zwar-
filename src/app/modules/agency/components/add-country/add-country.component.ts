@@ -44,8 +44,11 @@ export class AddCountryComponent implements OnInit, OnDestroy {
 
   addCountries() {
     const payload = this.addCountryForm.value;
-    this.agencyService.addCountry(payload);
-    this.toast.success('تمت الاضافه');
+    if(this.addCountryForm.valid) {
+      this.agencyService.addCountry(payload);
+      this.toast.success('تمت الاضافه');
+      this.addCountryForm.reset();
+    }
   }
 
   updateItem(item) {

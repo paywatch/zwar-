@@ -43,9 +43,11 @@ export class UmrahDirectionComponent implements OnInit, OnDestroy {
 
   addUmrahDirection() {
     const payload = this.umrahDirectionForm.value;
-    this.packageService.addUmrahDirection(payload);
-    this.toast.success('تمت الاضافه');
-    this.umrahDirectionForm.reset();
+    if (this.umrahDirectionForm.valid) {
+      this.packageService.addUmrahDirection(payload);
+      this.toast.success('تمت الاضافه');
+      this.umrahDirectionForm.reset();
+    }
   }
 
   updateItem(item) {

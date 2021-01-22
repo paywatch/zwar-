@@ -44,9 +44,11 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
 
   AddHotelStar() {
     const payload = this.programHotelStar.value;
-    this.programService.AddHotelStar(payload);
-    this.toast.success('تمت الاضافه');
-    this.programHotelStar.reset();
+    if (this.programHotelStar.valid) {
+      this.programService.AddHotelStar(payload);
+      this.toast.success('تمت الاضافه');
+      this.programHotelStar.reset();
+    }
   }
 
   updateItem(item) {

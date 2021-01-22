@@ -43,9 +43,11 @@ export class UmrahSeasonComponent implements OnInit, OnDestroy {
 
   addUmrahSeason() {
     const payload = this.umrahSeasonForm.value;
-    this.packageService.addUmrahSeason(payload);
-    this.toast.success('تمت الاضافه');
-    this.umrahSeasonForm.reset();
+    if (this.umrahSeasonForm.valid) {
+      this.packageService.addUmrahSeason(payload);
+      this.toast.success('تمت الاضافه');
+      this.umrahSeasonForm.reset();
+    }
   }
 
   updateItem(item) {

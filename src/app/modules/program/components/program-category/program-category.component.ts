@@ -43,9 +43,11 @@ export class ProgramCategoryComponent implements OnInit, OnDestroy {
 
   AddCategory() {
     const payload = this.programCategories.value;
-    this.programService.addCategory(payload);
-    this.toast.success('تمت الاضافه');
-    this.programCategories.reset();
+    if (this.programCategories.valid) {
+      this.programService.addCategory(payload);
+      this.toast.success('تمت الاضافه');
+      this.programCategories.reset();
+    }
   }
 
   updateItem(item) {

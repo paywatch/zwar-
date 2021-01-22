@@ -43,9 +43,11 @@ export class InternalAirportComponent implements OnInit, OnDestroy {
 
   addAirPlane() {
     const payload = this.airPlaneForm.value;
-    this.packageService.AddAirPlane(payload);
-    this.toast.success('تمت الاضافه');
-    this.airPlaneForm.reset();
+    if (this.airPlaneForm.valid) {
+      this.packageService.AddAirPlane(payload);
+      this.toast.success('تمت الاضافه');
+      this.airPlaneForm.reset();
+    }
   }
 
   updateItem(item) {

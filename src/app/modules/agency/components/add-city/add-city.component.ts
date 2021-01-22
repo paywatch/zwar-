@@ -43,9 +43,11 @@ export class AddCityComponent implements OnInit, OnDestroy {
 
   addCities() {
     const payload = this.addCityForm.value;
-    this.agencyService.addCity(payload);
-    this.toast.success('تمت الاضافه');
-    this.addCityForm.reset();
+    if (this.addCityForm.valid) {
+      this.agencyService.addCity(payload);
+      this.toast.success('تمت الاضافه');
+      this.addCityForm.reset();
+    }
   }
 
   updateItem(item) {
