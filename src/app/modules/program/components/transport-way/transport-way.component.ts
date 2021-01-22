@@ -14,6 +14,8 @@ export class TransportWayComponent implements OnInit, OnDestroy {
   transportForm: FormGroup;
   sub: Subscription;
   transportWay: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,6 +45,17 @@ export class TransportWayComponent implements OnInit, OnDestroy {
     this.programService.addTransportWay(payload);
     this.toast.success('تمت الاضافه');
     this.transportForm.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.programService.updateTransportWay(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

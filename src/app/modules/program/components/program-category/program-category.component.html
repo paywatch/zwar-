@@ -28,11 +28,26 @@
               <li class="list-group-item">
                 {{item.name}}
               </li>
+
+              <div *ngIf="itemToEdit?.id == item?.id && editState">
+                <form (ngSubmit)="updateSingleItem(item)">
+                  <input type="text" class="form-control" [(ngModel)]="item.name" name="name">
+                  <button type="submit" class="btn">
+                    <i class="fa fa-pen-alt"></i>
+                  </button>
+                </form>
+              </div>
             </ul>
           </div>
+          <div class="row">
             <a class="table-action text-danger mt-3" (click)="deleteItem(item)">
               <i class="fas fa-trash"></i>
             </a>
+            <a class="mr-1" (click)="updateItem(item)">
+              <i class="fas fa-pencil"></i>
+            </a>
+          </div>
+
         </div>
       </div>
     </div>

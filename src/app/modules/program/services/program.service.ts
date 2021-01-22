@@ -356,6 +356,26 @@ export class ProgramService {
     this.programDoc.update(item);
   }
 
+  updateItemCategories(item) {
+    this.programCategoryDoc = this.afs.doc(`programCategory/${item.id}`);
+    this.programCategoryDoc.update(item);
+  }
+
+  updateHotelStar(item) {
+    this.hotelStarDoc = this.afs.doc(`hotel starts/${item.id}`);
+    this.hotelStarDoc.update(item);
+  }
+
+  updateTransportWay(item) {
+    this.transportationWayDoc = this.afs.doc(`transportationWay/${item.id}`);
+    this.transportationWayDoc.update(item);
+  }
+
+  updateAirplane(item) {
+    this.airplaneDoc = this.afs.doc(`airplaneCompany/${item.id}`);
+    this.airplaneDoc.update(item);
+  }
+
   deleteProgram(program: Program) {
     this.programDoc = this.afs.doc(`program/${program.programId}`);
     this.programDoc.delete();

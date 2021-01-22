@@ -14,14 +14,17 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
   programHotelStar: FormGroup;
   sub: Subscription;
   hotelStars: any;
+  itemToEdit: any;
+  editState: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
     private programService: ProgramService,
     private toast: ToastrService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
+    this.editState = false;
     this.initForm();
     this.getStars();
   }
@@ -44,6 +47,17 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
     this.programService.AddHotelStar(payload);
     this.toast.success('تمت الاضافه');
     this.programHotelStar.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.programService.updateHotelStar(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

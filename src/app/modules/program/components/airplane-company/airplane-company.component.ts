@@ -14,6 +14,8 @@ export class AirplaneCompanyComponent implements OnInit, OnDestroy {
   airplaneForm: FormGroup;
   sub: Subscription;
   airplanes: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +24,7 @@ export class AirplaneCompanyComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.editState = false;
     this.initForm();
     this.getAirPlane();
   }
@@ -44,6 +47,17 @@ export class AirplaneCompanyComponent implements OnInit, OnDestroy {
     this.programService.addAirPlane(payload);
     this.toast.success('تمت الاضافه');
     this.airplaneForm.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.programService.updateAirplane(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

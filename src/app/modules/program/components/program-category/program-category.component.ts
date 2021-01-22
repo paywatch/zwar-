@@ -14,6 +14,8 @@ export class ProgramCategoryComponent implements OnInit, OnDestroy {
   programCategories: FormGroup;
   sub: Subscription;
   categories: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,12 +24,14 @@ export class ProgramCategoryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
+    this.editState = false;
     this.getAllCategories();
   }
 
-  deleteItem(item) {
-    this.programService.deleteprogramCategory(item);
-    this.toast.error('تم الحذف');
+  initForm() {
+    this.programCategories = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]]
+    });
   }
 
   getAllCategories() {
@@ -37,17 +41,27 @@ export class ProgramCategoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  initForm() {
-    this.programCategories = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]]
-    });
-  }
-
   AddCategory() {
     const payload = this.programCategories.value;
     this.programService.addCategory(payload);
     this.toast.success('تمت الاضافه');
     this.programCategories.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.programService.updateItemCategories(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
+  }
+
+  deleteItem(item) {
+    this.programService.deleteprogramCategory(item);
+    this.toast.error('تم الحذف');
   }
 
   ngOnDestroy() {
