@@ -38,16 +38,21 @@ export class AddCountryComponent implements OnInit, OnDestroy {
   getAllCountries() {
     this.sub = this.agencyService.getAllCountries().subscribe(res => {
       this.countries = res;
-      console.log(res);
     });
   }
 
   addCountries() {
     const payload = this.addCountryForm.value;
-    if(this.addCountryForm.valid) {
-      this.agencyService.addCountry(payload);
-      this.toast.success('تمت الاضافه');
-      this.addCountryForm.reset();
+    if (this.addCountryForm.valid) {
+      const result = this.countries.find(country => country.name == payload.name);
+      if (!result) {
+        this.agencyService.addCountry(payload);
+        this.toast.success('تمت الاضافه');
+        this.addCountryForm.reset();
+      }
+      else {
+        this.toast.error('موجود من قبل');
+      }
     }
   }
 

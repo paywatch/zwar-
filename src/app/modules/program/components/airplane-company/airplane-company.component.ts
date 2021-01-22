@@ -45,9 +45,15 @@ export class AirplaneCompanyComponent implements OnInit, OnDestroy {
   AddAirPlane() {
     const payload = this.airplaneForm.value;
     if (this.airplaneForm.valid) {
-      this.programService.addAirPlane(payload);
-      this.toast.success('تمت الاضافه');
-      this.airplaneForm.reset();
+      const result = this.airplanes.find(airplane => airplane.name == payload.name);
+      if (!result) {
+        this.programService.addAirPlane(payload);
+        this.toast.success('تمت الاضافه');
+        this.airplaneForm.reset();
+      }
+      else {
+        this.toast.error('موجود من قبل');
+      }
     }
   }
 

@@ -29,6 +29,12 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
     this.getStars();
   }
 
+  initForm() {
+    this.programHotelStar = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]]
+    });
+  }
+
   getStars() {
     this.sub = this.programService.getAllStars().subscribe(res => {
       this.hotelStars = res;
@@ -36,18 +42,18 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
     });
   }
 
-  initForm() {
-    this.programHotelStar = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]]
-    });
-  }
-
   AddHotelStar() {
     const payload = this.programHotelStar.value;
     if (this.programHotelStar.valid) {
-      this.programService.AddHotelStar(payload);
-      this.toast.success('تمت الاضافه');
-      this.programHotelStar.reset();
+      const result = this.hotelStars.find(hotel => hotel.name == payload.name);
+      if (!result) {
+        this.programService.AddHotelStar(payload);
+        this.toast.success('تمت الاضافه');
+        this.programHotelStar.reset();
+      }
+      else {
+        this.toast.error('موجود من قبل');
+      }
     }
   }
 

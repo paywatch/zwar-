@@ -43,9 +43,15 @@ export class TransportWayComponent implements OnInit, OnDestroy {
   AddTransportWay() {
     const payload = this.transportForm.value;
     if (this.transportForm.valid) {
-      this.programService.addTransportWay(payload);
-      this.toast.success('تمت الاضافه');
-      this.transportForm.reset();
+      const result = this.transportWay.find(transport => transport.name == payload.name);
+      if (!result) {
+        this.programService.addTransportWay(payload);
+        this.toast.success('تمت الاضافه');
+        this.transportForm.reset();
+      }
+      else {
+        this.toast.error('موجود من قبل');
+      }
     }
   }
 

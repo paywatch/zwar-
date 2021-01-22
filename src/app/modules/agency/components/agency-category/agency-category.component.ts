@@ -39,16 +39,24 @@ export class AgencyCategoryComponent implements OnInit, OnDestroy {
   getAllAgenciesCategories() {
     this.sub = this.agencyService.getAgencyType().subscribe(res => {
       this.agencyCategory = res;
-      console.log(res);
     });
   }
 
   addCategory() {
     const payload = this.agencyCategoryForm.value;
     if (this.agencyCategoryForm.valid) {
-      this.agencyService.addCategory(payload);
-      this.toast.success('تمت الاضافه');
-      this.agencyCategoryForm.reset();
+      const result = this.agencyCategory.find(category => category.name == payload.name);
+      if (!result) {
+        this.agencyService.addCategory(payload);
+        this.toast.success('تمت الاضافه');
+        this.agencyCategoryForm.reset();
+      }
+      else {
+        this.toast.error('موجود من قبل');
+      }
+    }
+    else {
+      this.toast.info('enter valid data');
     }
   }
 
