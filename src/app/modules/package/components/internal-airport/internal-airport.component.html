@@ -22,7 +22,8 @@
             <button class="btn btn-primary text-center" type="submit">اضافة</button>
           </div>
         </form>
-        <div *ngFor="let item of airPorts" class="d-flex justify-content-between">
+        <div *ngFor="let item of airPorts |  paginate: { itemsPerPage: 2, currentPage: page}"
+          class="d-flex justify-content-between">
           <div style="width: 100%;">
             <ul class="list-group mt-2">
               <li class="list-group-item">
@@ -47,6 +48,7 @@
             </a>
           </div>
         </div>
+        <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
       </div>
     </div>
   </div>

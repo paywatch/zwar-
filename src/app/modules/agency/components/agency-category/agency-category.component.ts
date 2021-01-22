@@ -45,9 +45,11 @@ export class AgencyCategoryComponent implements OnInit, OnDestroy {
 
   addCategory() {
     const payload = this.agencyCategoryForm.value;
-    this.agencyService.addCategory(payload);
-    this.toast.success('تمت الاضافه');
-    this.agencyCategoryForm.reset();
+    if (this.agencyCategoryForm.valid) {
+      this.agencyService.addCategory(payload);
+      this.toast.success('تمت الاضافه');
+      this.agencyCategoryForm.reset();
+    }
   }
 
   updateItem(item) {
