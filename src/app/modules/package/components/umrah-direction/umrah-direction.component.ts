@@ -14,6 +14,8 @@ export class UmrahDirectionComponent implements OnInit, OnDestroy {
   umrahDirectionForm: FormGroup;
   sub: Subscription;
   umrahDirections: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +24,7 @@ export class UmrahDirectionComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.editState = false;
     this.initForm();
     this.getUmrahDierction();
   }
@@ -43,6 +46,17 @@ export class UmrahDirectionComponent implements OnInit, OnDestroy {
     this.packageService.addUmrahDirection(payload);
     this.toast.success('تمت الاضافه');
     this.umrahDirectionForm.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.packageService.updateUmrahDirection(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

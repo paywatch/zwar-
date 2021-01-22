@@ -14,6 +14,8 @@ export class UmrahSeasonComponent implements OnInit, OnDestroy {
   umrahSeasonForm: FormGroup;
   sub: Subscription;
   umrahSeason: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,6 +46,17 @@ export class UmrahSeasonComponent implements OnInit, OnDestroy {
     this.packageService.addUmrahSeason(payload);
     this.toast.success('تمت الاضافه');
     this.umrahSeasonForm.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.packageService.updateUmrahASeason(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

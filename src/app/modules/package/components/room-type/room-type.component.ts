@@ -14,6 +14,8 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
   roomTypeForm: FormGroup;
   sub: Subscription;
   roomType: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +24,7 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.editState = false;
     this.initForm();
     this.getRoomType();
   }
@@ -43,6 +46,17 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
     this.packageService.addRoomType(payload);
     this.toast.success('تمت الاضافه');
     this.roomTypeForm.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.packageService.updateRoomType(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

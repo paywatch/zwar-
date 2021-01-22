@@ -14,6 +14,8 @@ export class AgencyCategoryComponent implements OnInit, OnDestroy {
   agencyCategoryForm: FormGroup;
   sub: Subscription;
   agencyCategory: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +24,7 @@ export class AgencyCategoryComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.editState = false;
     this.initForm();
     this.getAllAgenciesCategories();
   }
@@ -45,6 +48,17 @@ export class AgencyCategoryComponent implements OnInit, OnDestroy {
     this.agencyService.addCategory(payload);
     this.toast.success('تمت الاضافه');
     this.agencyCategoryForm.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.agencyService.updateCategories(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

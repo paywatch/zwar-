@@ -14,6 +14,8 @@ export class AddCityComponent implements OnInit, OnDestroy {
   addCityForm: FormGroup;
   sub: Subscription;
   cities: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +24,7 @@ export class AddCityComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.editState = false;
     this.initForm();
     this.getAllCities();
   }
@@ -43,6 +46,17 @@ export class AddCityComponent implements OnInit, OnDestroy {
     this.agencyService.addCity(payload);
     this.toast.success('تمت الاضافه');
     this.addCityForm.reset();
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.agencyService.updateCity(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

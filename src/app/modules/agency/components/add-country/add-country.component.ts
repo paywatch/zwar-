@@ -14,6 +14,8 @@ export class AddCountryComponent implements OnInit, OnDestroy {
   addCountryForm: FormGroup;
   sub: Subscription;
   countries: any;
+  editState: boolean;
+  itemToEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +24,7 @@ export class AddCountryComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.editState = false;
     this.initForm();
     this.getAllCountries();
   }
@@ -43,6 +46,17 @@ export class AddCountryComponent implements OnInit, OnDestroy {
     const payload = this.addCountryForm.value;
     this.agencyService.addCountry(payload);
     this.toast.success('تمت الاضافه');
+  }
+
+  updateItem(item) {
+    this.itemToEdit = item;
+    this.editState = true;
+  }
+
+  updateSingleItem(item) {
+    this.agencyService.updateCountry(item);
+    this.editState = false;
+    this.toast.success('تم التعديل');
   }
 
   deleteItem(item) {

@@ -345,6 +345,21 @@ export class AgencyService {
     this.confirmDoc.update(agency);
   }
 
+  updateCountry(item) {
+    this.countriesDoc = this.afs.doc(`countries/${item.id}`);
+    this.countriesDoc.update(item);
+  }
+
+  updateCity(item) {
+    this.districtListDoc = this.afs.doc(`districtList/${item.id}`);
+    this.districtListDoc.update(item);
+  }
+
+  updateCategories(item) {
+    this.agencyTypeDoc = this.afs.doc(`agencyType/${item.id}`);
+    this.agencyTypeDoc.update(item);
+  }
+
   deleteAgencyData(item) {
     this.registerDoc = this.afs.doc(`agency/${item.id}`);
     this.registerDoc.delete();

@@ -34,11 +34,12 @@ export class PackageService {
 
   roomCollection: AngularFirestoreCollection<any>;
   existRoooms: Observable<any>;
-  roomType: Observable<any>;
   roomDoc: AngularFirestoreDocument<any>;
 
+  roomType: Observable<any>;
   roomTypeCollection: AngularFirestoreCollection<any>;
   roomTypeDoc: AngularFirestoreDocument<any>;
+
 
   packageCollection: AngularFirestoreCollection<any>;
 
@@ -269,6 +270,26 @@ export class PackageService {
   updatePackageRoom(item) {
     this.roomDoc = this.afs.doc(`roomsData/${item[0].id}`);
     this.roomDoc.update(item);
+  }
+
+  updateAirPort(item) {
+    this.internalAirportDoc = this.afs.doc(`internalairport/${item.id}`);
+    this.internalAirportDoc.update(item);
+  }
+
+  updateUmrahASeason(item) {
+    this.umrahSeasonDoc = this.afs.doc(`omrahSeason/${item.id}`);
+    this.umrahSeasonDoc.update(item);
+  }
+
+  updateUmrahDirection(item) {
+    this.umrahDirectionDoc = this.afs.doc(`Umrah Direction/${item.id}`);
+    this.umrahDirectionDoc.update(item);
+  }
+
+  updateRoomType(item) {
+    this.roomTypeDoc = this.afs.doc(`roomType/${item.id}`);
+    this.roomTypeDoc.update(item);
   }
 
   deletePackageBasic(item) {
