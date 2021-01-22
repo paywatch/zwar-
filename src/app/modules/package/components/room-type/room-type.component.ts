@@ -44,9 +44,15 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
   addRoomType() {
     const payload = this.roomTypeForm.value;
     if (this.roomTypeForm.valid) {
-      this.packageService.addRoomType(payload);
-      this.toast.success('تمت الاضافه');
-      this.roomTypeForm.reset();
+      const result = this.roomType.find(room => room.name == payload.name);
+      if (!result) {
+        this.packageService.addRoomType(payload);
+        this.toast.success('تمت الاضافه');
+        this.roomTypeForm.reset();
+      }
+      else {
+        this.toast.error('موجود من قبل');
+      }
     }
   }
 
