@@ -16,6 +16,10 @@
             <div class="col-md-6">
               <label for=""> اضافة مطار جديده </label>
               <input type="text" class="form-control" formControlName="name">
+              <em *ngIf="airPlaneForm.get('name').hasError('required') && 
+                         airPlaneForm.get('name').touched">
+                اجباري
+              </em>
             </div>
           </div>
           <div class="row justify-content-center mt-2">

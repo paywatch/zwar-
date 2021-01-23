@@ -16,13 +16,18 @@
             <div class="col-md-6">
               <label for=""> اضافة نوع غرفه </label>
               <input type="text" class="form-control" formControlName="name">
+              <em *ngIf="roomTypeForm.get('name').hasError('required') && 
+                         roomTypeForm.get('name').touched">
+                اجباري
+              </em>
             </div>
           </div>
           <div class="row justify-content-center mt-2">
             <button class="btn btn-primary text-center" [disabled]="!roomTypeForm.valid" type="submit">اضافة</button>
           </div>
         </form>
-        <div *ngFor="let item of roomType |  paginate: { itemsPerPage: 2, currentPage: page}" class="d-flex justify-content-between">
+        <div *ngFor="let item of roomType |  paginate: { itemsPerPage: 2, currentPage: page}"
+          class="d-flex justify-content-between">
           <div style="width: 100%;">
             <ul class="list-group mt-2">
               <li class="list-group-item">

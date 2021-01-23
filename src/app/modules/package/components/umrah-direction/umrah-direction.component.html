@@ -16,10 +16,15 @@
             <div class="col-md-6">
               <label for=""> اضافة اتجاه عمره جديد </label>
               <input type="text" class="form-control" formControlName="name">
+              <em *ngIf="umrahDirectionForm.get('name').hasError('required') && 
+                         umrahDirectionForm.get('name').touched">
+                اجباري
+              </em>
             </div>
           </div>
           <div class="row justify-content-center mt-2">
-            <button class="btn btn-primary text-center" [disabled]="!umrahDirectionForm.valid" type="submit">اضافة</button>
+            <button class="btn btn-primary text-center" [disabled]="!umrahDirectionForm.valid"
+              type="submit">اضافة</button>
           </div>
         </form>
         <div *ngFor="let item of umrahDirections |  paginate: { itemsPerPage: 2, currentPage: page}"
