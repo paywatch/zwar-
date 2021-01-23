@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="row justify-content-center mt-2">
-            <button class="btn btn-primary text-center" type="submit">اضافة</button>
+            <button class="btn btn-primary text-center" [disabled]="!roomTypeForm.valid" type="submit">اضافة</button>
           </div>
         </form>
         <div *ngFor="let item of roomType |  paginate: { itemsPerPage: 2, currentPage: page}" class="d-flex justify-content-between">

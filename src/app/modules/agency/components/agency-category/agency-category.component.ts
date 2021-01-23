@@ -32,7 +32,7 @@ export class AgencyCategoryComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.agencyCategoryForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]]
+      name: ['', [Validators.required]]
     });
   }
 
@@ -54,9 +54,6 @@ export class AgencyCategoryComponent implements OnInit, OnDestroy {
       else {
         this.toast.error('موجود من قبل');
       }
-    }
-    else {
-      this.toast.info('enter valid data');
     }
   }
 

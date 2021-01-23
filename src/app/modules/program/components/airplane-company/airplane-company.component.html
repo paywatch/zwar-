@@ -2,8 +2,8 @@
   <div class="container ">
     <nav aria-label="breadcrumb">
       <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
-        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
-        <li class="breadcrumb-item"><a uhref="Search_results.html"> ادارة برامج العمرة </a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/home']">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/profile/programs']"> ادارة برامج العمرة </a></li>
       </ol>
     </nav>
     <div class="page-title">
@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="row justify-content-center mt-2">
-            <button class="btn btn-primary text-center" type="submit">اضافة</button>
+            <button class="btn btn-primary text-center" [disabled]="!airplaneForm.valid" type="submit">اضافة</button>
           </div>
         </form>
         <div *ngFor="let item of airplanes |  paginate: { itemsPerPage: 2, currentPage: page}"
