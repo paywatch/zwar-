@@ -31,7 +31,7 @@ export class AddCountryComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.addCountryForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(20)]]
+      name: ['', [Validators.required]]
     });
   }
 
