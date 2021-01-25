@@ -31,7 +31,7 @@ export class InternalAirportComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.airPlaneForm = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 

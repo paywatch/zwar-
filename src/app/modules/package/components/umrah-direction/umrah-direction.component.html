@@ -20,6 +20,11 @@
                          umrahDirectionForm.get('name').touched">
                 اجباري
               </em>
+              <em *ngIf="!umrahDirectionForm.get('name').hasError('required') && 
+                         umrahDirectionForm.get('name').hasError('maxlength') &&
+                         umrahDirectionForm.get('name').touched">
+                حد اقصي 20 حرف
+              </em>
             </div>
           </div>
           <div class="row justify-content-center mt-2">

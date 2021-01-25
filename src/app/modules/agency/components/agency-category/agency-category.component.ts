@@ -32,7 +32,7 @@ export class AgencyCategoryComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.agencyCategoryForm = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 

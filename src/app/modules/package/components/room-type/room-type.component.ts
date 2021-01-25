@@ -31,7 +31,7 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.roomTypeForm = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 

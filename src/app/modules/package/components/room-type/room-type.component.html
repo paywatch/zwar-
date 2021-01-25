@@ -20,6 +20,11 @@
                          roomTypeForm.get('name').touched">
                 اجباري
               </em>
+              <em *ngIf="!roomTypeForm.get('name').hasError('required') && 
+                         roomTypeForm.get('name').hasError('maxlength') &&
+                         roomTypeForm.get('name').touched">
+                حد اقصي 20 حرف
+              </em>
             </div>
           </div>
           <div class="row justify-content-center mt-2">

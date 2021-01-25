@@ -31,7 +31,7 @@ export class UmrahDirectionComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.umrahDirectionForm = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 

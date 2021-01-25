@@ -31,7 +31,7 @@ export class AddCityComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.addCityForm = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 

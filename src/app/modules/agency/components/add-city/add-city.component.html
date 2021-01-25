@@ -20,6 +20,11 @@
                          addCityForm.get('name').touched">
                 اجباري
               </em>
+              <em *ngIf="!addCityForm.get('name').hasError('required') && 
+                         addCityForm.get('name').hasError('maxlength') &&
+                         addCityForm.get('name').touched">
+                حد اقصي 20 حرف
+              </em>
             </div>
           </div>
           <div class="row justify-content-center mt-2">

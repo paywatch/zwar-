@@ -30,7 +30,7 @@ export class ProgramCategoryComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.programCategories = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 

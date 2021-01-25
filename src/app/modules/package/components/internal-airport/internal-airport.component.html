@@ -20,6 +20,11 @@
                          airPlaneForm.get('name').touched">
                 اجباري
               </em>
+              <em *ngIf="!airPlaneForm.get('name').hasError('required') && 
+                         airPlaneForm.get('name').hasError('maxlength') &&
+                         airPlaneForm.get('name').touched">
+                حد اقصي 20 حرف
+              </em>
             </div>
           </div>
           <div class="row justify-content-center mt-2">

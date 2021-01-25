@@ -30,7 +30,7 @@ export class TransportWayComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.transportForm = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 

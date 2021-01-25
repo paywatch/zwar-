@@ -31,7 +31,7 @@ export class UmrahSeasonComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.umrahSeasonForm = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 

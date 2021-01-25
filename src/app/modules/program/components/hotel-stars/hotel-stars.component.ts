@@ -31,7 +31,7 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.programHotelStar = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 
