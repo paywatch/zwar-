@@ -72,48 +72,6 @@
           <li *ngIf="!isLoggedIn">
             <a routerLink="./agency/register" class="btn btn-outline-dark btn-sm mr-3"> اعرض برنامجك معنا </a>
           </li>
-          <li class="dropdown">
-            <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <span class="pl-2">
-                SAR |
-                تونس
-                <img src="assets/images/flags/tunis.svg" alt="tunis flag" class="d-none d-md-inline ml-2">
-              </span>
-              <i class="fal fa-fw fa-1x fa-angle-down"></i>
-            </a>
-            <div class="dropdown-menu ">
-              <div class="d-flex form-group justify-content-between">
-                <label for="" class="w-50"> العملة </label>
-                <select class="form-control form-control-sm">
-                  <option> ريال سعودي </option>
-                  <option> دولار </option>
-                  <option> يورو </option>
-                  <option> يوان صيني </option>
-                </select>
-              </div>
-              <div class="d-flex form-group justify-content-between">
-                <label for="" class="w-50"> الدولة </label>
-                <select class="form-control form-control-sm">
-                  <option> تونس </option>
-                  <option> مصر </option>
-                  <option> السودان </option>
-                  <option> المغرب </option>
-                </select>
-              </div>
-              <div class="d-flex form-group justify-content-between">
-                <!-- <a href="#f" class="btn btn-outline-light btn-sm mr-3 toggle-lang" >  ENGLISH  </a> -->
-                <label for="" class="w-50"> اللغة </label>
-                <select class="form-control form-control-sm toggle-lang">
-                  <option> Arabic </option>
-                  <option> English </option>
-                  <!-- <option> German    </option>   -->
-                </select>
-              </div>
-              <a href="javascript:;" class="btn btn-block btn-outline-primary btn-sm  px-2" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"> موافق </a>
-            </div>
-          </li>
           <li class="dropdown username" *ngIf="isLoggedIn">
             <a href="javascript:;" class="btn btn-outline-dark btn-sm mr-3 dropdown-toggle px-2" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
@@ -126,9 +84,6 @@
               <li class="p-2 small"><a (click)="logOut()" class="text-danger"> تسجيل الخروج</a></li>
             </ul>
           </li>
-          <!-- <li *ngIf="isLoggedIn">
-            <a routerLink="/auth/logout" class="btn btn-outline-dark btn-sm "> تسجيل خروج </a>
-          </li> -->
           <li *ngIf="!isLoggedIn">
             <a routerLink="/auth/login" class="btn btn-outline-dark btn-sm "> تسجيل دخول </a>
           </li>
