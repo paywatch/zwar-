@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import firebase from 'firebase/app';
+import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
@@ -78,7 +78,7 @@ export class AuthService {
       const provider = new firebase.auth.FacebookAuthProvider();
       this.AfAuth.auth
         .signInWithPopup(provider)
-        .then(res => {
+        .then((res: any) => {
           if (res.credential) {
             const token = res.credential.accessToken;
           }
@@ -95,7 +95,7 @@ export class AuthService {
       const provider = new firebase.auth.GithubAuthProvider();
       this.AfAuth.auth
         .signInWithPopup(provider)
-        .then(res => {
+        .then((res: any) => {
           if (res.credential) {
             const token = res.credential.accessToken;
           }

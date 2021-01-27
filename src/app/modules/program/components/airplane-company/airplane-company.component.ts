@@ -16,6 +16,7 @@ export class AirplaneCompanyComponent implements OnInit, OnDestroy {
   airplanes: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

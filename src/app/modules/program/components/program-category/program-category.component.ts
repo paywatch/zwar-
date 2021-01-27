@@ -16,6 +16,7 @@ export class ProgramCategoryComponent implements OnInit, OnDestroy {
   categories: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

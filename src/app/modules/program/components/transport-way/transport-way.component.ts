@@ -16,6 +16,7 @@ export class TransportWayComponent implements OnInit, OnDestroy {
   transportWay: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

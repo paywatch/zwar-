@@ -16,6 +16,7 @@ export class AddCountryComponent implements OnInit, OnDestroy {
   countries: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

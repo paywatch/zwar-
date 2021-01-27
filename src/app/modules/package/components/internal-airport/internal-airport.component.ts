@@ -16,6 +16,7 @@ export class InternalAirportComponent implements OnInit, OnDestroy {
   airPorts: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -16,6 +16,7 @@ export class AddCityComponent implements OnInit, OnDestroy {
   cities: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

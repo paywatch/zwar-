@@ -16,6 +16,7 @@ export class UmrahDirectionComponent implements OnInit, OnDestroy {
   umrahDirections: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

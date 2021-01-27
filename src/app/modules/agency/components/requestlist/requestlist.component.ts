@@ -16,6 +16,7 @@ export class RequestlistComponent implements OnInit {
   agencyID: any;
   agencytype: any;
   searchResult: any;
+  page;
 
   constructor(
     private agencyService: AgencyService,

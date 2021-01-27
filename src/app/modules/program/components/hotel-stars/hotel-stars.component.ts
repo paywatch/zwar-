@@ -16,6 +16,7 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
   hotelStars: any;
   itemToEdit: any;
   editState: boolean;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

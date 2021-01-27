@@ -16,6 +16,7 @@ export class UmrahSeasonComponent implements OnInit, OnDestroy {
   umrahSeason: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,

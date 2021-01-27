@@ -16,6 +16,7 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
   roomType: any;
   editState: boolean;
   itemToEdit: any;
+  page;
 
   constructor(
     private formBuilder: FormBuilder,
