@@ -106,8 +106,7 @@ export class RoomDataComponent implements OnInit {
   }
 
   _editRoom() {
-    console.log(this.roomForm.value);
-    this.rooms = [];
+    this.rooms.splice(1, this.room);
     this.rooms.push(this.roomForm.value);
   }
 

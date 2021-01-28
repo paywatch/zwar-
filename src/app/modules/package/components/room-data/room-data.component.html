@@ -245,9 +245,6 @@
         <button type="button" [disabled]="!roomForm.valid" (click)="addRoom()" class="btn btn-primary demo-trigger-1"
           data-dismiss="modal">
           حفظ </button>
-        <button type="button"  *ngIf="rooms" [disabled]="!roomForm.valid" (click)="_editRoom(room)" class="btn btn-secondary demo-trigger-1"
-          data-dismiss="modal">
-          تعديل </button>
       </div>
     </div>
   </div>
