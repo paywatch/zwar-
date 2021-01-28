@@ -323,6 +323,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   deleteAgencyBasic() {
     this.agencyService.deleteAgencyBasic(this.selectedBasic);
+    this.router.navigate(['/agency/register']);
+    this.toast.success('تم الحذف');
   }
 
   // logoChange(input: any, fileName) {

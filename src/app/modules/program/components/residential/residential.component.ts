@@ -15,7 +15,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './residential.component.html',
   styleUrls: ['./residential.component.css']
 })
-export class ResidentialComponent implements OnInit,OnDestroy {
+export class ResidentialComponent implements OnInit, OnDestroy {
 
   modalRef: BsModalRef;
   basics: any;
@@ -283,7 +283,7 @@ export class ResidentialComponent implements OnInit,OnDestroy {
   }
 
   getAllHotelStars() {
-    this.sub = this.programservice.getAllStars().subscribe(stars => {  
+    this.sub = this.programservice.getAllStars().subscribe(stars => {
       this.hotelStars = stars;
       console.log(this.hotelStars);
     });
@@ -328,6 +328,7 @@ export class ResidentialComponent implements OnInit,OnDestroy {
 
   deleteResidential() {
     this.programservice.deleteResidential(this.selecetdHotel);
+    this.router.navigate(['/program/basics']);
     this.toaster.success('تم الحذف');
   }
 

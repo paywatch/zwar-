@@ -110,6 +110,8 @@ export class TransportaionComponent implements OnInit, OnDestroy {
 
   deleteTransportation() {
     this.programService.deleteTransportation(this.selectedTransportation);
+    this.toast.success('تم الحذف');
+    this.router.navigate(['/program/residential']);
   }
 
   ngOnDestroy() {

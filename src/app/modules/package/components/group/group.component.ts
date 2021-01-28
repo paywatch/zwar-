@@ -31,6 +31,7 @@ export class GroupComponent implements OnInit {
   MatwafImageID: any;
   matwafImage: any;
   modalRef: any;
+  program: any;
 
   constructor(
     private fb: FormBuilder,
@@ -51,6 +52,7 @@ export class GroupComponent implements OnInit {
       this.getMatwafImage();
     }, 1000);
     this.loadBasicInfo();
+    this.program = JSON.parse(sessionStorage.getItem('program')) || {};
   }
 
   initForm() {
@@ -194,7 +196,7 @@ export class GroupComponent implements OnInit {
 
   deleteMatwaf() {
     this.packageService.deletePackageMatwaf(this.selectedGroup);
-    this.toast.info('تم الحذف');
-    this.groupForm.reset();
+    this.toast.success('تم الحذف');
+    this.router.navigate(['/package/base', this.basics]);
   }
 }

@@ -384,6 +384,8 @@ export class LicenseComponent implements OnInit {
 
   deleteLicenseData() {
     this.agencyService.deleteLicenseData(this.selectedLicense);
+    this.router.navigate(['/agency/main']);
+    this.toast.success('تم الحذف');
   }
 
   changeMinTourAuth() {

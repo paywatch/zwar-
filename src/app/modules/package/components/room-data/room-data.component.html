@@ -4,7 +4,7 @@
       <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
         <li class="breadcrumb-item"><a [routerLink]="['/home']">الرئيسية</a></li>
         <li class="breadcrumb-item"><a [routerLink]="['/profile/programs']"> ادارة برامج العمرة </a></li>
-        <li class="breadcrumb-item active" aria-current="page"> عمرة رمضان شركة الواحات للسياحة </li>
+        <li class="breadcrumb-item active" aria-current="page"> {{program.programName}} </li>
       </ol>
     </nav>
     <div class="page-title">
@@ -41,8 +41,8 @@
         <section>
           <div class="d-flex justify-content-between align-items-center my-4">
             <h3 class="text-primary m-0">بيانات الغرف </h3>
-            <a href="javascript:;" class="btn btn-outline-primary btn-hover" data-toggle="modal"
-              data-target="#additem" (click)="resetForm()">اضافة غرف </a>
+            <a href="javascript:;" class="btn btn-outline-primary btn-hover" data-toggle="modal" data-target="#additem"
+              (click)="resetForm()">اضافة غرف </a>
           </div>
 
           <div *ngIf="!rooms"
@@ -77,8 +77,8 @@
                     <td>{{room.roomTypeInfants}}</td>
                     <td>{{room.roomQuantity}}</td>
                     <td>
-                      <a href="javascript:;" (click)="editRoom(room.$$ID)" class="table-action text-success" data-toggle="modal"
-                        data-target="#additem"> <i class="fal fa-fw fa-pencil-alt"></i> </a>
+                      <a href="javascript:;" (click)="editRoom(room.$$ID)" class="table-action text-success"
+                        data-toggle="modal" data-target="#additem"> <i class="fal fa-fw fa-pencil-alt"></i> </a>
                     </td>
                     <td>
                       <a href="javascript:;" (click)="deleteRoom(room.$$ID)" class="table-action text-danger"
@@ -94,7 +94,8 @@
           <a class="btn btn-default px-0" (click)="deletePackageRoom"> الغاء </a>
           <div>
             <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
-            <button *ngIf="!selectedRoom" class="btn btn-primary ml-3" [disabled]="!rooms?.length" (click)="submit()">التالي</button>
+            <button *ngIf="!selectedRoom" class="btn btn-primary ml-3" [disabled]="!rooms?.length"
+              (click)="submit()">التالي</button>
             <button *ngIf="selectedRoom" (click)="updatePackageRoom()" class="btn btn-secondary ml-3">
               تعديل
             </button>
@@ -142,8 +143,7 @@
                     <span class="input-group-text" id="basic-addon2">ريـال</span>
                   </div>
                 </div>
-                <em
-                  *ngIf="roomForm.get('roomPriceAdult').hasError('required') && roomForm.get('roomPriceAdult').dirty">
+                <em *ngIf="roomForm.get('roomPriceAdult').hasError('required') && roomForm.get('roomPriceAdult').dirty">
                   هذا الحقل إجباري
                 </em>
                 <em *ngIf="!roomForm.get('roomPriceAdult').hasError('required') &&
@@ -245,6 +245,9 @@
         <button type="button" [disabled]="!roomForm.valid" (click)="addRoom()" class="btn btn-primary demo-trigger-1"
           data-dismiss="modal">
           حفظ </button>
+        <button type="button"  *ngIf="rooms" [disabled]="!roomForm.valid" (click)="_editRoom(room)" class="btn btn-secondary demo-trigger-1"
+          data-dismiss="modal">
+          تعديل </button>
       </div>
     </div>
   </div>

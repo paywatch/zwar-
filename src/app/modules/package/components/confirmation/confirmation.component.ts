@@ -19,6 +19,7 @@ export class ConfirmationComponent implements OnInit {
   ID: string;
   matwafImage: any;
   modalRef: any;
+  program: any;
 
   constructor(
     private router: Router,
@@ -31,6 +32,7 @@ export class ConfirmationComponent implements OnInit {
   ngOnInit(): void {
     this.getBasicData();
     this.ID = JSON.parse(sessionStorage.getItem('ID')) || {};
+    this.program = JSON.parse(sessionStorage.getItem('program')) || {};
     this.getAirPorts();
     this.getUmrahSeason();
     this.getUmrahDirection();

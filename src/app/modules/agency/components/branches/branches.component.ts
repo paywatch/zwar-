@@ -87,7 +87,7 @@ export class BranchesComponent implements OnInit {
   }
 
   updateBranchData() {
-    this.selectedBranch = {...this.taBranchesList};
+    this.selectedBranch = { ...this.taBranchesList };
     this.selectedBranch.id = this.brachID;
     this.agencyService.updateBranchData(this.selectedBranch);
     this.toast.success('تم التعديل');
@@ -96,7 +96,8 @@ export class BranchesComponent implements OnInit {
 
   deleteBranchData() {
     this.agencyService.updateBranchData(this.selectedBranch);
-    this.toast.info('تم الحذف');
+    this.router.navigate(['/agency/license']);
+    this.toast.success('تم الحذف');
   }
 
   onRowDelete(id) {

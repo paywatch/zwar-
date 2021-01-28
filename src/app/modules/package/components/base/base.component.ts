@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AfterToday } from '../../../../_helpers/afterToday.validator';
 import { GreaterThan } from '../../../../_helpers/greater-than.validator';
-import * as moment from 'moment';
-
 
 import { PackageService } from '../../services/package-service.service';
 import { Subscription } from 'rxjs';
@@ -26,6 +24,7 @@ export class BaseComponent implements OnInit, OnDestroy {
   packageBasicID: string;
   selectedBasic: any;
   sub: Subscription;
+  program: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,6 +43,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.getPackageBasicData();
     });
+    this.program = JSON.parse(sessionStorage.getItem('program')) || {};
   }
 
   initForm(): void {

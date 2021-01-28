@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
 import { PackageService } from '../../services/package-service.service';
 
 @Component({
@@ -21,6 +20,10 @@ export class RoomDataComponent implements OnInit {
   roomID: string;
   selectedRoom: any;
   roomPayload: any;
+  program: any;
+  editIndex: any;
+  roomsData: any;
+  room: any;
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +40,8 @@ export class RoomDataComponent implements OnInit {
     setTimeout(() => {
       this.getRoomType();
     }, 2000);
+
+    this.program = JSON.parse(sessionStorage.getItem('program')) || {};
   }
 
   initForm() {
@@ -78,7 +83,7 @@ export class RoomDataComponent implements OnInit {
     this.roomForm.reset();
   }
 
-  back() {
+  back() { 
     this.router.navigate(['/package/group']);
   }
 
@@ -87,6 +92,7 @@ export class RoomDataComponent implements OnInit {
       this.payload = this.roomForm.value;
       this.payload.$$ID = this.rooms.length + 1;
       this.rooms.push(this.payload);
+      this.editIndex = true;
     }
   }
 
@@ -95,8 +101,14 @@ export class RoomDataComponent implements OnInit {
   }
 
   editRoom(index) {
-    const room = this.rooms.find(r => r.$$ID === index);
-    this.roomForm.patchValue(room);
+    this.room = this.rooms.find(r => r.$$ID === index);
+    this.roomForm.patchValue(this.room);
+  }
+
+  _editRoom() {
+    console.log(this.roomForm.value);
+    this.rooms = [];
+    this.rooms.push(this.roomForm.value);
   }
 
   submit() {
@@ -123,5 +135,6 @@ export class RoomDataComponent implements OnInit {
   deletePackageRoom() {
     this.packageService.deletePackageRoom(this.selectedRoom);
     this.toast.info('تم الحذف');
+    this.router.navigate(['/package/group']);
   }
 }

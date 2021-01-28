@@ -213,6 +213,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
   deleteBasic() {
     this.programService.deleteBasic(this.selectedBasic);
+    this.toastr.success('تم الحذف');
   }
 
   ngOnDestroy() {

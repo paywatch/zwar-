@@ -88,7 +88,6 @@ export class VisitsComponent implements OnInit {
 
   deleteProgramVisit() {
     this.programService.deleteProgramVisit(this.selectedVisit);
-    this.visitForm.reset();
     this.router.navigate(['program/transportation']);
   }
 
