@@ -23,11 +23,21 @@ export class AuthService {
     });
   }
 
-  register(email: string, password: string) {
+  register(email: string, password: string, phone: string, name: string) {
     return new Promise((resolve, reject) => {
       this.AfAuth.auth.createUserWithEmailAndPassword(email, password)
-        .then(userData => resolve(userData),
-          err => reject(err));
+        .then(userData => {
+          const data = {
+            Email: email,
+            Password: password,
+            phoneNumber: phone,
+            displayName: name
+          };
+          resolve(userData);
+          console.log(data);
+          this.userCollection.add(data);
+        },
+          (err) => reject(err));
     });
   }
 

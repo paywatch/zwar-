@@ -5,6 +5,7 @@ import {
   ProfileComponent,
   ProgramsComponent,
   PackagesComponent,
+  UserProfileComponent
 } from './components';
 
 
@@ -13,6 +14,10 @@ const routes: Routes = [
     path: '',
     component: ProfileComponent,
 
+  },
+  {
+    path: 'user-profile',
+    component: UserProfileComponent
   },
   {
     path: 'programs',
@@ -32,6 +37,7 @@ export class ProfileRoutingModule {
   static components = [
     ProfileComponent,
     ProgramsComponent,
-    PackagesComponent
+    PackagesComponent,
+    UserProfileComponent
   ];
 }

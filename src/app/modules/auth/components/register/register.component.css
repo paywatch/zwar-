@@ -2,12 +2,14 @@
   position: relative;
 }
 
-.email {
+.email, .password, .phone, .name {
   position: absolute;
+}
+
+.email {
   top: 5.5rem;
 }
 
-.password {
-  position: absolute;
-  bottom: 6rem;
+.password, .phone, .name {
+  bottom: -1.4rem;
 }

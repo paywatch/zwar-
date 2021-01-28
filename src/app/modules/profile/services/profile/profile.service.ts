@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-import { environment } from '../../../../../environments/environment';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -9,7 +9,46 @@ import { environment } from '../../../../../environments/environment';
 })
 export class ProfileService {
 
-  constructor(private http: HttpClient) { }
+  userImage: Observable<any>;
+  userImageCollection: AngularFirestoreCollection<any>;
+  userImageDoc: AngularFirestoreDocument<any>;
+
+  userCollection: AngularFirestoreCollection<any>;
+
+  constructor(private afs: AngularFirestore) { }
+
+  getAllCollection() {
+    this.userImageCollection = this.afs.collection('userFile');
+    this.userCollection = this.afs.collection('user');
+  }
+
+  getUserImage() {
+    return this.userImage = this.afs.collection('userFile').snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
+  }
+
+  getSingleUsers() {
+    return this.afs.collection('user').snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map((a: any) => {
+          const data = a.payload.doc.data();
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
+  }
+
+  deleteUSerImage(item) {
+    this.userImageDoc = this.afs.doc(`userFile/${item.id}`);
+    this.userImageDoc.delete();
+  }
+}
 
   // getAllPrograms() {
   //   return this.http.get('/api/admin/getAllTblProgram?size=100')
@@ -87,4 +126,3 @@ export class ProfileService {
   //       tap(res => console.log(res))
   //     );
   // }
-}

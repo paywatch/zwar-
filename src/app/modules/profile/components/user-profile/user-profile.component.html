@@ -1,0 +1,91 @@
+<div class="page-layout">
+  <div class="container ">
+    <nav aria-label="breadcrumb">
+      <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/profile/programs']"> ادارة برامج العمرة </a></li>
+      </ol>
+    </nav>
+    <div class="page-title">
+      <h1 class="h1 text-primary"> بيانات المستخدم</h1>
+    </div>
+    <div class="page-inner">
+      <div class="wizard-details">
+        <div class="d-flex justify-content-between">
+          <div style="width: 100%;">
+            <div class="row">
+              <div class="col-md-9" *ngFor="let item of user.data">
+                <form>
+                  <div class="form-group">
+                    <label>الرقم التعريفي</label>
+                    <input type="text" class="form-control" disabled [value]="user?.user.uid">
+                  </div>
+                  <div class="form-group">
+                    <label>اسم المستخدم</label>
+                    <input type="text" class="form-control" disabled [value]="item?.displayName">
+                  </div>
+                  <div class="form-group">
+                    <label>الايميل</label>
+                    <input type="text" class="form-control" disabled [value]="user?.user.email">
+                  </div>
+                  <div class="form-group">
+                    <label>التليفون</label>
+                    <input type="text" class="form-control" disabled [value]="item?.phoneNumber">
+                  </div>
+                </form>
+              </div>
+              <div class="col-md-3">
+                <div class="row justify-content-center align-items-center">
+                  <img class="img-fluid mt-5" alt="">
+                  <div class="mk-custom-file-upload py-5 mb-1">
+                    <p class="text-primary display-2"> <i class="fal fa-2x fa-fw fa-upload"></i></p>
+                    <p class="text-primary display-4"> رفع صورة المستخدم </p>
+
+                    <input type="file" multiple class="gallery-photo-add" (change)="userChange($event)">
+                    <div class="upload-gallery full">
+                      <div *ngFor="let upload of uploads">
+                        <p> Progress: {{upload.percentage | async}}</p>
+                      </div>
+                    </div>
+                    <p class="text-light small m-0">
+                      الحجم المفضل
+                      <span> 200px X 200px</span> </p>
+                  </div>
+                  <a type="button" (click)="openModal(template)">
+                    <h4>
+                      صوره المستخدم
+                    </h4>
+                    <i style="width: 7rem; font-size: 2.6rem;" class="fa fa-desktop"></i>
+                  </a>
+
+                  <ng-template #template>
+                    <div class="modal-header">
+                      <h4 class="modal-title pull-left">صورة المستخدم </h4>
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div *ngIf="user.userImage">
+                        <div class="row justify-content-center">
+                          <div *ngFor="let item of user?.userImage">
+                            <p><img width="100" height="100" [src]="item?.url" class="mr-3" /></p>
+                            <div>
+                              <a class="table-action text-danger" (click)="deleteUserImage(item)">
+                                <i class="fas fa-trash"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

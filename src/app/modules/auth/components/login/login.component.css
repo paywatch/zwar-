@@ -17,3 +17,9 @@
 .github {
   font-size: 1.4rem;
 }
+
+@media screen and (min-width: 320px) and (max-width: 414px) {
+  .password {
+    margin-bottom: 0.5rem;
+  }
+}

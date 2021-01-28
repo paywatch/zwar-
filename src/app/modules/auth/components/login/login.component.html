@@ -10,10 +10,10 @@
 
             <label class=" col-form-label">البريد الالكتروني </label>
             <input type="email" class="form-control" formControlName="email" placeholder="أسم المستخدم">
-            <em class="email" *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched">
+            <em class="email mb-sm-1" *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched">
               اجباري
             </em>
-            <em class="email" *ngIf="!loginForm.get('email').hasError('required') &&
+            <em class="email mb-sm-1" *ngIf="!loginForm.get('email').hasError('required') &&
                         loginForm.get('email').hasError('email') &&
                         loginForm.get('email').touched">
               ادخل البريد الالكتروني بطريقه صحيحه
@@ -29,8 +29,9 @@
                 class="btn btn-primary btn-block" />
             </div>
             <div class="row justify-content-between">
-              <a class="text-muted" [routerLink]="['/auth/register']">تسجيل حساب</a>
+              <a class="text-muted mr-1" [routerLink]="['/auth/register']">تسجيل حساب</a>
               <a class="text-muted" [routerLink]="['/auth/resetpassword']"> هل نسيت كلمه السر</a>
+              <a class="text-muted text-center" [routerLink]="['/auth/changePassword']">تغيير كلمه السر</a>
             </div>
             <div class="column">
               <h4 class="mt-2 text-center text-muted">
