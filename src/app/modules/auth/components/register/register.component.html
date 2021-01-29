@@ -26,11 +26,16 @@
                 *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">
                 اجباري
               </em>
+              <em class="password-strength" *ngIf="!registerForm.get('password').hasError('required') &&
+                          registerForm.get('password').hasError('password') &&
+                          registerForm.get('password').touched">
+                كلمة السر يجب ان تحتوى على حروف صغيرة و كبيرة و ارقام و علامات
+              </em>
             </div>
 
             <div class="form-group">
               <label class="col-form-label"> التليفون </label>
-              <input type="tel" class="form-control" formControlName="phoneNumber" placeholder="التليفون" >
+              <input type="tel" class="form-control" formControlName="phoneNumber" placeholder="التليفون">
               <em class="phone"
                 *ngIf="registerForm.get('phoneNumber').hasError('required') && registerForm.get('phoneNumber').touched">
                 اجباري

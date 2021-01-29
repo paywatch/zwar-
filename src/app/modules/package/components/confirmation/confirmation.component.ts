@@ -26,7 +26,7 @@ export class ConfirmationComponent implements OnInit {
     private toast: ToastrService,
     private packaService: PackageService,
     private modalService: BsModalService
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -48,8 +48,9 @@ export class ConfirmationComponent implements OnInit {
     this.package = {
       ...this.base,
       ...this.matwaf,
-      ...this.room
     };
+    this.package.rooms = [].concat(this.room);
+    console.log(this.package);
   }
 
   openModal(template: TemplateRef<any>) {

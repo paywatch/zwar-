@@ -1,6 +1,7 @@
 <header class="header">
   <div id="mySidenav" class="sidenav column">
     <a class="closebtn" (click)="closeNav()">&times;</a>
+    <a [routerLink]="['/profile/user-profile']" (click)="closeNav()"> ملف المستخدم</a>
     <a [routerLink]="['/profile/programs']" (click)="closeNav()">برامج العمرة</a>
     <a [routerLink]="['/agency/request-list']" (click)="closeNav()">وكالات السفر</a>
     <a [routerLink]="['/package/edit']" (click)="closeNav()">الباقات</a>

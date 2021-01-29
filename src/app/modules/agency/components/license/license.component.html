@@ -406,7 +406,7 @@
           </section>
 
           <div class="btn-group mt-5">
-            <a routerLink="/" class="btn btn-default px-0" (click)="deleteLicenseData()"> الغاء التسجيل</a>
+            <a [routerLink]="['/agency/main']" class="btn btn-default px-0" (click)="deleteLicenseData()"> الغاء التسجيل</a>
             <div>
               <a routerLink="/agency/main" class="btn btn-outline-primary ml-3">السابق</a>
               <button *ngIf="!selectedLicense" class="btn btn-primary ml-3" type="submit"

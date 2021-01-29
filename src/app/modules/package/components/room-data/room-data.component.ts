@@ -24,6 +24,8 @@ export class RoomDataComponent implements OnInit {
   editIndex: any;
   roomsData: any;
   room: any;
+  page;
+  editMode: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -83,7 +85,7 @@ export class RoomDataComponent implements OnInit {
     this.roomForm.reset();
   }
 
-  back() { 
+  back() {
     this.router.navigate(['/package/group']);
   }
 
@@ -101,13 +103,14 @@ export class RoomDataComponent implements OnInit {
   }
 
   editRoom(index) {
-    this.room = this.rooms.find(r => r.$$ID === index);
+    this.room = this.rooms.find(obj => obj.$$ID == index.$$ID);
     this.roomForm.patchValue(this.room);
+    this.editMode = true;
   }
 
   _editRoom() {
-    this.rooms.splice(1, this.room);
-    this.rooms.push(this.roomForm.value);
+    const find = this.rooms.findIndex(room => room.$$ID == this.room.$$ID);
+    this.rooms[find] = this.roomForm.value;
   }
 
   submit() {

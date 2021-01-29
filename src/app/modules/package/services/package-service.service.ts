@@ -270,6 +270,8 @@ export class PackageService {
   updatePackageRoom(item) {
     this.roomDoc = this.afs.doc(`roomsData/${item[0].id}`);
     this.roomDoc.update(item);
+    sessionStorage.removeItem('room');
+    sessionStorage.setItem('room', JSON.stringify(item));
   }
 
   updateAirPort(item) {

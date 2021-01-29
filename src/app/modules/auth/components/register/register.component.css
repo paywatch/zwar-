@@ -2,7 +2,7 @@
   position: relative;
 }
 
-.email, .password, .phone, .name {
+.email, .password, .phone, .name, .password-strength {
   position: absolute;
 }
 
@@ -12,4 +12,8 @@
 
 .password, .phone, .name {
   bottom: -1.4rem;
+}
+
+.password-strength {
+  bottom: -2.7rem;
 }
