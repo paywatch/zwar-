@@ -77,10 +77,6 @@ export class RoomDataComponent implements OnInit {
     this.packageService.getRooms().subscribe(rooms => {
       if (this.roomData) {
         this.selectedRoom = rooms.find(r => r.id == this.roomID);
-        this.data = {
-          data: this.selectedRoom[0]
-        };
-        console.log(this.selectedRoom);
         this.selectedRoom ? this.rooms = [].concat(this.selectedRoom) : this.rooms = [];
       }
     });
@@ -119,16 +115,16 @@ export class RoomDataComponent implements OnInit {
   }
 
   submit() {
-    this.packageService.createRooms(this.payload)
-      .subscribe((res) => {
-        if (res) {
-          this.toast.success('تمت الاضافه');
-          this.router.navigate(['/package/confirm']);
-        }
-      },
-        (err) => {
-          this.toast.error('لقد حدث خطأ ما');
-        });
+    this.packageService.createRooms(this.payload).subscribe(res => {
+      if (res) {
+        console.log(this.payload);
+        this.toast.success('تمت الاضافه');
+        this.router.navigate(['/package/confirm']);
+      }
+      else {
+        this.toast.error('لقد حدث خطأ ما');
+      }
+    });
   }
 
   updatePackageRoom() {
