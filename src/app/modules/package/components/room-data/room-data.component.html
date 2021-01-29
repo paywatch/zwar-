@@ -89,10 +89,10 @@
               </table>
               <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
             </div>
-          </div>
+          </div>          
         </section>
         <div class="btn-group mt-5">
-          <a class="btn btn-default px-0" [routerLink]="['/package/group']" (click)="deletePackageRoom"> الغاء </a>
+          <a class="btn btn-default px-0" [routerLink]="['/package/group']" (click)="deletePackageRoom()"> الغاء </a>
           <div>
             <a class="btn btn-outline-primary ml-3" (click)="back()">السابق</a>
             <button *ngIf="!selectedRoom" class="btn btn-primary ml-3" [disabled]="!rooms?.length"

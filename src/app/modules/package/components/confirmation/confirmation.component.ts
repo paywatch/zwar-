@@ -48,8 +48,8 @@ export class ConfirmationComponent implements OnInit {
     this.package = {
       ...this.base,
       ...this.matwaf,
+      ...this.room
     };
-    this.package.rooms = [].concat(this.room);
     console.log(this.package);
   }
 

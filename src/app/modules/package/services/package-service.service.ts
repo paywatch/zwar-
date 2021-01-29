@@ -268,10 +268,8 @@ export class PackageService {
   }
 
   updatePackageRoom(item) {
-    this.roomDoc = this.afs.doc(`roomsData/${item[0].id}`);
+    this.roomDoc = this.afs.doc(`roomsData/${item.id}`);
     this.roomDoc.update(item);
-    sessionStorage.removeItem('room');
-    sessionStorage.setItem('room', JSON.stringify(item));
   }
 
   updateAirPort(item) {
@@ -305,7 +303,8 @@ export class PackageService {
   }
 
   deletePackageRoom(item) {
-    this.roomDoc = this.afs.doc(`roomsData/${item[0].id}`);
+    console.log(item);
+    this.roomDoc = this.afs.doc(`roomsData/${item.id}`);
     this.roomDoc.delete();
   }
 

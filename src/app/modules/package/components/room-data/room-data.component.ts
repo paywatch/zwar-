@@ -26,6 +26,7 @@ export class RoomDataComponent implements OnInit {
   room: any;
   page;
   editMode: boolean;
+  data: any;
 
   constructor(
     private fb: FormBuilder,
@@ -76,6 +77,10 @@ export class RoomDataComponent implements OnInit {
     this.packageService.getRooms().subscribe(rooms => {
       if (this.roomData) {
         this.selectedRoom = rooms.find(r => r.id == this.roomID);
+        this.data = {
+          data: this.selectedRoom[0]
+        };
+        console.log(this.selectedRoom);
         this.selectedRoom ? this.rooms = [].concat(this.selectedRoom) : this.rooms = [];
       }
     });
@@ -129,12 +134,14 @@ export class RoomDataComponent implements OnInit {
   updatePackageRoom() {
     this.roomPayload = { ...this.rooms };
     this.selectedRoom = this.roomPayload;
+    this.selectedRoom.id = this.roomID;
     this.packageService.updatePackageRoom(this.selectedRoom);
     this.toast.success('تم التعديل');
     this.router.navigate(['/package/confirm']);
   }
 
   deletePackageRoom() {
+    console.log(this.selectedRoom);
     this.packageService.deletePackageRoom(this.selectedRoom);
     this.toast.info('تم الحذف');
     this.router.navigate(['/package/group']);

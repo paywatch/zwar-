@@ -34,11 +34,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.getSpecifiedUser();
-    });
+    this.getSpecifiedUser();
     this.getDataFromSessionStorage();
     this.getusersImageCollection();
+    setTimeout(() => {
+      this.storeUserData();
+    }, 2000);
   }
 
   getDataFromSessionStorage() {
