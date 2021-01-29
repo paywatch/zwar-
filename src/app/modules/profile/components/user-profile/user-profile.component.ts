@@ -37,9 +37,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.getSpecifiedUser();
     this.getDataFromSessionStorage();
     this.getusersImageCollection();
-    setTimeout(() => {
-      this.storeUserData();
-    }, 2000);
   }
 
   getDataFromSessionStorage() {
