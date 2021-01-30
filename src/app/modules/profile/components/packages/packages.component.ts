@@ -53,7 +53,6 @@ export class PackagesComponent implements OnInit {
   getAllPackage() {
     this.packageService.getPackage().subscribe(packages => {
       this.packagesList$ = packages;
-      console.log(this.packagesList$);
     });
   }
 
@@ -78,7 +77,6 @@ export class PackagesComponent implements OnInit {
   getSinglePackage() {
     this.packageService.getPackage().subscribe(packages => {
       this.selectedPackages = packages.find(p => p.ID == this.programId);
-      console.log(this.selectedPackages);
     });
   }
 

@@ -108,10 +108,8 @@ export class LicenseComponent implements OnInit {
 
   getAllLicenseData() {
     this.agencyService.getLicense().subscribe(license => {
-      console.log(license);
       if (this.license) {
         this.selectedLicense = license.find(l => l.id == this.licenseID);
-        console.log(this.selectedLicense);
         if (this.selectedLicense) {
           this.myForm.patchValue(this.selectedLicense);
         }
@@ -123,7 +121,6 @@ export class LicenseComponent implements OnInit {
     this.agencyService.getTourismFile().subscribe(files => {
       const find = files.find(file => file.id == this.tourismFiles);
       this.selectedTourismFile = find;
-      console.log(this.selectedTourismFile);
     });
   }
 
@@ -157,7 +154,6 @@ export class LicenseComponent implements OnInit {
 
       // push each upload into the array
       this.tourismUploads.push(uploadTrack);
-      console.log(this.tourismUploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -190,7 +186,6 @@ export class LicenseComponent implements OnInit {
     this.agencyService.getFtavFile().subscribe(files => {
       const find = files.find(file => file.id == this.FtavFiles);
       this.selectedFtavFile = find;
-      console.log(this.selectedFtavFile);
     });
   }
 
@@ -224,7 +219,6 @@ export class LicenseComponent implements OnInit {
 
       // push each upload into the array
       this.FtavmUploads.push(uploadTrack);
-      console.log(this.FtavmUploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -255,10 +249,8 @@ export class LicenseComponent implements OnInit {
 
   getTunisFile() {
     this.agencyService.getTunisFile().subscribe(files => {
-      console.log(files);
       const find = files.find(file => file.id == this.tunisFilesID);
       this.selectedTunisFile = find;
-      console.log(this.selectedTunisFile);
     });
   }
 
@@ -293,7 +285,6 @@ export class LicenseComponent implements OnInit {
 
       // push each upload into the array
       this.tunisUploads.push(uploadTrack);
-      console.log(this.tunisUploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -395,7 +386,6 @@ export class LicenseComponent implements OnInit {
       this.myForm.get('tAMinTourAuthExpiryDate').enable();
     }
     else {
-      console.log('clear validators');
       this.myForm.get('tAMinTourAuthNo').disable();
       this.myForm.get('tAMinTourAuthIssueDate').disable();
       this.myForm.get('tAMinTourAuthExpiryDate').disable();

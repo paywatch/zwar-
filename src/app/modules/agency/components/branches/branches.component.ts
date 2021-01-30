@@ -42,7 +42,6 @@ export class BranchesComponent implements OnInit {
     this.loadDistrictList();
     this.found = JSON.parse(sessionStorage.getItem('branch'));
     this.brachID = JSON.parse(sessionStorage.getItem('branchID')) || {};
-    console.log(this.brachID);
   }
 
   initForm() {
@@ -66,7 +65,6 @@ export class BranchesComponent implements OnInit {
     this.agencyService.getBranch().subscribe(branches => {
       if (this.found) {
         this.selectedBranch = branches.find(b => b.id == this.brachID);
-        console.log(this.selectedBranch);
         if (this.selectedBranch) {
           this.taBranchesList = [].concat(this.selectedBranch);
         }
@@ -106,7 +104,6 @@ export class BranchesComponent implements OnInit {
 
   updateAgencyBranch() {
     this.selectedBranch = this.taBranchesList;
-    console.log(this.selectedBranch);
   }
 
   createBrnaches() {

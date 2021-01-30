@@ -80,7 +80,6 @@ export class VisitsComponent implements OnInit {
   updateProgramVisit() {
     this.selectedVisit = this.visitForm.value;
     this.selectedVisit.id = this.visitID;
-    console.log(this.selectedVisit);
     this.programService.updateProgramVisit(this.selectedVisit);
     this.router.navigate(['/program/confirmation']);
     this.toast.success('تم التعديل');

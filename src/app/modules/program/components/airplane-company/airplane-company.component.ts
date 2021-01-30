@@ -39,7 +39,6 @@ export class AirplaneCompanyComponent implements OnInit, OnDestroy {
   getAirPlane() {
     this.sub = this.programService.getAllAirplaneCompany().subscribe(res => {
       this.airplanes = res;
-      console.log(res);
     });
   }
 

@@ -13,7 +13,6 @@ export class ResidanceviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.residance);
   }
 
 }

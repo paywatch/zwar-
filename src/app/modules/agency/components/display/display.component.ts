@@ -53,7 +53,6 @@ export class DisplayComponent implements OnInit {
     this.basics = JSON.parse(sessionStorage.getItem('agencyBasic')) || {};
     this.license = JSON.parse(sessionStorage.getItem('license')) || {};
     this.branches = JSON.parse(sessionStorage.getItem('branch')) || {};
-    console.log(this.branches);
     this.user = JSON.parse(localStorage.getItem('user'));
     this.companyLogo = JSON.parse(sessionStorage.getItem('agencyFile')) || [];
     this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || [];
@@ -84,7 +83,6 @@ export class DisplayComponent implements OnInit {
     this.agencyService.getAgencyImage().subscribe(images => {
       const companySet = new Set(this.companyLogo);
       this.agency.companyLogo = images.filter(logo => companySet.has(logo.id));
-      console.log(this.agency.companyLogo);
     });
   }
 
@@ -92,7 +90,6 @@ export class DisplayComponent implements OnInit {
     this.agencyService.getComRegFile().subscribe(files => {
       const find = files.find(file => file.id == this.comRegFile);
       this.agency.comRegFile = find;
-      console.log(this.agency.comRegFile);
     });
   }
 
@@ -100,7 +97,6 @@ export class DisplayComponent implements OnInit {
     this.agencyService.getTourismFile().subscribe(files => {
       const find = files.find(file => file.id == this.tourismFile);
       this.agency.tourismFile = find;
-      console.log(this.agency.tourismFile);
     });
   }
 
@@ -126,7 +122,6 @@ export class DisplayComponent implements OnInit {
 
   confirm() {
     this.agency.userID = this.user.user.uid;
-    console.log(this.agency);
     this.agency.status = 'جديد';
     this.agencyService.confirm(this.agency);
     this.router.navigate(['agency/edit']);

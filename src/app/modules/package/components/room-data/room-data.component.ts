@@ -42,7 +42,7 @@ export class RoomDataComponent implements OnInit {
     }, 1000);
     setTimeout(() => {
       this.getRoomType();
-    }, 2000);
+    }, 1000);
 
     this.program = JSON.parse(sessionStorage.getItem('program')) || {};
   }
@@ -69,15 +69,17 @@ export class RoomDataComponent implements OnInit {
   }
 
   getSessionStorageData() {
-    this.roomData = JSON.parse(sessionStorage.getItem('room'));
     this.roomID = JSON.parse(sessionStorage.getItem('roomID')) || {};
+    this.roomData = JSON.parse(sessionStorage.getItem('room'));
+    if (this.roomsData !== null) {
+      this.rooms = this.roomData;
+    }
   }
 
   getPackageRoom() {
     this.packageService.getRooms().subscribe(rooms => {
       if (this.roomData) {
         this.selectedRoom = rooms.find(r => r.id == this.roomID);
-        this.selectedRoom ? this.rooms = [].concat(this.selectedRoom) : this.rooms = [];
       }
     });
   }
@@ -95,6 +97,10 @@ export class RoomDataComponent implements OnInit {
       this.payload = this.roomForm.value;
       this.payload.$$ID = this.rooms.length + 1;
       this.rooms.push(this.payload);
+      this.rooms = this.rooms.map(room => {
+        room.roomName = this.roomType.find(roomType => roomType.id == room.roomTypeID).name;
+        return room;
+      });
       this.editIndex = true;
     }
   }
@@ -115,9 +121,8 @@ export class RoomDataComponent implements OnInit {
   }
 
   submit() {
-    this.packageService.createRooms(this.payload).subscribe(res => {
+    this.packageService.createRooms(this.rooms).subscribe(res => {
       if (res) {
-        console.log(this.payload);
         this.toast.success('تمت الاضافه');
         this.router.navigate(['/package/confirm']);
       }
@@ -128,18 +133,15 @@ export class RoomDataComponent implements OnInit {
   }
 
   updatePackageRoom() {
-    this.roomPayload = { ...this.rooms };
-    this.selectedRoom = this.roomPayload;
-    this.selectedRoom.id = this.roomID;
-    this.packageService.updatePackageRoom(this.selectedRoom);
+    this.packageService.updatePackageRoom(this.rooms);
     this.toast.success('تم التعديل');
     this.router.navigate(['/package/confirm']);
   }
 
   deletePackageRoom() {
-    console.log(this.selectedRoom);
     this.packageService.deletePackageRoom(this.selectedRoom);
     this.toast.info('تم الحذف');
     this.router.navigate(['/package/group']);
+    sessionStorage.removeItem('room');
   }
 }

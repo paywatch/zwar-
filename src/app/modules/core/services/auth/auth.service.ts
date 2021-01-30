@@ -17,7 +17,6 @@ export class AuthService {
   setToken(auth) {
     auth.access_token = `Bearer ${auth.access_token}`;
     sessionStorage.setItem('auth', JSON.stringify(auth));
-    console.log("session created", sessionStorage.getItem('auth'));
   }
 
   getAuthorizationHeader() {

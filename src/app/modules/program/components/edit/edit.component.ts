@@ -25,7 +25,6 @@ export class EditComponent implements OnInit {
     this.programService.getProgram().subscribe(res => {
       if (res) {
         this.programs = res;
-        console.log(this.programs);
       }
       else {
         this.programs = [];
@@ -43,7 +42,6 @@ export class EditComponent implements OnInit {
   }
 
   onRowDelete(event, program) {
-    console.log(program);
     this.programService.deleteProgram(program);
   }
 }

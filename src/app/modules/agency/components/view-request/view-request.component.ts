@@ -49,7 +49,6 @@ export class ViewRequestComponent implements OnInit {
     this.agencyService.getAllData().subscribe(agency => {
       const found = agency.find(a => a.id == id);
       this.agency = found;
-      console.log(this.agency);
     });
   }
 

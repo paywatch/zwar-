@@ -69,7 +69,6 @@ export class UpdateComponent implements OnInit {
     this.packageService.getPackage().subscribe(packages => {
       const found = packages.find(p => p.id == id);
       this.singlePackage = found;
-      console.log(this.singlePackage);
       this.packageForm.patchValue(this.singlePackage);
     });
   }
@@ -95,7 +94,6 @@ export class UpdateComponent implements OnInit {
   submit() {
     this.singlePackage = this.packageForm.value;
     this.singlePackage.id = this.ID;
-    console.log(this.singlePackage);
     this.packageService.updatePackage(this.singlePackage);
     this.router.navigate(['package/edit']);
   }

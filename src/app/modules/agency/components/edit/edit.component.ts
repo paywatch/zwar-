@@ -24,7 +24,6 @@ export class EditComponent implements OnInit {
   getAgency(): void {
     this.agencyService.getAllData().subscribe(agency => {
       this.agencies = agency;
-      console.log(this.agencies);
     });
   }
 

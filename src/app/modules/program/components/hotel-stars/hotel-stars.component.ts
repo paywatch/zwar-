@@ -39,7 +39,6 @@ export class HotelStarsComponent implements OnInit, OnDestroy {
   getStars() {
     this.sub = this.programService.getAllStars().subscribe(res => {
       this.hotelStars = res;
-      console.log(res);
     });
   }
 

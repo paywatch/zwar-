@@ -46,7 +46,6 @@ export class RequestlistComponent implements OnInit {
   }
 
   agencySearch() {
-    console.log(this.agencytype);
     // tslint:disable-next-line:max-line-length
     const find = this.agencies.find(agency =>  agency.tAName == this.agencyName || agency.id == this.agencyID || agency.tAType == this.agencytype);
     this.searchResult = find;
@@ -56,7 +55,6 @@ export class RequestlistComponent implements OnInit {
     this.agencyService.getAllData().subscribe(agency => {
       if (agency) {
         this.agencies = agency;
-        console.log(this.agencies);
       }
       else {
         this.agencies = {};

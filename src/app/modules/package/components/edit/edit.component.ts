@@ -31,7 +31,6 @@ export class EditComponent implements OnInit {
     this.packageService.getPackage().subscribe(pack => {
       if (pack) {
         this.packages = pack;
-        console.log(this.packages);
       }
       else {
         this.packages = [];

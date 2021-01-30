@@ -92,7 +92,6 @@ export class ResidentialComponent implements OnInit, OnDestroy {
         const meccaSet = new Set(this.MeccaImageID);
         this.selectedMeccaFile = res.filter(item => meccaSet.has(item.id));
       }
-      console.log(this.selectedMeccaFile);
     });
   }
 
@@ -126,7 +125,6 @@ export class ResidentialComponent implements OnInit, OnDestroy {
 
       // push each upload into the array
       this.uploads.push(uploadTrack);
-      console.log(this.uploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -164,7 +162,6 @@ export class ResidentialComponent implements OnInit, OnDestroy {
         const madinaImage = new Set(this.MadinaImageID);
         this.selectedMadinaFile = res.filter(item => madinaImage.has(item.id));
       }
-      console.log(this.selectedMeccaFile);
     });
   }
 
@@ -198,7 +195,6 @@ export class ResidentialComponent implements OnInit, OnDestroy {
 
       // push each upload into the array
       this.Madinauploads.push(uploadTrack);
-      console.log(this.Madinauploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -285,7 +281,6 @@ export class ResidentialComponent implements OnInit, OnDestroy {
   getAllHotelStars() {
     this.sub = this.programservice.getAllStars().subscribe(stars => {
       this.hotelStars = stars;
-      console.log(this.hotelStars);
     });
   }
 
@@ -294,7 +289,6 @@ export class ResidentialComponent implements OnInit, OnDestroy {
       this.hotelsData = hotel;
       if (this.residential) {
         this.selecetdHotel = this.hotelsData.find(h => h.id == this.hotelID);
-        console.log(this.selecetdHotel);
         this.residentailForm.patchValue(this.selecetdHotel);
         this.madinaForm.patchValue(this.selecetdHotel);
       }

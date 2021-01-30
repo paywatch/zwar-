@@ -8,8 +8,6 @@ export function AfterToday(control) {
   // }
 
   // set error on matchingControl if validation fails
-  console.log(control.value ,  (new Date(control.value)).getTime() - (new Date()).getTime());
-  console.log(control.value &&  (new Date(control.value)).getTime() < (new Date()).getTime());
   if (control.value && (new Date(control.value)).getTime() < (new Date()).getTime()) {
     return { afterToday: true };
   }

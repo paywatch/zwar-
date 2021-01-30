@@ -135,7 +135,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   deleteAgencyImage(item) {
-    console.log(item);
     const path = `agencyFile/${item.name}`;
     const ref = this.db.ref(path);
     ref.delete();
@@ -166,7 +165,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
       // push each upload into the array
       this.uploads.push(uploadTrack);
-      console.log(this.uploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -206,7 +204,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   deleteComRegFile(item) {
-    console.log(item);
     const path = `comRegFile/${item.name}`;
     const ref = this.db.ref(path);
     ref.delete();
@@ -312,10 +309,8 @@ export class MainComponent implements OnInit, OnDestroy {
     }
     // tslint:disable-next-line:no-non-null-assertion
     if (this.selectedComRegFile) {
-      console.log(this.selectedComRegFile);
       this.selectedBasic.selectedComRegFile = this.selectedComRegFile;
     }
-    console.log(this.selectedBasic);
     this.agencyService.updateBasicAgency(this.selectedBasic);
     this.router.navigate(['/agency/license']);
     this.toast.success('تم التعديل');
@@ -381,7 +376,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   _editOwner() {
-    console.log('Edit existing owner');
     const payload = this.ownerForm.value;
     if (this.ownerForm.valid) {
       this.ownerList[this.editIndex] = payload;

@@ -137,7 +137,6 @@ export class GroupComponent implements OnInit {
 
       // push each upload into the array
       this.uploads.push(uploadTrack);
-      console.log(this.uploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -188,7 +187,6 @@ export class GroupComponent implements OnInit {
     this.selectedGroup.id = this.GroupID;
     // tslint:disable-next-line:no-unused-expression
     this.matwafImage ? this.selectedGroup.matwafImage = this.matwafImage : null;
-    console.log(this.selectedGroup);
     this.packageService.updatePackageMatwaf(this.selectedGroup);
     this.router.navigate(['/package/room-data']);
     this.toast.success('تم التعديل');

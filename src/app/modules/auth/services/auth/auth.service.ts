@@ -34,7 +34,6 @@ export class AuthService {
             displayName: name
           };
           resolve(userData);
-          console.log(data);
           this.userCollection.add(data);
         },
           (err) => reject(err));
@@ -43,7 +42,6 @@ export class AuthService {
 
   getAuth() {
     this.user = JSON.parse(localStorage.getItem('user')) || {};
-    console.log(this.user);
   }
 
   isLoggIn(): boolean {
@@ -77,7 +75,6 @@ export class AuthService {
         .then(res => {
           resolve(localStorage.setItem('user', JSON.stringify(res)));
         }, err => {
-          console.log(err);
           reject(err);
         });
     });
@@ -94,7 +91,6 @@ export class AuthService {
           }
           resolve(localStorage.setItem('user', JSON.stringify(res)));
         }, err => {
-          console.log(err);
           reject(err);
         });
     });
@@ -111,7 +107,6 @@ export class AuthService {
           }
           resolve(localStorage.setItem('user', JSON.stringify(res)));
         }, err => {
-          console.log(err);
           reject(err);
         });
     });

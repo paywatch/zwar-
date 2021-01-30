@@ -72,7 +72,6 @@ export class TransportaionComponent implements OnInit, OnDestroy {
         const find = this.transportationData.find(t => t.id == this.residenceID);
         this.selectedTransportation = find;
         this.transportationFrom.patchValue(this.selectedTransportation);
-        console.log(this.selectedTransportation);
       }
     });
   }
@@ -100,7 +99,6 @@ export class TransportaionComponent implements OnInit, OnDestroy {
 
   updateTransportation() {
     const id = this.selectedTransportation.id;
-    console.log(id);
     this.selectedTransportation = this.transportationFrom.value;
     this.selectedTransportation.id = id;
     this.programService.updateTransportation(this.selectedTransportation);

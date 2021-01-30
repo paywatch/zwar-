@@ -28,7 +28,6 @@ export class CongratulateComponent implements OnInit {
   getProgram() {
     this.packageService.getProgram().subscribe((program: any[]) => {
       const found = program.find(prog => prog.programId == this.ID);
-      console.log(found);
       this.program = found;
     });
   }

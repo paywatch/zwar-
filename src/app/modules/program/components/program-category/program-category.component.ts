@@ -38,7 +38,6 @@ export class ProgramCategoryComponent implements OnInit, OnDestroy {
   getAllCategories() {
     this.sub = this.programService.getAllCategory().subscribe(res => {
       this.categories = res;
-      console.log(res);
     });
   }
 

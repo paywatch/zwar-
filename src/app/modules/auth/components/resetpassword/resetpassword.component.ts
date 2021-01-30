@@ -23,7 +23,6 @@ export class ResetpasswordComponent implements OnInit {
   ngOnInit(): void {
     this.inittForm();
     const mode = this.activatedActivated.snapshot.queryParams['mode'];
-    console.log(mode);
   }
 
   inittForm() {
@@ -34,7 +33,6 @@ export class ResetpasswordComponent implements OnInit {
 
   submit() {
     const payload = this.ResetPAsswordForm.value;
-    console.log(payload);
 
     if (!payload) {
       this.toaster.info('ادخل البريد الالكتروني')

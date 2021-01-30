@@ -97,7 +97,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
       // push each upload into the array
       this.uploads.push(uploadTrack);
-      console.log(this.uploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {

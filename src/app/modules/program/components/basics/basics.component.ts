@@ -101,7 +101,6 @@ export class BasicsComponent implements OnInit, OnDestroy {
   }
 
   programBanner(event: any) {
-    console.log(event);
 
     this.uploads = [];
     const filelist = event.target.files;
@@ -124,7 +123,6 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
       // push each upload into the array
       this.uploads.push(uploadTrack);
-      console.log(this.uploads);
 
       // for every upload do whatever you want in firestore with the uploaded file
       const t = task.then((f) => {
@@ -172,7 +170,6 @@ export class BasicsComponent implements OnInit, OnDestroy {
       this.Basics$ = basics;
       if (this.basics) {
         this.selectedBasic = basics.find(b => b.id == this.basicID);
-        console.log(this.selectedBasic);
         this.basicsForm.patchValue(this.selectedBasic);
       }
     });
@@ -182,7 +179,6 @@ export class BasicsComponent implements OnInit, OnDestroy {
   getAllCategory() {
     this.sub = this.programService.getAllCategory().subscribe(category => {
       this.categories = category;
-      console.log(category);
     });
   }
 
@@ -201,11 +197,9 @@ export class BasicsComponent implements OnInit, OnDestroy {
     const id = this.selectedBasic.id;
     this.selectedBasic = this.basicsForm.value;
     this.selectedBasic.id = id;
-    console.log(this.selectedProgramBannerFile);
     if (this.selectedProgramBannerFile) {
       this.selectedBasic.programUrl = this.selectedProgramBannerFile;
     }
-    console.log(this.selectedBasic);
     this.programService.updateBasicData(this.selectedBasic);
     this.router.navigate(['/program/residential']);
     this.toastr.success('تم التعديل');

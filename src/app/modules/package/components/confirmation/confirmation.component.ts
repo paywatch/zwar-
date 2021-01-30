@@ -50,7 +50,6 @@ export class ConfirmationComponent implements OnInit {
       ...this.matwaf,
       ...this.room
     };
-    console.log(this.package);
   }
 
   openModal(template: TemplateRef<any>) {

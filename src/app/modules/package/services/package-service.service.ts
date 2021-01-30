@@ -212,9 +212,9 @@ export class PackageService {
   }
 
   createRooms(rooms) {
-    this.roomCollection.add(rooms).then(res => {
+    // const roomCollection = {...rooms};
+    this.roomCollection.add({ ...rooms }).then(res => {
       if (res) {
-        console.log(res.id);
         sessionStorage.setItem('roomID', JSON.stringify(res.id));
       }
     });
@@ -266,10 +266,15 @@ export class PackageService {
     sessionStorage.removeItem('group');
     sessionStorage.setItem('group', JSON.stringify(item));
   }
-
+ 
   updatePackageRoom(item) {
-    this.roomDoc = this.afs.doc(`roomsData/${item.id}`);
-    this.roomDoc.update(item);
+    const id = JSON.parse(sessionStorage.getItem('roomID'));
+    const data = { ...item };
+    data.id = id;
+    this.roomDoc = this.afs.doc(`roomsData/${data.id}`);
+    this.roomDoc.update(data);
+    sessionStorage.removeItem('room');
+    const rooms = sessionStorage.setItem('room', JSON.stringify(item));
   }
 
   updateAirPort(item) {
@@ -303,7 +308,6 @@ export class PackageService {
   }
 
   deletePackageRoom(item) {
-    console.log(item);
     this.roomDoc = this.afs.doc(`roomsData/${item.id}`);
     this.roomDoc.delete();
   }

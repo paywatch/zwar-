@@ -98,7 +98,6 @@ export class UpdateComponent implements OnInit {
   getSingleProgram() {
     this.programService.getProgram().subscribe((programs: any) => {
       this.program = programs.find(p => p.programId == this.programId);
-      console.log(this.program);
       this.programForm.patchValue(this.program);
     });
   }

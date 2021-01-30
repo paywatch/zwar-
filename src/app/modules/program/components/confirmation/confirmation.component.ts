@@ -117,9 +117,7 @@ export class ConfirmationComponent implements OnInit {
   }
 
   confirm() {
-    console.log(this.user);
     this.program.uid = this.user.user.uid;
-    console.log(this.program.uid);
     this.programService.AddProgram(this.program).subscribe(program => {
       sessionStorage.removeItem('basics');
       sessionStorage.removeItem('hotels');

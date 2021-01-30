@@ -296,7 +296,6 @@ export class AgencyService {
 
   confirm(payload) {
     this.confirmationCollection.add(payload).then(res => {
-      console.log(res);
     });
   }
 

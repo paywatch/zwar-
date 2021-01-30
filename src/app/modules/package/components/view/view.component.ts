@@ -22,7 +22,6 @@ export class ViewComponent implements OnInit {
 
   ngOnInit(): void {
     const ID = this.activatedRoute.snapshot.params['id'];
-    console.log(ID);
     this.getPackage(ID);
   }
 
@@ -37,7 +36,6 @@ export class ViewComponent implements OnInit {
     this.packageService.getPackage().subscribe(pack => {
       const found = pack.find(p => p.id == id);
       this.package = found;
-      console.log(this.package);
     });
   }
 

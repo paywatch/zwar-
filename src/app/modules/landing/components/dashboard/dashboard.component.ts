@@ -35,7 +35,6 @@ export class DashboardComponent implements OnInit {
   getAllProgram() {
     this.programService.getProgram().subscribe(res => {
       this.programs = res.length;
-      console.log(this.programs);
     });
   }
 

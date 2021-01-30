@@ -236,7 +236,6 @@ export class ProgramService {
   createProgram(payload) {
     this.basicsCollection.add(payload).then(res => {
       if (res) {
-        console.log(res.id);
         sessionStorage.setItem('basicID', JSON.stringify(res.id));
       }
     });
@@ -382,7 +381,6 @@ export class ProgramService {
   }
 
   deleteImage(item) {
-    console.log(item.id);
     this.filesDoc = this.afs.doc(`files/${item.id}`);
     this.filesDoc.delete();
   }

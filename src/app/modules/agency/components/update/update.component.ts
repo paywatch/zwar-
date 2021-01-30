@@ -98,7 +98,6 @@ export class UpdateComponent implements OnInit {
     this.agencyService.getAllData().subscribe(agency => {
       this.agency = agency.find(a => a.id == id);
       this.agencyForm.patchValue(this.agency);
-      console.log(this.agency);
     });
   }
 

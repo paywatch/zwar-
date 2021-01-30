@@ -24,7 +24,6 @@ export class ReviewComponent implements OnInit {
   ngOnInit(): void {
     this.ID = this.activatedRoute.snapshot.params['id'];
     this.agencyBasic = JSON.parse(sessionStorage.getItem('agencyBasic'));
-    console.log(this.agencyBasic);
     this.getAgency(this.ID);
     setTimeout(() => {
       this.getCountry();
@@ -34,7 +33,6 @@ export class ReviewComponent implements OnInit {
   getAgency(id) {
     this.agencyService.getAllData().subscribe(res => {
       this.agency = res.find(r => r.id = id);
-      console.log(this.agency);
     });
   }
 
@@ -42,7 +40,6 @@ export class ReviewComponent implements OnInit {
     this.agencyService.getAllCountries().subscribe(country => {
       const find = country.find(c => c.id == this.agencyBasic.countryId).name;
       this.agency.countryName = find;
-      console.log(this.agency.countryName);
     });
   }
 

@@ -92,7 +92,6 @@ export class BaseComponent implements OnInit, OnDestroy {
     this.packageService.getbaseData().subscribe(basic => {
       if (this.base) {
         this.selectedBasic = basic.find(b => b.id == this.packageBasicID);
-        console.log(this.selectedBasic);
         this.baseForm.patchValue(this.selectedBasic);
       }
     });

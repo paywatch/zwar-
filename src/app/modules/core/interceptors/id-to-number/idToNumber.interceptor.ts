@@ -25,7 +25,6 @@ export class IdToNumberInterceptor implements HttpInterceptor {
         }
       }
 
-      console.log(request, newBody);
       request = request.clone({
         // headers: request.headers,
         body: newBody

@@ -49,7 +49,6 @@ export class ViewprogramComponent implements OnInit {
   getSinglePackage() {
     this.packageService.getPackage().subscribe(packages => {
       this.program.packages = packages.find(p => p.ID == this.program.programId);
-      console.log(this.program);
     });
   }
 

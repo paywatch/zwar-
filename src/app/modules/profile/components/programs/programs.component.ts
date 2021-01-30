@@ -41,10 +41,8 @@ export class ProgramsComponent implements OnInit {
   getPrograms() {
     this.programService.getProgram().subscribe(res => {
       res ? this.programsList$ = res : this.programsList$ = [];
-      console.log(this.programsList$);
       const found = this.programsList$.find(p => p.uid == this.user.user.uid);
       this.program.push(found);
-      console.log(this.program);
     });
   }
 
@@ -64,10 +62,8 @@ export class ProgramsComponent implements OnInit {
   }
 
   findSingleProgram() {
-    console.log(this.programsList$);
     const find = this.programsList$.find(p => p.programName == this.programName || p.programUmrahYear == this.programYear);
     this.searchResult = [].concat(find);
-    console.log(this.searchResult);
   }
 
   resetForm() {

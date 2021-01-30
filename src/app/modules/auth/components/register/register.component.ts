@@ -42,7 +42,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   getUsers() {
     this.sub = this.profileService.getSingleUsers().subscribe(user => {
       this.users = user;
-      console.log(user);
     });
   }
 
