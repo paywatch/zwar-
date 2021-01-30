@@ -22,6 +22,9 @@ export class BranchesComponent implements OnInit {
   found: any;
   brachID: any;
   selectedBranch: any;
+  editMode: boolean;
+  singleBranch: any;
+  page;
 
   constructor(
     private fb: FormBuilder,
@@ -40,8 +43,17 @@ export class BranchesComponent implements OnInit {
 
   getSessionStorageDaTA() {
     this.loadDistrictList();
-    this.found = JSON.parse(sessionStorage.getItem('branch'));
     this.brachID = JSON.parse(sessionStorage.getItem('branchID')) || {};
+    this.found = JSON.parse(sessionStorage.getItem('branch')) || [];
+    if (this.found !== null) {
+      this.taBranchesList = this.found;
+    }
+  }
+
+  loadDistrictList() {
+    this.agencyService.getDistrictList().subscribe((districts: any) => {
+      this.districtList = districts;
+    });
   }
 
   initForm() {
@@ -65,12 +77,6 @@ export class BranchesComponent implements OnInit {
     this.agencyService.getBranch().subscribe(branches => {
       if (this.found) {
         this.selectedBranch = branches.find(b => b.id == this.brachID);
-        if (this.selectedBranch) {
-          this.taBranchesList = [].concat(this.selectedBranch);
-        }
-        else {
-          this.taBranchesList = [];
-        }
       }
     });
   }
@@ -84,44 +90,42 @@ export class BranchesComponent implements OnInit {
     }
   }
 
-  updateBranchData() {
-    this.selectedBranch = { ...this.taBranchesList };
-    this.selectedBranch.id = this.brachID;
-    this.agencyService.updateBranchData(this.selectedBranch);
-    this.toast.success('تم التعديل');
-    this.router.navigate(['agency/display']);
+  editBranch(item) {
+    this.singleBranch = this.taBranchesList.find(branch => branch.$$ID == item.$$ID);
+    this.myForm.patchValue(this.singleBranch);
+    this.editMode = true;
   }
 
-  deleteBranchData() {
-    this.agencyService.updateBranchData(this.selectedBranch);
-    this.router.navigate(['/agency/license']);
-    this.toast.success('تم الحذف');
+  _editBranch() {
+    const find = this.taBranchesList.findIndex(branch => branch.$$ID == this.singleBranch.$$ID);
+    this.taBranchesList[find] = this.myForm.value;
   }
 
   onRowDelete(id) {
     this.taBranchesList = this.taBranchesList.filter((branch: any) => branch.$$ID !== id);
   }
 
-  updateAgencyBranch() {
-    this.selectedBranch = this.taBranchesList;
-  }
-
   createBrnaches() {
-    if (this.taBranchesList.length) {
-      this.agencyService.saveBranch(this.newBranch)
-        .subscribe((res: any) => {
-          if (res) {
-            this.toast.success('تم الحفظ بنجاح');
-            this.myForm.reset();
-            this.router.navigate(['agency/display']);
-          }
-        });
-    }
+    this.agencyService.saveBranch(this.taBranchesList)
+      .subscribe((res: any) => {
+        if (res) {
+          this.toast.success('تم الحفظ بنجاح');
+          this.myForm.reset();
+          this.router.navigate(['agency/display']);
+        }
+      });
   }
 
-  loadDistrictList() {
-    this.agencyService.getDistrictList().subscribe((districts: any) => {
-      this.districtList = districts;
-    });
+  updateBranchData() {
+    this.agencyService.updateBranchData(this.taBranchesList);
+    this.toast.success('تم التعديل');
+    this.router.navigate(['agency/display']);
+  }
+
+  deleteBranchData() {
+    this.agencyService.deleteBranchData(this.selectedBranch);
+    this.router.navigate(['/agency/license']);
+    this.toast.success('تم الحذف');
+    sessionStorage.removeItem('branch');
   }
 }

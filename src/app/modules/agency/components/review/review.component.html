@@ -316,13 +316,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr style="cursor: pointer;">
-									<td>{{agency.branch[0].tABranchName}}</td>
-									<td>{{agency?.branch[0].tADistrictID}}</td>
-									<td>{{agency.branch[0].tABranchAddress}}</td>
-									<td>{{agency.branch[0].tABranchType ? 'رئيسى': 'عادى'}}</td>
-									<td>{{agency.branch[0].tABranchLongitude + ' , ' + agency.branch[0].tABranchLatitude}}</td>
-									<td>{{agency.branch[0].tABranchPhoneNo}}</td>
+								<tr *ngFor="let agency of agency.branch">
+									<td>{{agency.tABranchName}}</td>
+									<td>{{agency.tADistrictID}}</td>
+									<td>{{agency.tABranchAddress}}</td>
+									<td>{{agency.tABranchType ? 'رئيسى': 'عادى'}}</td>
+									<td>{{agency.tABranchLongitude + ' , ' + agency.tABranchLatitude}}</td>
+									<td>{{agency.tABranchPhoneNo}}</td>
 								</tr>
 							</tbody>
 						</table>

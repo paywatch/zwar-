@@ -22,6 +22,12 @@ export class UpdateComponent implements OnInit {
   ID: any;
   countries: any;
   district: any;
+  branchFrom: FormGroup;
+  branches: any;
+  page;
+  ownerForm: FormGroup;
+  ownerList: any;
+  editMode: boolean;
 
   constructor(
     private agencyService: AgencyService,
@@ -34,6 +40,8 @@ export class UpdateComponent implements OnInit {
     this.ID = this.activatedRoute.snapshot.params['id'];
     this.getSingleAgency(this.ID);
     this.initForm();
+    this.initBranchForm();
+    this.initOwnerForm();
     this.changeMinTourAuth();
     this.changeFTAVMember();
     this.changeFITTMember();
@@ -61,15 +69,6 @@ export class UpdateComponent implements OnInit {
       tAFITTMemberNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       tAFITTMemberIssueDate: ['', [Validators.required, LessThanToday]],
       tAFITTMemberExpiryDate: ['', Validators.required],
-      tABranchName: ['', [Validators.required, Validators.pattern(/^[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z]+[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z-_]*$/)]],
-      tABranchAddress: ['', Validators.required],
-      tABranchEmail: ['', [Validators.required, Validators.email]],
-      tABranchFaxNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      tADistrictID: ['', Validators.required],
-      tABranchLatitude: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      tABranchLongitude: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      tABranchMobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      tABranchPhoneNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       tABranchType: ['', Validators.required],
       tACommRegFile: [],
       tAFITTMemberFile: [],
@@ -77,9 +76,6 @@ export class UpdateComponent implements OnInit {
       tALogo: [],
       tAMinTourAuthFile: [],
       $$ID: [],
-      tAOwnerFullName: ['', Validators.required],
-      tAOwnerNationalID: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      tAOwnerPhoneNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       $$commRegFile: [],
       $$isFITTMember: [true],
       $$isFTAVMember: [true],
@@ -94,12 +90,54 @@ export class UpdateComponent implements OnInit {
     });
   }
 
+  initBranchForm() {
+    this.branchFrom = this.formBuilder.group({
+      tABranchName: ['', [Validators.required, Validators.pattern(/^[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z]+[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z-_]*$/)]],
+      tABranchAddress: ['', Validators.required],
+      tABranchEmail: ['', [Validators.required, Validators.email]],
+      tABranchFaxNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tADistrictID: ['', Validators.required],
+      tABranchLatitude: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tABranchLongitude: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tABranchMobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      tABranchPhoneNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+    });
+  }
+
+  initOwnerForm() {
+    this.ownerForm = this.formBuilder.group({
+      tAOwnerFullName: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[\u0621-\u064Aa-zA-Z\s]+$/)]],
+      tAOwnerNationalID: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
+      tAOwnerPhoneNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]]
+    });
+  }
+
   getSingleAgency(id) {
     this.agencyService.getAllData().subscribe(agency => {
       this.agency = agency.find(a => a.id == id);
+      this.branches = this.agency.branch;
+      this.ownerList = this.agency.ownerList;
+      console.log(this.ownerList);
       this.agencyForm.patchValue(this.agency);
     });
   }
+
+
+  addOwner() { }
+
+  editOwner() { }
+
+  _editOwner() { }
+
+  onOwnerDelete() { }
+
+  addBranch() { }
+
+  editBranch(item) { }
+
+  _editBranch() { }
+
+  onRowDelete(item) { }
 
   getAgencyType() {
     this.agencyService.getAgencyType().subscribe(res => {

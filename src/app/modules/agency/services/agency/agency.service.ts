@@ -284,13 +284,15 @@ export class AgencyService {
   }
 
   saveBranch(payload) {
-    this.branchCollection.add(payload).then(res => {
+    const data = {...payload};
+    console.log(payload);
+    this.branchCollection.add(data).then(res => {
       if (res) {
         sessionStorage.setItem('branchID', JSON.stringify(res.id));
       }
     });
     return of(true).pipe(
-      tap(data => sessionStorage.setItem('branch', JSON.stringify(payload)))
+      tap(branch => sessionStorage.setItem('branch', JSON.stringify(payload)))
     );
   }
 
@@ -333,8 +335,11 @@ export class AgencyService {
   }
 
   updateBranchData(item) {
-    this.branchDoc = this.afs.doc(`branch/${item.id}`);
-    this.branchDoc.update(item);
+    const data = {...item};
+    const ID = JSON.parse(sessionStorage.getItem('branchID'));
+    data.id = ID;
+    this.branchDoc = this.afs.doc(`branch/${data.id}`);
+    this.branchDoc.update(data);
     sessionStorage.removeItem('branch');
     sessionStorage.setItem('branch', JSON.stringify(item));
   }

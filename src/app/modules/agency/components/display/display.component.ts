@@ -52,7 +52,7 @@ export class DisplayComponent implements OnInit {
   getSessionStorgeData() {
     this.basics = JSON.parse(sessionStorage.getItem('agencyBasic')) || {};
     this.license = JSON.parse(sessionStorage.getItem('license')) || {};
-    this.branches = JSON.parse(sessionStorage.getItem('branch')) || {};
+    this.branches = JSON.parse(sessionStorage.getItem('branch')) || [];
     this.user = JSON.parse(localStorage.getItem('user'));
     this.companyLogo = JSON.parse(sessionStorage.getItem('agencyFile')) || [];
     this.comRegFile = JSON.parse(sessionStorage.getItem('comRegFile')) || [];
@@ -67,6 +67,7 @@ export class DisplayComponent implements OnInit {
       ...this.license,
       branch: this.branches
     };
+    console.log(this.agency.branch);
     if (!this.agency) {
       this.router.navigate(['/']);
     }

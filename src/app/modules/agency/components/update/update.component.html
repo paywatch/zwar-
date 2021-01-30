@@ -136,47 +136,33 @@
                   <th>الاسم</th>
                   <th>الرقم القومي</th>
                   <th>رقم الهاتف</th>
+                  <th>تعديل</th>
+                  <th>حذف</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of agency?.ownerList">
+                <tr *ngFor="let item of ownerList |  paginate: { itemsPerPage: 2, currentPage: page}">
                   <td>
-                    <input type="text" class="form-control" formControlName="tAOwnerFullName"
-                      [value]="item.tAOwnerFullName">
-                    <em *ngIf="agencyForm.get('tAOwnerFullName').hasError('required') &&
-                               agencyForm.get('tAOwnerFullName').touched">
-                      اجباري
-                    </em>
+                    {{item.tAOwnerFullName}}
                   </td>
                   <td>
-                    <input type="text" class="form-control" formControlName="tAOwnerNationalID"
-                      [value]="item.tAOwnerNationalID">
-                    <em *ngIf="agencyForm.get('tAOwnerNationalID').hasError('required') &&
-                               agencyForm.get('tAOwnerNationalID').touched">
-                      اجباري
-                    </em>
-                    <em *ngIf="!agencyForm.get('tAOwnerNationalID').hasError('required') &&
-                                agencyForm.get('tAOwnerNationalID').hasError('pattern') &&
-                                agencyForm.get('tAOwnerNationalID').touched">
-                      ارقام فقط
-                    </em>
+                    {{item.tAOwnerNationalID}}
                   </td>
                   <td>
-                    <input type="text" class="form-control" formControlName="tAOwnerPhoneNo"
-                      [value]="item.tAOwnerPhoneNo">
-                    <em *ngIf="agencyForm.get('tAOwnerPhoneNo').hasError('required') &&
-                                agencyForm.get('tAOwnerPhoneNo').touched">
-                      اجباري
-                    </em>
-                    <em *ngIf="!agencyForm.get('tAOwnerPhoneNo').hasError('required') &&
-                               agencyForm.get('tAOwnerPhoneNo').hasError('pattern') &&
-                               agencyForm.get('tAOwnerPhoneNo').touched">
-                      ارقام فقط
-                    </em>
+                    {{item.tAOwnerPhoneNo}}
+                  </td>
+                  <td>
+                    <a href="javascript:;" (click)="editOwner(branch)" class="table-action text-success"
+                      data-toggle="modal" data-target="#addowner"> <i class="fal fa-fw fa-pencil-alt"></i> </a>
+                  </td>
+                  <td style="text-align:center">
+                    <a class="table-action text-danger" (click)="onOwnerDelete(branch.$$ID)"> <i
+                        class="fal fa-fw fa-trash-alt"></i></a>
                   </td>
                 </tr>
               </tbody>
             </table>
+            <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
           </div>
         </div>
 
@@ -430,19 +416,66 @@
           </section>
 
           <h3 class="text-primary"> بيانات التواصل </h3>
+          <table class="table">
+            <tr>
+              <th> اسم الفرع</th>
+              <th>المدينة</th>
+              <th>رقم / اسم المبنى </th>
+              <th>الجوال </th>
+              <th>تعديل</th>
+              <th>حذف</th>
+            </tr>
+            <tr *ngFor="let branch of branches |  paginate: { itemsPerPage: 2, currentPage: page}">
+              <td>{{branch.tABranchName}}</td>
+              <td>{{branch.tADistrictID}}</td>
+              <td>{{branch.tABranchAddress}}</td>
+              <td>{{branch.tABranchMobileNo}}</td>
+              <td>
+                <a href="javascript:;" (click)="editBranch(branch)" class="table-action text-success"
+                  data-toggle="modal" data-target="#additem"> <i class="fal fa-fw fa-pencil-alt"></i> </a>
+              </td>
+              <td style="text-align:center">
+                <a class="table-action text-danger" (click)="onRowDelete(branch.$$ID)"> <i
+                    class="fal fa-fw fa-trash-alt"></i></a>
+              </td>
+            </tr>
+          </table>
+          <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
+        </div>
+      </section>
+      <div class="row justify-content-between ml-3">
+        <button class="btn btn-secondary" [routerLink]="['/agency/edit']">رجوع</button>
+        <button class="btn btn-secondary" type="submit">تعديل</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal fade" id="additem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> إضافة غرفة </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div [formGroup]="branchFrom">
           <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
             <div class="col-md-4">
               <div class="form-group ">
                 <label class="d-block col-form-label"> اسم الفرع </label>
                 <input type="text" id="tABranchName" formControlName="tABranchName" class="form-control">
               </div>
-              <em *ngIf="agencyForm.get('tABranchName').hasError('required') && 
-                         agencyForm.get('tABranchName').touched">
+              <em *ngIf="branchFrom.get('tABranchName').hasError('required') && 
+               branchFrom.get('tABranchName').touched">
                 اجباري
               </em>
-              <em *ngIf="!agencyForm.get('tABranchName').hasError('required') && 
-                          agencyForm.get('tABranchName').hasError('pattern') &&
-                         agencyForm.get('tABranchName').touched">
+              <em *ngIf="!branchFrom.get('tABranchName').hasError('required') && 
+                branchFrom.get('tABranchName').hasError('pattern') &&
+               branchFrom.get('tABranchName').touched">
                 حروف فقط
               </em>
             </div>
@@ -454,8 +487,8 @@
                     {{item.name}}
                   </option>
                 </select>
-                <em *ngIf="agencyForm.get('tADistrictID').hasError('required') &&
-                           agencyForm.get('tADistrictID').touched">
+                <em *ngIf="branchFrom.get('tADistrictID').hasError('required') &&
+                 branchFrom.get('tADistrictID').touched">
                   اجباري
                 </em>
               </div>
@@ -465,8 +498,8 @@
                 <label class="d-block col-form-label"> رقم / اسم المبنى </label>
                 <input type="text" id="tABranchAddress" formControlName="tABranchAddress" class="form-control">
               </div>
-              <em *ngIf="agencyForm.get('tABranchAddress').hasError('required') &&
-                         agencyForm.get('tABranchAddress').touched">
+              <em *ngIf="branchFrom.get('tABranchAddress').hasError('required') &&
+               branchFrom.get('tABranchAddress').touched">
                 اجباري
               </em>
             </div>
@@ -482,22 +515,22 @@
                     placeholder="latitude">
                 </div>
               </div>
-              <em *ngIf="agencyForm.get('tABranchLongitude').hasError('required') &&
-                         agencyForm.get('tABranchLongitude').touched">
+              <em *ngIf="branchFrom.get('tABranchLongitude').hasError('required') &&
+               branchFrom.get('tABranchLongitude').touched">
                 اجباري
               </em>
-              <em *ngIf="!agencyForm.get('tABranchLongitude').hasError('required') &&
-                          agencyForm.get('tABranchLongitude').hasError('pattern') &&
-                          agencyForm.get('tABranchLongitude').touched">
+              <em *ngIf="!branchFrom.get('tABranchLongitude').hasError('required') &&
+                branchFrom.get('tABranchLongitude').hasError('pattern') &&
+                branchFrom.get('tABranchLongitude').touched">
                 ارقام فقط
               </em>
-              <em class="row justify-content-end" *ngIf="agencyForm.get('tABranchLatitude').hasError('required') &&
-                         agencyForm.get('tABranchLatitude').touched">
+              <em class="row justify-content-end" *ngIf="branchFrom.get('tABranchLatitude').hasError('required') &&
+               branchFrom.get('tABranchLatitude').touched">
                 اجباري
               </em>
-              <em class="row justify-content-end" *ngIf="!agencyForm.get('tABranchLatitude').hasError('required') &&
-                          agencyForm.get('tABranchLatitude').hasError('pattern') &&
-                          agencyForm.get('tABranchLatitude').touched">
+              <em class="row justify-content-end" *ngIf="!branchFrom.get('tABranchLatitude').hasError('required') &&
+                branchFrom.get('tABranchLatitude').hasError('pattern') &&
+                branchFrom.get('tABranchLatitude').touched">
                 ارقام فقط
               </em>
             </div>
@@ -506,13 +539,13 @@
                 <label class="d-block col-form-label"> رقم الهاتف </label>
                 <input type="text" id="tABranchPhoneNo" formControlName="tABranchPhoneNo" class="form-control">
               </div>
-              <em *ngIf="agencyForm.get('tABranchPhoneNo').hasError('required') &&
-                         agencyForm.get('tABranchPhoneNo').touched">
+              <em *ngIf="branchFrom.get('tABranchPhoneNo').hasError('required') &&
+               branchFrom.get('tABranchPhoneNo').touched">
                 اجباري
               </em>
-              <em *ngIf="!agencyForm.get('tABranchPhoneNo').hasError('required') &&
-                          agencyForm.get('tABranchPhoneNo').hasError('pattern') &&
-                         agencyForm.get('tABranchPhoneNo').touched">
+              <em *ngIf="!branchFrom.get('tABranchPhoneNo').hasError('required') &&
+                branchFrom.get('tABranchPhoneNo').hasError('pattern') &&
+               branchFrom.get('tABranchPhoneNo').touched">
                 ارقام فقط
               </em>
             </div>
@@ -524,13 +557,13 @@
                 <label class="d-block col-form-label"> رقم الجوال </label>
                 <input type="text" id="tABranchMobileNo" formControlName="tABranchMobileNo" class="form-control">
               </div>
-              <em *ngIf="agencyForm.get('tABranchMobileNo').hasError('required') &&
-                         agencyForm.get('tABranchMobileNo').touched">
+              <em *ngIf="branchFrom.get('tABranchMobileNo').hasError('required') &&
+               branchFrom.get('tABranchMobileNo').touched">
                 اجباري
               </em>
-              <em *ngIf="!agencyForm.get('tABranchMobileNo').hasError('required') &&
-                          agencyForm.get('tABranchMobileNo').hasError('pattern') &&
-                          agencyForm.get('tABranchMobileNo').touched">
+              <em *ngIf="!branchFrom.get('tABranchMobileNo').hasError('required') &&
+                branchFrom.get('tABranchMobileNo').hasError('pattern') &&
+                branchFrom.get('tABranchMobileNo').touched">
                 ارقام فقط
               </em>
             </div>
@@ -539,13 +572,13 @@
                 <label class="d-block col-form-label"> رقم الفاكس </label>
                 <input type="text" id="tABranchFaxNo" formControlName="tABranchFaxNo" class="form-control">
               </div>
-              <em *ngIf="agencyForm.get('tABranchFaxNo').hasError('required') &&
-                         agencyForm.get('tABranchFaxNo').touched">
+              <em *ngIf="branchFrom.get('tABranchFaxNo').hasError('required') &&
+               branchFrom.get('tABranchFaxNo').touched">
                 اجباري
               </em>
-              <em *ngIf="!agencyForm.get('tABranchFaxNo').hasError('required') &&
-                          agencyForm.get('tABranchFaxNo').hasError('pattern') &&
-                          agencyForm.get('tABranchFaxNo').touched">
+              <em *ngIf="!branchFrom.get('tABranchFaxNo').hasError('required') &&
+                branchFrom.get('tABranchFaxNo').hasError('pattern') &&
+                branchFrom.get('tABranchFaxNo').touched">
                 ارقام فقط
               </em>
             </div>
@@ -554,13 +587,13 @@
                 <label class="d-block col-form-label"> البريد الالكتروني </label>
                 <input type="email" id="tABranchEmail" formControlName="tABranchEmail" class="form-control">
               </div>
-              <em *ngIf="agencyForm.get('tABranchEmail').hasError('required') &&
-                         agencyForm.get('tABranchEmail').touched">
+              <em *ngIf="branchFrom.get('tABranchEmail').hasError('required') &&
+               branchFrom.get('tABranchEmail').touched">
                 اجباري
               </em>
-              <em *ngIf="!agencyForm.get('tABranchEmail').hasError('required') &&
-                         agencyForm.get('tABranchEmail').hasError('email') &&
-                         agencyForm.get('tABranchEmail').touched">
+              <em *ngIf="!branchFrom.get('tABranchEmail').hasError('required') &&
+               branchFrom.get('tABranchEmail').hasError('email') &&
+               branchFrom.get('tABranchEmail').touched">
                 ادخل البريد الالكتروني بطريقه صحيحه
               </em>
             </div>
@@ -577,11 +610,114 @@
             </div>
           </div>
         </div>
-      </section>
-      <div class="row justify-content-between ml-3">
-        <button class="btn btn-secondary" [routerLink]="['/agency/edit']">رجوع</button>
-        <button class="btn btn-secondary" type="submit">تعديل</button>
+
       </div>
-    </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">إلغاء</button>
+        <button *ngIf="!editMode" type="button" [disabled]="!branchFrom.valid" (click)="addBranch()"
+          class="btn btn-primary demo-trigger-1" data-dismiss="modal">
+          حفظ
+        </button>
+        <button *ngIf="editMode" type="button" [disabled]="!branchFrom.valid" (click)="_editBranch()"
+          class="btn btn-primary demo-trigger-1" data-dismiss="modal">
+          تعديل
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="addowner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> إضافة غرفة </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div [formGroup]="ownerForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> اسم المالك </label>
+                <input type="text" id="tAOwnerFullName" formControlName="tAOwnerFullName" class="form-control">
+                <span class="text-danger"
+                  *ngIf="ownerForm.get('tAOwnerFullName').hasError('required') && ownerForm.get('tAOwnerFullName').dirty">
+                  هذا الحقل إجباري
+                </span>
+                <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerFullName').hasError('required') &&
+                         ownerForm.get('tAOwnerFullName').hasError('maxlength')">
+                  فقط 20 رقم
+                </span>
+                <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerFullName').hasError('required') &&
+                !ownerForm.get('tAOwnerFullName').hasError('maxlength') &&
+                ownerForm.get('tAOwnerFullName').hasError('pattern')">
+                  حروف فقط
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="d-block col-form-label"> رقم الهوية </label>
+                <input type="text" class="form-control" formControlName="tAOwnerNationalID">
+                <span class="text-danger"
+                  *ngIf="ownerForm.get('tAOwnerNationalID').hasError('required') && ownerForm.get('tAOwnerNationalID').dirty">
+                  هذا الحقل إجباري
+                </span>
+                <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerNationalID').hasError('required') &&
+                ownerForm.get('tAOwnerNationalID').hasError('maxlength') && ownerForm.get('tAOwnerNationalID').dirty">
+                  فقط 20 حرف
+                </span>
+                <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerNationalID').hasError('required') &&
+                              !ownerForm.get('tAOwnerNationalID').hasError('maxlength') &&
+                              ownerForm.get('tAOwnerNationalID').hasError('pattern') &&
+                              ownerForm.get('tAOwnerNationalID').dirty">
+                  ارقام فقط
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="d-block col-form-label"> رقم الجوال </label>
+                <input type="text" id="tAOwnerPhoneNo" class="form-control" formControlName="tAOwnerPhoneNo">
+                <span class="text-danger"
+                  *ngIf="ownerForm.get('tAOwnerPhoneNo').hasError('required') && ownerForm.get('tAOwnerPhoneNo').dirty">
+                  هذا الحقل إجباري
+                </span>
+                <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerPhoneNo').hasError('required') &&
+                      ownerForm.get('tAOwnerPhoneNo').hasError('maxlength')">
+                  فقط 20 رقم
+                </span>
+                <span class="text-danger" *ngIf="!ownerForm.get('tAOwnerPhoneNo').hasError('required') &&
+                !ownerForm.get('tAOwnerPhoneNo').hasError('maxlength') &&
+                ownerForm.get('tAOwnerPhoneNo').hasError('pattern') &&
+                ownerForm.get('tAOwnerPhoneNo').dirty">
+                  ارقام فقط
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">إلغاء</button>
+        <button *ngIf="!editMode" type="button" [disabled]="!ownerForm.valid" (click)="addOwner()"
+          class="btn btn-primary demo-trigger-1" data-dismiss="modal">
+          حفظ
+        </button>
+        <button *ngIf="editMode" type="button" [disabled]="!ownerForm.valid" (click)="_editOwner()"
+          class="btn btn-primary demo-trigger-1" data-dismiss="modal">
+          تعديل
+        </button>
+      </div>
+    </div>
   </div>
 </div>

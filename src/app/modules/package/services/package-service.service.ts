@@ -266,7 +266,7 @@ export class PackageService {
     sessionStorage.removeItem('group');
     sessionStorage.setItem('group', JSON.stringify(item));
   }
- 
+
   updatePackageRoom(item) {
     const id = JSON.parse(sessionStorage.getItem('roomID'));
     const data = { ...item };

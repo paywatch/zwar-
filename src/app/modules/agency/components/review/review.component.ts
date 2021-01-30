@@ -33,6 +33,7 @@ export class ReviewComponent implements OnInit {
   getAgency(id) {
     this.agencyService.getAllData().subscribe(res => {
       this.agency = res.find(r => r.id = id);
+      console.log(this.agency);
     });
   }
 

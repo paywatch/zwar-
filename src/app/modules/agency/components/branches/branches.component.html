@@ -215,9 +215,12 @@
           <section>
             <div class="d-flex justify-content-between align-items-center my-4">
               <h2 class="h3 text-primary m-0"> فروع وكالة السفر</h2>
-              <!--<a href="javascript:;" class="btn btn-outline-primary btn-hover" data-toggle="modal" data-target="#addbranch">اضافة فرع</a>-->
-              <button class="btn btn-outline-primary btn-hover" [disabled]="!myForm.valid"
-                (click)="SaveData()">حفظ</button>
+              <div>
+                <button class="btn btn-outline-primary btn-hover" [disabled]="!myForm.valid"
+                  (click)="SaveData()" *ngIf="!editMode">حفظ</button>
+                <button *ngIf="editMode" class="btn btn-outline-primary btn-hover ml-2" [disabled]="!myForm.valid"
+                  (click)="_editBranch()">تعديل</button>
+              </div>
             </div>
 
             <div *ngIf="taBranchesList?.length <= 0"
@@ -240,17 +243,22 @@
                   <th>الجوال </th>
                   <th style="width:8rem"></th>
                 </tr>
-                <tr *ngFor="let branch of taBranchesList">
+                <tr *ngFor="let branch of taBranchesList |  paginate: { itemsPerPage: 2, currentPage: page}">
                   <td>{{branch.tABranchName}}</td>
                   <td>{{branch.tADistrictID}}</td>
                   <td>{{branch.tABranchAddress}}</td>
                   <td>{{branch.tABranchMobileNo}}</td>
+                  <td>
+                    <a href="javascript:;" (click)="editBranch(branch)" class="table-action text-success"
+                      data-toggle="modal" data-target="#additem"> <i class="fal fa-fw fa-pencil-alt"></i> </a>
+                  </td>
                   <td style="text-align:center">
                     <a class="table-action text-danger" (click)="onRowDelete(branch.$$ID)"> <i
                         class="fal fa-fw fa-trash-alt"></i></a>
                   </td>
                 </tr>
               </table>
+              <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
               <div class="branch-map">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d104888.4757581263!2d10.663058829797!3d34.76151547712517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13002cda1486c695%3A0x22dfe0a62c50ce6f!2sSfax%2C%20Tunisia!5e0!3m2!1sen!2ssa!4v1570107555457!5m2!1sen!2ssa"
@@ -260,7 +268,8 @@
           </section>
 
           <div class="btn-group mt-5">
-            <a routerLink="['/agency/main']" class="btn btn-default px-0" (click)="deleteBranchData()"> الغاء التسجيل</a>
+            <a routerLink="['/agency/main']" class="btn btn-default px-0" (click)="deleteBranchData()"> الغاء
+              التسجيل</a>
             <div>
               <a routerLink="/agency/license" class="btn btn-outline-primary ml-3">السابق</a>
               <button *ngIf="!selectedBranch" class="btn btn-primary ml-3" [disabled]="!taBranchesList?.length"
