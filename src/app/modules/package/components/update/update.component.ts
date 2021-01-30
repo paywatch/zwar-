@@ -6,7 +6,6 @@ import { GreaterThan } from '../../../../_helpers/greater-than.validator';
 import { Package } from '../../models/package';
 import { PackageService } from '../../services/package-service.service';
 
-
 // IMPORT MOMENT FOR FORMAT DATE IN NICE WAY;
 import * as moment from 'moment';
 
@@ -17,12 +16,17 @@ import * as moment from 'moment';
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
-  singlePackage: Package;
+  singlePackage: any;
   packageForm: FormGroup;
   ID: any;
   roomType: any;
   airports: any;
   umrahSeason: any;
+  rooms: any;
+  editMode: boolean;
+  room: any;
+  roomForm: any;
+  page;
 
   constructor(
     private router: Router,
@@ -32,11 +36,14 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.ID = this.activatedRouter.snapshot.params['id'];
-    this.getRoomType();
+    setTimeout(() => {
+      this.getRoomType();
+    }, 2000);
     this.getInternalAirPort();
     this.getPackage(this.ID);
     this.getUmrahSeason();
     this.initForm();
+    this.initRoomForm();
   }
 
   initForm() {
@@ -44,7 +51,6 @@ export class UpdateComponent implements OnInit {
       ID: [this.singlePackage?.ID],
       localAirportID: [this.singlePackage?.localAirportID, Validators.required],
       packageAvailableSeats: [this.singlePackage?.packageAvailableSeats, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      // tslint:disable-next-line:max-line-length
       packageCapacity: [this.singlePackage?.packageCapacity, [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]*$/)]],
       packageDepartureDate: [this.singlePackage?.packageReturnDate, [Validators.required, AfterToday]],
       packageReturnDate: [this.singlePackage?.packageDepartureDate, Validators.required],
@@ -55,13 +61,18 @@ export class UpdateComponent implements OnInit {
       mutawefName: [this.singlePackage?.mutawefName, Validators.required],
       mutawefPhone: [this.singlePackage?.mutawefPhone, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       mutawefPicture: [this.singlePackage?.mutawefPicture],
-      roomPriceAdult: [this.singlePackage?.roomPriceAdult, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      roomPriceKids: [this.singlePackage?.roomPriceKids, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      roomQuantity: [this.singlePackage?.roomQuantity, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      roomTypeID: [this.singlePackage?.roomTypeID, Validators.required],
-      roomTypeInfants: [this.singlePackage?.roomTypeInfants, [Validators.required, Validators.pattern(/^[0-9]*$/)]]
     }, {
       validators: GreaterThan('packageDepartureDate', 'packageReturnDate')
+    });
+  }
+
+  initRoomForm() {
+    this.roomForm = this.formBuilder.group({
+      roomTypeID: ['', Validators.required],
+      roomPriceAdult: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]+/)]],
+      roomPriceKids: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]+/)]],
+      roomTypeInfants: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]+/)]],
+      roomQuantity: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[0-9]+/)]]
     });
   }
 
@@ -69,13 +80,16 @@ export class UpdateComponent implements OnInit {
     this.packageService.getPackage().subscribe(packages => {
       const found = packages.find(p => p.id == id);
       this.singlePackage = found;
+      this.rooms = [];
+      this.rooms = this.singlePackage.room;
+      console.log(this.singlePackage);
       this.packageForm.patchValue(this.singlePackage);
     });
   }
 
   getRoomType() {
-    this.packageService.getRoomType().subscribe(room => {
-      this.roomType = room;
+    this.packageService.getRoomType().subscribe(roomType => {
+      this.roomType = roomType;
     });
   }
 
@@ -91,9 +105,34 @@ export class UpdateComponent implements OnInit {
     });
   }
 
+  deleteRoom(item) {
+    this.singlePackage.room = this.singlePackage.room.filter(room => room.$$ID !== item.$$ID);
+    this.rooms = this.singlePackage.room;
+  }
+
+  editRoom(index) {
+    this.room = this.rooms.find(obj => obj.$$ID == index.$$ID);
+    this.roomForm.patchValue(this.room);
+    this.editMode = true;
+  }
+
+  _editRoom() {
+    const find = this.rooms.findIndex(r => r.$$ID == this.room.$$ID);
+    this.rooms[find] = this.roomForm.value;
+    this.rooms = this.rooms.map(room => {
+      room.roomTypeName = this.roomType.find(type => type.id == room.roomTypeID).name;
+      return room;
+    });
+    console.log(this.rooms);
+  }
+
   submit() {
-    this.singlePackage = this.packageForm.value;
-    this.singlePackage.id = this.ID;
+    this.singlePackage = {
+      data: this.packageForm.value,
+      id: this.ID,
+      room: []
+    };
+    this.singlePackage.room = this.rooms;
     this.packageService.updatePackage(this.singlePackage);
     this.router.navigate(['package/edit']);
   }

@@ -20,6 +20,7 @@ export class ConfirmationComponent implements OnInit {
   matwafImage: any;
   modalRef: any;
   program: any;
+  page;
 
   constructor(
     private router: Router,
@@ -48,7 +49,7 @@ export class ConfirmationComponent implements OnInit {
     this.package = {
       ...this.base,
       ...this.matwaf,
-      ...this.room
+      room: this.room
     };
   }
 
@@ -86,7 +87,10 @@ export class ConfirmationComponent implements OnInit {
 
   getRoomType() {
     this.packaService.getRoomType().subscribe(roomType => {
-      this.package.roomTypeName = roomType.find(r => r.id == this.room.roomTypeID).name;
+      this.package.room = this.package.room.map(room => {
+        room.roomTypeName = roomType.find(r => r.id == room.roomTypeID).name;
+        return room;
+      });
     });
   }
 

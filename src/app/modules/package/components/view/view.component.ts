@@ -12,7 +12,7 @@ export class ViewComponent implements OnInit {
 
   package: any;
   modalRef: any;
-
+  page;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,6 +36,7 @@ export class ViewComponent implements OnInit {
     this.packageService.getPackage().subscribe(pack => {
       const found = pack.find(p => p.id == id);
       this.package = found;
+      console.log(this.package);
     });
   }
 

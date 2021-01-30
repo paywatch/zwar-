@@ -2,8 +2,8 @@
   <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="bg-transparent breadcrumb mb-2 p-0 small text-muted">
-        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
-        <li class="breadcrumb-item"><a href="manage_package.html"> ادارة باقات العمرة </a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/home']">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['profile/programs']"> ادارة باقات العمرة </a></li>
       </ol>
     </nav>
     <div class="page-title">
@@ -140,8 +140,7 @@
                 <div class="modal-body">
                   <div class="row justify-content-center" *ngIf="package.matwafImage">
                     <div *ngFor="let item of package.matwafImage">
-                      <p><img width="100" height="100" [src]="item.url"
-                          class="mr-3" /></p>
+                      <p><img width="100" height="100" [src]="item.url" class="mr-3" /></p>
                     </div>
                   </div>
                 </div>
@@ -166,15 +165,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td> {{package.roomTypeName}} </td>
-                <td> {{package.roomPriceAdult}}</td>
-                <td> {{package.roomPriceKids}}</td>
-                <td> {{package.roomTypeInfants}} </td>
-                <td> {{package.roomQuantity}} </td>
+              <tr *ngFor="let item of package.room |  paginate: { itemsPerPage: 2, currentPage: page}">
+                <td> {{item.roomTypeName}} </td>
+                <td> {{item.roomPriceAdult}}</td>
+                <td> {{item.roomPriceKids}}</td>
+                <td> {{item.roomTypeInfants}} </td>
+                <td> {{item.roomQuantity}} </td>
               </tr>
             </tbody>
           </table>
+          <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
         </div>
       </section>
       <div class="btn-group mt-5">

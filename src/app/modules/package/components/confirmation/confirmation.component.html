@@ -176,15 +176,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>{{package?.roomTypeName}}</td>
-                  <td>{{package?.roomPriceAdult}}</td> 
-                  <td>{{package?.roomPriceKids}}</td>
-                  <td>{{package?.roomTypeInfants}}</td>
-                  <td>{{package?.roomQuantity}}</td>
+                <tr *ngFor="let room of package.room |  paginate: { itemsPerPage: 2, currentPage: page}">
+                  <td>{{room?.roomTypeName}}</td>
+                  <td>{{room?.roomPriceAdult}}</td>
+                  <td>{{room?.roomPriceKids}}</td>
+                  <td>{{room?.roomTypeInfants}}</td>
+                  <td>{{room?.roomQuantity}}</td>
                 </tr>
               </tbody>
             </table>
+            <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
           </div>
         </section>
 

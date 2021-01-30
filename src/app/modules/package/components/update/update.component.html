@@ -183,105 +183,38 @@
         </div>
 
         <h3 class="mt-3">بيانات الغرف</h3>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="d-block col-form-label">نوع الغرفة</label>
-              <select class="form-control" formControlName="roomTypeID">
-                <option *ngFor="let item of roomType" [value]="item.id">
-                  {{item.name}}
-                </option>
-              </select>
-            </div>
-            <em *ngIf="packageForm.get('roomTypeID').hasError('required') && 
-                       packageForm.get('roomTypeID').touched">
-              اجباري
-            </em>
-          </div>
-        </div>
-        <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
-          <div class="col-md-6">
-            <div class="form-group ">
-              <label class="d-block col-form-label"> السعر للبالغين </label>
-              <div class="input-group">
-                <input type="text" class="form-control" type="text" formControlName="roomPriceAdult">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">ريـال</span>
-                </div>
-              </div>
-            </div>
-            <em *ngIf="packageForm.get('roomPriceAdult').hasError('required') && 
-                       packageForm.get('roomPriceAdult').touched">
-              اجباري
-            </em>
-            <em *ngIf="!packageForm.get('roomPriceAdult').hasError('required') && 
-                        packageForm.get('roomPriceAdult').hasError('pattern') &&
-                        packageForm.get('roomPriceAdult').touched">
-              ارقام فقط
-            </em>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group ">
-              <label class="d-block col-form-label"> السعر للاطفال </label>
-              <div class="input-group">
-                <input type="text" class="form-control" formControlName="roomPriceKids">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">ريـال</span>
-                </div>
-              </div>
-            </div>
-            <em *ngIf="packageForm.get('roomPriceKids').hasError('required') && 
-                      packageForm.get('roomPriceKids').touched">
-              اجباري
-            </em>
-            <em *ngIf="!packageForm.get('roomPriceKids').hasError('required') && 
-                        packageForm.get('roomPriceKids').hasError('pattern') &&
-                        packageForm.get('roomPriceKids').touched">
-              ارقام فقط
-            </em>
-          </div>
-        </div>
-        <div class="row" data-aos="fade-up" data-aos-offset="100" data-aos-duration="1000" data-aos-delay="100">
-          <div class="col-md-6">
-            <div class="form-group ">
-              <label class="d-block col-form-label"> السعر للرضع </label>
-              <div class="input-group">
-                <input type="text" class="form-control" formControlName="roomTypeInfants">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">ريـال</span>
-                </div>
-              </div>
-              <em *ngIf="packageForm.get('roomTypeInfants').hasError('required') && 
-                         packageForm.get('roomTypeInfants').touched">
-                اجباري
-              </em>
-              <em *ngIf="!packageForm.get('roomTypeInfants').hasError('required') && 
-                          packageForm.get('roomTypeInfants').hasError('pattern') &&
-                          packageForm.get('roomTypeInfants').touched">
-                ارقام فقط
-              </em>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group ">
-              <label class="d-block col-form-label"> العدد المتوفر </label>
-              <div class="input-group">
-                <input type="text" class="form-control" formControlName="roomQuantity">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">غرفة</span>
-                </div>
-              </div>
-            </div>
-            <em *ngIf="packageForm.get('roomQuantity').hasError('required') && 
-                       packageForm.get('roomQuantity').touched">
-              اجباري
-            </em>
-            <em *ngIf="!packageForm.get('roomQuantity').hasError('required') && 
-                        packageForm.get('roomQuantity').hasError('pattern') &&
-                        packageForm.get('roomQuantity').touched">
-              ارقام فقط
-            </em>
-          </div>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>نوع الغرف </th>
+                <th>السعر للبالغين </th>
+                <th> السعر للاطفال </th>
+                <th> السعر للرضع </th>
+                <th>العدد المتوفر</th>
+                <th>تعديل</th>
+                <th>حذف</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of rooms |  paginate: { itemsPerPage: 2, currentPage: page}">
+                <td> {{item.roomTypeName}} </td>
+                <td> {{item.roomPriceAdult}}</td>
+                <td> {{item.roomPriceKids}}</td>
+                <td> {{item.roomTypeInfants}} </td>
+                <td> {{item.roomQuantity}} </td>
+                <td>
+                  <a href="javascript:;" (click)="editRoom(item)" class="table-action text-success"
+                    data-toggle="modal" data-target="#additem"> <i class="fal fa-fw fa-pencil-alt"></i> </a>
+                </td>
+                <td>
+                  <a href="javascript:;" (click)="deleteRoom(item)" class="table-action text-danger"
+                    data-toggle="modal" data-target="#deleteitem"> <i class="fal fa-fw fa-trash-alt"></i> </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
         </div>
       </section>
       <div class="row justify-content-between m-3">
@@ -289,5 +222,153 @@
         <button class="btn btn-secondary" type="submit">تعديل</button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="modal fade" id="additem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> إضافة غرفة </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="roomForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> نوع الغرفة </label>
+                <select class="form-control" formControlName="roomTypeID">
+                  <option *ngFor="let item of roomType" [value]="item.id">
+                    {{item.name}}
+                  </option>
+                </select>
+                <em *ngIf="roomForm.get('roomTypeID').hasError('required') && roomForm.get('roomTypeID').dirty">
+                  هذا الحقل إجباري
+                </em>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> السعر للبالغين </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" type="text" formControlName="roomPriceAdult">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">ريـال</span>
+                  </div>
+                </div>
+                <em *ngIf="roomForm.get('roomPriceAdult').hasError('required') && roomForm.get('roomPriceAdult').dirty">
+                  هذا الحقل إجباري
+                </em>
+                <em *ngIf="!roomForm.get('roomPriceAdult').hasError('required') &&
+                          roomForm.get('roomPriceAdult').hasError('pattern') &&
+                          roomForm.get('roomPriceAdult').dirty">
+                  فقط ارقام
+                </em>
+                <em *ngIf="!roomForm.get('roomPriceAdult').hasError('required') &&
+                           !roomForm.get('roomPriceAdult').hasError('pattern') &&
+                           roomForm.get('roomPriceAdult').hasError('maxlength') &&
+                              roomForm.get('roomPriceAdult').dirty">
+                  حد اقصي 20 رقم
+                </em>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> السعر للاطفال </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" formControlName="roomPriceKids">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">ريـال</span>
+                  </div>
+                </div>
+                <em *ngIf="roomForm.get('roomPriceKids').hasError('required') && roomForm.get('roomPriceKids').dirty">
+                  هذا الحقل إجباري
+                </em>
+                <em *ngIf="!roomForm.get('roomPriceKids').hasError('required') &&
+                           roomForm.get('roomPriceKids').hasError('pattern') &&
+                           roomForm.get('roomPriceKids').dirty">
+                  فقط ارقام
+                </em>
+                <em *ngIf="!roomForm.get('roomPriceKids').hasError('required') &&
+                           !roomForm.get('roomPriceKids').hasError('pattern') &&
+                            roomForm.get('roomPriceKids').hasError('maxlength') &&
+                            roomForm.get('roomPriceKids').dirty">
+                  حد اقصي 20 رقم
+                </em>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> السعر للرضع </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" formControlName="roomTypeInfants">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">ريـال</span>
+                  </div>
+                </div>
+                <em
+                  *ngIf="roomForm.get('roomTypeInfants').hasError('required') && roomForm.get('roomTypeInfants').dirty">
+                  هذا الحقل إجباري
+                </em>
+                <em *ngIf="!roomForm.get('roomTypeInfants').hasError('required') &&
+                         roomForm.get('roomTypeInfants').hasError('pattern') &&
+                         roomForm.get('roomTypeInfants').dirty">
+                  فقط ارقام
+                </em>
+                <em *ngIf="!roomForm.get('roomTypeInfants').hasError('required') &&
+                           !roomForm.get('roomTypeInfants').hasError('pattern') &&
+                           roomForm.get('roomTypeInfants').hasError('maxlength') &&
+                           roomForm.get('roomTypeInfants').dirty">
+                  حد اقصي 20 رقم
+                </em>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="d-block col-form-label"> العدد المتوفر </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" formControlName="roomQuantity">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">غرفة</span>
+                  </div>
+                </div>
+                <em *ngIf="roomForm.get('roomQuantity').hasError('required') && roomForm.get('roomQuantity').dirty">
+                  هذا الحقل إجباري
+                </em>
+                <em *ngIf="!roomForm.get('roomQuantity').hasError('required') &&
+                            roomForm.get('roomQuantity').hasError('pattern') &&
+                            roomForm.get('roomQuantity').dirty">
+                  فقط ارقام
+                </em>
+                <em *ngIf="!roomForm.get('roomQuantity').hasError('required') &&
+                           !roomForm.get('roomQuantity').hasError('pattern') &&
+                           roomForm.get('roomQuantity').hasError('maxlength') &&
+                           roomForm.get('roomQuantity').dirty">
+                  حد اقصي 20 رقم
+                </em>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">إلغاء</button>
+        <button *ngIf="!editMode" type="button" [disabled]="!roomForm.valid" (click)="addRoom()" class="btn btn-primary demo-trigger-1"
+          data-dismiss="modal">
+          حفظ
+        </button>
+        <button *ngIf="editMode" type="button" [disabled]="!roomForm.valid" (click)="_editRoom()" class="btn btn-primary demo-trigger-1"
+          data-dismiss="modal">
+          تعديل
+        </button>
+      </div>
+    </div>
   </div>
 </div>
