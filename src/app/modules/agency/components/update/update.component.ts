@@ -122,6 +122,7 @@ export class UpdateComponent implements OnInit {
   getSingleAgency(id) {
     this.agencyService.getAllData().subscribe(agency => {
       this.agency = agency.find(a => a.id == id);
+      console.log(this.agency);
       this.branches = this.agency.branch;
       this.ownerList = this.agency.ownerList;
       this.agencyForm.patchValue(this.agency);
@@ -178,16 +179,17 @@ export class UpdateComponent implements OnInit {
   }
 
   editBranch(item) {
-    this.selectedBranch = this.branches.find(branch => branch.$$ID == item.$$ID);
-    console.log(this.selectedBranch);
-    this.branchFrom.patchValue(this.selectedBranch);
     this.editBranchMode = true;
+    this.selectedBranch = this.branches.find(branch => branch.$$ID == item.$$ID);
+    this.branchFrom.patchValue(this.selectedBranch);
   }
 
   _editBranch() {
     const find = this.branches.findIndex(branch => branch.$$ID == this.selectedBranch.$$ID);
-    console.log(find);
+    const payload = this.branchFrom.value;
+    payload.tADistrictID = this.district.find(dis => dis.id == payload.tADistrictID).name;
     this.branches[find] = this.branchFrom.value;
+    this.branches[find].tADistrictID = payload.tADistrictID;
   }
 
   onRowDelete(item) {

@@ -130,6 +130,9 @@
 
         <div class="row">
           <div class="col-sm-12 col-md-12 col-lg-12">
+            <h4>اضافة ملاك</h4>
+            <a href="javascript:;" style="font-size: 2rem;" (click)="addOwner()" class="table-action text-success" data-toggle="modal"
+              data-target="#addowner"> <i class="fa fa-plus-square"></i> </a>
             <table style="width: 100%;" class="table table-striped">
               <thead>
                 <tr>
@@ -138,7 +141,6 @@
                   <th>رقم الهاتف</th>
                   <th>تعديل</th>
                   <th>حذف</th>
-                  <th>اضافه</th>
                 </tr>
               </thead>
               <tbody>
@@ -160,10 +162,6 @@
                   <td style="text-align:center">
                     <a class="table-action text-danger" (click)="onOwnerDelete(item.$$ID)"> <i
                         class="fal fa-fw fa-trash-alt"></i></a>
-                  </td>
-                  <td>
-                    <a href="javascript:;" (click)="addOwner()" class="table-action text-success" data-toggle="modal"
-                      data-target="#addowner"> <i class="fa fa-plus-square"></i> </a>
                   </td>
                 </tr>
               </tbody>
@@ -422,6 +420,9 @@
           </section>
 
           <h3 class="text-primary"> بيانات التواصل </h3>
+          <h4>اضافة فروع</h4>
+          <a href="javascript:;" style="font-size: 2rem;" (click)="addBranch()" class="table-action text-success" data-toggle="modal"
+          data-target="#additem"> <i class="fa fa-plus-square"></i> </a>
           <table class="table">
             <tr>
               <th> اسم الفرع</th>
@@ -430,7 +431,6 @@
               <th>الجوال </th>
               <th>تعديل</th>
               <th>حذف</th>
-              <th>اضافه</th>
             </tr>
             <tr *ngFor="let branch of branches |  paginate: { itemsPerPage: 2, currentPage: page}">
               <td>{{branch.tABranchName}}</td>
@@ -444,10 +444,6 @@
               <td style="text-align:center">
                 <a class="table-action text-danger" (click)="onRowDelete(branch.$$ID)"> <i
                     class="fal fa-fw fa-trash-alt"></i></a>
-              </td>
-              <td>
-                <a href="javascript:;" (click)="addBranch()" class="table-action text-success" data-toggle="modal"
-                  data-target="#additem"> <i class="fa fa-plus-square"></i> </a>
               </td>
             </tr>
           </table>
@@ -625,11 +621,11 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">إلغاء</button>
-        <button *ngIf="!editBranchMode" type="button" (click)="addBranch()"
-          class="btn btn-primary demo-trigger-1" data-dismiss="modal">
+        <button *ngIf="!editBranchMode" type="button" (click)="addBranch()" class="btn btn-primary demo-trigger-1"
+          data-dismiss="modal">
           حفظ
         </button>
-        <button *ngIf="editBranchMode" type="button" [disabled]="!branchFrom.valid" (click)="_editBranch()"
+        <button *ngIf="editBranchMode" type="button" (click)="_editBranch()"
           class="btn btn-primary demo-trigger-1" data-dismiss="modal">
           تعديل
         </button>
@@ -645,7 +641,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> إضافة غرفة </h5>
+        <h5 class="modal-title" id="exampleModalLabel"> إضافة ملاك </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -720,8 +716,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">إلغاء</button>
-        <button *ngIf="!editMode" type="button" (click)="addOwner()"
-          class="btn btn-primary demo-trigger-1" data-dismiss="modal">
+        <button *ngIf="!editMode" type="button" (click)="addOwner()" class="btn btn-primary demo-trigger-1"
+          data-dismiss="modal">
           حفظ
         </button>
         <button *ngIf="editMode" type="button" [disabled]="!ownerForm.valid" (click)="_editOwner()"
