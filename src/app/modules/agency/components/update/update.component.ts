@@ -8,6 +8,7 @@ import { AgencyService } from '../../services/agency/agency.service';
 
 // IMPORT MOMENT FOR FORMAT DATE IN NICE WAY;
 import * as moment from 'moment';
+import { Branch } from '../../models/branch';
 
 @Component({
   selector: 'app-update',
@@ -28,6 +29,11 @@ export class UpdateComponent implements OnInit {
   ownerForm: FormGroup;
   ownerList: any;
   editMode: boolean;
+  editBranchMode: boolean;
+  collectBranchForm: any;
+  collcectOwnerForm: any;
+  selectedOwner: any;
+  selectedBranch: any;
 
   constructor(
     private agencyService: AgencyService,
@@ -97,6 +103,7 @@ export class UpdateComponent implements OnInit {
       tABranchEmail: ['', [Validators.required, Validators.email]],
       tABranchFaxNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       tADistrictID: ['', Validators.required],
+      tABranchType: [],
       tABranchLatitude: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       tABranchLongitude: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       tABranchMobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
@@ -117,27 +124,75 @@ export class UpdateComponent implements OnInit {
       this.agency = agency.find(a => a.id == id);
       this.branches = this.agency.branch;
       this.ownerList = this.agency.ownerList;
-      console.log(this.ownerList);
       this.agencyForm.patchValue(this.agency);
     });
   }
 
 
-  addOwner() { }
+  addOwner() {
+    this.collcectOwnerForm = this.ownerForm.value;
+    if (this.ownerForm.valid) {
+      this.collcectOwnerForm.$$ID = this.ownerList.length + 1;
+      this.ownerList.push(this.collcectOwnerForm);
+    }
+    this.ownerForm.reset();
+    this.editMode = false;
+  }
 
-  editOwner() { }
+  editOwner(item) {
+    this.selectedOwner = this.ownerList.find(owner => owner.$$ID == item.$$ID);
+    console.log(this.selectedOwner);
+    this.ownerForm.patchValue(this.selectedOwner);
+    this.editMode = true;
+  }
 
-  _editOwner() { }
+  _editOwner() {
+    const find = this.ownerList.findIndex(owner => owner.$$ID == this.selectedOwner.$$ID);
+    console.log(find);
+    this.ownerList[find] = this.ownerForm.value;
+  }
 
-  onOwnerDelete() { }
+  onOwnerDelete(ID) {
+    this.ownerList = this.ownerList.filter(owner => owner.$$ID !== ID);
+  }
 
-  addBranch() { }
 
-  editBranch(item) { }
+  getDistrictList() {
+    this.agencyService.getDistrictList().subscribe(district => {
+      if (district) {
+        this.district = district;
+      }
+    });
+  }
 
-  _editBranch() { }
+  addBranch() {
+    this.editBranchMode = false;
+    this.collectBranchForm = this.branchFrom.value;
+    if (this.branchFrom.valid) {
+      this.collectBranchForm.$$ID = this.branches.length + 1;
+      this.collectBranchForm.tADistrictID = this.district.find(d => d.id == this.collectBranchForm.tADistrictID).name;
+      this.branches.push(this.collectBranchForm);
+      console.log(this.branches);
+      this.branchFrom.reset();
+    }
+  }
 
-  onRowDelete(item) { }
+  editBranch(item) {
+    this.selectedBranch = this.branches.find(branch => branch.$$ID == item.$$ID);
+    console.log(this.selectedBranch);
+    this.branchFrom.patchValue(this.selectedBranch);
+    this.editBranchMode = true;
+  }
+
+  _editBranch() {
+    const find = this.branches.findIndex(branch => branch.$$ID == this.selectedBranch.$$ID);
+    console.log(find);
+    this.branches[find] = this.branchFrom.value;
+  }
+
+  onRowDelete(item) {
+    this.branches = this.branches.filter(branch => branch.$$ID !== item.$$ID);
+  }
 
   getAgencyType() {
     this.agencyService.getAgencyType().subscribe(res => {
@@ -151,14 +206,6 @@ export class UpdateComponent implements OnInit {
     this.agencyService.getAllCountries().subscribe(country => {
       if (country) {
         this.countries = country;
-      }
-    });
-  }
-
-  getDistrictList() {
-    this.agencyService.getDistrictList().subscribe(district => {
-      if (district) {
-        this.district = district;
       }
     });
   }
@@ -228,6 +275,8 @@ export class UpdateComponent implements OnInit {
   submit() {
     this.agency = this.agencyForm.value;
     this.agency.id = this.ID;
+    this.agency.ownerList = this.ownerList;
+    this.agency.branch = this.branches;
     this.agencyService.updateAgency(this.agency);
     this.toaster.info('تم التعديل');
     this.router.navigate(['/agency/edit']);
