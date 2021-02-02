@@ -25,7 +25,7 @@ export class UpdateComponent implements OnInit {
   district: any;
   branchFrom: FormGroup;
   branches: any;
-  page;
+  page = 1;
   ownerForm: FormGroup;
   ownerList: any;
   editMode: boolean;
@@ -149,8 +149,9 @@ export class UpdateComponent implements OnInit {
 
   _editOwner() {
     const find = this.ownerList.findIndex(owner => owner.$$ID == this.selectedOwner.$$ID);
-    console.log(find);
     this.ownerList[find] = this.ownerForm.value;
+    this.ownerList[find].$$ID = this.selectedOwner.$$ID;
+    console.log(this.ownerList[find]);
   }
 
   onOwnerDelete(ID) {
@@ -182,6 +183,7 @@ export class UpdateComponent implements OnInit {
     this.editBranchMode = true;
     this.selectedBranch = this.branches.find(branch => branch.$$ID == item.$$ID);
     this.branchFrom.patchValue(this.selectedBranch);
+    console.log(this.selectedBranch);
   }
 
   _editBranch() {
@@ -190,10 +192,13 @@ export class UpdateComponent implements OnInit {
     payload.tADistrictID = this.district.find(dis => dis.id == payload.tADistrictID).name;
     this.branches[find] = this.branchFrom.value;
     this.branches[find].tADistrictID = payload.tADistrictID;
+    this.branches[find].$$ID = this.selectedBranch.$$ID;
+    console.log(this.branches[find]);
+    this.branchFrom.reset();
   }
 
   onRowDelete(item) {
-    this.branches = this.branches.filter(branch => branch.$$ID !== item.$$ID);
+    this.branches = this.branches.filter(branch => branch.$$ID !== item);
   }
 
   getAgencyType() {
